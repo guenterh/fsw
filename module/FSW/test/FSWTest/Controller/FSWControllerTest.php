@@ -73,4 +73,9 @@ class AlbumControllerTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(200, $response->getStatusCode());
     }
+
+    public function testGetMediumTableReturnsAnInstanceOfMediumTable()
+    {
+        $this->assertInstanceOf('FSW\Model\MediumTable', $this->controller->getMediumTable());
+    }
 }

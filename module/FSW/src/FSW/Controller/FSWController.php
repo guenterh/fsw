@@ -22,8 +22,16 @@ use Zend\EventManager\Event;
 
 class FSWController extends AbstractActionController {
 
+
+    protected $mediumTable;
+
     public function indexAction()
     {
+
+        return new ViewModel(array(
+            'medien' => $this->getMediumTable()->fetchAll(),
+        ));
+
     }
 
     public function addAction()
@@ -37,6 +45,19 @@ class FSWController extends AbstractActionController {
     public function deleteAction()
     {
     }
+
+
+
+
+    public function getMediumTable()
+    {
+        if (!$this->mediumTable) {
+            $sm = $this->getServiceLocator();
+            $this->mediumTable = $sm->get('FSW\Model\MediumTable');
+        }
+        return $this->mediumTable;
+    }
+
 
 
 } 

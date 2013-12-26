@@ -19,6 +19,8 @@ class Bootstrap
 
     public static function init()
     {
+        $basePath = dirname(dirname(dirname(__DIR__)));
+
         $zf2ModulePaths = array(dirname(dirname(__DIR__)));
         if (($path = static::findParentPath('vendor'))) {
             $zf2ModulePaths[] = $path;
@@ -33,11 +35,18 @@ class Bootstrap
         $config = array(
             'module_listener_options' => array(
                 'module_paths' => $zf2ModulePaths,
+                'config_glob_paths' => array(
+                    $basePath . '/config/autoload/{,*.}{global,local}.php',
+                ),
+
             ),
             'modules' => array(
                 'Application',
                 'FSW'
             )
+
+
+
         );
 
         $serviceManager = new ServiceManager(new ServiceManagerConfig());

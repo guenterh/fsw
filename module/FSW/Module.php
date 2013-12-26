@@ -10,6 +10,14 @@ namespace FSW;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Zend\Db\Adapter\Adapter;
+use FSW\Model\Medium;
+use FSW\Model\MediumTable;
+
+
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
+
 
 
 class Module {
@@ -58,6 +66,26 @@ class Module {
         $h = "";
 
     }
+
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'FSW\Model\MediumTable' =>  function($sm) {
+                        $tableGateway = $sm->get('MediumTableGateway');
+                        $table = new MediumTable($tableGateway);
+                        return $table;
+                    },
+                'MediumTableGateway' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        $resultSetPrototype = new ResultSet();
+                        $resultSetPrototype->setArrayObjectPrototype(new Medium());
+                        return new TableGateway('medien', $dbAdapter, null, $resultSetPrototype);
+                    },
+            ),
+        );
+    }
+
 
 
 } 
