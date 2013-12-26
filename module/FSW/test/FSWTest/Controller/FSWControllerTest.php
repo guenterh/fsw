@@ -1,17 +1,16 @@
 <?php
-
-namespace FSWTest\Controller;
+namespace AlbumTest\Controller;
 
 use FSWTest\Bootstrap;
-use Zend\Mvc\Router\Http\TreeRouteStack as HttpRouter;
-use Application\Controller\IndexController;
+use FSW\Controller\FSWController;
 use Zend\Http\Request;
 use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
+use Zend\Mvc\Router\Http\TreeRouteStack as HttpRouter;
 use PHPUnit_Framework_TestCase;
 
-class IndexControllerTest extends \PHPUnit_Framework_TestCase
+class AlbumControllerTest extends PHPUnit_Framework_TestCase
 {
     protected $controller;
     protected $request;
@@ -22,18 +21,47 @@ class IndexControllerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $serviceManager = Bootstrap::getServiceManager();
-        $this->controller = new IndexController();
+        $this->controller = new FSWController();
         $this->request    = new Request();
         $this->routeMatch = new RouteMatch(array('controller' => 'index'));
         $this->event      = new MvcEvent();
         $config = $serviceManager->get('Config');
         $routerConfig = isset($config['router']) ? $config['router'] : array();
         $router = HttpRouter::factory($routerConfig);
-
         $this->event->setRouter($router);
         $this->event->setRouteMatch($this->routeMatch);
         $this->controller->setEvent($this->event);
         $this->controller->setServiceLocator($serviceManager);
+    }
+
+    public function testAddActionCanBeAccessed()
+    {
+        $this->routeMatch->setParam('action', 'add');
+
+        $result   = $this->controller->dispatch($this->request);
+        $response = $this->controller->getResponse();
+
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    public function testDeleteActionCanBeAccessed()
+    {
+        $this->routeMatch->setParam('action', 'delete');
+
+        $result   = $this->controller->dispatch($this->request);
+        $response = $this->controller->getResponse();
+
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    public function testEditActionCanBeAccessed()
+    {
+        $this->routeMatch->setParam('action', 'edit');
+
+        $result   = $this->controller->dispatch($this->request);
+        $response = $this->controller->getResponse();
+
+        $this->assertEquals(200, $response->getStatusCode());
     }
 
     public function testIndexActionCanBeAccessed()

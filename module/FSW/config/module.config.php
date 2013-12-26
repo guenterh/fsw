@@ -11,9 +11,13 @@ return array(
     'router' => array(
         'routes' => array(
             'fsw' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/fsw',
+                    'route'    => '/fsw[/][:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
                     'defaults' => array(
                         'controller' => 'FSW\Controller\FSW',
                         'action'     => 'index',
