@@ -20,7 +20,7 @@ class MediumForm extends Form {
         parent::__construct('medium');
 
         $this->add(array(
-            'name' => 'id',
+            'name' => 'medienid',
             'type' => 'Hidden',
         ));
         $this->add(array(

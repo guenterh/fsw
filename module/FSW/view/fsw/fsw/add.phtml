@@ -9,7 +9,7 @@ $form->setAttribute('action', $this->url('fsw', array('action' => 'add')));
 $form->prepare();
 
 echo $this->form()->openTag($form);
-echo $this->formHidden($form->get('id'));
+echo $this->formHidden($form->get('medienid'));
 echo $this->formRow($form->get('gespraechstitel'));
 echo $this->formRow($form->get('sendetitel'));
 echo $this->formRow($form->get('mit_id'));
