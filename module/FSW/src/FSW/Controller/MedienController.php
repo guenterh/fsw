@@ -16,7 +16,7 @@ use FSW\Model\Medium;
 
 
 
-class FSWController extends AbstractActionController {
+class MedienController extends AbstractActionController {
 
 
     protected $mediumTable;
@@ -46,7 +46,7 @@ class FSWController extends AbstractActionController {
                 $this->getMediumTable()->saveMedium($medium);
 
                 // Redirect to list of albums
-                return $this->redirect()->toRoute('fsw');
+                return $this->redirect()->toRoute('medien');
             }
         }
         return array('form' => $form);
@@ -57,7 +57,7 @@ class FSWController extends AbstractActionController {
     {
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('fsw', array(
+            return $this->redirect()->toRoute('medien', array(
                 'action' => 'add'
             ));
         }
@@ -68,7 +68,7 @@ class FSWController extends AbstractActionController {
             $medium = $this->getMediumTable()->getMedium($id);
         }
         catch (\Exception $ex) {
-            return $this->redirect()->toRoute('fsw', array(
+            return $this->redirect()->toRoute('medien', array(
                 'action' => 'index'
             ));
         }
@@ -86,7 +86,10 @@ class FSWController extends AbstractActionController {
                 $this->getMediumTable()->saveMedium($medium);
 
                 // Redirect to list of albums
-                return $this->redirect()->toRoute('fsw');
+                return $this->redirect()->toRoute('medien');
+            } else {
+                $test =  $form->getMessages();
+                $eins = "";
             }
         }
 
@@ -101,7 +104,7 @@ class FSWController extends AbstractActionController {
 
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('fsw');
+            return $this->redirect()->toRoute('medien');
         }
 
         $request = $this->getRequest();
@@ -114,7 +117,7 @@ class FSWController extends AbstractActionController {
             }
 
             // Redirect to list of albums
-            return $this->redirect()->toRoute('fsw');
+            return $this->redirect()->toRoute('medien');
         }
 
         return array(

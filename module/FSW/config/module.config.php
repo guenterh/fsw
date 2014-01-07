@@ -10,16 +10,30 @@
 return array(
     'router' => array(
         'routes' => array(
-            'fsw' => array(
+            'medien' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/fsw[/][:action][/:id]',
+                    'route'    => '/medien[/][:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
                     ),
                     'defaults' => array(
-                        'controller' => 'FSW\Controller\FSW',
+                        'controller' => 'FSW\Controller\Medien',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'kolloquien' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/kolloquien[/][:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'FSW\Controller\Kolloquien',
                         'action'     => 'index',
                     ),
                 ),
@@ -33,7 +47,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'FSW\Controller\FSW' => 'FSW\Controller\FSWController'
+            'FSW\Controller\Medien' => 'FSW\Controller\MedienController',
+            'FSW\Controller\Kolloquien' => 'FSW\Controller\KolloquienController'
         ),
     ),
     'view_manager' => array(
