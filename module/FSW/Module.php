@@ -10,6 +10,8 @@ namespace FSW;
 
 use FSW\Model\Kolloqium;
 use FSW\Model\KolloqiumTable;
+use FSW\Model\KolloqiumVeranstaltungTable;
+use FSW\Model\Veranstaltung;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\Db\Adapter\Adapter;
@@ -95,6 +97,19 @@ class Module {
                         $resultSetPrototype->setArrayObjectPrototype(new Kolloqium());
                         return new TableGateway('kolloquium', $dbAdapter, null, $resultSetPrototype);
                     },
+                'FSW\Model\KolloqiumVeranstaltungTable' =>  function($sm) {
+                        $tableGateway = $sm->get('KolloquiumVeranstaltungTableGateway');
+                        $table = new KolloqiumVeranstaltungTable($tableGateway);
+                        return $table;
+                    },
+                'KolloquiumVeranstaltungTableGateway' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        $resultSetPrototype = new ResultSet();
+                        $resultSetPrototype->setArrayObjectPrototype(new Veranstaltung());
+                        return new TableGateway('kolloquium_veranstaltung', $dbAdapter, null, $resultSetPrototype);
+                    },
+
+
 
             ),
         );

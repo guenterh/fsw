@@ -10,11 +10,11 @@ namespace FSW\Model;
 
 
 use Zend\Db\TableGateway\TableGateway;
-use Zend\Db\Adapter\Adapter;
 
 
 
-class KolloqiumTable {
+
+class KolloqiumVeranstaltungTable {
 
 
     /*
@@ -36,18 +36,26 @@ class KolloqiumTable {
         return $resultSet;
     }
 
-    public function getKolloqium($id)
+    public function getVeranstaltung($id)
     {
         $id  = (int) $id;
         $rowset = $this->tableGateway->select(array('idkolloquium' => $id));
         $row = $rowset->current();
         if (!$row) {
-            throw new \Exception("Could not find kolloquium row $id");
+            throw new \Exception("Could not find Veranstaltung row $id");
         }
         return $row;
     }
 
-    public function saveKolloquium(Kolloqium $kolloquium)
+    public function getKolloquiumVeranstaltungen($idKolloquium)
+    {
+        $id_kolloquium  = (int) $idKolloquium;
+        $resultset = $this->tableGateway->select(array('idkolloquium' => $id_kolloquium));
+        return $resultset;
+    }
+
+
+    public function saveVeranstaltung(Veranstaltung $kolloquium)
     {
     }
 

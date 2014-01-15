@@ -7,6 +7,10 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
+use FSW\Model\Veranstaltungen as ModelVeranstaltungen;
+use FSW\View\Helper\Veranstaltungen as HelperVeranstaltungen;
+
+
 return array(
     'router' => array(
         'routes' => array(
@@ -45,12 +49,39 @@ return array(
 
         ),
     ),
+
+    'service_manager' => array(
+        'allow_override' => true,
+        'factories' => array(
+            'FSW\Model\Veranstaltungen' => function ($sm) {
+                $hello = "";
+
+                return new ModelVeranstaltungen(
+                    $sm->get('FSW\Model\KolloqiumVeranstaltungTable')
+                );
+            }
+        )
+    ),
+
+
     'controllers' => array(
         'invokables' => array(
             'FSW\Controller\Medien' => 'FSW\Controller\MedienController',
             'FSW\Controller\Kolloquien' => 'FSW\Controller\KolloquienController'
         ),
     ),
+    'view_helpers'    => array(
+        'factories' => array(
+            'Veranstaltungen' => function ($sm) {
+
+                    $veranstaltungen = $sm->getServiceLocator()->get('FSW\Model\Veranstaltungen');
+                    return new HelperVeranstaltungen($veranstaltungen);
+
+                }
+
+        )
+    ),
+
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view',

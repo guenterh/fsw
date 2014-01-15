@@ -7,4 +7,55 @@
  */
 
 
-echo "in index kolloquien";
+$title = 'Übersicht der Kolloquien';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+    <a href="<?php echo $this->url('kolloquien', array('action'=>'add'));?>">Nimm neues Kolloquium auf</a>
+</p>
+
+<table class="table">
+    <tr>
+        <th>ID Kolloquium</th>
+        <th>Kolloquiumtitel</th>
+        <th>&nbsp;</th>
+    </tr>
+    <?php foreach ($kolloquien as $kolloqium) : ?>
+        <tr>
+            <td><?php echo $this->escapeHtml($kolloqium->idkolloquium);?></td>
+            <td>
+                <div>
+                <?php echo $this->escapeHtml($kolloqium->titel);?>
+                </div>
+                <div>
+                    neuer container
+                    <div style="margin-left: 30px;">
+                        <?php foreach ($this->Veranstaltungen($kolloqium->idkolloquium) as $veranstaltung) : ?>
+
+                           <span>Veranstaltungsid:&nbsp;<?=$veranstaltung->idveranstaltung ?>// </span>
+                            <span>Datum:&nbsp;<?=$veranstaltung->datum ?>// </span>
+                            <span>Personenenname:&nbsp;<?=$veranstaltung->personenname ?> </span>
+                            <br/>
+                        <?php endforeach ?>
+
+
+
+                    </div>
+                    <div>
+
+                        <script type="text/javascript">
+                            console.log("dies ist ein test");
+                        </script>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <a href="<?php echo $this->url('kolloquien',
+                    array('action'=>'edit', 'id' => $kolloqium->idkolloquium));?>">Edit</a>
+                <a href="<?php echo $this->url('kolloquien',
+                    array('action'=>'delete', 'id' => $kolloqium->idkolloquium));?>">Delete</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>

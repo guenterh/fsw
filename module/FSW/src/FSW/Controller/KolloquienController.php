@@ -14,17 +14,38 @@ use Zend\View\Model\ViewModel;
 
 class KolloquienController extends AbstractActionController {
 
+    protected $kolloquiumTable;
+    protected $veranstaltungenTable;
 
     public function indexAction () {
 
-
+        //201201
         return new ViewModel(
             array(
-                "hello" => "hello"
+                "kolloquien" => $this->getKolloquiumTable()->fetchAll()
             )
 
         );
 
     }
+
+    public function getKolloquiumTable()
+    {
+        if (!$this->kolloquiumTable) {
+            $sm = $this->getServiceLocator();
+            $this->kolloquiumTable = $sm->get('FSW\Model\KolloquiumTable');
+        }
+        return $this->kolloquiumTable;
+    }
+
+    public function getVeranstaltungen () {
+        if (!$this->veranstaltungenTable) {
+            $sm = $this->getServiceLocator();
+            $this->veranstaltungenTable = $sm->get('FSW\Model\KolloqiumVeranstaltungTable');
+        }
+        return $this->veranstaltungenTable;
+
+    }
+
 
 } 
