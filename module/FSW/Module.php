@@ -8,19 +8,9 @@
 
 namespace FSW;
 
-use FSW\Model\Kolloqium;
-use FSW\Model\KolloqiumTable;
-use FSW\Model\KolloqiumVeranstaltungTable;
-use FSW\Model\Veranstaltung;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-use Zend\Db\Adapter\Adapter;
-use FSW\Model\Medium;
-use FSW\Model\MediumTable;
 
-
-use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\TableGateway\TableGateway;
 
 
 
@@ -75,41 +65,12 @@ class Module {
     {
         return array(
             'factories' => array(
-                'FSW\Model\MediumTable' =>  function($sm) {
-                        $tableGateway = $sm->get('MediumTableGateway');
-                        $table = new MediumTable($tableGateway);
-                        return $table;
-                    },
-                'MediumTableGateway' => function ($sm) {
-                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                        $resultSetPrototype = new ResultSet();
-                        $resultSetPrototype->setArrayObjectPrototype(new Medium());
-                        return new TableGateway('medien', $dbAdapter, null, $resultSetPrototype);
-                    },
-                'FSW\Model\KolloquiumTable' =>  function($sm) {
-                        $tableGateway = $sm->get('KolloquiumTableGateway');
-                        $table = new KolloqiumTable($tableGateway);
-                        return $table;
-                    },
-                'KolloquiumTableGateway' => function ($sm) {
-                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                        $resultSetPrototype = new ResultSet();
-                        $resultSetPrototype->setArrayObjectPrototype(new Kolloqium());
-                        return new TableGateway('kolloquium', $dbAdapter, null, $resultSetPrototype);
-                    },
-                'FSW\Model\KolloqiumVeranstaltungTable' =>  function($sm) {
-                        $tableGateway = $sm->get('KolloquiumVeranstaltungTableGateway');
-                        $table = new KolloqiumVeranstaltungTable($tableGateway);
-                        return $table;
-                    },
-                'KolloquiumVeranstaltungTableGateway' => function ($sm) {
-                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                        $resultSetPrototype = new ResultSet();
-                        $resultSetPrototype->setArrayObjectPrototype(new Veranstaltung());
-                        return new TableGateway('kolloquium_veranstaltung', $dbAdapter, null, $resultSetPrototype);
-                    },
-
-
+                'FSW\Model\MediumTable' =>  'FSW\Model\Factories\MediumTableFactory',
+                'MediumTableGateway' => 'FSW\Model\Factories\MediumTableGatewayFactory',
+                'FSW\Model\KolloquiumTable' =>  'FSW\Model\Factories\KolloquiumTableFactory',
+                'KolloquiumTableGateway' => 'FSW\Model\Factories\KolloquiumTableGatewayFactory',
+                'FSW\Model\KolloqiumVeranstaltungTable' =>  'FSW\Model\Factories\KolloqiumVeranstaltungTableFactory',
+                'KolloquiumVeranstaltungTableGateway' => 'FSW\Model\Factories\KolloquiumVeranstaltungTableGatewayFactory'
 
             ),
         );

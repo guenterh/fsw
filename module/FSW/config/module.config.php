@@ -53,13 +53,7 @@ return array(
     'service_manager' => array(
         'allow_override' => true,
         'factories' => array(
-            'FSW\Model\Veranstaltungen' => function ($sm) {
-                $hello = "";
-
-                return new ModelVeranstaltungen(
-                    $sm->get('FSW\Model\KolloqiumVeranstaltungTable')
-                );
-            }
+            'FSW\Model\Veranstaltungen' => 'FSW\Model\Factories\VeranstaltungenFactory'
         )
     ),
 
@@ -72,13 +66,7 @@ return array(
     ),
     'view_helpers'    => array(
         'factories' => array(
-            'Veranstaltungen' => function ($sm) {
-
-                    $veranstaltungen = $sm->getServiceLocator()->get('FSW\Model\Veranstaltungen');
-                    return new HelperVeranstaltungen($veranstaltungen);
-
-                }
-
+            'Veranstaltungen' => 'FSW\View\Helper\Factories\VeranstaltungenHelperFactory'
         )
     ),
 
