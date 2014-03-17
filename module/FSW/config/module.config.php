@@ -78,7 +78,7 @@ return array(
             'FSW\Controller\Kolloquien' => 'FSW\Controller\KolloquienController'
         ),
         'factories' => array(
-            'FSW\Controller\Personen' => 'FSW\Model\Factories\VeranstaltungenFactory'
+            'FSW\Controller\Personen' => 'FSW\Controller\Factories\PersonenControllerFactory'
         )
 
     ),

@@ -37,6 +37,8 @@ use FSW\Controller\PersonenController;
 
 class PersonenControllerFactory implements FactoryInterface {
 
+
+
     /**
      * Create service
      *
@@ -45,6 +47,13 @@ class PersonenControllerFactory implements FactoryInterface {
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $serviceLocator->getServiceLocator()->get("HistSemDBService");
+        $histsemdbService = $serviceLocator->getServiceLocator()->get("HistSemDBService");
+
+        $pC = new PersonenController();
+        $pC->setHistSemDBService($histsemdbService);
+
+        return $pC;
+
+
     }
 }

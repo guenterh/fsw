@@ -31,16 +31,27 @@ namespace FSW\Controller;
 use FSW\Services\HistSemDBService;
 use Zend\Mvc\Controller\AbstractActionController;
 use FSW\Services\HistSemDBServiceAwareInterface;
-
+use Zend\View\Model\ViewModel;
 
 
 class PersonenController extends AbstractActionController implements HistSemDBServiceAwareInterface{
 
 
+    /**
+     * @var DBService to access histsem DB
+     */
+    protected $histsemdbService;
 
+    protected  $histSemDBService;
 
     public function setHistSemDBService(HistSemDBService $dbService)
     {
-        // TODO: Implement setHistSemDBService() method.
+        $this->histSemDBService = $dbService;
+    }
+
+    public function indexAction() {
+
+        return new ViewModel();
+
     }
 }
