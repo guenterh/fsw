@@ -70,7 +70,11 @@ class Module {
                 'FSW\Model\KolloquiumTable' =>  'FSW\Model\Factories\KolloquiumTableFactory',
                 'KolloquiumTableGateway' => 'FSW\Model\Factories\KolloquiumTableGatewayFactory',
                 'FSW\Model\KolloqiumVeranstaltungTable' =>  'FSW\Model\Factories\KolloqiumVeranstaltungTableFactory',
-                'KolloquiumVeranstaltungTableGateway' => 'FSW\Model\Factories\KolloquiumVeranstaltungTableGatewayFactory'
+                'KolloquiumVeranstaltungTableGateway' => 'FSW\Model\Factories\KolloquiumVeranstaltungTableGatewayFactory',
+                'FSWPersonenExtendedAdapter' => 'FSW\Model\Factories\DB\PersonenExtendedAdapterFactory',
+                'HistSemDBService'          =>  'FSW\Model\Factories\HistSemDBServiceFactory',
+                'HistSemDBAdapter'          =>  'FSW\Model\Factories\DB\HistSemDBAdapterFactory',
+
 
             ),
         );

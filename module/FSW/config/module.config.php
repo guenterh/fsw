@@ -42,6 +42,20 @@ return array(
                     ),
                 ),
             ),
+            'personen' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/personen[/][:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'FSW\Controller\Personen',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
@@ -63,6 +77,10 @@ return array(
             'FSW\Controller\Medien' => 'FSW\Controller\MedienController',
             'FSW\Controller\Kolloquien' => 'FSW\Controller\KolloquienController'
         ),
+        'factories' => array(
+            'FSW\Controller\Personen' => 'FSW\Model\Factories\VeranstaltungenFactory'
+        )
+
     ),
     'view_helpers'    => array(
         'factories' => array(

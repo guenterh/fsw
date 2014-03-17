@@ -35,6 +35,10 @@ class KolloquienController extends AbstractActionController {
             $sm = $this->getServiceLocator();
             $this->kolloquiumTable = $sm->get('FSW\Model\KolloquiumTable');
         }
+
+        $extendedAdapter = $this->getServiceLocator()->get("HistSemDBService");
+
+
         return $this->kolloquiumTable;
     }
 
