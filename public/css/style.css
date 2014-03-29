@@ -1,7 +1,147 @@
+div.container a.brand {
+    background: url("../images/swissbib-logo.png") no-repeat scroll 0 8px transparent;
+    margin-left: 0;
+    padding: 8px 20px 12px 40px;
+}
+
+.topButtons {
+	float: right;
+	clear: both;
+}
+
+.searchForm,
+.searchResultList {
+	clear: both;
+}
+
+.form-horizontal .general .control-label {
+	width: 100px;
+}
+.form-horizontal .general .controls {
+	margin-left: 120px;
+}
+
+fieldset.notes textarea {
+	width: 95%;
+}
+
+#search-query {
+	width: 170px;
+}
+
+
+form#group #views .controls,
+form#view #groups .controls {
+	margin-left: 50px;
+}
+form#group #views .controls label.checkbox,
+form#view #groups .controls label.checkbox {
+	display: inline-block;
+	width: 30%;
+	margin-bottom: 15px;
+}
+
+ul.adminNavi {
+	margin-top: 50px;
+}
+
+#institution #relations .group label {
+	display: none;
+}
+
+#institution #relations .group .controls {
+	margin-left: 0;
+}
+
+#institution #relations .group .controls select {
+	width: 90%;
+}
+
+#institution #relations .favorite .control-group > label {
+	width: 100px;
+}
+
+#institution #relations .favorite .controls {
+	margin-left: 120px;
+}
+
+
+#view #relations th.nr {
+	width: 5%;
+}
+#view #relations th.codes {
+	width: 30%;
+}
+#view #relations th.favorite {
+	width: 10%;
+}
+
+#view #institutionsort,
+#view #groupsort {
+
+}
+
+#view #institutionsort .vsort-scrollable,
+#view #groupsort .vsort-scrollable {
+	overflow-x: hidden;
+	/*overflow: scroll;*/
+	height: 500px;
+}
+#view .vsort-scrollable .item-label {
+	width:660px;
+	cursor: move;
+}
+
+
+
+
+
+#group #institutions .listElement .controls {
+	margin-left: 0;
+}
+#group #institutions .listElement select {
+	width: 95%;
+	font-size: 0.9em;
+}
+
+#group #institutions .buttons {
+	padding-top: 50px;
+}
+
+#group #institutions .buttons label {
+	display: none;
+}
+
+#group #institutions .buttons .controls {
+	margin-left: 0;
+}
+
+#group #institutions .buttons button {
+	width: 95%;
+	margin-bottom: 20px;
+}
+
+#group #institutions .naviButtons {
+	margin-bottom: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 body {
     padding-top: 60px;
     padding-bottom: 40px;
 }
+
 
 .zf-green {
     color: #68b604;
@@ -30,8 +170,3 @@ body {
   background-color: #57a900;
 }
 
-div.container a.brand {
-    background: url("../img/zf2-logo.png") no-repeat scroll 0 10px transparent;
-    margin-left: 0;
-    padding: 8px 20px 12px 40px;
-}

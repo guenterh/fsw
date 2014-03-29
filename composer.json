@@ -9,7 +9,12 @@
     "homepage": "http://framework.zend.com/",
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": "2.2.*"
+        "zendframework/zendframework": "2.2.*",
+        "dlu/dlutwbootstrap": "dev-master@dev",
+        "dlu/dlutwbootstrapdemo": "dev-master@dev",
+        "mwillbanks/zfc-twitter-bootstrap": "@dev",
+        "zendframework/zend-developer-tools": "dev-master@dev"
+
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*"

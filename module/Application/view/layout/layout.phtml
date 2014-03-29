@@ -3,52 +3,62 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headTitle('Swissbib Libadmin')->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
 
-        <?php echo $this->headMeta()
-            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
-            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        <?php	// Styles
+        echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
+            ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.css')
+//				->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
+            ->prependStylesheet($this->basePath() . '/css/style.css')
+            ->prependStylesheet($this->basePath() . '/css/dlu-tw-bootstrap.css')
+            ->prependStylesheet($this->basePath() . '/css/bootstrap.css')
+//				->prependStylesheet($this->basePath() . '/css/jquery-ui.css')
+            ->appendStylesheet($this->basePath() . '/css/jquery.loadmask.css')
+        //				->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
+        ?>
+
+        <?php	// Scripts
+        $this->headScript()
+            ->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/js/bootstrap.js')
+//				->prependFile($this->basePath() . '/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/js/jquery.js')
+//				->prependFile($this->basePath() . '/js/jquery.min.js');
+            ->appendFile($this->basePath() . '/js/jquery-ui.js')
+            ->appendFile($this->basePath() . '/js/libadmin.js')
+            ->appendFile($this->basePath() . '/js/jquery.form.js')
+            ->appendFile($this->basePath() . '/js/jquery.loadmask.js')
+            ->appendFile($this->basePath() . '/js/jquery.tinysort.js');
+
+        echo $this->headScript();
         ?>
 
         <!-- Le styles -->
-        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-                        ->prependStylesheet($this->basePath() . '/css/style.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
-
-        <!-- Scripts -->
-        <?php echo $this->headScript()
-            ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-            ->prependFile($this->basePath() . '/js/jquery.min.js')
-            ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-            ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
-        ; ?>
 
     </head>
     <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
             <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><img src="<?php echo $this->basePath('img/zf2-logo.png') ?>" alt="Zend Framework 2"/>&nbsp;<?php echo $this->translate('FSW CMS Home') ?></a>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="<?php echo $this->url('medien') ?>"><?php echo $this->translate('Medien') ?></a></li>
-                    </ul>
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="<?php echo $this->url('kolloquien') ?>"><?php echo $this->translate('Kolloquien') ?></a></li>
-                    </ul>
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="<?php echo $this->url('personen') ?>"><?php echo $this->translate('Personen') ?></a></li>
-                    </ul>
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a class="brand" href="<?= $this->url('home') ?>"><?=$this->translate('app_title', 'Libadmin')?></a>
+                <div class="nav-collapse collapse">
+                    <?php
+                    /** @var \Zend\View\Helper\Navigation\Menu $mainNav  */
+                    $mainNav	= $this->navigation('Navigation')->menu();
+                    $mainNav->setTranslatorTextDomain('Libadmin');
+                    $mainNav->setUlClass('nav');
+                    echo $mainNav;
+                    ?>
                 </div><!--/.nav-collapse -->
             </div>
-        </nav>
+        </div>
+    </div>
         <div class="container">
             <?php echo $this->content; ?>
             <hr>

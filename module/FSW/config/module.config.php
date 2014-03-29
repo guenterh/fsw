@@ -67,7 +67,10 @@ return array(
     'service_manager' => array(
         'allow_override' => true,
         'factories' => array(
-            'FSW\Model\Veranstaltungen' => 'FSW\Model\Factories\VeranstaltungenFactory'
+            'FSW\Model\Veranstaltungen' => 'FSW\Model\Factories\VeranstaltungenFactory',
+            'Navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory'
+
+
         )
     ),
 
@@ -93,6 +96,29 @@ return array(
             __DIR__ . '/../view',
         ),
     ),
+    'navigation' => array(
+        // The DefaultNavigationFactory we configured in (1) uses 'default' as the sitemap key
+        'default' => array(
+            // And finally, here is where we define our page hierarchy
+            'home' => array(
+                'label' => 'navigation_home',
+                'route' => 'home'
+            ),
+            'medien' => array(
+                'label' => 'navigation_medien',
+                'route' => 'medien'
+            ),
+            'kolloquien' => array(
+                'label' => 'navigation_kolloquien',
+                'route' => 'kolloquien'
+            ),
+            'personen' => array(
+                'label' => 'navigation_personen',
+                'route' => 'personen'
+            )
+        ),
+    ),
+
 
 
 
