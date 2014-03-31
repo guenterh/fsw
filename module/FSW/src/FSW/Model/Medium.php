@@ -52,6 +52,15 @@ class Medium implements InputFilterAwareInterface {
         throw new \Exception("Not used");
     }
 
+
+    public function getID() {
+        return $this->medienid;
+    }
+
+    public function getListLabel() {
+        return $this->gespraechstitel;    }
+
+
     public function getInputFilter()
     {
         if (!$this->inputFilter) {

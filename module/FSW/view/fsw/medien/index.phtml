@@ -1,30 +1,13 @@
-<?php
 
-
-$title = 'Meine Medien';
-$this->headTitle($title);
-?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
-<p>
-    <a href="<?php echo $this->url('medien', array('action'=>'add'));?>">Add new media</a>
-</p>
-
-<table class="table">
-    <tr>
-        <th>Gesprächstitel</th>
-        <th>Sendetitel</th>
-        <th>&nbsp;</th>
-    </tr>
-    <?php foreach ($medien as $medium) : ?>
-        <tr>
-            <td><?php echo $this->escapeHtml($medium->gespraechstitel);?></td>
-            <td><?php echo $this->escapeHtml($medium->sendetitel);?></td>
-            <td>
-                <a href="<?php echo $this->url('medien',
-                    array('action'=>'edit', 'id' => $medium->medienid));?>">Edit</a>
-                <a href="<?php echo $this->url('medien',
-                    array('action'=>'delete', 'id' => $medium->medienid));?>">Delete</a>
-            </td>
-        </tr>
-    <?php endforeach; ?>
-</table>
+<div class="row">
+    <div class="span3" id="sidebar">
+        <?=
+        $this->render('fsw/global/sidebar', array(
+            'route' => 'medien',
+            'listItems' => $medien
+        ));?>
+    </div>
+    <div class="span9" id="content">
+        <?= $this->render('fsw/medien/home'); ?>
+    </div>
+</div>

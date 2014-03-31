@@ -1,0 +1,10 @@
+<?php
+
+echo $this->render('fsw/global/home-crud', array(
+
+    'entityName' => 'Medien',
+    'entityNamePlural' => 'Medien',
+
+    'route' => 'medien',
+	'listItems' => $medien
+));
