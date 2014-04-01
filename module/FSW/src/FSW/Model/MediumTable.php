@@ -3,13 +3,21 @@ namespace FSW\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 
-class MediumTable
+class MediumTable extends BaseTable
 {
-    protected $tableGateway;
+
+
+    protected $searchFields = array(
+        'gespraechstitel',
+        'sendetitel',
+    );
+
+
+    //protected $tableGateway;
 
     public function __construct(TableGateway $tableGateway)
     {
-        $this->tableGateway = $tableGateway;
+        parent::__construct($tableGateway);
     }
 
     public function fetchAll()
@@ -57,5 +65,19 @@ class MediumTable
     {
         $this->tableGateway->delete(array('medienid' => $id));
     }
+
+    /**
+     * Find institutions
+     *
+     * @param    String            $searchString
+     * @param    Integer            $limit
+     * @param    String            $order
+     * @return    BaseModel[]
+     */
+    public function find($searchString, $limit = 30, $order = 'gespraechstitel')
+    {
+        return $this->findFulltext($searchString, $order, $limit);
+    }
+
 }
 

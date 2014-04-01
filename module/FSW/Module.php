@@ -66,6 +66,8 @@ class Module {
         return array(
             'factories' => array(
                 'FSW\Model\MediumTable' =>  'FSW\Model\Factories\MediumTableFactory',
+                //todo bessere namensgebung
+                'FSW\Model\MedienTable' =>  'FSW\Model\Factories\MediumTableFactory',
                 'MediumTableGateway' => 'FSW\Model\Factories\MediumTableGatewayFactory',
                 'FSW\Model\KolloquiumTable' =>  'FSW\Model\Factories\KolloquiumTableFactory',
                 'KolloquiumTableGateway' => 'FSW\Model\Factories\KolloquiumTableGatewayFactory',

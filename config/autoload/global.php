@@ -13,7 +13,7 @@
 
 return array(
     'db' => array(
-        'driver'         => 'Pdo',
+        'driver'         => 'pdo_mysql',
         'dsn'            => 'mysql:dbname=fsw;host=localhost',
         'driver_options' => array(
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''

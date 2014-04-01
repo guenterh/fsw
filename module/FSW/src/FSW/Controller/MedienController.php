@@ -16,7 +16,7 @@ use FSW\Model\Medium;
 
 
 
-class MedienController extends AbstractActionController {
+class MedienController extends BaseController {
 
 
     protected $mediumTable;
@@ -93,10 +93,63 @@ class MedienController extends AbstractActionController {
             }
         }
 
-        return array(
-            'id' => $id,
+        //return array(
+        //    'id' => $id,
+        //    'form' => $form,
+        //);
+
+
+        //new
+        $idMedium = (int)$this->params()->fromRoute('id', 0);
+        $flashMessenger = $this->flashMessenger();
+
+        if (!$idMedium) {
+            return $this->redirect()->toRoute('medien', array(
+                'action' => 'add'
+            ));
+        }
+
+        // Get the Medium with the specified id.  An exception is thrown
+        // if it cannot be found, in which case go to the index page.
+        try {
+            $medium = $this->getMediumTable()->getMedium($id);
+        }
+        catch (\Exception $ex) {
+            return $this->redirect()->toRoute('medien', array(
+                'action' => 'index'
+            ));
+        }
+
+        $form  = new MediumForm();
+        $form->bind($medium);
+        $form->get('submit')->setAttribute('value', 'Edit');
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $form->setInputFilter($medium->getInputFilter());
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $this->getMediumTable()->saveMedium($medium);
+
+                // Redirect to list of albums
+                return $this->redirect()->toRoute('medien');
+            } else {
+                $test =  $form->getMessages();
+                $eins = "";
+            }
+        }
+
+
+        //$form->setAttribute('action', $this->makeUrl('institution', 'edit', $idInstitution));
+
+        return $this->getAjaxView(array(
             'form' => $form,
-        );
+            'title' => $this->translate('institution_edit', 'Libadmin'),
+        ));
+
+
+
     }
 
     public function deleteAction()
