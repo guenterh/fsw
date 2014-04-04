@@ -1,12 +1,11 @@
 <?php
 
-$title = 'Edit media';
-$this->headTitle($title);
-?>
-    <h1><?php echo $this->escapeHtml($title); ?></h1>
 
-<?php
+$this->headTitle("Dies ist der Titel fuer Medien");
+
+
 $form = $this->form;
+
 $form->setAttribute('action', $this->url(
     'medien',
     array(
@@ -14,13 +13,61 @@ $form->setAttribute('action', $this->url(
         'id'     => $this->id,
     )
 ));
+
 $form->prepare();
 
-echo $this->form()->openTag($form);
-echo $this->formHidden($form->get('medienid'));
-echo $this->formRow($form->get('gespraechstitel'));
-echo $this->formRow($form->get('sendetitel'));
-echo $this->formRow($form->get('mit_id'));
-echo $this->formRow($form->get('icon'));
-echo $this->formSubmit($form->get('submit'));
-echo $this->form()->closeTag();
+
+
+$saveButtonLabel = "Speichern";
+
+$formType = 'horizontal';
+
+// Force Libadmin text domain (@todo cleaner way?)
+$this->formLabelTwb()->setTranslatorTextDomain('Libadmin');
+$this->formLabel()->setTranslatorTextDomain('Libadmin');
+$this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
+
+?>
+
+
+
+<?= $this->formTwb()->openTag($form, $formType) ?>
+    <div class="topButtons">
+        <input type="submit" value="<?= $this->escapeHtml($saveButtonLabel) ?>"
+               class="submitButton btn btn-primary btn-medium" id="submitbutton" name="submit">
+        <a href="<?= $this->url('medien', array('action' => 'index')); ?>"
+           class="ajaxButton closeButton btn btn-medium" id="closebutton">
+            "Hier schliessen"
+        </a>
+    </div>
+
+    <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?= $this->ztbFlashMessenger()->render() ?>
+
+    <fieldset class="general">
+        <legend><?= $this->translate('Angaben zum Medium ','Libadmin') ?></legend>
+        <div class="row-fluid">
+
+            <div class="span5"><?= $this->formRowTwb($form->get('gespraechstitel')) ?></div>
+        </div>
+        <div class="row-fluid">
+
+            <div class="span5"><?= $this->formRowTwb($form->get('sendetitel')) ?></div>
+        </div>
+
+        <div class="row-fluid">
+
+            <div class="span5"><?= $this->formRowTwb($form->get('mit_id')) ?></div>
+        </div>
+
+        <div class="row-fluid">
+
+            <div class="span5"><?= $this->formRowTwb($form->get('icon')) ?></div>
+        </div>
+
+
+    </fieldset>
+
+
+<?= $this->form()->closeTag(); ?>
