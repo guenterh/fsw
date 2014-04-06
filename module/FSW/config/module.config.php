@@ -56,6 +56,21 @@ return array(
                     ),
                 ),
             ),
+            'aktivitaeten' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/aktivitaeten[/][:aktivitaetentyp][/:mitid]',
+                    'constraints' => array(
+                        'aktivitaetentyp' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'mitid'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'FSW\Controller\Aktivitaeten',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
@@ -78,11 +93,14 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'FSW\Controller\Medien' => 'FSW\Controller\MedienController',
-            'FSW\Controller\Kolloquien' => 'FSW\Controller\KolloquienController'
+            'FSW\Controller\Kolloquien' => 'FSW\Controller\KolloquienController',
+            'FSW\Controller\Aktivitaeten' => 'FSW\Controller\AktivitaetenController',
+            'FSW\Controller\Personen' => 'FSW\Controller\PersonenController'
+
         ),
-        'factories' => array(
-            'FSW\Controller\Personen' => 'FSW\Controller\Factories\PersonenControllerFactory'
-        )
+        //'factories' => array(
+        //    'FSW\Controller\Personen' => 'FSW\Controller\Factories\PersonenControllerFactory'
+        //)
 
     ),
     'view_helpers'    => array(

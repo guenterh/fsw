@@ -1,27 +1,28 @@
 <?php
 namespace FSW\Controller;
 
+use FSW\Services\HistSemDBService;
 use Zend\Db\ResultSet\ResultSetInterface;
 use Zend\Http\Request;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Http\Response;
+use FSW\Services\HistSemDBServiceAwareInterface;
 
 
 /**
  * [Description]
  *
  */
-abstract class BaseController extends AbstractActionController
+abstract class BaseController extends AbstractActionController implements HistSemDBServiceAwareInterface
 {
 
 	/**
 	 * @var BaseTable
 	 */
 	protected $table;
-
-
 	protected $translator;
+    protected  $histSemDBService;
 
 
 
@@ -136,8 +137,10 @@ abstract class BaseController extends AbstractActionController
         return $this->table;
     }
 
-
-
+    public function setHistSemDBService(HistSemDBService $dbService)
+    {
+        $this->histSemDBService = $dbService;
+    }
 
 
 }

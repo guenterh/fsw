@@ -8,7 +8,7 @@
 
 namespace FSW;
 
-use Zend\Mvc\ModuleRouteListener;
+use FSW\Services\HistSemDBServiceAwareInterface;
 use Zend\Mvc\MvcEvent;
 
 
@@ -18,12 +18,23 @@ class Module {
 
     public function onBootstrap(MvcEvent $e)
     {
-        $eventManager        = $e->getApplication()->getEventManager();
-        $moduleRouteListener = new ModuleRouteListener();
-        $moduleRouteListener->attach($eventManager);
-        $app =  $e->getParam('application');
-        $app->getEventManager()->attach('route',array($this,"modulecheck"),-100);
-        $t = "";
+        $sM = $e->getApplication()->getServiceManager();
+//        $controllerManager        = $sM->get('Zend\Mvc\Controller\ControllerManager');
+        $controllerManager        = $sM->get('controllerloader');
+        $controllerManager->addInitializer(
+
+            function ($instance) use ($sM){
+
+                if ($instance instanceof HistSemDBServiceAwareInterface) {
+                    $dbService = $sM->get("HistSemDBService");
+                    $instance->setHistSemDBService($dbService);
+                }
+
+            }
+
+        );
+
+
 
     }
 
@@ -70,8 +81,8 @@ class Module {
                 'FSW\Model\MedienTable' =>  'FSW\Model\Factories\MediumTableFactory',
                 'MediumTableGateway' => 'FSW\Model\Factories\MediumTableGatewayFactory',
 
-                'FSW\Table\PersonTable' => 'FSW\Table\Factory::getPersonTable',
-                'PersonTableGateway' => 'FSW\Table\Factory::getPersonTableGateway',
+                'FSW\Table\PersonTable' => 'FSW\Services\Factory::getPersonFacade',
+                'PersonTableGateway' => 'FSW\Services\Factory::getPersonTableGateway',
 
 
                 'FSW\Model\KolloquiumTable' =>  'FSW\Model\Factories\KolloquiumTableFactory',
@@ -83,10 +94,10 @@ class Module {
                 'HistSemDBAdapter'          =>  'FSW\Model\Factories\DB\HistSemDBAdapterFactory',
 
 
+                'FSW\Services\Facade\AktivitaetFacade'    =>  'FSW\Services\Factory::getAktivitaetFassade',
+                'AktivitaetTableGateway'          =>  'FSW\Services\Factory::getAktivitaetTableGateway'
             ),
         );
     }
 
-
-
-} 
+}

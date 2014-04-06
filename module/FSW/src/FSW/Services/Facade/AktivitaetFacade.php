@@ -6,12 +6,12 @@
  * Time: 20:22
  */
 
-namespace FSW\Table;
+namespace FSW\Services\Facade;
 
 
 //use Libadmin\Model\BaseModel;
 
-class PersonTable extends BaseTable {
+class AktivitaetFacade extends BaseFacade {
     /**
      * Find elements
      *

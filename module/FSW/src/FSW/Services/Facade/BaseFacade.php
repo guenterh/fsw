@@ -1,5 +1,5 @@
 <?php
-namespace FSW\Table;
+namespace FSW\Services\Facade;
 
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Predicate\PredicateSet;
@@ -16,7 +16,7 @@ use Libadmin\Model\BaseModel;
  * [Description]
  *
  */
-abstract class BaseTable
+abstract class BaseFacade
 {
 
 	/**

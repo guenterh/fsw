@@ -34,20 +34,16 @@ use FSW\Services\HistSemDBServiceAwareInterface;
 use Zend\View\Model\ViewModel;
 
 
-class PersonenController extends AbstractActionController implements HistSemDBServiceAwareInterface{
+class PersonenController extends AbstractActionController{
 
 
     /**
      * @var DBService to access histsem DB
      */
-    protected $histsemdbService;
 
-    protected  $histSemDBService;
 
-    public function setHistSemDBService(HistSemDBService $dbService)
-    {
-        $this->histSemDBService = $dbService;
-    }
+
+
 
     public function indexAction() {
 

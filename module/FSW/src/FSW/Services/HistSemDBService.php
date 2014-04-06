@@ -30,11 +30,14 @@
 namespace FSW\Services;
 
 use Zend\Db\Adapter\Adapter;
+use Zend\ServiceManager\ServiceManager;
+use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 
-class HistSemDBService {
+class HistSemDBService implements ServiceManagerAwareInterface {
 
     protected $adapter;
+    protected $serviceManager;
 
     public function __construct(Adapter $adapter) {
 
@@ -43,7 +46,29 @@ class HistSemDBService {
 
     }
 
+    public function getAdapter() {
+        return $this->adapter;
+    }
 
+
+    public function getAktivitatetFacade() {
+        return $this->adapter;
+    }
+
+    /**
+     * Set service manager
+     *
+     * @param ServiceManager $serviceManager
+     */
+    public function setServiceManager(ServiceManager $serviceManager)
+    {
+        $this->serviceManager = $serviceManager;
+    }
+
+    public function getAktivitaetFacade() {
+        $aF = $this->serviceManager->get('FSW\Services\Facade\AktivitaetFacade');
+        return $aF;
+    }
 
 
 } 
