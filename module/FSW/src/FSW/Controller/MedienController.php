@@ -20,6 +20,7 @@ class MedienController extends BaseController {
 
 
     protected $mediumTable;
+    protected $personTable;
 
     public function indexAction()
     {
@@ -100,6 +101,8 @@ class MedienController extends BaseController {
 
 
         //new
+
+
         $idMedium = (int)$this->params()->fromRoute('id', 0);
         $flashMessenger = $this->flashMessenger();
 
@@ -120,7 +123,12 @@ class MedienController extends BaseController {
             ));
         }
 
-        $form  = new MediumForm();
+        $personTable = $this->getPersonTable();
+        $rL = $personTable->find(null,200);
+        $simpleList = $this->toList($rL,true);
+
+
+        $form  = new MediumForm('medium', $simpleList);
         $form->bind($medium);
         $form->get('submit')->setAttribute('value', 'Edit');
 
@@ -143,9 +151,12 @@ class MedienController extends BaseController {
 
         //$form->setAttribute('action', $this->makeUrl('institution', 'edit', $idInstitution));
 
+
+
+
         return $this->getAjaxView(array(
             'form' => $form,
-            'title' => $this->translate('institution_edit', 'Libadmin'),
+            'title' => $this->translate('medien_edit', 'FSW'),
         ));
 
 
@@ -189,6 +200,17 @@ class MedienController extends BaseController {
             $this->mediumTable = $sm->get('FSW\Model\MediumTable');
         }
         return $this->mediumTable;
+    }
+
+    public function getPersonTable() {
+
+        if (!$this->personTable) {
+            $sm = $this->getServiceLocator();
+            $this->personTable = $sm->get('FSW\Table\PersonTable');
+        }
+        return $this->personTable;
+
+
     }
 
 

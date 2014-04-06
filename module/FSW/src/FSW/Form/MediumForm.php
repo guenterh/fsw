@@ -14,45 +14,108 @@ use Zend\Form\Form;
 class MediumForm extends Form {
 
 
-    public function __construct($name = null)
+    public function __construct($name = 'medium', $personen = array())
     {
         // we want to ignore the name passed
-        parent::__construct('medium');
+        parent::__construct($name);
 
         $this->add(array(
             'name' => 'medienid',
             'type' => 'Hidden',
         ));
+
         $this->add(array(
             'name' => 'gespraechstitel',
-            'type' => 'Text',
+            'type' => 'textarea',
             'options' => array(
-                'label' => 'gespraechstitel',
+                'label' => 'gespraechstitel'
             ),
+            'attributes' => array(
+                'rows' => 5
+            )
         ));
+
+
+        $this->add(array(
+            'name' => 'link',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'link'
+            ),
+            'attributes' => array(
+                'rows' => 2,
+                'cols' => 300
+            )
+        ));
+
+
+
+
+
+        $selectarray = array();
+        foreach ($personen as $key => $person) {
+
+            $selectarray[$key] = $person->getName();
+        }
 
         $this->add(array(
             'name' => 'mit_id',
-            'type' => 'Text',
+            'type' => 'select',
             'options' => array(
-                'label' => 'mit_id',
-            ),
+                'empty_option' => '- Kein Mitarbeiter -',
+                'label' => 'Mitarbeiter',
+                'value_options' => $selectarray
+            )
         ));
+        /*
+         * 				'empty_option' => '- Kein Kanton -',
+				'value_options' => array(
+					'ag' => 'Aargau',
+					'ai' => 'Appenzell Innerrhoden',
+					'ar' => 'Appenzell Ausserrhoden',
+
+         */
+
+
         $this->add(array(
             'name' => 'icon',
-            'type' => 'Text',
+            'type' => 'select',
             'options' => array(
-                'label' => 'icon',
-            ),
+                'empty_option' => '- Kein Icon -',
+                'label' => 'Icon',
+                'value_options' => array(
+                    'woz.gif' => 'woz.gif',
+                    'drs.gif' => 'drs.gif',
+                    'zeit.gif' => 'zeit.gif',
+                    'ta.gif' => 'ta.gif',
+                    'nzz.gif' => 'nzz.gif',
+                    'magazin.gif' => 'magazin.gif',
+                    'migros.gif'    =>  'migros.gif',
+                    'ceo.gif'   =>  'ceo.gif',
+                    'baz.gif'   =>  'baz.gif',
+                    'handelszeitung.gif' => 'handelszeitung.gif',
+                    'st-galler-tagblatt.gif' => 'st-galler-tagblatt.gif',
+                    'bund.gif'  =>  'bund.gif'
+
+
+
+                )
+            )
         ));
 
         $this->add(array(
             'name' => 'sendetitel',
-            'type' => 'Text',
+            'type' => 'textarea',
             'options' => array(
-                'label' => 'sendetitel',
+                'label' => 'sendetitel'
             ),
+            'attributes' => array(
+                'rows' => 5,
+                'cols' => 300
+            )
         ));
+
+
         $this->add(array(
             'name' => 'submit',
             'type' => 'Submit',

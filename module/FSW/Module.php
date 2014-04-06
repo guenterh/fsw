@@ -69,6 +69,11 @@ class Module {
                 //todo bessere namensgebung
                 'FSW\Model\MedienTable' =>  'FSW\Model\Factories\MediumTableFactory',
                 'MediumTableGateway' => 'FSW\Model\Factories\MediumTableGatewayFactory',
+
+                'FSW\Table\PersonTable' => 'FSW\Table\Factory::getPersonTable',
+                'PersonTableGateway' => 'FSW\Table\Factory::getPersonTableGateway',
+
+
                 'FSW\Model\KolloquiumTable' =>  'FSW\Model\Factories\KolloquiumTableFactory',
                 'KolloquiumTableGateway' => 'FSW\Model\Factories\KolloquiumTableGatewayFactory',
                 'FSW\Model\KolloqiumVeranstaltungTable' =>  'FSW\Model\Factories\KolloqiumVeranstaltungTableFactory',

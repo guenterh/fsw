@@ -7,16 +7,6 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Http\Response;
 
-use Libadmin\Table\BaseTable;
-use Libadmin\Table\GroupTable;
-use Libadmin\Table\InstitutionTable;
-use Libadmin\Table\ViewTable;
-use Libadmin\Model\BaseModel;
-use Libadmin\Model\Group;
-use Libadmin\Model\View;
-use Libadmin\Model\Institution;
-use Libadmin\Table\GroupRelationTable;
-use Libadmin\Table\InstitutionRelationTable;
 
 /**
  * [Description]
@@ -35,25 +25,28 @@ abstract class BaseController extends AbstractActionController
 
 
 
+    /**
+     * Extract all result items from a result set to work with a simple list
+     *
+     * @param    ResultSetInterface $set
+     * @param    Boolean $idAsIndex
+     * @return    BaseModel[]
+     */
+    protected function toList(ResultSetInterface $set, $idAsIndex = false)
+    {
+        $list = array();
 
+        /** @var BaseModel $item */
+        foreach ($set as $item) {
+            if ($idAsIndex) {
+                $list[$item->getId()] = $item;
+            } else {
+                $list[] = $item;
+            }
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return $list;
+    }
 
 	/**
 	 * Get terminal view model for ajax
