@@ -59,9 +59,9 @@ return array(
             'aktivitaeten' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/aktivitaeten[/][:aktivitaetentyp][/:mitid]',
+                    'route'    => '/aktivitaeten[/][/:mitid]',
                     'constraints' => array(
-                        'aktivitaetentyp' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        //'aktivitaetentyp' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'mitid'     => '[0-9]+',
                     ),
                     'defaults' => array(

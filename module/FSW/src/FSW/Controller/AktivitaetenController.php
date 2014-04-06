@@ -21,14 +21,22 @@ class AktivitaetenController extends BaseController {
      */
     public function indexAction() {
 
+        //http://localhost:30000/aktivitaeten/27?aktivitaetentyp[]=Dissertation&aktivitaetentyp[]=Lizentiatsarbeit
+        //http://localhost:30000/aktivitaeten?aktivitaetentyp[]=Dissertation&aktivitaetentyp[]=Lizentiatsarbeit
 
-        $aktivitaetentyp = $this->getEvent()->getRouteMatch()->getParam("aktivitaetentyp");
         $mitid = $this->getEvent()->getRouteMatch()->getParam("mitid");
+        $aktivitaetentyp = $this->params()->fromQuery("aktivitaetentyp");
 
-        $aktivitaeten = $this->histSemDBService->getAktivitaetFacade();
-        $all = $aktivitaeten->find(null,1000);
+        $mitid = !is_null($mitid) ? $mitid : 0;
+        $aktivitaetentyp = !is_null($aktivitaetentyp) ? $aktivitaetentyp : array();
 
-        return new ViewModel();
+        $aktivitaetenFacade = $this->histSemDBService->getAktivitaetFacade();
+
+        //$t = array('Lizentiatsarbeit');
+        $result = $aktivitaetenFacade->getActivities($aktivitaetentyp,$mitid);
+        $simpleList = $this->toList($result);
+        $model = array('items' => $simpleList);
+        return new ViewModel($model);
 
     }
 
