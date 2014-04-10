@@ -133,7 +133,12 @@ return array(
             'personen' => array(
                 'label' => 'navigation_personen',
                 'route' => 'personen'
+            ),
+            'master_lizz_diss' => array(
+                'label' => 'master_lizz_diss',
+                'route' => 'aktivitaeten'
             )
+
         ),
     ),
 
