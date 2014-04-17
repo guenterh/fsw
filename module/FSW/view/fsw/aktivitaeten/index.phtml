@@ -2,11 +2,12 @@
 
 <ul class="type1">
 
+    <?php $i = 0; ?>
     <?php foreach ($this->items as $item): ?>
     <li>
+        <?php $i++; ?>
 
-
-        <p class="noMarginBottom"><?= $item->getQarbArbAbschlussjahr() ?> :&nbsp;<b> <?= $item->getQarbArbTitel() ?></b></p>
+        <p class="noMarginBottom"><?= $i?>:  <?= $item->getQarbArbAbschlussjahr() ?> :&nbsp;<b> <?= $item->getQarbArbTitel() ?></b></p>
 
     </li>
     <?php endforeach; ?>
