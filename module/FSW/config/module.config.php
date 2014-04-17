@@ -70,6 +70,17 @@ return array(
                     ),
                 ),
             ),
+            'harvest' => array(
+                'type'  =>  'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/harvest',
+                    'defaults' => array(
+                        'controller' => 'FSW\Controller\Harvest',
+                        'action'     => 'oai',
+                    ),
+                ),
+
+            )
 
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
@@ -83,9 +94,8 @@ return array(
         'allow_override' => true,
         'factories' => array(
             'FSW\Model\Veranstaltungen' => 'FSW\Model\Factories\VeranstaltungenFactory',
-            'Navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory'
-
-
+            'Navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
+            'VuFind\Http' => 'FSW\Services\Factory::getHttp',
         )
     ),
 
@@ -95,7 +105,9 @@ return array(
             'FSW\Controller\Medien' => 'FSW\Controller\MedienController',
             'FSW\Controller\Kolloquien' => 'FSW\Controller\KolloquienController',
             'FSW\Controller\Aktivitaeten' => 'FSW\Controller\AktivitaetenController',
-            'FSW\Controller\Personen' => 'FSW\Controller\PersonenController'
+            'FSW\Controller\Personen' => 'FSW\Controller\PersonenController',
+            'FSW\Controller\Harvest' => 'FSW\Controller\HarvestController',
+
 
         ),
         //'factories' => array(

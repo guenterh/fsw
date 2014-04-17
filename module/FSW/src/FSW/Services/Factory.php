@@ -59,6 +59,33 @@ class Factory {
         return new TableGateway('Qarb_ArbeitenV2', $dbAdapter, null, $resultSetPrototype);
     }
 
+    /**
+     * Construct the HTTP service.
+     *
+     * @param ServiceManager $sm Service manager.
+     *
+     * @return \VuFindHttp\HttpService
+     */
+    public static function getHttp(ServiceManager $sm)
+    {
+        //$config = $sm->get('VuFind\Config')->get('config');
+        $options = array();
+        /*
+        if (isset($config->Proxy->host)) {
+            $options['proxy_host'] = $config->Proxy->host;
+            if (isset($config->Proxy->port)) {
+                $options['proxy_port'] = $config->Proxy->port;
+            }
+        }
+        $defaults = isset($config->Http)
+            ? $config->Http->toArray() : array();
+        */
+        $defaults = array();
+
+        return new \VuFindHttp\HttpService($options, $defaults);
+    }
+
+
 
 
 } 

@@ -8,7 +8,9 @@ return array(
         'FSW',
         'DluTwBootstrap',
         'DluTwBootstrapDemo',
-        'ZfcTwitterBootstrap'
+        'ZfcTwitterBootstrap',
+        'VuFindHttp'
+
     ),
 
     // These are various options for the listeners attached to the ModuleManager
