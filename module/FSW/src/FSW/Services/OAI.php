@@ -234,16 +234,14 @@ class OAI implements EventManagerAwareInterface
      * last_harvest.txt)
      * @param string            $until    Harvest end date (optional)
      */
-    public function __construct($target, $settings, \Zend\Http\Client $client,
-                                $from = null, $until = null
-    ) {
+    public function __construct(\Zend\Http\Client $client) {
         // Store client:
         $this->client = $client;
 
         // Disable SSL verification if requested:
-        if (isset($settings['sslverifypeer']) && !$settings['sslverifypeer']) {
-            $this->client->setOptions(array('sslverifypeer' => false));
-        }
+        //if (isset($settings['sslverifypeer']) && !$settings['sslverifypeer']) {
+        //    $this->client->setOptions(array('sslverifypeer' => false));
+        //}
 
         // Don't time out during harvest!!
         set_time_limit(0);
@@ -255,21 +253,21 @@ class OAI implements EventManagerAwareInterface
         //$this->lastHarvestFile = $this->basePath . 'last_harvest.txt';
 
         // Set up start/end dates:
-        $this->setStartDate(empty($from) ? $this->loadLastHarvestedDate() : $from);
-        $this->setEndDate($until);
+        //$this->setStartDate(empty($from) ? $this->loadLastHarvestedDate() : $from);
+        //$this->setEndDate($until);
 
         // Save configuration:
-        $this->setConfig($target, $settings);
+        //$this->setConfig($target, $settings);
 
         // Load set names if we're going to need them:
-        if ($this->injectSetName) {
-            $this->loadSetNames();
-        }
+        //if ($this->injectSetName) {
+        //    $this->loadSetNames();
+        //}
 
         // Autoload granularity if necessary:
-        if ($this->granularity == 'auto') {
-            $this->loadGranularity();
-        }
+        //if ($this->granularity == 'auto') {
+        //    $this->loadGranularity();
+        //}
     }
 
     /**

@@ -55,7 +55,7 @@ class Factory {
         $tGZoraAuthor = $sm->get('ZoraAuthorTableGateway');
         $tGCover = $sm->get('CoverTableGateway');
 
-        $zF = new ZoraFacade($tGZoraDoc,$tGZoraAuthor,$tGZoraDocType,$tGCover);
+        $zF = new ZoraFacade($tGZoraDoc,$tGZoraAuthor,$tGZoraDocType,$tGCover,$sm);
 
         return $zF;
 
@@ -152,7 +152,7 @@ class Factory {
     public static function getOAIClient(ServiceManager $sm)
     {
         $client = $sm->get('VuFind\Http')->createClient();
-        $harvest = new OAI($target, $settings, $client, $from, $until);
+        return new OAI($client);
 
 
     }

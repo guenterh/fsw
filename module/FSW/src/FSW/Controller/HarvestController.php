@@ -115,23 +115,39 @@ class HarvestController extends AbstractActionController
 
         $zoraFacade = $this->getServiceLocator()->get('FSW\Services\Facade\ZoraFacade');
 
-        $accessConfig = $this->getServiceLocator()->get('FSW\Config')->get('config');
+        $oaiClient = $zoraFacade->getOAIClient();
 
-        foreach ($oaiSettings as $target => $settings) {
-            if (!empty($target) && !empty($settings)) {
-                //Console::writeLine("Processing {$target}...");
-                try {
-                    $client = $this->getServiceLocator()->get('VuFind\Http')
-                        ->createClient();
-                    $harvest = new OAI($target, $settings, $client, $from, $until);
-                    $harvest->launch();
-                } catch (\Exception $e) {
-                    //Console::writeLine($e->getMessage());
-                    return $this->getFailureResponse();
+        $oaiConfig = $this->getServiceLocator()->get('FSW\Config')->get('oai');
+
+        foreach ($oaiConfig as $sectionName => $oaiSection)
+        {
+            if (isset($oaiSection->active) && $oaiSection->active && $sectionName == 'Zora') {
+
+                $from = $this->params()->fromQuery('from',null);
+                $until = $this->params()->fromQuery('until',null);
+
+                $a = $oaiConfig->Zora->toArray();
+
+                foreach ($oaiSettings as $target => $settings) {
+                    if (!empty($target) && !empty($settings)) {
+                        //Console::writeLine("Processing {$target}...");
+                        try {
+                            $client = $this->getServiceLocator()->get('VuFind\Http')
+                                ->createClient();
+                            $harvest = new OAI($target, $settings, $client, $from, $until);
+                            $harvest->launch();
+                        } catch (\Exception $e) {
+                            //Console::writeLine($e->getMessage());
+                            return $this->getFailureResponse();
+                        }
+                        $processed++;
+                    }
                 }
-                $processed++;
+
             }
         }
+
+
 
         // All done.
         //Console::writeLine(

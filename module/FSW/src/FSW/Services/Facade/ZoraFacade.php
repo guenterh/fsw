@@ -11,16 +11,18 @@ namespace FSW\Services\Facade;
 
 use FSW\Model\BaseModel;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\ServiceManager\ServiceManager;
 
 
 
 class ZoraFacade extends BaseFacade {
 
 
-    protected $tableGatewaZoraDoc;
-    protected $tableGatewaZoraAuthor;
-    protected $tableGatewaZoraDocType;
-    protected $tableGatewaCover;
+    protected $tableGatewayZoraDoc;
+    protected $tableGatewayZoraAuthor;
+    protected $tableGatewayZoraDocType;
+    protected $tableGatewayCover;
+    protected $sm;
 
 
     /**
@@ -31,13 +33,15 @@ class ZoraFacade extends BaseFacade {
     public function __construct(TableGateway $tableGatewayZoraDoc,
                                 TableGateway $tableGatewayZoraAuthor,
                                 TableGateway $tablegatewayZoraDocType,
-                                TableGateway $tablegatewayCover)
+                                TableGateway $tablegatewayCover,
+                                ServiceManager $sm)
     {
 
-        $this->tableGatewaCover = $tablegatewayCover;
-        $this->tableGatewaZoraAuthor = $tableGatewayZoraAuthor;
-        $this->tableGatewaZoraDoc = $tableGatewayZoraDoc;
-        $this->tableGatewaZoraDocType = $tablegatewayZoraDocType;
+        $this->tableGatewayCover = $tablegatewayCover;
+        $this->tableGatewayZoraAuthor = $tableGatewayZoraAuthor;
+        $this->tableGatewayZoraDoc = $tableGatewayZoraDoc;
+        $this->tableGatewayZoraDocType = $tablegatewayZoraDocType;
+        $this->sm = $sm;
 
     }
 
@@ -54,4 +58,25 @@ class ZoraFacade extends BaseFacade {
     {
         // TODO: Implement find() method.
     }
+
+    public function getOAIClient($options = array()) {
+
+        $oaiClient = $this->sm->get('oaiClient');
+
+        $oaiClient->getEventManager()->attach('processOAIItem',array($this,'processOAIItem'));
+
+        return $oaiClient;
+
+
+
+    }
+
+
+    public function processOAIItem($args) {
+
+
+        $t = "";
+
+    }
+
 }

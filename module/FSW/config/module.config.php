@@ -123,6 +123,7 @@ return array(
             'ZoraDocTypeTableGateway'          =>  'FSW\Services\Factory::getZoraDocTypeTableGateway',
             'CoverTableGateway'          =>  'FSW\Services\Factory::getCoverTableGateway',
             'FSW\Services\Facade\ZoraFacade'    =>  'FSW\Services\Factory::getZoraFacade',
+            'oaiClient'                     =>      'FSW\Services\Factory::getOAIClient',
 
 
 
