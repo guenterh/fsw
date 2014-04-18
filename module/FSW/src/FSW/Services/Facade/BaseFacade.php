@@ -10,7 +10,7 @@ use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\ResultSet\ResultSetInterface;
 use Zend\Db\Adapter\Adapter;
 
-use Libadmin\Model\BaseModel;
+use FSW\Model\BaseModel;
 
 /**
  * [Description]
@@ -29,15 +29,6 @@ abstract class BaseFacade
 	 */
 	protected $tableGateway;
 
-	/**
-	 * Constructor
-	 *
-	 * @param	 TableGateway	$tableGateway
-	 */
-	public function __construct(TableGateway $tableGateway)
-	{
-		$this->tableGateway = $tableGateway;
-	}
 
 
 

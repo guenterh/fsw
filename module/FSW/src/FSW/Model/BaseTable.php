@@ -9,8 +9,7 @@ use Zend\Db\Sql\Where;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\ResultSet\ResultSetInterface;
 use Zend\Db\Adapter\Adapter;
-
-use Libadmin\Model\BaseModel;
+use FSW\Model\BaseModel;
 
 /**
  * [Description]

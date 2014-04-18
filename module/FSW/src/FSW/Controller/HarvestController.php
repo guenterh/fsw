@@ -113,6 +113,9 @@ class HarvestController extends AbstractActionController
          */
 
 
+        $zoraFacade = $this->getServiceLocator()->get('FSW\Services\Facade\ZoraFacade');
+
+        $accessConfig = $this->getServiceLocator()->get('FSW\Config')->get('config');
 
         foreach ($oaiSettings as $target => $settings) {
             if (!empty($target) && !empty($settings)) {

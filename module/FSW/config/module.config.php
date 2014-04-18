@@ -96,6 +96,38 @@ return array(
             'FSW\Model\Veranstaltungen' => 'FSW\Model\Factories\VeranstaltungenFactory',
             'Navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'VuFind\Http' => 'FSW\Services\Factory::getHttp',
+
+            'FSW\Model\MediumTable' =>  'FSW\Model\Factories\MediumTableFactory',
+            //todo bessere namensgebung
+            'FSW\Model\MedienTable' =>  'FSW\Model\Factories\MediumTableFactory',
+            'MediumTableGateway' => 'FSW\Model\Factories\MediumTableGatewayFactory',
+
+            'FSW\Table\PersonTable' => 'FSW\Services\Factory::getPersonFacade',
+            'PersonTableGateway' => 'FSW\Services\Factory::getPersonTableGateway',
+
+
+            'FSW\Model\KolloquiumTable' =>  'FSW\Model\Factories\KolloquiumTableFactory',
+            'KolloquiumTableGateway' => 'FSW\Model\Factories\KolloquiumTableGatewayFactory',
+            'FSW\Model\KolloqiumVeranstaltungTable' =>  'FSW\Model\Factories\KolloqiumVeranstaltungTableFactory',
+            'KolloquiumVeranstaltungTableGateway' => 'FSW\Model\Factories\KolloquiumVeranstaltungTableGatewayFactory',
+            'FSWPersonenExtendedAdapter' => 'FSW\Model\Factories\DB\PersonenExtendedAdapterFactory',
+            'HistSemDBService'          =>  'FSW\Model\Factories\HistSemDBServiceFactory',
+            'HistSemDBAdapter'          =>  'FSW\Model\Factories\DB\HistSemDBAdapterFactory',
+
+
+            'FSW\Services\Facade\AktivitaetFacade'    =>  'FSW\Services\Factory::getAktivitaetFassade',
+            'AktivitaetTableGateway'          =>  'FSW\Services\Factory::getAktivitaetTableGateway',
+
+            'ZoraDocTableGateway'          =>  'FSW\Services\Factory::getZoraDocTableGateway',
+            'ZoraAuthorTableGateway'          =>  'FSW\Services\Factory::getZoraAuthorTableGateway',
+            'ZoraDocTypeTableGateway'          =>  'FSW\Services\Factory::getZoraDocTypeTableGateway',
+            'CoverTableGateway'          =>  'FSW\Services\Factory::getCoverTableGateway',
+            'FSW\Services\Facade\ZoraFacade'    =>  'FSW\Services\Factory::getZoraFacade',
+
+
+
+
+
         )
     ),
 
@@ -153,6 +185,14 @@ return array(
 
         ),
     ),
+    'fsw'       =>  array(
+
+        'config_reader' => array(
+            'abstract_factories' => array('FSW\Services\Config\PluginFactory'),
+        ),
+
+
+    )
 
 
 

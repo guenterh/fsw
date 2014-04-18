@@ -1,0 +1,9 @@
+http://www.id.uzh.ch/dl/web/webhosting/nutzung.html
+https://www.owasp.org/index.php/Top_10_2013-Top_10
+http://www.id.uzh.ch/dl/web/webhosting/php/phpumstellung53.html
+http://www.id.uzh.ch/publikationen/servicelevels.html
+http://www.id.uzh.ch/dl/email/versand.html
+http://www.id.uzh.ch/dl/web/webhosting/scripts_4.html
+
+
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/medien/

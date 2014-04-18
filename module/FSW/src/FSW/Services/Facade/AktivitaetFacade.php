@@ -10,8 +10,22 @@ namespace FSW\Services\Facade;
 
 
 //use Libadmin\Model\BaseModel;
+use Zend\Db\TableGateway\TableGateway;
 
 class AktivitaetFacade extends BaseFacade {
+
+    /**
+     * Constructor
+     *
+     * @param	 TableGateway	$tableGateway
+     */
+    public function __construct(TableGateway $tableGateway)
+    {
+        $this->tableGateway = $tableGateway;
+    }
+
+
+
     /**
      * Find elements
      *

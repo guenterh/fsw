@@ -2,25 +2,20 @@
 /**
  * Created by PhpStorm.
  * User: guenter
- * Date: 04.04.14
- * Time: 20:22
+ * Date: 18.04.14
+ * Time: 14:57
  */
 
-namespace FSW\Services\Facade;
+namespace FSW\Model;
+
 use Zend\Db\TableGateway\TableGateway;
 
 
+class CoverTable extends BaseTable {
 
-class PersonFacade extends BaseFacade {
-
-    /**
-     * Constructor
-     *
-     * @param	 TableGateway	$tableGateway
-     */
     public function __construct(TableGateway $tableGateway)
     {
-        $this->tableGateway = $tableGateway;
+        parent::__construct($tableGateway);
     }
 
 
@@ -34,10 +29,6 @@ class PersonFacade extends BaseFacade {
      */
     public function find($searchString, $limit = 30)
     {
-        $test = $this->getAll(null,$limit);
-
-        return $test;
+        // TODO: Implement find() method.
     }
-
-
-} 
+}

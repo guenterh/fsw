@@ -12,9 +12,16 @@ use Zend\ServiceManager\ServiceManager;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 use FSW\Model\Person;
+use FSW\Model\ZoraDoc;
+use FSW\Model\ZoraDocType;
+use FSW\Model\ZoraAuthor;
+use FSW\Model\Cover;
 use FSW\Model\Aktivitaet;
 use FSW\Services\Facade\PersonFacade;
 use FSW\Services\Facade\AktivitaetFacade;
+use FSW\Services\Facade\ZoraFacade;
+use FSW\Services\OAI;
+
 
 
 
@@ -39,6 +46,62 @@ class Factory {
         return $facade;
 
     }
+
+    public static function getZoraFacade (ServiceManager $sm)
+    {
+
+        $tGZoraDoc = $sm->get('ZoraDocTableGateway');
+        $tGZoraDocType = $sm->get('ZoraDocTypeTableGateway');
+        $tGZoraAuthor = $sm->get('ZoraAuthorTableGateway');
+        $tGCover = $sm->get('CoverTableGateway');
+
+        $zF = new ZoraFacade($tGZoraDoc,$tGZoraAuthor,$tGZoraDocType,$tGCover);
+
+        return $zF;
+
+
+    }
+
+
+
+
+    public static function getZoraDocTableGateway(ServiceManager $sm) {
+
+        $histSemDBService = $sm->get('HistSemDBService');
+        $dbAdapter = $histSemDBService->getAdapter();
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new ZoraDoc());
+        return new TableGateway('fsw_zora_doc', $dbAdapter, null, $resultSetPrototype);
+    }
+
+    public static function getZoraAuthorTableGateway(ServiceManager $sm) {
+
+        $histSemDBService = $sm->get('HistSemDBService');
+        $dbAdapter = $histSemDBService->getAdapter();
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new ZoraAuthor());
+        return new TableGateway('fsw_zora_author', $dbAdapter, null, $resultSetPrototype);
+    }
+
+
+    public static function getZoraDocTypeTableGateway(ServiceManager $sm) {
+
+        $histSemDBService = $sm->get('HistSemDBService');
+        $dbAdapter = $histSemDBService->getAdapter();
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new ZoraDocType());
+        return new TableGateway('fsw_zora_doctype', $dbAdapter, null, $resultSetPrototype);
+    }
+
+    public static function getCoverTableGateway(ServiceManager $sm) {
+
+        $histSemDBService = $sm->get('HistSemDBService');
+        $dbAdapter = $histSemDBService->getAdapter();
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new Cover());
+        return new TableGateway('fsw_cover', $dbAdapter, null, $resultSetPrototype);
+    }
+
 
 
     public static function getPersonTableGateway(ServiceManager $sm) {
@@ -83,6 +146,15 @@ class Factory {
         $defaults = array();
 
         return new \VuFindHttp\HttpService($options, $defaults);
+    }
+
+
+    public static function getOAIClient(ServiceManager $sm)
+    {
+        $client = $sm->get('VuFind\Http')->createClient();
+        $harvest = new OAI($target, $settings, $client, $from, $until);
+
+
     }
 
 

@@ -27,6 +27,9 @@
  */
 namespace FSW\Services;
 use Zend\Console\Console;
+use Zend\EventManager\EventManager;
+use Zend\EventManager\EventManagerAwareInterface;
+use Zend\EventManager\EventManagerInterface;
 
 /**
  * OAI Class
@@ -40,8 +43,11 @@ use Zend\Console\Console;
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     http://vufind.org/wiki/importing_records#oai-pmh_harvesting Wiki
  */
-class OAI
+class OAI implements EventManagerAwareInterface
 {
+
+    protected $eventManager;
+
     /**
      * HTTP client
      *
@@ -884,5 +890,37 @@ class OAI
             return;
         }
         //Console::writeLine($str);
+    }
+
+    /**
+     * Inject an EventManager instance
+     *
+     * @param  EventManagerInterface $eventManager
+     * @return void
+     */
+    public function setEventManager(EventManagerInterface $eventManager)
+    {
+
+        $eventManager->setIdentifiers(
+            array(__CLASS__,
+                    get_called_class()
+            )
+        );
+        $this->eventManager = $eventManager;
+    }
+
+    /**
+     * Retrieve the event manager
+     *
+     * Lazy-loads an EventManager instance if none registered.
+     *
+     * @return EventManagerInterface
+     */
+    public function getEventManager()
+    {
+        if ($this->eventManager == null) {
+            $this->eventManager = new EventManager();
+        }
+        return $this->eventManager;
     }
 }
