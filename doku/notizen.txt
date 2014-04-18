@@ -1,2 +1,9 @@
 Beispiele fuer Form
 http://samsonasik.wordpress.com/2012/10/01/zend-framework-2-extending-zendform-to-add-select-multicheckbox-emaildate-textarea-and-radio-element/
+
+Installation und Betrieb von fastcgi (UZH)
+
+http://www.id.uzh.ch/dl/web/webhosting/php/phpumstellung53.html
+http://mwop.net/blog/243-Running-mod_php-and-FastCGI-side-by-side.html
+
+
