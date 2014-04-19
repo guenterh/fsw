@@ -30,6 +30,7 @@ use Zend\Console\Console;
 use Zend\EventManager\EventManager;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerInterface;
+use FSW\Model\ZoraRecord;
 
 /**
  * OAI Class
@@ -559,7 +560,7 @@ class OAI implements EventManagerAwareInterface
      *
      * @return void
      */
-    protected function saveRecord($id, $record)
+    protected function saveRecord($id, $record,$status, $datestamp)
     {
         if (!isset($record->metadata)) {
             throw new \Exception("Unexpected missing record metadata.");
@@ -612,6 +613,17 @@ class OAI implements EventManagerAwareInterface
         if (!empty($insert)) {
             $xml = preg_replace('/>/', '>' . $insert, $xml, 1);
         }
+
+        $zR = new ZoraRecord();
+        try {
+            $zR->setRawOAIRecord($xml,$id,$status,$datestamp);
+            $this->getEventManager()->trigger('processOAIItem',null,array('oaiR' => $zR));
+
+        } catch (\Exception $ex) {
+
+            $test = "";
+        }
+
 
         // Save our XML:
         //file_put_contents($this->getFilename($id, 'xml'), trim($xml));
@@ -724,12 +736,16 @@ class OAI implements EventManagerAwareInterface
 
             // Save the current record, either as a deleted or as a regular file:
             $attribs = $record->header->attributes();
-            if (strtolower($attribs['status']) == 'deleted') {
-                $this->saveDeletedRecord($id);
-            } else {
-                $this->saveRecord($id, $record);
+
+            $status = !empty($attribs['status']) ? $attribs['status'] : 'updated';
+            $this->saveRecord($id, $record,$status,$record->header->datestamp);
+
+            //if (strtolower($attribs['status']) == 'deleted') {
+            //    $this->saveDeletedRecord($id);
+            //} else {
+            //    $this->saveRecord($id, $record);
                 $harvestedIds[] = $id;
-            }
+            //}
 
             // If the current record's date is newer than the previous end date,
             // remember it for future reference:
@@ -825,7 +841,7 @@ class OAI implements EventManagerAwareInterface
      *
      * @return void
      */
-    protected function setConfig($target, $settings)
+    public function setConfig($target, $settings)
     {
         // Set up base URL:
         if (empty($settings['url'])) {

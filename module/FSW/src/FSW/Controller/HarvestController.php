@@ -48,101 +48,23 @@ class HarvestController extends AbstractActionController
      */
     public function oaiAction()
     {
-        //$this->checkLocalSetting();
 
-        // Parse switches:
-        /*
-        $this->consoleOpts->addRules(
-            array('from-s' => 'Harvest start date', 'until-s' => 'Harvest end date')
-        );
-        $from = $this->consoleOpts->getOption('from');
-        $until = $this->consoleOpts->getOption('until');
-
-        // Read Config files
-        $configFile = \VuFind\Config\Locator::getConfigPath('oai.ini', 'harvest');
-        $oaiSettings = @parse_ini_file($configFile, true);
-        if (empty($oaiSettings)) {
-            Console::writeLine("Please add OAI-PMH settings to oai.ini.");
-            return $this->getFailureResponse();
-        }
-
-        // If first command line parameter is set, see if we can limit to just the
-        // specified OAI harvester:
-        $argv = $this->consoleOpts->getRemainingArgs();
-        if (isset($argv[0])) {
-            if (isset($oaiSettings[$argv[0]])) {
-                $oaiSettings = array($argv[0] => $oaiSettings[$argv[0]]);
-            } else {
-                Console::writeLine("Could not load settings for {$argv[0]}.");
-                return $this->getFailureResponse();
-            }
-        }
-        */
-        $oaiSettings = array(
-            'zora' => array(
-                'url' =>    'http://www.zora.uzh.ch/cgi/oai2',
-
-            )
-        );
-        // Loop through all the settings and perform harvests:
-        $processed = 0;
-        $from = '2014-01-01';
-        $until = '2014-04-15';
-        $settings = array();
-        $target = array();
-        //http://www.zora.uzh.ch/cgi/oai2?verb=ListRecords&metadataPrefix=oai_dc&from=2009-10-01&until=2009-10-01
-        /*
-         * ; url = http://oai.myuniversity.edu/
-; set = my_optional_set
-; metadataPrefix = oai_dc
-; idSearch[] = "/oai:myuniversity.edu:/"
-; idReplace[] = "myprefix-"
-; injectDate = false
-; injectId = false
-; injectSetName = false
-; injectSetSpec = false
-; injectHeaderElements[] = hierarchy
-; dateGranularity = auto
-; harvestedIdLog = harvest.log
-; verbose = false
-; sslverifypeer = true
-; sanitize = true
-; badXMLLog = bad.log
-; httpUser = myUsername
-; httpPass = myPassword
-         */
-
-
-        $zoraFacade = $this->getServiceLocator()->get('FSW\Services\Facade\ZoraFacade');
-
-        $oaiClient = $zoraFacade->getOAIClient();
 
         $oaiConfig = $this->getServiceLocator()->get('FSW\Config')->get('oai');
 
-        foreach ($oaiConfig as $sectionName => $oaiSection)
-        {
+        foreach ($oaiConfig as $sectionName => $oaiSection) {
+
             if (isset($oaiSection->active) && $oaiSection->active && $sectionName == 'Zora') {
 
-                $from = $this->params()->fromQuery('from',null);
-                $until = $this->params()->fromQuery('until',null);
+                $zoraFacade = $this->getServiceLocator()->get('FSW\Services\Facade\ZoraFacade');
+                $oaiClient = $zoraFacade->getOAIClient();
 
-                $a = $oaiConfig->Zora->toArray();
+                //missing set config, do something
+                $oaiClient->setStartDate($this->params()->fromQuery('from',null));
+                $oaiClient->setEndDate($this->params()->fromQuery('until',null));
 
-                foreach ($oaiSettings as $target => $settings) {
-                    if (!empty($target) && !empty($settings)) {
-                        //Console::writeLine("Processing {$target}...");
-                        try {
-                            $client = $this->getServiceLocator()->get('VuFind\Http')
-                                ->createClient();
-                            $harvest = new OAI($target, $settings, $client, $from, $until);
-                            $harvest->launch();
-                        } catch (\Exception $e) {
-                            //Console::writeLine($e->getMessage());
-                            return $this->getFailureResponse();
-                        }
-                        $processed++;
-                    }
-                }
+
+                $oaiClient->launch();
 
             }
         }

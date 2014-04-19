@@ -152,8 +152,16 @@ class Factory {
     public static function getOAIClient(ServiceManager $sm)
     {
         $client = $sm->get('VuFind\Http')->createClient();
-        return new OAI($client);
+        $oaiConfig = $sm->get('FSW\Config')->get('oai');
+        $oaiClient =  new OAI($client);;
+        foreach ($oaiConfig as $sectionName => $oaiSection) {
 
+            if (isset($oaiSection->active) && $oaiSection->active && $sectionName == 'Zora') {
+                $oaiClient->setConfig($sectionName,$oaiSection->toArray());
+            }
+         }
+
+        return $oaiClient;
 
     }
 
