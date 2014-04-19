@@ -49,7 +49,6 @@ class ZoraRecord  {
         $namespaces = $sxml->getDocNamespaces(true);
 
 
-        $dcElements = $sxml->children($namespaces['dc']);
 
         if (! $this->testToInclude()) {
             throw new \Exception("now FSW record");
@@ -62,7 +61,12 @@ class ZoraRecord  {
         $creators = array();
         $contributors = array();
 
-
+        //es scheint wihtig zu sein, foreach so zu benutzen
+        //$dcElements = $sxml->children($namespaces['dc']);
+        //-> das geht nicht
+        //foreach($dcElements  as $dcTag => $dcValue)
+        //-> php bekommt ein Problem mit multiplen tags...
+        //s. auch Hinweise zur Benutzung: http://www.sitepoint.com/parsing-xml-with-simplexml/
         foreach($sxml->children($namespaces['dc'])  as $dcTag => $dcValue)
         {
 
@@ -114,42 +118,6 @@ class ZoraRecord  {
         $sxml->addChild('dc:customizedcontributors',implode('##',$customizedContributors),"http://purl.org/dc/elements/1.1/");
 
     }
-
-    private function evaluateNode($dcTag, $dcValue,&$creators,&$contributors) {
-
-        switch ($dcTag){
-            case "contributor":
-                $this->setContributor($dcValue);
-                $contributors[] = $dcValue;
-
-                break;
-            case "date":
-                $this->setDate($dcValue);
-                break;
-            case "type":
-
-                $this->setType($dcValue);
-                break;
-            case "subtype":
-                $this->setSubtype($dcValue);
-                break;
-            case "creator":
-                $this->setCreator($dcValue);
-                $creators[] = $dcValue;
-
-                break;
-            case "title":
-
-                //echo $vdc;
-                $this->setTitle($dcValue);
-                break;
-
-            default:
-                break;
-
-        }
-    }
-
 
     public function setTitle($title){
         
