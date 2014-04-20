@@ -16,45 +16,12 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
---
--- Datenbank: `fsw`
---
-CREATE DATABASE IF NOT EXISTS `fswng` DEFAULT CHARACTER SET latin1;
+DROP DATABASE IF EXISTS `fswng`;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `fswng` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
 USE `fswng`;
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `fsw_cover`
---
-
-DROP TABLE IF EXISTS `fsw_cover`;
-CREATE TABLE IF NOT EXISTS `fsw_cover` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `oai_identifier` varchar(100)  NOT NULL,
-  `coverlink` varchar(1000)  DEFAULT NULL,
-  `frontpage` enum('frontpage','nofrontpage')  NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1016 ;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `fswzora`
---
-
-DROP TABLE IF EXISTS `fsw_zora`;
-CREATE TABLE IF NOT EXISTS `fsw_zora` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `oai_identifier` varchar(100)  NOT NULL,
-  `datestamp` varchar(20)  NOT NULL,
-  `year` int(11) NOT NULL,
-  `status` varchar(40)  NOT NULL,
-  `title` varchar(255)  NOT NULL,
-  `author` varchar(255)  DEFAULT NULL,
-  `xmlrecord` text  NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1016 ;
 
 -- --------------------------------------------------------
 
@@ -104,37 +71,83 @@ CREATE TABLE IF NOT EXISTS `fsw_medien` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1016 ;
 
+
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `mitarbeiterOAI`
+-- Tabellenstruktur für Tabelle `fsw_cover`
 --
 
-DROP TABLE IF EXISTS `fsw_zora_author`;
-CREATE TABLE IF NOT EXISTS `fsw_zora_author` (
+DROP TABLE IF EXISTS `fsw_cover`;
+CREATE TABLE IF NOT EXISTS `fsw_cover` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `zora_name` varchar(500)  NOT NULL,
   `oai_identifier` varchar(100)  NOT NULL,
-  `zora_rolle` varchar(40)  NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `zoraName` (`zora_name`,`oai_identifier`,`zora_rolle`)
+  `coverlink` varchar(1000)  DEFAULT NULL,
+  `frontpage` enum('frontpage','nofrontpage')  NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1016 ;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `mitarbeiterZoraName`
+-- Tabellenstruktur für Tabelle `fsw_zora_doc`
 --
 
-DROP TABLE IF EXISTS `fsw_relation_person_extended_zora_author`;
-CREATE TABLE IF NOT EXISTS `fsw_relation_person_extended_zora_author` (
+DROP TABLE IF EXISTS `fsw_zora_doc`;
+CREATE TABLE IF NOT EXISTS `fsw_zora_doc` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `mit_id_per_extended` bigint(20) NOT NULL,
+  `oai_identifier` varchar(100)  NOT NULL,
+  `datestamp` varchar(20)  NOT NULL,
+  `year` int(11) NOT NULL,
+  `status` varchar(40)  NOT NULL,
+  `title` varchar(255)  NOT NULL,
+  `author` varchar(255)  DEFAULT NULL,
+  `xmlrecord` text  NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1016 ;
+
+
+
+-- --------------------------------------------------------
+
+
+DROP TABLE IF EXISTS `fsw_personen_extended`;
+
+
+CREATE TABLE `fsw_personen_extended` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `pers_id` int(11) NOT NULL,
+  `roll_id` bigint(20) DEFAULT NULL,
+  `persstatus` smallint(6) NOT NULL DEFAULT '1',
   `zora_name` varchar(500)  NOT NULL,
   `zora_name_customized` varchar(500)  DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1016 DEFAULT CHARSET=latin1 COMMENT='FSW table: to store extended values related to persons ';
+
+--
+-- Dumping data for table `FSW_Personen_Extended`
+--
+
+LOCK TABLES `fsw_personen_extended` WRITE;
+/*!40000 ALTER TABLE `fsw_personen_extended` DISABLE KEYS */;
+INSERT INTO `fsw_personen_extended` (`pers_id`,`persstatus`,`zora_name` ) VALUES (101,1,'Sarasin, P'),(103,1,'Tanner, J');
+/*!40000 ALTER TABLE `fsw_personen_extended` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
+-- Tabellenstruktur für Tabelle `fsw_zora_relations_author_doc`
+--  Relationentabelle zwischen Zoraautoren und Zoradokumenten
+
+DROP TABLE IF EXISTS `fsw_relation_author_zora_doc`;
+CREATE TABLE IF NOT EXISTS `fsw_relation_author_zora_doc` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `pers_id` bigint(20) NOT NULL,
+  `oai_identifier` varchar(100)  NOT NULL,
+  `zora_rolle` varchar(40)  NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `zora_name` (`zora_name`),
-  KEY `mit_id` (`mit_id_per_extended`)
+  KEY `oai_identifier` (`oai_identifier`),
+  KEY `zorarolle` (`zora_rolle`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1016 ;
 
 -- --------------------------------------------------------

@@ -57,14 +57,15 @@ class HarvestController extends AbstractActionController
             if (isset($oaiSection->active) && $oaiSection->active && $sectionName == 'Zora') {
 
                 $zoraFacade = $this->getServiceLocator()->get('FSW\Services\Facade\ZoraFacade');
-                $oaiClient = $zoraFacade->getOAIClient();
+                $zoraFacade->processOAIItem();
+                //$oaiClient = $zoraFacade->getOAIClient();
 
                 //missing set config, do something
-                $oaiClient->setStartDate($this->params()->fromQuery('from',null));
-                $oaiClient->setEndDate($this->params()->fromQuery('until',null));
+                //$oaiClient->setStartDate($this->params()->fromQuery('from',null));
+                //$oaiClient->setEndDate($this->params()->fromQuery('until',null));
 
 
-                $oaiClient->launch();
+                //$oaiClient->launch();
 
             }
         }
