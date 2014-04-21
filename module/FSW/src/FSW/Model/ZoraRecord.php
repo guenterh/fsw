@@ -42,7 +42,8 @@ class ZoraRecord  {
 
     public function setRawOAIRecord ($rawrecord, $id,$status,$datestamp ) {
 
-        $this->rawXML = $rawrecord;
+        //$this->rawXML = $rawrecord;
+        $this->setRecXML($rawrecord);
 
         $sxml= new \SimpleXMLElement($rawrecord);
         $namespaces = null;
@@ -121,21 +122,25 @@ class ZoraRecord  {
 
     public function setTitle($title){
         
-        $this->title = preg_replace("/'/","\'",$title );
+        //$this->title = preg_replace("/'/","\'",$title );
+        $this->title = $title ;
         //echo $this->title . "\n";
 
     }
 
     public function setIdentifier($identifier) {
-        $this->identifier = preg_replace("/'/","\'",$identifier );
+        //$this->identifier = preg_replace("/'/","\'",$identifier );
+        $this->identifier = $identifier ;
     }
 
     public function setCreator($creator) {
-        $this->creator[] = preg_replace("/'/","\'",$creator );
+        //$this->creator[] = preg_replace("/'/","\'",$creator );
+        $this->creator[] = $creator ;
     }
 
     public function setContributor($contributor) {
-        $this->contributor[] = preg_replace("/'/","\'",$contributor );
+        //$this->contributor[] = preg_replace("/'/","\'",$contributor );
+        $this->contributor[] = $contributor ;
     }
 
     public function setDate($date) {
@@ -153,20 +158,24 @@ class ZoraRecord  {
     }
 
     public function setType($type) {
-        $this->type[] = preg_replace("/'/","\'",$type );
+        //$this->type[] = preg_replace("/'/","\'",$type );
+        $this->type[] = $type ;
     }
 
     public function setSubtype($subtype) {
-        $this->subtype[] = preg_replace("/'/","\'",$subtype );
+        //$this->subtype[] = preg_replace("/'/","\'",$subtype );
+        $this->subtype[] = $subtype ;
     }
 
 
     public function setDatestamp($datestamp) {
-        $this->datestamp = preg_replace("/'/","\'",$datestamp );
+        //$this->datestamp = preg_replace("/'/","\'",$datestamp );
+        $this->datestamp = $datestamp ;
     }
 
     public function setRecXML($recxml) {
-        $this->recxml = preg_replace("/'/","\'",$recxml );
+        //$this->recxml = preg_replace("/'/","\'",$recxml );
+        $this->recxml = $recxml ;
     }
 
 
@@ -185,8 +194,18 @@ class ZoraRecord  {
         return $this->creator;
     }
 
+    public function getFirstCreator() {
+        //todo: make flat array
+        return  count($this->creator) > 0 ? $this->creator[0] : null;
+    }
+
     public function getContributor() {
         return $this->contributor;
+    }
+
+    public function getFirstContributor() {
+        //todo: make flat array
+        return  count($this->contributor) > 0 ? $this->contributor[0] : null;
     }
 
     public function getDate() {

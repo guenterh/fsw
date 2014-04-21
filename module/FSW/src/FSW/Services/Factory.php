@@ -55,7 +55,10 @@ class Factory {
         $tGZoraAuthor = $sm->get('ZoraAuthorTableGateway');
         $tGCover = $sm->get('CoverTableGateway');
 
-        $zF = new ZoraFacade($tGZoraDoc,$tGZoraAuthor,$tGZoraDocType,$tGCover,$sm);
+        $histSemDBService = $sm->get('HistSemDBService');
+        $dbAdapter = $histSemDBService->getAdapter();
+
+        $zF = new ZoraFacade($tGZoraDoc,$tGZoraAuthor,$tGZoraDocType,$tGCover,$sm,$dbAdapter);
 
         return $zF;
 

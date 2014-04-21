@@ -16,11 +16,8 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
-DROP DATABASE IF EXISTS `fswng`;
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `fswng` /*!40100 DEFAULT CHARACTER SET latin1 */;
-
-USE `fswng`;
+USE `histsem`;
 
 
 -- --------------------------------------------------------
@@ -34,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `fsw_kolloquium` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `titel` varchar(65000) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1016 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -50,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `fsw_kolloquium_veranstaltung` (
   `personenname` varchar(65000) NOT NULL,
   `beschreibung` longtext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1016 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -69,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `fsw_medien` (
   `datum` date DEFAULT NULL,
   `medientyp` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1016 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 -- --------------------------------------------------------
@@ -85,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `fsw_cover` (
   `coverlink` varchar(1000)  DEFAULT NULL,
   `frontpage` enum('frontpage','nofrontpage')  NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1016 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -104,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `fsw_zora_doc` (
   `author` varchar(255)  DEFAULT NULL,
   `xmlrecord` text  NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1016 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 
@@ -112,43 +109,48 @@ CREATE TABLE IF NOT EXISTS `fsw_zora_doc` (
 
 
 DROP TABLE IF EXISTS `fsw_personen_extended`;
-
-
 CREATE TABLE `fsw_personen_extended` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `pers_id` int(11) NOT NULL,
-  `roll_id` bigint(20) DEFAULT NULL,
-  `persstatus` smallint(6) NOT NULL DEFAULT '1',
+  `profilURL` varchar(500) DEFAULT NULL,
+  `fullname` varchar(500) DEFAULT NULL COMMENT 'not necessary - only to make it easier to work with',
+
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COMMENT='FSW table: to store extended values related to persons ';
+
+
+
+DROP TABLE IF EXISTS `fsw_zora_author`;
+CREATE TABLE IF NOT EXISTS `fsw_zora_author` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `fid_personen` bigint(20) NOT NULL COMMENT 'foreign key fsw_personen_extended (id)',
+  `pers_id` bigint(20) NOT NULL COMMENT 'doubled value not necessary at the first sight but for better reading',
   `zora_name` varchar(500)  NOT NULL,
   `zora_name_customized` varchar(500)  DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1016 DEFAULT CHARSET=latin1 COMMENT='FSW table: to store extended values related to persons ';
-
---
--- Dumping data for table `FSW_Personen_Extended`
---
-
-LOCK TABLES `fsw_personen_extended` WRITE;
-/*!40000 ALTER TABLE `fsw_personen_extended` DISABLE KEYS */;
-INSERT INTO `fsw_personen_extended` (`pers_id`,`persstatus`,`zora_name` ) VALUES (101,1,'Sarasin, P'),(103,1,'Tanner, J');
-/*!40000 ALTER TABLE `fsw_personen_extended` ENABLE KEYS */;
-UNLOCK TABLES;
+  PRIMARY KEY (`id`),
+  KEY `fid_personen` (`fid_personen`),
+  KEY `zora_name` (`zora_name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 
 -- Tabellenstruktur für Tabelle `fsw_zora_relations_author_doc`
 --  Relationentabelle zwischen Zoraautoren und Zoradokumenten
 
-DROP TABLE IF EXISTS `fsw_relation_author_zora_doc`;
-CREATE TABLE IF NOT EXISTS `fsw_relation_author_zora_doc` (
+DROP TABLE IF EXISTS `fsw_relation_zora_author_zora_doc`;
+CREATE TABLE IF NOT EXISTS `fsw_relation_zora_author_zora_doc` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `pers_id` bigint(20) NOT NULL,
-  `oai_identifier` varchar(100)  NOT NULL,
-  `zora_rolle` varchar(40)  NOT NULL,
+  `fid_zora_author` bigint(20) NOT NULL COMMENT 'foreign key fsw_zora_author (id)',
+  `fid_zora_doc` bigint(20) NOT NULL COMMENT 'foreign key fsw_zora_doc (id)',
+  `pers_id` bigint(20) NOT NULL COMMENT 'doubled value not necessary at the first sight but for better reading',
+  `oai_identifier` varchar(100)  NOT NULL COMMENT 'doubled value not necessary at the first sight but for better reading',
+  `zora_rolle` varchar(40)  NOT NULL COMMENT 'creator or contributor',
   PRIMARY KEY (`id`),
   KEY `oai_identifier` (`oai_identifier`),
-  KEY `zorarolle` (`zora_rolle`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1016 ;
+  KEY `zorarolle` (`zora_rolle`),
+  KEY `fid_personen` (`fid_zora_author`),
+  KEY `fid_zora_doc` (`fid_zora_doc`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -158,12 +160,14 @@ CREATE TABLE IF NOT EXISTS `fsw_relation_author_zora_doc` (
 
 DROP TABLE IF EXISTS `fsw_zora_doctype`;
 CREATE TABLE IF NOT EXISTS `fsw_zora_doctype` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `oai_identifier` varchar(100) NOT NULL,
   `oai_recordtyp` varchar(100) NOT NULL,
   `typform` varchar(10)  NOT NULL COMMENT 'typ or subtyp',
+  PRIMARY KEY (`id`),
   KEY `oaiidentier` (`oai_identifier`,`oai_recordtyp`),
   KEY `typform` (`typform`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
