@@ -113,7 +113,7 @@ CREATE TABLE `fsw_personen_extended` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `pers_id` int(11) NOT NULL,
   `profilURL` varchar(500) DEFAULT NULL,
-  `fullname` varchar(500) DEFAULT NULL COMMENT 'not necessary - only to make it easier to work with',
+  `fullname` varchar(500) DEFAULT NULL COMMENT 'only for better reading',
 
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COMMENT='FSW table: to store extended values related to persons ';
@@ -124,7 +124,7 @@ DROP TABLE IF EXISTS `fsw_zora_author`;
 CREATE TABLE IF NOT EXISTS `fsw_zora_author` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `fid_personen` bigint(20) NOT NULL COMMENT 'foreign key fsw_personen_extended (id)',
-  `pers_id` bigint(20) NOT NULL COMMENT 'doubled value not necessary at the first sight but for better reading',
+  `pers_id` bigint(20) DEFAULT NULL COMMENT 'only for better reading',
   `zora_name` varchar(500)  NOT NULL,
   `zora_name_customized` varchar(500)  DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -142,8 +142,8 @@ CREATE TABLE IF NOT EXISTS `fsw_relation_zora_author_zora_doc` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `fid_zora_author` bigint(20) NOT NULL COMMENT 'foreign key fsw_zora_author (id)',
   `fid_zora_doc` bigint(20) NOT NULL COMMENT 'foreign key fsw_zora_doc (id)',
-  `pers_id` bigint(20) NOT NULL COMMENT 'doubled value not necessary at the first sight but for better reading',
-  `oai_identifier` varchar(100)  NOT NULL COMMENT 'doubled value not necessary at the first sight but for better reading',
+  `zora_name` varchar(500)  DEFAULT NULL COMMENT 'only for better reading',
+  `oai_identifier` varchar(100)  DEFAULT NULL COMMENT 'only for better reading',
   `zora_rolle` varchar(40)  NOT NULL COMMENT 'creator or contributor',
   PRIMARY KEY (`id`),
   KEY `oai_identifier` (`oai_identifier`),

@@ -81,44 +81,50 @@ class ZoraFacade extends BaseFacade {
 
         $zR = $this->prepareZR();
 
-
-        $insertTemplate = "insert into fsw_zora_doc " . " (author, datestamp, oai_identifier,status,title,xmlrecord,year)
-                    values (AUTHOR, DATESTAMP,OAI_IDENTIFIER,STATUS,TITLE,XMLFRAGMENT,YEAR)";
-        $insertTemplate = preg_replace('/AUTHOR/',$this->qV($this->getDBCreator($zR)),$insertTemplate );
-        $insertTemplate = preg_replace('/OAI_IDENTIFIER/',$this->qV($zR->getIdentifier()),$insertTemplate );
-        $insertTemplate = preg_replace('/DATESTAMP/',$this->qV($zR->getDatestamp()),$insertTemplate );
-        $insertTemplate = preg_replace('/YEAR/',$this->qV($zR->getDate()),$insertTemplate );
-        $insertTemplate = preg_replace('/TITLE/',$this->qV($zR->getTitle()),$insertTemplate );
-        $insertTemplate = preg_replace('/STATUS/',$this->qV($zR->getRecordStatus()),$insertTemplate );
-        $insertTemplate = preg_replace('/XMLFRAGMENT/', $this->qV($zR->getRecXML()),$insertTemplate );
-
-        $this->adapter->query($insertTemplate,Adapter::QUERY_MODE_EXECUTE);
-
-        $genIdZoraDoc = $this->adapter->getDriver()->getLastGeneratedValue();
+        //$connection = $this->adapter->getDriver()->getConnection();
+        //$connection->beginTransaction();
+        //do some jobs - e.g : multiple tables update or insert.
+        //$connection->commit();
+        //$connection->rollback();
+        //$connection->getLastGeneratedValue();
 
 
-        $names = null;
 
-        $tDBCreator = null;
+        if ($this->isFSWZoraAuthor($zR)) {
 
-        foreach ($zR->getCreator() as $creator) {
-            $tcreator = $this->analyzeEncoding($creator);
-            if ($tDBCreator == null && $this->isFSWMA($tcreator) ) {
-                $tDBCreator = $tcreator;
-            }
+            $insertTemplate = "insert into fsw_zora_doc " . " (author, datestamp, oai_identifier,status,title,xmlrecord,year)
+                        values (AUTHOR, DATESTAMP,OAI_IDENTIFIER,STATUS,TITLE,XMLFRAGMENT,YEAR)";
+            $insertTemplate = preg_replace('/AUTHOR/',$this->qV($this->getDBCreator($zR)),$insertTemplate );
+            $insertTemplate = preg_replace('/OAI_IDENTIFIER/',$this->qV($zR->getIdentifier()),$insertTemplate );
+            $insertTemplate = preg_replace('/DATESTAMP/',$this->qV($zR->getDatestamp()),$insertTemplate );
+            $insertTemplate = preg_replace('/YEAR/',$this->qV($zR->getDate()),$insertTemplate );
+            $insertTemplate = preg_replace('/TITLE/',$this->qV($zR->getTitle()),$insertTemplate );
+            $insertTemplate = preg_replace('/STATUS/',$this->qV($zR->getRecordStatus()),$insertTemplate );
+            $insertTemplate = preg_replace('/XMLFRAGMENT/', $this->qV($zR->getRecXML()),$insertTemplate );
 
-            //echo mb_detect_encoding($creator) . "\n";
+            $this->adapter->query($insertTemplate,Adapter::QUERY_MODE_EXECUTE);
 
-            $insertTemplate = "insert into " . FSWConfig::$table_mitarbeiter_oai . " (zoraName, oaiIdentifier, rolle)
-                        values ('ZORANAME', 'IDENTIFIER','ROLLE')";
-            $insertTemplate = preg_replace("/IDENTIFIER/",$zR->getIdentifier(),$insertTemplate );
-            $insertTemplate = preg_replace("/ZORANAME/",$tcreator,$insertTemplate );
-            $insertTemplate = preg_replace("/ROLLE/","CREATOR" ,$insertTemplate);
-            if (!mysql_query($insertTemplate,$this->dbConnection)) {
-                die(mysql_error($this->dbConnection));
+            $genIdZoraDoc = $this->adapter->getDriver()->getLastGeneratedValue();
+
+
+            foreach ($zR->getCreator() as $creator) {
+
+
+                if ( count($creatorAttribibutes = $this->isFSWZoraAuthor($creator)) > 0 ) {
+
+
+                    $sqlTemplate = 'insert into fsw_relation_zora_author_zora_doc (fid_zora_author,fid_zora_doc,';
+                    $sqlTemplate .= 'oai_identifier,zora_name,zora_values)';
+                    $sqlTemplate .= 'values (FID_ZORA_AUTHOR, FID_ZORA_DOC)';
+
+                    //            values ('ZORANAME', 'IDENTIFIER','ROLLE')";
+                    //$insertTemplate = preg_replace("/IDENTIFIER/",$zoraRecord->getIdentifier(),$insertTemplate );
+                    //$insertTemplate = preg_replace("/ZORANAME/",$tcreator,$insertTemplate );
+                    //$insertTemplate = preg_replace("/ROLLE/","CREATOR" ,$insertTemplate);
+
+                }
             }
         }
-
 
     }
 
@@ -165,23 +171,43 @@ EOD;
     }
 
 
-    public function isFSWMA ($maName) {
+    public function isFSWZoraAuthor ($object) {
 
-        /*
-        $istMA = false;
-        $sql = "SELECT * from mitarbeiterZoraName where  zoraName = '" . $maName . "'";
-        $handler = mysql_query($sql,$this->dbConnection);
-        if (!$handler) {
-            echo mysql_error($this->dbConnection);
-        } else {
-            $num_rows = mysql_num_rows($handler);
-            if( $num_rows <> 0) {
-                $istMA = true;
+        $isZoraAuthor = null;
+
+        if ($object instanceof ZoraRecord) {
+            foreach ($object->getCreator() as $creator) {
+                $sql = 'SELECT * from fsw_zora_author where zora_name = ' . $this->qV($creator);
+                $result = $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+                if (count($result > 0)) {
+                    $isZoraAuthor = true;
+                }
             }
+
+            if (is_null($isZoraAuthor)) {
+                foreach ($object->getContributor() as $contributor) {
+                    $sql = 'SELECT * from fsw_zora_author where zora_name = ' . $this->qV($contributor);
+                    $result = $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+                    if (count($result > 0)) {
+                        $isZoraAuthor = true;
+                        return $isZoraAuthor;
+                    }
+                }
+            }
+        } else {
+            $sql = 'SELECT * from fsw_zora_author where zora_name = ' . $this->qV($object);
+            $result = $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+            $isZoraAuthor = array();
+            foreach ($result as $row) {
+                $r = $row->getArrayCopy();
+                $isZoraAuthor['id'] = $r['id'];
+                $isZoraAuthor['zora_name'] = $r['zora_name'];
+            }
+
         }
-        return $istMA;
-        */
-        return true;
+
+
+        return $isZoraAuthor;
     }
 
 

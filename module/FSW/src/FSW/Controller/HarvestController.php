@@ -57,8 +57,8 @@ class HarvestController extends AbstractActionController
             if (isset($oaiSection->active) && $oaiSection->active && $sectionName == 'Zora') {
 
                 $zoraFacade = $this->getServiceLocator()->get('FSW\Services\Facade\ZoraFacade');
-                //$zoraFacade->processOAIItem();
-                $zoraFacade->insertIntoFSWExtended();
+                $zoraFacade->processOAIItem();
+                //$zoraFacade->insertIntoFSWExtended();
                 //$oaiClient = $zoraFacade->getOAIClient();
 
                 //missing set config, do something
@@ -77,7 +77,11 @@ class HarvestController extends AbstractActionController
         //Console::writeLine(
         //    "Completed without errors -- {$processed} source(s) processed."
         //);
-        return $this->getSuccessResponse();
+        $r = new \Zend\Http\Response();
+        $r->setStatusCode(503);
+        return $r;
+        //return $this->getSuccessResponse();
+
     }
 
     /**
