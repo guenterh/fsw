@@ -92,17 +92,17 @@ class ZoraFacade extends BaseFacade {
 
         if ($this->isFSWZoraAuthor($zR)) {
 
-            $insertTemplate = "insert into fsw_zora_doc " . " (author, datestamp, oai_identifier,status,title,xmlrecord,year)
-                        values (AUTHOR, DATESTAMP,OAI_IDENTIFIER,STATUS,TITLE,XMLFRAGMENT,YEAR)";
-            $insertTemplate = preg_replace('/AUTHOR/',$this->qV($this->getDBCreator($zR)),$insertTemplate );
-            $insertTemplate = preg_replace('/OAI_IDENTIFIER/',$this->qV($zR->getIdentifier()),$insertTemplate );
-            $insertTemplate = preg_replace('/DATESTAMP/',$this->qV($zR->getDatestamp()),$insertTemplate );
-            $insertTemplate = preg_replace('/YEAR/',$this->qV($zR->getDate()),$insertTemplate );
-            $insertTemplate = preg_replace('/TITLE/',$this->qV($zR->getTitle()),$insertTemplate );
-            $insertTemplate = preg_replace('/STATUS/',$this->qV($zR->getRecordStatus()),$insertTemplate );
-            $insertTemplate = preg_replace('/XMLFRAGMENT/', $this->qV($zR->getRecXML()),$insertTemplate );
+            $sqlTemplate = ' insert into fsw_zora_doc  (author, datestamp, oai_identifier,status,title,xmlrecord,year) ';
+            $sqlTemplate .= ' values (AUTHOR, DATESTAMP,OAI_IDENTIFIER,STATUS,TITLE,XMLFRAGMENT,YEAR)';
+            $sqlTemplate = preg_replace('/AUTHOR/',$this->qV($this->getDBCreator($zR)),$sqlTemplate );
+            $sqlTemplate = preg_replace('/OAI_IDENTIFIER/',$this->qV($zR->getIdentifier()),$sqlTemplate );
+            $sqlTemplate = preg_replace('/DATESTAMP/',$this->qV($zR->getDatestamp()),$sqlTemplate );
+            $sqlTemplate = preg_replace('/YEAR/',$this->qV($zR->getDate()),$sqlTemplate );
+            $sqlTemplate = preg_replace('/TITLE/',$this->qV($zR->getTitle()),$sqlTemplate );
+            $sqlTemplate = preg_replace('/STATUS/',$this->qV($zR->getRecordStatus()),$sqlTemplate );
+            $sqlTemplate = preg_replace('/XMLFRAGMENT/', $this->qV($zR->getRecXML()),$sqlTemplate );
 
-            $this->adapter->query($insertTemplate,Adapter::QUERY_MODE_EXECUTE);
+            $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
 
             $genIdZoraDoc = $this->adapter->getDriver()->getLastGeneratedValue();
 
@@ -114,16 +114,56 @@ class ZoraFacade extends BaseFacade {
 
 
                     $sqlTemplate = 'insert into fsw_relation_zora_author_zora_doc (fid_zora_author,fid_zora_doc,';
-                    $sqlTemplate .= 'oai_identifier,zora_name,zora_values)';
-                    $sqlTemplate .= 'values (FID_ZORA_AUTHOR, FID_ZORA_DOC)';
+                    $sqlTemplate .= 'oai_identifier,zora_name,zora_rolle)';
+                    $sqlTemplate .= 'values (FID_ZORA_AUTHOR, FID_ZORA_DOC,OAI_IDENTIFIER,ZORA_NAME,ZORA_ROLLE)';
+                    $sqlTemplate = preg_replace('/FID_ZORA_AUTHOR/',$this->qV($creatorAttribibutes['id']),$sqlTemplate );
+                    $sqlTemplate = preg_replace('/FID_ZORA_DOC/',$this->qV($genIdZoraDoc),$sqlTemplate );
+                    $sqlTemplate = preg_replace('/OAI_IDENTIFIER/',$this->qV($zR->getIdentifier()),$sqlTemplate );
+                    $sqlTemplate = preg_replace('/ZORA_NAME/',$this->qV($creator),$sqlTemplate );
+                    $sqlTemplate = preg_replace('/ZORA_ROLLE/',$this->qV("CREATOR"),$sqlTemplate );
+                    $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
 
-                    //            values ('ZORANAME', 'IDENTIFIER','ROLLE')";
-                    //$insertTemplate = preg_replace("/IDENTIFIER/",$zoraRecord->getIdentifier(),$insertTemplate );
-                    //$insertTemplate = preg_replace("/ZORANAME/",$tcreator,$insertTemplate );
-                    //$insertTemplate = preg_replace("/ROLLE/","CREATOR" ,$insertTemplate);
 
                 }
             }
+            foreach ($zR->getContributor() as $contributor) {
+
+
+                if ( count($creatorAttribibutes = $this->isFSWZoraAuthor($contributor)) > 0 ) {
+
+
+                    $sqlTemplate = 'insert into fsw_relation_zora_author_zora_doc (fid_zora_author,fid_zora_doc,';
+                    $sqlTemplate .= 'oai_identifier,zora_name,zora_rolle)';
+                    $sqlTemplate .= 'values (FID_ZORA_AUTHOR, FID_ZORA_DOC,OAI_IDENTIFIER,ZORA_NAME,ZORA_ROLLE)';
+                    $sqlTemplate = preg_replace('/FID_ZORA_AUTHOR/',$this->qV($creatorAttribibutes['id']),$sqlTemplate );
+                    $sqlTemplate = preg_replace('/FID_ZORA_DOC/',$this->qV($genIdZoraDoc),$sqlTemplate );
+                    $sqlTemplate = preg_replace('/OAI_IDENTIFIER/',$this->qV($zR->getIdentifier()),$sqlTemplate );
+                    $sqlTemplate = preg_replace('/ZORA_NAME/',$this->qV($contributor),$sqlTemplate );
+                    $sqlTemplate = preg_replace('/ZORA_ROLLE/',$this->qV("CONTRIBUTOR"),$sqlTemplate );
+                    $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
+                }
+            }
+
+            foreach ($zR->getType() as $type) {
+                $sqlTemplate = 'insert into fsw_zora_doctype (oai_identifier, oai_recordtyp, typform) ';
+                $sqlTemplate .= ' values (OAI_IDENTIFIER, OAIRECORDTYP,TYPFORM)';
+                $sqlTemplate = preg_replace("/OAI_IDENTIFIER/",$this->qV($zR->getIdentifier()),$sqlTemplate );
+                $sqlTemplate = preg_replace("/OAIRECORDTYP/",$this->qV($type),$sqlTemplate );
+                $sqlTemplate = preg_replace("/TYPFORM/",$this->qV("typ") ,$sqlTemplate);
+
+                $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
+            }
+
+            foreach ($zR->getSubtype() as $subtype) {
+                $sqlTemplate = 'insert into fsw_zora_doctype (oai_identifier, oai_recordtyp, typform) ';
+                $sqlTemplate .=  ' values (OAI_IDENTIFIER, OAIRECORDTYP,TYPFORM)';
+                $sqlTemplate = preg_replace("/OAI_IDENTIFIER/",$this->qV($zR->getIdentifier()),$sqlTemplate );
+                $sqlTemplate = preg_replace("/OAIRECORDTYP/",$this->qV($subtype),$sqlTemplate );
+                $sqlTemplate = preg_replace("/TYPFORM/",$this->qV("subtyp") ,$sqlTemplate);
+
+                $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
+            }
+
         }
 
     }
@@ -135,7 +175,8 @@ class ZoraFacade extends BaseFacade {
 <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
         <dc:title>The ää àà ä öö economics \\ //of primary 'prevention' of "cardiovascular disease" - A systematic review of economic evaluations</dc:title>
         <dc:creator>Schwüüppachppach, D L B</dc:creator>
-        <dc:creator>Boluarte, T A</dc:creator>
+        <dc:creator>Tanner, Jakob</dc:creator>
+        <dc:contributor>Schwager, Nicole</dc:contributor>
         <dc:creator>Suhrcke, M</dc:creator>
         <dc:subject>Swiss Research Institute for Public Health \\ // ??and Addiction</dc:subject>
         <dc:subject>610 Medicine &amp; health</dc:subject>
@@ -176,11 +217,13 @@ EOD;
         $isZoraAuthor = null;
 
         if ($object instanceof ZoraRecord) {
+
             foreach ($object->getCreator() as $creator) {
                 $sql = 'SELECT * from fsw_zora_author where zora_name = ' . $this->qV($creator);
                 $result = $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
                 if (count($result > 0)) {
                     $isZoraAuthor = true;
+                    break;
                 }
             }
 
@@ -234,13 +277,14 @@ EOD;
 
 
         foreach ($zR->getCreator() as $creator) {
-            if ($this->isFSWMA($creator)) {
+
+            if ($this->isFSWZoraAuthor($creator)) {
                 return $creator;
             }
         }
 
         foreach ($zR->getContributor() as $contributor) {
-            if ($this->isFSWMA($contributor)) {
+            if ($this->isFSWZoraAuthor($contributor)) {
                 return $contributor;
             }
         }
