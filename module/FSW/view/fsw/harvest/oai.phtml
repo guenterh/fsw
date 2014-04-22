@@ -1,0 +1,17 @@
+
+<div >
+
+<h1>Uberblick der per OAI abgefragten und behandelten records</h1>
+    <h2>number of records: <?= count($this->messages)?></h2>
+    <ul>
+
+
+        <?php foreach ($this->messages as $message):?>
+            <li><?= $message ?></li>
+
+        <?php endforeach; ?>
+
+    </ul>
+
+
+</div>

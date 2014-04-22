@@ -29,6 +29,7 @@ namespace FSW\Controller;
 use FSW\Services\OAI;
 use Zend\Console\Console;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
 /**
  * This controller handles various command-line tools
@@ -52,6 +53,7 @@ class HarvestController extends AbstractActionController
 
         $oaiConfig = $this->getServiceLocator()->get('FSW\Config')->get('oai');
 
+        $zoraFacade = null;
         foreach ($oaiConfig as $sectionName => $oaiSection) {
 
             if (isset($oaiSection->active) && $oaiSection->active && $sectionName == 'Zora') {
@@ -82,16 +84,22 @@ class HarvestController extends AbstractActionController
 
             }
         }
+        //delete FROM `fsw_zora_doc`;
+        //delete FROM `fsw_zora_doctype`;
+        //delete FROM `fsw_relation_zora_author_zora_doc`;
+        //delete FROM `fsw_cover`;
 
+        $test = $zoraFacade->getMessages();
 
+        return new ViewModel(array('messages' => $zoraFacade->getMessages()));
 
         // All done.
         //Console::writeLine(
         //    "Completed without errors -- {$processed} source(s) processed."
         //);
-        $r = new \Zend\Http\Response();
-        $r->setStatusCode(503);
-        return $r;
+        //$r = new \Zend\Http\Response();
+        //$r->setStatusCode(503);
+        //return $r;
         //return $this->getSuccessResponse();
 
     }

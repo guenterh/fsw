@@ -96,7 +96,7 @@ class ZoraFacade extends BaseFacade {
 
             if (strtoupper($zR->getRecordStatus()) === "DELETED") {
                 $this->deleteValuesFromZoraTables($zR->getIdentifier());
-                $this->messages = "<b>" . $zR->getIdentifier() . "</b>" . " was sent as deleted and was deleted in the database ";
+                $this->messages[] = "<b>" . $zR->getIdentifier() . "</b>" . " was sent as deleted and was deleted in the database ";
                 return;
 
             }
@@ -108,23 +108,23 @@ class ZoraFacade extends BaseFacade {
                         $this->deleteValuesFromZoraTables($zR->getIdentifier());
 
                         $this->insertValuesIntoZoraTables($zR);
-                        $this->messages = "<b>" . $zR->getIdentifier() . "</b>" . " was <b>updated</b> because datestamp has changed";
+                        $this->messages[] = "<b>" . $zR->getIdentifier() . "</b>" . " was <b>updated</b> because datestamp has changed";
 
                     } else {
-                        $this->messages = "<b>" . $zR->getIdentifier() . "</b>" . " was not updated because datestamp hasn't changed";
+                        $this->messages[] = "<b>" . $zR->getIdentifier() . "</b>" . " was not updated because datestamp hasn't changed";
 
                     }
 
                 } else {
                     $this->insertValuesIntoZoraTables($zR);
-                    $this->messages = "<b>" . $zR->getIdentifier() . "</b>" . " was <b>inserted</b> because wasn't in database before";
+                    $this->messages[] = "<b>" . $zR->getIdentifier() . "</b>" . " was <b>inserted</b> because wasn't in database before";
 
                 }
             } else {
-                $this->messages = '<b>none of the persons (creators: ' . $zR->getAllCreators() . ' or contributors: '  . $zR->getAllContributors() . ' are in FSW DB -> nothing was done';
+                $this->messages[] = 'none of the persons (creators: ' . $zR->getAllCreators() . ' or contributors: '  . $zR->getAllContributors() . ' are in FSW DB -> nothing was done';
             }
         } else {
-            $this->messages = 'send record wasn\'t an instance of ZoraRecord: ' . $args['oaiR'];
+            $this->messages[] = 'send record wasn\'t an instance of ZoraRecord: ' . $args['oaiR'];
         }
 
     }
@@ -455,6 +455,13 @@ EOD;
 
         return count($result) > 0 ? true : false;
     }
+
+    public function getMessages() {
+
+        return $this->messages;
+
+    }
+
 
 
 

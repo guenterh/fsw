@@ -313,6 +313,7 @@ class OAI implements EventManagerAwareInterface
             $token = $this
                 ->getRecordsByDate($this->startDate, $set, $this->harvestEndDate);
 
+            //$token = false;
             // Keep harvesting as long as a resumption token is provided:
             while ($token !== false) {
                 $token = $this->getRecordsByToken($token);
