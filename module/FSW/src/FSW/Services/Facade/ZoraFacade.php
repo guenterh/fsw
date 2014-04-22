@@ -26,6 +26,7 @@ class ZoraFacade extends BaseFacade {
     protected $tableGatewayCover;
     protected $sm;
     protected $adapter;
+    protected $messages = array();
 
 
     /**
@@ -79,91 +80,51 @@ class ZoraFacade extends BaseFacade {
 
     public function processOAIItem($args) {
 
-        $zR = $this->prepareZR();
+        //$zR = $this->prepareZR();
 
-        //$connection = $this->adapter->getDriver()->getConnection();
-        //$connection->beginTransaction();
-        //do some jobs - e.g : multiple tables update or insert.
-        //$connection->commit();
-        //$connection->rollback();
-        //$connection->getLastGeneratedValue();
+        $zR = $args->getParam('oaiR');
 
-
-
-        if ($this->isFSWZoraAuthor($zR)) {
-
-            $sqlTemplate = ' insert into fsw_zora_doc  (author, datestamp, oai_identifier,status,title,xmlrecord,year) ';
-            $sqlTemplate .= ' values (AUTHOR, DATESTAMP,OAI_IDENTIFIER,STATUS,TITLE,XMLFRAGMENT,YEAR)';
-            $sqlTemplate = preg_replace('/AUTHOR/',$this->qV($this->getDBCreator($zR)),$sqlTemplate );
-            $sqlTemplate = preg_replace('/OAI_IDENTIFIER/',$this->qV($zR->getIdentifier()),$sqlTemplate );
-            $sqlTemplate = preg_replace('/DATESTAMP/',$this->qV($zR->getDatestamp()),$sqlTemplate );
-            $sqlTemplate = preg_replace('/YEAR/',$this->qV($zR->getDate()),$sqlTemplate );
-            $sqlTemplate = preg_replace('/TITLE/',$this->qV($zR->getTitle()),$sqlTemplate );
-            $sqlTemplate = preg_replace('/STATUS/',$this->qV($zR->getRecordStatus()),$sqlTemplate );
-            $sqlTemplate = preg_replace('/XMLFRAGMENT/', $this->qV($zR->getRecXML()),$sqlTemplate );
-
-            $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
-
-            $genIdZoraDoc = $this->adapter->getDriver()->getLastGeneratedValue();
+        if ($zR  instanceof ZoraRecord) {
+            //$connection = $this->adapter->getDriver()->getConnection();
+            //$connection->beginTransaction();
+            //do some jobs - e.g : multiple tables update or insert.
+            //$connection->commit();
+            //$connection->rollback();
+            //$connection->getLastGeneratedValue();
 
 
-            foreach ($zR->getCreator() as $creator) {
 
+            if (strtoupper($zR->getRecordStatus()) === "DELETED") {
+                $this->deleteValuesFromZoraTables($zR->getIdentifier());
+                $this->messages = "<b>" . $zR->getIdentifier() . "</b>" . " was sent as deleted and was deleted in the database ";
+                return;
 
-                if ( count($creatorAttribibutes = $this->isFSWZoraAuthor($creator)) > 0 ) {
+            }
 
+            if ($this->isOneAuthorFSWRelated($zR)) {
 
-                    $sqlTemplate = 'insert into fsw_relation_zora_author_zora_doc (fid_zora_author,fid_zora_doc,';
-                    $sqlTemplate .= 'oai_identifier,zora_name,zora_rolle)';
-                    $sqlTemplate .= 'values (FID_ZORA_AUTHOR, FID_ZORA_DOC,OAI_IDENTIFIER,ZORA_NAME,ZORA_ROLLE)';
-                    $sqlTemplate = preg_replace('/FID_ZORA_AUTHOR/',$this->qV($creatorAttribibutes['id']),$sqlTemplate );
-                    $sqlTemplate = preg_replace('/FID_ZORA_DOC/',$this->qV($genIdZoraDoc),$sqlTemplate );
-                    $sqlTemplate = preg_replace('/OAI_IDENTIFIER/',$this->qV($zR->getIdentifier()),$sqlTemplate );
-                    $sqlTemplate = preg_replace('/ZORA_NAME/',$this->qV($creator),$sqlTemplate );
-                    $sqlTemplate = preg_replace('/ZORA_ROLLE/',$this->qV("CREATOR"),$sqlTemplate );
-                    $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
+                if ($this->isRecordInDB($zR->getIdentifier())) {
+                    if ($this->isRecordInDBandUpdated($zR->getIdentifier(),$zR->getDatestamp())) {
+                        $this->deleteValuesFromZoraTables($zR->getIdentifier());
 
+                        $this->insertValuesIntoZoraTables($zR);
+                        $this->messages = "<b>" . $zR->getIdentifier() . "</b>" . " was <b>updated</b> because datestamp has changed";
+
+                    } else {
+                        $this->messages = "<b>" . $zR->getIdentifier() . "</b>" . " was not updated because datestamp hasn't changed";
+
+                    }
+
+                } else {
+                    $this->insertValuesIntoZoraTables($zR);
+                    $this->messages = "<b>" . $zR->getIdentifier() . "</b>" . " was <b>inserted</b> because wasn't in database before";
 
                 }
+            } else {
+                $this->messages = '<b>none of the persons (creators: ' . $zR->getAllCreators() . ' or contributors: '  . $zR->getAllContributors() . ' are in FSW DB -> nothing was done';
             }
-            foreach ($zR->getContributor() as $contributor) {
-
-
-                if ( count($creatorAttribibutes = $this->isFSWZoraAuthor($contributor)) > 0 ) {
-
-
-                    $sqlTemplate = 'insert into fsw_relation_zora_author_zora_doc (fid_zora_author,fid_zora_doc,';
-                    $sqlTemplate .= 'oai_identifier,zora_name,zora_rolle)';
-                    $sqlTemplate .= 'values (FID_ZORA_AUTHOR, FID_ZORA_DOC,OAI_IDENTIFIER,ZORA_NAME,ZORA_ROLLE)';
-                    $sqlTemplate = preg_replace('/FID_ZORA_AUTHOR/',$this->qV($creatorAttribibutes['id']),$sqlTemplate );
-                    $sqlTemplate = preg_replace('/FID_ZORA_DOC/',$this->qV($genIdZoraDoc),$sqlTemplate );
-                    $sqlTemplate = preg_replace('/OAI_IDENTIFIER/',$this->qV($zR->getIdentifier()),$sqlTemplate );
-                    $sqlTemplate = preg_replace('/ZORA_NAME/',$this->qV($contributor),$sqlTemplate );
-                    $sqlTemplate = preg_replace('/ZORA_ROLLE/',$this->qV("CONTRIBUTOR"),$sqlTemplate );
-                    $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
-                }
-            }
-
-            foreach ($zR->getType() as $type) {
-                $sqlTemplate = 'insert into fsw_zora_doctype (oai_identifier, oai_recordtyp, typform) ';
-                $sqlTemplate .= ' values (OAI_IDENTIFIER, OAIRECORDTYP,TYPFORM)';
-                $sqlTemplate = preg_replace("/OAI_IDENTIFIER/",$this->qV($zR->getIdentifier()),$sqlTemplate );
-                $sqlTemplate = preg_replace("/OAIRECORDTYP/",$this->qV($type),$sqlTemplate );
-                $sqlTemplate = preg_replace("/TYPFORM/",$this->qV("typ") ,$sqlTemplate);
-
-                $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
-            }
-
-            foreach ($zR->getSubtype() as $subtype) {
-                $sqlTemplate = 'insert into fsw_zora_doctype (oai_identifier, oai_recordtyp, typform) ';
-                $sqlTemplate .=  ' values (OAI_IDENTIFIER, OAIRECORDTYP,TYPFORM)';
-                $sqlTemplate = preg_replace("/OAI_IDENTIFIER/",$this->qV($zR->getIdentifier()),$sqlTemplate );
-                $sqlTemplate = preg_replace("/OAIRECORDTYP/",$this->qV($subtype),$sqlTemplate );
-                $sqlTemplate = preg_replace("/TYPFORM/",$this->qV("subtyp") ,$sqlTemplate);
-
-                $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
-            }
-
+        } else {
+            $this->messages = 'send record wasn\'t an instance of ZoraRecord: ' . $args['oaiR'];
         }
 
     }
@@ -214,44 +175,50 @@ EOD;
 
     public function isFSWZoraAuthor ($object) {
 
-        $isZoraAuthor = null;
+        $isZoraAuthor = array();
 
-        if ($object instanceof ZoraRecord) {
-
-            foreach ($object->getCreator() as $creator) {
-                $sql = 'SELECT * from fsw_zora_author where zora_name = ' . $this->qV($creator);
-                $result = $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
-                if (count($result > 0)) {
-                    $isZoraAuthor = true;
-                    break;
-                }
-            }
-
-            if (is_null($isZoraAuthor)) {
-                foreach ($object->getContributor() as $contributor) {
-                    $sql = 'SELECT * from fsw_zora_author where zora_name = ' . $this->qV($contributor);
-                    $result = $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
-                    if (count($result > 0)) {
-                        $isZoraAuthor = true;
-                        return $isZoraAuthor;
-                    }
-                }
-            }
-        } else {
-            $sql = 'SELECT * from fsw_zora_author where zora_name = ' . $this->qV($object);
-            $result = $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
-            $isZoraAuthor = array();
-            foreach ($result as $row) {
-                $r = $row->getArrayCopy();
-                $isZoraAuthor['id'] = $r['id'];
-                $isZoraAuthor['zora_name'] = $r['zora_name'];
-            }
-
+        $sql = 'SELECT * from fsw_zora_author where zora_name = ' . $this->qV($object);
+        $result = $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        $isZoraAuthor = array();
+        foreach ($result as $row) {
+            $r = $row->getArrayCopy();
+            $isZoraAuthor['id'] = $r['id'];
+            $isZoraAuthor['zora_name'] = $r['zora_name'];
         }
+
 
 
         return $isZoraAuthor;
     }
+
+
+    public function isOneAuthorFSWRelated (ZoraRecord $object) {
+
+        $isZoraAuthor = false;
+
+
+        foreach ($object->getCreator() as $creator) {
+            $sql = 'SELECT * from fsw_zora_author where zora_name = ' . $this->qV($creator);
+            $result = $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+            if (count($result) > 0) {
+                $isZoraAuthor = true;
+                break;
+            }
+        }
+
+        if (is_null($isZoraAuthor)) {
+            foreach ($object->getContributor() as $contributor) {
+                $sql = 'SELECT * from fsw_zora_author where zora_name = ' . $this->qV($contributor);
+                $result = $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+                if (count($result) > 0) {
+                    $isZoraAuthor = true;
+                    return $isZoraAuthor;
+                }
+            }
+        }
+        return $isZoraAuthor;
+    }
+
 
 
     /**
@@ -292,6 +259,36 @@ EOD;
         return '';
 
     }
+
+    private function isRecordInDB($oai_identifier) {
+
+        $sql = 'select * from fsw_zora_doc where oai_identifier = ' . $this->qV($oai_identifier);
+
+        $result =  $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        $contained = count($result) > 0;
+        return $contained;
+    }
+
+    private function isRecordInDBandUpdated($oai_identifier, $datestamp) {
+
+        $sql = 'select * from fsw_zora_doc where oai_identifier = ' . $this->qV($oai_identifier);
+        $result =  $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+        $updated = false;
+        if ($number =  (count($result) > 0)){
+            foreach ($result as $row) {
+                $columns = $row->getArrayCopy();
+
+                $updated = strcmp($columns["datestamp"],$datestamp) != 0 ? true : false;
+                break;
+            }
+        }
+
+        return $updated;
+
+    }
+
+
 
 
     public function insertIntoFSWExtended() {
@@ -339,13 +336,128 @@ EOD;
                     $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
                 }
+            }
+        }
+    }
+
+    private function insertValuesIntoZoraTables($zR) {
+
+
+
+        $sqlTemplate = ' insert into fsw_zora_doc  (author, datestamp, oai_identifier,status,title,xmlrecord,year) ';
+        $sqlTemplate .= ' values (AUTHOR, DATESTAMP,OAI_IDENTIFIER,STATUS,TITLE,XMLFRAGMENT,YEAR)';
+        $sqlTemplate = preg_replace('/AUTHOR/',$this->qV($this->getDBCreator($zR)),$sqlTemplate );
+        $sqlTemplate = preg_replace('/OAI_IDENTIFIER/',$this->qV($zR->getIdentifier()),$sqlTemplate );
+        $sqlTemplate = preg_replace('/DATESTAMP/',$this->qV($zR->getDatestamp()),$sqlTemplate );
+        $sqlTemplate = preg_replace('/YEAR/',$this->qV($zR->getDate()),$sqlTemplate );
+        $sqlTemplate = preg_replace('/TITLE/',$this->qV($zR->getTitle()),$sqlTemplate );
+        $sqlTemplate = preg_replace('/STATUS/',$this->qV($zR->getRecordStatus()),$sqlTemplate );
+        $sqlTemplate = preg_replace('/XMLFRAGMENT/', $this->qV($zR->getRecXML()),$sqlTemplate );
+
+        $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
+
+        $genIdZoraDoc = $this->adapter->getDriver()->getLastGeneratedValue();
+
+
+        foreach ($zR->getCreator() as $creator) {
+
+            $creatorAttributes = $this->isFSWZoraAuthor($creator);
+
+            if ( count($creatorAttributes) > 0 ) {
+
+
+                $sqlTemplate = 'insert into fsw_relation_zora_author_zora_doc (fid_zora_author,fid_zora_doc,';
+                $sqlTemplate .= 'oai_identifier,zora_name,zora_rolle)';
+                $sqlTemplate .= 'values (FID_ZORA_AUTHOR, FID_ZORA_DOC,OAI_IDENTIFIER,ZORA_NAME,ZORA_ROLLE)';
+                $sqlTemplate = preg_replace('/FID_ZORA_AUTHOR/',$this->qV($creatorAttributes['id']),$sqlTemplate );
+                $sqlTemplate = preg_replace('/FID_ZORA_DOC/',$this->qV($genIdZoraDoc),$sqlTemplate );
+                $sqlTemplate = preg_replace('/OAI_IDENTIFIER/',$this->qV($zR->getIdentifier()),$sqlTemplate );
+                $sqlTemplate = preg_replace('/ZORA_NAME/',$this->qV($creator),$sqlTemplate );
+                $sqlTemplate = preg_replace('/ZORA_ROLLE/',$this->qV("CREATOR"),$sqlTemplate );
+                $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
+
 
             }
+        }
+        foreach ($zR->getContributor() as $contributor) {
+
+            $contributorAttributes = $this->isFSWZoraAuthor($contributor);
+
+            if ( count($contributorAttributes) > 0 ) {
+
+
+                $sqlTemplate = 'insert into fsw_relation_zora_author_zora_doc (fid_zora_author,fid_zora_doc,';
+                $sqlTemplate .= 'oai_identifier,zora_name,zora_rolle)';
+                $sqlTemplate .= 'values (FID_ZORA_AUTHOR, FID_ZORA_DOC,OAI_IDENTIFIER,ZORA_NAME,ZORA_ROLLE)';
+                $sqlTemplate = preg_replace('/FID_ZORA_AUTHOR/',$this->qV($contributorAttributes['id']),$sqlTemplate );
+                $sqlTemplate = preg_replace('/FID_ZORA_DOC/',$this->qV($genIdZoraDoc),$sqlTemplate );
+                $sqlTemplate = preg_replace('/OAI_IDENTIFIER/',$this->qV($zR->getIdentifier()),$sqlTemplate );
+                $sqlTemplate = preg_replace('/ZORA_NAME/',$this->qV($contributor),$sqlTemplate );
+                $sqlTemplate = preg_replace('/ZORA_ROLLE/',$this->qV("CONTRIBUTOR"),$sqlTemplate );
+                $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
+            }
+        }
+
+        foreach ($zR->getType() as $type) {
+            $sqlTemplate = 'insert into fsw_zora_doctype (oai_identifier, oai_recordtyp, typform) ';
+            $sqlTemplate .= ' values (OAI_IDENTIFIER, OAIRECORDTYP,TYPFORM)';
+            $sqlTemplate = preg_replace("/OAI_IDENTIFIER/",$this->qV($zR->getIdentifier()),$sqlTemplate );
+            $sqlTemplate = preg_replace("/OAIRECORDTYP/",$this->qV($type),$sqlTemplate );
+            $sqlTemplate = preg_replace("/TYPFORM/",$this->qV("typ") ,$sqlTemplate);
+
+            $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
+        }
+
+        foreach ($zR->getSubtype() as $subtype) {
+            $sqlTemplate = 'insert into fsw_zora_doctype (oai_identifier, oai_recordtyp, typform) ';
+            $sqlTemplate .=  ' values (OAI_IDENTIFIER, OAIRECORDTYP,TYPFORM)';
+            $sqlTemplate = preg_replace("/OAI_IDENTIFIER/",$this->qV($zR->getIdentifier()),$sqlTemplate );
+            $sqlTemplate = preg_replace("/OAIRECORDTYP/",$this->qV($subtype),$sqlTemplate );
+            $sqlTemplate = preg_replace("/TYPFORM/",$this->qV("subtyp") ,$sqlTemplate);
+
+            $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
+        }
+
+        if (! $this->isRecordInFSWCover($zR->getIdentifier())) {
+
+            $sqlTemplate = 'insert into fsw_cover (oai_identifier,frontpage)';
+            $sqlTemplate .= ' values (OAI_IDENTIFIER, FRONTPAGE)';
+            $sqlTemplate = preg_replace("/OAI_IDENTIFIER/",$this->qV($zR->getIdentifier()),$sqlTemplate );
+            $sqlTemplate = preg_replace("/FRONTPAGE/",$this->qV("nofrontpage"),$sqlTemplate );
+
+            $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
 
         }
 
 
     }
+
+    private function deleteValuesFromZoraTables($oai_identifier, $deleteAll = false) {
+
+        $sql = 'delete from fsw_zora_doc where oai_identifier = ' . $this->qV ($oai_identifier) ;
+        $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        $sql = 'delete from fsw_zora_doctype where oai_identifier = ' . $this->qV ($oai_identifier);
+        $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        $sql = 'delete from fsw_relation_zora_author_zora_doc where oai_identifier = ' . $this->qV ($oai_identifier);
+        $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        if ($deleteAll) {
+            $sql = 'delete from fsw_cover where oai_identifier = ' . $this->qV ($oai_identifier);
+            $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        }
+
+    }
+
+    private function isRecordInFSWCover($oai_identifier) {
+
+        $sql = 'select * from fsw_cover where oai_identifier = ' . $this->qV ($oai_identifier) ;
+        $result =  $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+
+        return count($result) > 0 ? true : false;
+    }
+
+
+
 
 
 }

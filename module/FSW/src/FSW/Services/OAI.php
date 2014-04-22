@@ -546,10 +546,23 @@ class OAI implements EventManagerAwareInterface
      *
      * @return void
      */
-    protected function saveDeletedRecord($id)
+    protected function saveDeletedRecord($id, $record,$status)
     {
-        $filename = $this->getFilename($id, 'delete');
-        file_put_contents($filename, $id);
+
+        try {
+            $zR = new ZoraRecord();
+            $zR->setRawOAIRecord($record,$id,$status,null);
+            $this->getEventManager()->trigger('processOAIItem',null,array('oaiR' => $zR));
+
+        } catch (\Exception $ex) {
+
+            $test = "";
+        }
+
+
+
+        //$filename = $this->getFilename($id, 'delete');
+        //file_put_contents($filename, $id);
     }
 
     /**
@@ -738,14 +751,16 @@ class OAI implements EventManagerAwareInterface
             $attribs = $record->header->attributes();
 
             $status = !empty($attribs['status']) ? $attribs['status'] : 'updated';
-            $this->saveRecord($id, $record,$status,$record->header->datestamp);
+            //$this->saveRecord($id, $record,$status,$record->header->datestamp);
 
-            //if (strtolower($attribs['status']) == 'deleted') {
-            //    $this->saveDeletedRecord($id);
-            //} else {
-            //    $this->saveRecord($id, $record);
+            if (strtolower($attribs['status']) == 'deleted') {
+                $xml = $record->asXML();
+
+                $this->saveDeletedRecord($id,$xml,$status);
+            } else {
+                $this->saveRecord($id, $record,$status ,$record->header->datestamp);
                 $harvestedIds[] = $id;
-            //}
+            }
 
             // If the current record's date is newer than the previous end date,
             // remember it for future reference:

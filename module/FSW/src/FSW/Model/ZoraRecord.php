@@ -255,5 +255,30 @@ class ZoraRecord  {
         return true;
     }
 
+    public function getAllCreators() {
+
+        $creatorsConcatenated = "";
+        array_map(function ($element) use (&$creatorsConcatenated) {
+
+            $creatorsConcatenated .= $element . "###";
+
+        }, $this->creator);
+
+        return substr($creatorsConcatenated,0,strlen($creatorsConcatenated) -3 );
+
+    }
+
+    public function getAllContributors () {
+
+        $contributorsConcatenated = "";
+        array_map(function ($element) use (&$contributorsConcatenated) {
+
+            $contributorsConcatenated .= $element . "###";
+
+        }, $this->contributor);
+
+        return substr($contributorsConcatenated,0,strlen($contributorsConcatenated) -3 );
+
+    }
 
 }
