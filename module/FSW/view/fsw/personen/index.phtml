@@ -1,10 +1,14 @@
-<?php
 
 
-$title = 'Alle Personen';
-$this->headTitle($title);
-
-?>
-
-
-<h4> Alle Personen </h4>
+<div class="row">
+    <div class="span3" id="sidebar">
+        <?=
+        $this->render('fsw/global/sidebar', array(
+            'route' => 'personen',
+            'listItems' => $personen
+        ));?>
+    </div>
+    <div class="span9" id="content">
+        <?= $this->render('fsw/personen/home'); ?>
+    </div>
+</div>

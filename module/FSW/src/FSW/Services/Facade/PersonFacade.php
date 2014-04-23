@@ -18,9 +18,18 @@ class PersonFacade extends BaseFacade {
      *
      * @param	 TableGateway	$tableGateway
      */
-    public function __construct(TableGateway $tableGateway)
+
+    protected $tableGatewayPersExtended;
+    protected $tableGatewayZoraAuthor;
+
+    public function __construct(TableGateway $tableGatewayPersCore,
+                                TableGateway $tableGatewayPersExtended,
+                                TableGateway $tableGatewayZoraAuthor)
     {
-        $this->tableGateway = $tableGateway;
+        $this->tableGateway = $tableGatewayPersCore;
+        $this->tableGatewayPersExtended = $tableGatewayPersExtended;
+        $this->tableGatewayZoraAuthor = $tableGatewayZoraAuthor;
+
     }
 
 
@@ -40,4 +49,4 @@ class PersonFacade extends BaseFacade {
     }
 
 
-} 
+}

@@ -34,7 +34,7 @@ use FSW\Services\HistSemDBServiceAwareInterface;
 use Zend\View\Model\ViewModel;
 
 
-class PersonenController extends AbstractActionController{
+class PersonenController extends BaseController{
 
 
     /**
@@ -42,12 +42,37 @@ class PersonenController extends AbstractActionController{
      */
 
 
-
+    protected $personenFacade;
 
 
     public function indexAction() {
 
-        return new ViewModel();
+
+        $this->personenFacade =  $this->getServiceLocator()->get('FSW\Services\Facade\PersonenFacade');
+        $personen = $this->personenFacade->find(null,500);
+        return new ViewModel(array('personen' => $personen));
 
     }
+
+
+    /**
+     * Search matching records
+     *
+     * @param	Integer		$limit        Search result limit
+     * @return	ViewModel
+     **/
+    public function searchAction($limit = 15)
+    {
+        $this->personenFacade =  $this->getServiceLocator()->get('FSW\Services\Facade\PersonenFacade');
+
+
+        $query = $this->params()->fromQuery('query', '');
+        $data = array(
+            'route' => strtolower($this->getTypeName()),
+            'listItems' => $this->personenFacade->find($query, $limit)
+        );
+
+        return $this->getAjaxView($data, 'fsw/global/search');
+    }
+
 }

@@ -104,6 +104,9 @@ return array(
 
             'FSW\Table\PersonTable' => 'FSW\Services\Factory::getPersonFacade',
             'PersonTableGateway' => 'FSW\Services\Factory::getPersonTableGateway',
+            'PersonExtendedTableGateway' => 'FSW\Services\Factory::getPersonExtendedTableGateway',
+            'PersonZoraAuthorTableGateway' => 'FSW\Services\Factory::getPersonZoraAuthorTableGateway',
+
 
 
             'FSW\Model\KolloquiumTable' =>  'FSW\Model\Factories\KolloquiumTableFactory',
@@ -116,6 +119,7 @@ return array(
 
 
             'FSW\Services\Facade\AktivitaetFacade'    =>  'FSW\Services\Factory::getAktivitaetFassade',
+            'FSW\Services\Facade\PersonenFacade'    =>  'FSW\Services\Factory::getPersonFacade',
             'AktivitaetTableGateway'          =>  'FSW\Services\Factory::getAktivitaetTableGateway',
 
             'ZoraDocTableGateway'          =>  'FSW\Services\Factory::getZoraDocTableGateway',

@@ -12,6 +12,8 @@ use Zend\ServiceManager\ServiceManager;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 use FSW\Model\Person;
+use FSW\Model\PersonExtended;
+use FSW\Model\PersonZoraAuthor;
 use FSW\Model\ZoraDoc;
 use FSW\Model\ZoraDocType;
 use FSW\Model\ZoraAuthor;
@@ -32,8 +34,16 @@ class Factory {
     public static function getPersonFacade(ServiceManager $sm) {
 
 
-        $tableGateway = $sm->get('PersonTableGateway');
-        $table = new PersonFacade($tableGateway);
+        $tableGatewayPersonCore = $sm->get('PersonTableGateway');
+        $tableGatewayPersExtended = $sm->get('PersonExtendedTableGateway');
+        $tableGatewayZoraAuthor = $sm->get('PersonZoraAuthorTableGateway');
+
+
+
+        $table = new PersonFacade($tableGatewayPersonCore,
+                                    $tableGatewayPersExtended,
+                                    $tableGatewayZoraAuthor
+                                    );
         return $table;
 
 
@@ -109,12 +119,27 @@ class Factory {
 
     public static function getPersonTableGateway(ServiceManager $sm) {
 
-        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+        $dbAdapter = $sm->get('HistSemDBService')->getAdapter();
         $resultSetPrototype = new ResultSet();
         $resultSetPrototype->setArrayObjectPrototype(new Person());
-        return new TableGateway('mitarbeiter', $dbAdapter, null, $resultSetPrototype);
+        return new TableGateway('Per_Personen', $dbAdapter, null, $resultSetPrototype);
     }
 
+    public static function getPersonExtendedTableGateway(ServiceManager $sm) {
+
+        $dbAdapter = $sm->get('HistSemDBService')->getAdapter();
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new PersonExtended());
+        return new TableGateway('fsw_personen_extemded', $dbAdapter, null, $resultSetPrototype);
+    }
+
+    public static function getPersonZoraAuthorTableGateway(ServiceManager $sm) {
+
+        $dbAdapter = $sm->get('HistSemDBService')->getAdapter();
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new PersonZoraAuthor());
+        return new TableGateway('fsw_zora_author', $dbAdapter, null, $resultSetPrototype);
+    }
 
     public static function getAktivitaetTableGateway(ServiceManager $sm) {
 
