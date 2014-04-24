@@ -49,7 +49,7 @@ class PersonenController extends BaseController{
 
 
         $this->personenFacade =  $this->getServiceLocator()->get('FSW\Services\Facade\PersonenFacade');
-        $personen = $this->personenFacade->find(null,500);
+        $personen = $this->personenFacade->fetchAll();
         return new ViewModel(array('personen' => $personen));
 
     }

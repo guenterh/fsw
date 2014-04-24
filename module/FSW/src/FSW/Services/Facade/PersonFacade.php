@@ -22,6 +22,11 @@ class PersonFacade extends BaseFacade {
     protected $tableGatewayPersExtended;
     protected $tableGatewayZoraAuthor;
 
+    protected $searchFields = array(
+        'pers_name',
+        'pers_vorname',
+    );
+
     public function __construct(TableGateway $tableGatewayPersCore,
                                 TableGateway $tableGatewayPersExtended,
                                 TableGateway $tableGatewayZoraAuthor)
@@ -43,10 +48,20 @@ class PersonFacade extends BaseFacade {
      */
     public function find($searchString, $limit = 30)
     {
-        $test = $this->getAll(null,$limit);
+        //$test = $this->getAll(null,$limit);
+        $test = $this->findFulltext($searchString,'pers_name',500);
 
         return $test;
     }
+
+    public function fetchAll()
+    {
+        $resultSet = $this->tableGateway->select();
+        return $resultSet;
+    }
+
+
+
 
 
 }

@@ -76,8 +76,9 @@ abstract class BaseFacade
 				->limit($limit)
 				->where($likeCondition);
 
-//		$sql = new Sql($this->tableGateway->getAdapter(), $this->getTable());
-//		var_dump($sql->getSqlStringForSqlObject($select));
+		$sql = new Sql($this->tableGateway->getAdapter(), $this->getTable());
+        $test = $sql->getSqlStringForSqlObject($select);
+		//var_dump($sql->getSqlStringForSqlObject($select));
 
 		return $this->tableGateway->selectWith($select);
 	}

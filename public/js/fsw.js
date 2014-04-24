@@ -2,7 +2,7 @@ var FSWAdmin = {
 
 	onLoaded: function() {
 
-		if( this.hasUrlPart('/medien') ) {
+		if( this.hasUrlPart('/medien') || this.hasUrlPart('/personen') ) {
 
 			this.Medien.init();
 		}
