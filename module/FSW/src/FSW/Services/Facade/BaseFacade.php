@@ -1,6 +1,8 @@
 <?php
 namespace FSW\Services\Facade;
 
+use FSW\Services\HistSemDBService;
+use FSW\Services\HistSemDBServiceAwareInterface;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Predicate\PredicateSet;
 use Zend\Db\Sql\Select;
@@ -16,7 +18,7 @@ use FSW\Model\BaseModel;
  * [Description]
  *
  */
-abstract class BaseFacade
+abstract class BaseFacade implements HistSemDBServiceAwareInterface
 {
 
 	/**
@@ -29,7 +31,9 @@ abstract class BaseFacade
 	 */
 	protected $tableGateway;
 
+    protected $histSemDBService;
 
+    private $adapater;
 
 
 	/**
@@ -192,5 +196,18 @@ abstract class BaseFacade
 	}
 
 
+    public function setHistSemDBService(HistSemDBService $dbService)
+    {
+        $this->histSemDBService = $dbService;
 
+    }
+
+    protected function getAdapter() {
+
+
+        if (is_null($this->adapater)) {
+            $this->adapater = $this->histSemDBService->getAdapter();
+        }
+        return $this->adapater;
+    }
 }

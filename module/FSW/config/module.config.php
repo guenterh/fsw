@@ -133,7 +133,11 @@ return array(
 
 
 
+        ),
+        'initializers' => array(
+            'FSW\Services\Initializer\Initializer::initInstance',
         )
+
     ),
 
 

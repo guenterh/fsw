@@ -38,8 +38,8 @@ class ZoraFacade extends BaseFacade {
                                 TableGateway $tableGatewayZoraAuthor,
                                 TableGateway $tablegatewayZoraDocType,
                                 TableGateway $tablegatewayCover,
-                                ServiceManager $sm,
-                                Adapter $adapter)
+                                ServiceManager $sm
+                                )
     {
 
         $this->tableGatewayCover = $tablegatewayCover;
@@ -47,7 +47,7 @@ class ZoraFacade extends BaseFacade {
         $this->tableGatewayZoraDoc = $tableGatewayZoraDoc;
         $this->tableGatewayZoraDocType = $tablegatewayZoraDocType;
         $this->sm = $sm;
-        $this->adapter = $adapter;
+        //$this->adapter =  $this->histSemDBService->getAdapter();
 
     }
 
@@ -178,7 +178,7 @@ EOD;
         $isZoraAuthor = array();
 
         $sql = 'SELECT * from fsw_zora_author where zora_name = ' . $this->qV($object);
-        $result = $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        $result = $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
         $isZoraAuthor = array();
         foreach ($result as $row) {
             $r = $row->getArrayCopy();
@@ -199,7 +199,7 @@ EOD;
 
         foreach ($object->getCreator() as $creator) {
             $sql = 'SELECT * from fsw_zora_author where zora_name = ' . $this->qV($creator);
-            $result = $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+            $result = $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
             if (count($result) > 0) {
                 $isZoraAuthor = true;
                 break;
@@ -209,7 +209,7 @@ EOD;
         if (is_null($isZoraAuthor)) {
             foreach ($object->getContributor() as $contributor) {
                 $sql = 'SELECT * from fsw_zora_author where zora_name = ' . $this->qV($contributor);
-                $result = $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+                $result = $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
                 if (count($result) > 0) {
                     $isZoraAuthor = true;
                     return $isZoraAuthor;
@@ -229,7 +229,7 @@ EOD;
      */
     private function qV ($value) {
 
-        return $this->adapter->getPlatform()->quoteValue($value);
+        return $this->getAdapter()->getPlatform()->quoteValue($value);
 
     }
 
@@ -264,7 +264,7 @@ EOD;
 
         $sql = 'select * from fsw_zora_doc where oai_identifier = ' . $this->qV($oai_identifier);
 
-        $result =  $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
         $contained = count($result) > 0;
         return $contained;
     }
@@ -272,7 +272,7 @@ EOD;
     private function isRecordInDBandUpdated($oai_identifier, $datestamp) {
 
         $sql = 'select * from fsw_zora_doc where oai_identifier = ' . $this->qV($oai_identifier);
-        $result =  $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
         $updated = false;
         if ($number =  (count($result) > 0)){
@@ -296,7 +296,7 @@ EOD;
 
         $sql = 'select * from Per_Personen;';
 
-        $result =  $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
         foreach ($result as $row) {
 
@@ -307,7 +307,7 @@ EOD;
 
             $sql = 'select * from FSWmitarbeiter m ' ;
             $sql = $sql . ' where  m.name like "%' . $r['pers_name'] . '%" and m.name like "%' . $r['pers_vorname'] . '%";';
-            $resultFSW =  $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+            $resultFSW =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
             foreach ($resultFSW as $rowFSW) {
 
@@ -317,12 +317,12 @@ EOD;
                 $sql = $sql .  $this->qV($r['pers_name'] . ', ' . $r['pers_vorname']) . ',';
                 $sql = $sql .  $this->qV($f['profilURL']) . ' )';
 
-                $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
-                $genIdPersonenExtended = $this->adapter->getDriver()->getLastGeneratedValue();
+                $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+                $genIdPersonenExtended = $this->getAdapter()->getDriver()->getLastGeneratedValue();
 
 
                 $sql = 'select * from FSWmitarbeiterZoraName mz where mz.mit_id = ' . $rowFSW['mit_id'];
-                $resultZoraName =  $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+                $resultZoraName =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
                 foreach ($resultZoraName as $zN) {
                     $z = $zN->getArrayCopy();
@@ -333,7 +333,7 @@ EOD;
                     $sql = $sql .  $this->qV($z['zoraName']) . ',';
                     $sql = $sql .  $this->qV($z['zoraNameCustomized']) . ' )';
 
-                    $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+                    $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
                 }
             }
@@ -354,9 +354,9 @@ EOD;
         $sqlTemplate = preg_replace('/STATUS/',$this->qV($zR->getRecordStatus()),$sqlTemplate );
         $sqlTemplate = preg_replace('/XMLFRAGMENT/', $this->qV($zR->getRecXML()),$sqlTemplate );
 
-        $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
+        $this->getAdapter()->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
 
-        $genIdZoraDoc = $this->adapter->getDriver()->getLastGeneratedValue();
+        $genIdZoraDoc = $this->getAdapter()->getDriver()->getLastGeneratedValue();
 
 
         foreach ($zR->getCreator() as $creator) {
@@ -374,7 +374,7 @@ EOD;
                 $sqlTemplate = preg_replace('/OAI_IDENTIFIER/',$this->qV($zR->getIdentifier()),$sqlTemplate );
                 $sqlTemplate = preg_replace('/ZORA_NAME/',$this->qV($creator),$sqlTemplate );
                 $sqlTemplate = preg_replace('/ZORA_ROLLE/',$this->qV("CREATOR"),$sqlTemplate );
-                $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
+                $this->getAdapter()->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
 
 
             }
@@ -394,7 +394,7 @@ EOD;
                 $sqlTemplate = preg_replace('/OAI_IDENTIFIER/',$this->qV($zR->getIdentifier()),$sqlTemplate );
                 $sqlTemplate = preg_replace('/ZORA_NAME/',$this->qV($contributor),$sqlTemplate );
                 $sqlTemplate = preg_replace('/ZORA_ROLLE/',$this->qV("CONTRIBUTOR"),$sqlTemplate );
-                $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
+                $this->getAdapter()->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
             }
         }
 
@@ -405,7 +405,7 @@ EOD;
             $sqlTemplate = preg_replace("/OAIRECORDTYP/",$this->qV($type),$sqlTemplate );
             $sqlTemplate = preg_replace("/TYPFORM/",$this->qV("typ") ,$sqlTemplate);
 
-            $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
+            $this->getAdapter()->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
         }
 
         foreach ($zR->getSubtype() as $subtype) {
@@ -415,7 +415,7 @@ EOD;
             $sqlTemplate = preg_replace("/OAIRECORDTYP/",$this->qV($subtype),$sqlTemplate );
             $sqlTemplate = preg_replace("/TYPFORM/",$this->qV("subtyp") ,$sqlTemplate);
 
-            $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
+            $this->getAdapter()->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
         }
 
         if (! $this->isRecordInFSWCover($zR->getIdentifier())) {
@@ -425,7 +425,7 @@ EOD;
             $sqlTemplate = preg_replace("/OAI_IDENTIFIER/",$this->qV($zR->getIdentifier()),$sqlTemplate );
             $sqlTemplate = preg_replace("/FRONTPAGE/",$this->qV("nofrontpage"),$sqlTemplate );
 
-            $this->adapter->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
+            $this->getAdapter()->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
 
         }
 
@@ -435,14 +435,14 @@ EOD;
     private function deleteValuesFromZoraTables($oai_identifier, $deleteAll = false) {
 
         $sql = 'delete from fsw_zora_doc where oai_identifier = ' . $this->qV ($oai_identifier) ;
-        $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
         $sql = 'delete from fsw_zora_doctype where oai_identifier = ' . $this->qV ($oai_identifier);
-        $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
         $sql = 'delete from fsw_relation_zora_author_zora_doc where oai_identifier = ' . $this->qV ($oai_identifier);
-        $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
         if ($deleteAll) {
             $sql = 'delete from fsw_cover where oai_identifier = ' . $this->qV ($oai_identifier);
-            $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+            $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
         }
 
     }
@@ -450,7 +450,7 @@ EOD;
     private function isRecordInFSWCover($oai_identifier) {
 
         $sql = 'select * from fsw_cover where oai_identifier = ' . $this->qV ($oai_identifier) ;
-        $result =  $this->adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
 
         return count($result) > 0 ? true : false;

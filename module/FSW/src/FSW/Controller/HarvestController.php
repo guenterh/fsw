@@ -40,7 +40,7 @@ use Zend\View\Model\ViewModel;
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     http://vufind.org/wiki/vufind2:building_a_controller Wiki
  */
-class HarvestController extends AbstractActionController
+class HarvestController extends BaseController
 {
     /**
      * Harvest OAI-PMH records.

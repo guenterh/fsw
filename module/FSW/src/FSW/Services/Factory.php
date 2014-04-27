@@ -65,10 +65,11 @@ class Factory {
         $tGZoraAuthor = $sm->get('ZoraAuthorTableGateway');
         $tGCover = $sm->get('CoverTableGateway');
 
-        $histSemDBService = $sm->get('HistSemDBService');
-        $dbAdapter = $histSemDBService->getAdapter();
-
-        $zF = new ZoraFacade($tGZoraDoc,$tGZoraAuthor,$tGZoraDocType,$tGCover,$sm,$dbAdapter);
+        //$histSemDBService = $sm->get('HistSemDBService');
+        //$dbAdapter = $histSemDBService->getAdapter();
+        //es sollte der OAI client injiziert werden
+        
+        $zF = new ZoraFacade($tGZoraDoc,$tGZoraAuthor,$tGZoraDocType,$tGCover,$sm);
 
         return $zF;
 
