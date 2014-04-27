@@ -28,9 +28,7 @@
  */
 
 namespace FSW\Controller;
-use FSW\Services\HistSemDBService;
-use Zend\Mvc\Controller\AbstractActionController;
-use FSW\Services\HistSemDBServiceAwareInterface;
+
 use Zend\View\Model\ViewModel;
 
 

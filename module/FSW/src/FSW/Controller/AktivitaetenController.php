@@ -30,7 +30,9 @@ class AktivitaetenController extends BaseController {
         $mitid = !is_null($mitid) ? $mitid : 0;
         $aktivitaetentyp = !is_null($aktivitaetentyp) ? $aktivitaetentyp : array();
 
-        $aktivitaetenFacade = $this->histSemDBService->getAktivitaetFacade();
+
+        //todo Facaden sollten nicht direkt über den ServiceLocator vom Controller geholt sondern über Factory gesetzt werden
+        $aktivitaetenFacade = $this->getServiceLocator()->get('FSW\Services\Facade\AktivitaetFacade');
 
         //$t = array('Lizentiatsarbeit');
         $result = $aktivitaetenFacade->getActivities($aktivitaetentyp,$mitid);

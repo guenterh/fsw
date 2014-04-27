@@ -36,9 +36,7 @@ class KolloquienController extends BaseController {
             $this->kolloquiumTable = $sm->get('FSW\Model\KolloquiumTable');
         }
 
-        $extendedAdapter = $this->getServiceLocator()->get("HistSemDBService");
-
-
+        //$extendedAdapter = $this->getServiceLocator()->get("HistSemDBService");
         return $this->kolloquiumTable;
     }
 

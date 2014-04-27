@@ -68,7 +68,7 @@ class Factory {
         //$histSemDBService = $sm->get('HistSemDBService');
         //$dbAdapter = $histSemDBService->getAdapter();
         //es sollte der OAI client injiziert werden
-        
+
         $zF = new ZoraFacade($tGZoraDoc,$tGZoraAuthor,$tGZoraDocType,$tGCover,$sm);
 
         return $zF;
