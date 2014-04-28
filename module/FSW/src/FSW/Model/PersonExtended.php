@@ -16,6 +16,12 @@ use Zend\InputFilter\InputFilterInterface;
 class PersonExtended extends BaseModel implements InputFilterAwareInterface {
 
 
+    public $pers_id;
+    public $profilURL;
+    public $fullname;
+
+    protected $inputFilter;
+
     /**
      * Set input filter
      *
@@ -34,6 +40,88 @@ class PersonExtended extends BaseModel implements InputFilterAwareInterface {
      */
     public function getInputFilter()
     {
-        // TODO: Implement getInputFilter() method.
+        if (!$this->inputFilter) {
+            $inputFilter = new InputFilter();
+
+            $inputFilter->add(array(
+                'name'     => 'pers_id',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name'     => 'profilURL',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StringTrim'),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name'     => 'fullname',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StringTrim'),
+                ),
+            ));
+
+        }
+
+        return $this->inputFilter;
+
     }
+    /**
+     * @param mixed $fullname
+     */
+    public function setFullname($fullname)
+    {
+        $this->fullname = $fullname;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFullname()
+    {
+        return $this->fullname;
+    }
+
+    /**
+     * @param mixed $pers_id
+     */
+    public function setPersId($pers_id)
+    {
+        $this->pers_id = $pers_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPersId()
+    {
+        return $this->pers_id;
+    }
+
+    /**
+     * @param mixed $profilURL
+     */
+    public function setProfilURL($profilURL)
+    {
+        $this->profilURL = $profilURL;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProfilURL()
+    {
+        return $this->profilURL;
+    }
+
+
+
+
+
 } 

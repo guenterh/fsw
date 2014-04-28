@@ -2,6 +2,8 @@
 namespace FSW\Controller;
 
 
+use FSW\Services\Facade\BaseFacade;
+use FSW\Services\Facade\FacadeAwareInterface;
 use Zend\Db\ResultSet\ResultSetInterface;
 
 use Zend\Mvc\Controller\AbstractActionController;
@@ -14,7 +16,7 @@ use Zend\Http\Response;
  * [Description]
  *
  */
-abstract class BaseController extends AbstractActionController
+abstract class BaseController extends AbstractActionController implements FacadeAwareInterface
 {
 
 	/**
@@ -23,6 +25,8 @@ abstract class BaseController extends AbstractActionController
 	protected $table;
 	protected $translator;
     protected  $histSemDBService;
+
+    protected $facade;
 
 
 
@@ -137,7 +141,10 @@ abstract class BaseController extends AbstractActionController
         return $this->table;
     }
 
-
+    public function setFacadeService(BaseFacade $facadeService)
+    {
+        $this->facade = $facadeService;
+    }
 
 
 }

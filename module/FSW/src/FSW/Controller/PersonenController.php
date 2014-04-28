@@ -73,4 +73,29 @@ class PersonenController extends BaseController{
         return $this->getAjaxView($data, 'fsw/global/search');
     }
 
+    public function editAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('medien', array(
+                'action' => 'add'
+            ));
+        }
+
+        // Get the Album with the specified id.  An exception is thrown
+        // if it cannot be found, in which case go to the index page.
+        try {
+
+            //hole das Modell von der Facade
+            //$this->facade
+
+        }
+        catch (\Exception $ex) {
+            return $this->redirect()->toRoute('medien', array(
+                'action' => 'index'
+            ));
+        }
+
+
+    }
 }

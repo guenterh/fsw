@@ -146,11 +146,14 @@ return array(
             'FSW\Controller\Medien' => 'FSW\Controller\MedienController',
             'FSW\Controller\Kolloquien' => 'FSW\Controller\KolloquienController',
             'FSW\Controller\Aktivitaeten' => 'FSW\Controller\AktivitaetenController',
-            'FSW\Controller\Personen' => 'FSW\Controller\PersonenController',
+
             'FSW\Controller\Harvest' => 'FSW\Controller\HarvestController',
 
 
         ),
+        'factories' => array(
+            'FSW\Controller\Personen' => 'FSW\Controller\Factory::getPersonenController',
+        )
         //'factories' => array(
         //    'FSW\Controller\Personen' => 'FSW\Controller\Factories\PersonenControllerFactory'
         //)
