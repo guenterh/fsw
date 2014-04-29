@@ -35,6 +35,9 @@ class Person extends BaseModel implements InputFilterAwareInterface {
     public $pers_changedate;
     public $pers_oldid;
 
+    protected $personExtended;
+    protected $zoraAuthors = array();
+
 
 
 
@@ -464,6 +467,54 @@ class Person extends BaseModel implements InputFilterAwareInterface {
     public function getPersVorname()
     {
         return $this->pers_vorname;
+    }
+
+    /**
+     * @param mixed $pers_email
+     */
+    public function setPersEmail($pers_email)
+    {
+        $this->pers_email = $pers_email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPersEmail()
+    {
+        return $this->pers_email;
+    }
+
+    /**
+     * @param mixed $personExtended
+     */
+    public function setPersonExtended($personExtended)
+    {
+        $this->personExtended = $personExtended;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPersonExtended()
+    {
+        return $this->personExtended;
+    }
+
+    /**
+     * @param array $zoraAuthors
+     */
+    public function setZoraAuthors($zoraAuthors)
+    {
+        $this->zoraAuthors = $zoraAuthors;
+    }
+
+    /**
+     * @return array
+     */
+    public function getZoraAuthors()
+    {
+        return $this->zoraAuthors;
     }
 
 

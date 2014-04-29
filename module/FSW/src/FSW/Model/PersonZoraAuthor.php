@@ -17,6 +17,7 @@ class PersonZoraAuthor extends BaseModel implements InputFilterAwareInterface {
 
 
     protected $inputFilter;
+    public $id;
     public $zora_name;
     public $zora_name_customized;
     public $pers_id;
@@ -135,6 +136,22 @@ class PersonZoraAuthor extends BaseModel implements InputFilterAwareInterface {
     public function getZoraNameCustomized()
     {
         return $this->zora_name_customized;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
 

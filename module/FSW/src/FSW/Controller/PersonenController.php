@@ -29,6 +29,8 @@
 
 namespace FSW\Controller;
 
+use FSW\Form\PersonCoreFieldset;
+use FSW\Form\PersonForm;
 use Zend\View\Model\ViewModel;
 
 
@@ -87,11 +89,18 @@ class PersonenController extends BaseController{
         try {
 
             //hole das Modell von der Facade
-            //$this->facade
+            $person =  $this->facade->getPerson($id);
+
+            $coreFS = new PersonCoreFieldset();
+            $coreFS->bindValues($person->getPersonExtended());
+
+            $test = "";
+
+            //new PersonForm()
 
         }
         catch (\Exception $ex) {
-            return $this->redirect()->toRoute('medien', array(
+            return $this->redirect()->toRoute('personen', array(
                 'action' => 'index'
             ));
         }

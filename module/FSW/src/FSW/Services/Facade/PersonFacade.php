@@ -61,6 +61,37 @@ class PersonFacade extends BaseFacade {
     }
 
 
+    public function getPerson($persID) {
+
+
+
+        $persCore =  $this->runSelect(array('pers_id' => (int) $persID));
+
+        if (!$persCore) {
+            throw new \Exception("Could not find any person with id:  $persID");
+        } else  {
+            $persExtended = $this->runSelect(array('pers_id' => (int)$persID), $this->tableGatewayPersExtended);
+
+            if ($persExtended) {
+                $persCore->setPersonExtended($persExtended);
+                $id = (int) $persExtended->getId();
+                //$rowExtendedZora = $this->tableGatewayZoraAuthor->select(array('fid_personen' => $id))->current();
+                $persExtendedZoraAuthorNames = $this->runSelect(array('fid_personen' => $id), $this->tableGatewayZoraAuthor,false);
+
+                $zoraAuthorNames = array();
+                foreach ($persExtendedZoraAuthorNames as  $zoraAuthor) {
+                    $zoraAuthorNames[$zoraAuthor->getId()] = $zoraAuthor;
+                }
+
+                $persCore->setZoraAuthors($zoraAuthorNames);
+
+            }
+        }
+        return $persCore;
+
+    }
+
+
 
 
 

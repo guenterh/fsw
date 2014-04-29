@@ -210,4 +210,14 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface
         }
         return $this->adapater;
     }
+
+    protected function runSelect($where = array(), $gateway = null, $single = true) {
+
+        $tGateway = $gateway;
+        if (is_null($gateway )) {
+            $tGateway = $this->tableGateway;
+        }
+
+        return  $single ?  $tGateway->select($where)->current() : $tGateway->select($where);
+    }
 }

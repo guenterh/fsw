@@ -131,7 +131,7 @@ class Factory {
         $dbAdapter = $sm->get('HistSemDBService')->getAdapter();
         $resultSetPrototype = new ResultSet();
         $resultSetPrototype->setArrayObjectPrototype(new PersonExtended());
-        return new TableGateway('fsw_personen_extemded', $dbAdapter, null, $resultSetPrototype);
+        return new TableGateway('fsw_personen_extended', $dbAdapter, null, $resultSetPrototype);
     }
 
     public static function getPersonZoraAuthorTableGateway(ServiceManager $sm) {

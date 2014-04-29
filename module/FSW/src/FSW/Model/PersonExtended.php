@@ -16,6 +16,7 @@ use Zend\InputFilter\InputFilterInterface;
 class PersonExtended extends BaseModel implements InputFilterAwareInterface {
 
 
+    public $id;
     public $pers_id;
     public $profilURL;
     public $fullname;
@@ -119,6 +120,24 @@ class PersonExtended extends BaseModel implements InputFilterAwareInterface {
     {
         return $this->profilURL;
     }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
 
 
 
