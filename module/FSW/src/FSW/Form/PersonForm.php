@@ -15,17 +15,28 @@ use Zend\Form\Fieldset;
 class PersonForm extends Form {
 
 
-    public function __construct($name = 'person',
-                                    Fieldset $personCoreFieldset,
-                                    Fieldset $personExtendedFieldset,
-                                    Fieldset $personZoraFieldset)
+    public function __construct($name = 'person')
     {
         // we want to ignore the name passed
         parent::__construct($name);
 
-        $this->add($personCoreFieldset);
-        $this->add($personExtendedFieldset);
-        $this->add($personZoraFieldset);
+        $this->add(array(
+            'type' => 'FSW\Form\PersonCoreFieldset',
+            'options' => array(
+                'use_as_base_fieldset' => true
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'submit',
+            'type' => 'Submit',
+            'attributes' => array(
+                'value' => 'Go',
+                'id' => 'submitbutton',
+            ),
+        ));
+
+
     }
 
 } 

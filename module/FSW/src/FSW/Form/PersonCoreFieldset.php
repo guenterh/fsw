@@ -8,13 +8,24 @@
 
 namespace FSW\Form;
 
+use FSW\Model\Person;
 use Zend\Form\Fieldset;
 
-class PersonCoreFieldset extends Fieldset{
+use Zend\ModuleManager\Feature\InputFilterProviderInterface;
+use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+
+class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterface {
+
+
+    protected $inputFilter;
 
     public function __construct() {
 
-        parent::__construct('person_core_data');
+        parent::__construct('PersonCore');
+
+        $this->setHydrator(new ClassMethodsHydrator(false))
+            ->setObject(new Person());
+
 
         $this->add(array(
             'name' => 'pers_id',
@@ -74,10 +85,46 @@ class PersonCoreFieldset extends Fieldset{
             )
         ));
 
+        $this->add(array(
+            'type' => 'FSW\Form\PersonExtendedFieldset',
+
+            'name' => 'personExtended',
+            'options' => array(
+                'label' => 'Personenattribute FSW'
+            )
+        ));
+
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Collection',
+            'name' => 'zoraAuthors',
+            'options' => array(
+                'label' => 'ZoraNamen der Person',
+                'count' => 2,
+                'should_create_template' => true,
+                'allow_add' => true,
+                'target_element' => array(
+                    'type' => 'FSW\Form\PersonZoraFieldset'
+                )
+            )
+        ));
+
 
 
     }
 
 
-
-} 
+    /**
+     * Expected to return \Zend\ServiceManager\Config object or array to
+     * seed such an object.
+     *
+     * @return array|\Zend\ServiceManager\Config
+     */
+    public function getInputFilterConfig()
+    {
+        return array(
+            'pers_name' => array(
+                'required' => true,
+            )
+        );
+    }
+}

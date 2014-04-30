@@ -91,12 +91,9 @@ class PersonenController extends BaseController{
             //hole das Modell von der Facade
             $person =  $this->facade->getPerson($id);
 
-            $coreFS = new PersonCoreFieldset();
-            $coreFS->bindValues($person->getPersonExtended());
+            $coreFS = new PersonForm('Person');
+            $coreFS->bind($person);
 
-            $test = "";
-
-            //new PersonForm()
 
         }
         catch (\Exception $ex) {
@@ -104,6 +101,10 @@ class PersonenController extends BaseController{
                 'action' => 'index'
             ));
         }
+        return $this->getAjaxView(array(
+            'form' => $coreFS,
+            'title' => $this->translate('medien_edit', 'FSW'),
+        ));
 
 
     }

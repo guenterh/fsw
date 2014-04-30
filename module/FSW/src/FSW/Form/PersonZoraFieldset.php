@@ -8,13 +8,19 @@
 
 namespace FSW\Form;
 
+use FSW\Model\PersonZoraAuthor;
 use Zend\Form\Fieldset;
+use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Zend\InputFilter\InputFilterProviderInterface;
 
-class PersonCoreFieldset extends Fieldset{
+class PersonZoraFieldset extends Fieldset implements InputFilterProviderInterface{
 
     public function __construct() {
 
-        parent::__construct('person_core_data');
+        parent::__construct('PersonZora');
+
+        $this->setHydrator(new ClassMethodsHydrator(false))
+            ->setObject(new PersonZoraAuthor());
 
         $this->add(array(
             'name' => 'pers_id',
@@ -56,5 +62,17 @@ class PersonCoreFieldset extends Fieldset{
     }
 
 
-
-} 
+    /**
+     * Should return an array specification compatible with
+     * {@link Zend\InputFilter\Factory::createInputFilter()}.
+     *
+     * @return array
+     */
+    public function getInputFilterSpecification()
+    {
+        return array(
+            'zora_name' => array(
+                'required' => true,
+            )
+        );    }
+}

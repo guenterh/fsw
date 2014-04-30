@@ -8,13 +8,19 @@
 
 namespace FSW\Form;
 
+use FSW\Model\PersonExtended;
 use Zend\Form\Fieldset;
+use Zend\InputFilter\InputFilterProviderInterface;
+use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 
-class PersonCoreFieldset extends Fieldset{
+class PersonExtendedFieldset extends Fieldset implements InputFilterProviderInterface {
 
     public function __construct() {
 
-        parent::__construct('person_extended_data');
+        parent::__construct('PersonExtended');
+
+        $this->setHydrator(new ClassMethodsHydrator(false))
+            ->setObject(new PersonExtended());
 
         $this->add(array(
             'name' => 'pers_id',
@@ -44,5 +50,18 @@ class PersonCoreFieldset extends Fieldset{
     }
 
 
-
-} 
+    /**
+     * Should return an array specification compatible with
+     * {@link Zend\InputFilter\Factory::createInputFilter()}.
+     *
+     * @return array
+     */
+    public function getInputFilterSpecification()
+    {
+        return array(
+            'pers_id' => array(
+                'required' => true,
+            )
+        );
+    }
+}
