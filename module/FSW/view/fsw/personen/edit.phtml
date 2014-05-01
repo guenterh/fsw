@@ -60,22 +60,93 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
         <div class="tab-content">
             <div class="tab-pane active" id="personCore">
+
                 <fieldset>
-                    <legend>core attributes</legend>
+                    <legend>Namensbestandteile</legend>
                     <div class="row-fluid">
                         <div class="span6">
-                            <?= $this->formRowTwb($personCore->get('pers_uzhshortname')) ?>
+                            <?= $this->formRowTwb($personCore->get('pers_anrede')) ?>
+                        </div>
+                        <div class="span6">
+                            <?= $this->formRowTwb($personCore->get('pers_titel')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?= $this->formRowTwb($personCore->get('pers_titel_OLD')) ?>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Namensattribute</legend>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?= $this->formRowTwb($personCore->get('pers_name')) ?>
                         </div>
                         <div class="span6">
                             <?= $this->formRowTwb($personCore->get('pers_vorname')) ?>
                         </div>
                     </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?= $this->formRowTwb($personCore->get('pers_midname')) ?>
+                        </div>
+                        <div class="span6">
+                            <?= $this->formRowTwb($personCore->get('pers_uzhshortname')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?= $this->formRowTwb($personCore->get('pers_fullname')) ?>
+                        </div>
+                        <div class="span6">
+                            <?= $this->formRowTwb($personCore->get('pers_id')) ?>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Geschlecht</legend>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?= $this->formRowTwb($personCore->get('pers_sex')) ?>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Adressattribute</legend>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?= $this->formRowTwb($personCore->get('pers_strasse')) ?>
+                        </div>
+                        <div class="span6">
+                            <?= $this->formRowTwb($personCore->get('pers_plz')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?= $this->formRowTwb($personCore->get('pers_ort')) ?>
+                        </div>
+                        <div class="span6">
+                            <?= $this->formRowTwb($personCore->get('pers_land')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?= $this->formRowTwb($personCore->get('pers_tel_privat')) ?>
+                        </div>
+                        <div class="span6">
+                            <?= $this->formRowTwb($personCore->get('pers_tel_mobile')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?= $this->formRowTwb($personCore->get('pers_email')) ?>
+                        </div>
+                    </div>
                 </fieldset>
 
-                <fieldset class="notes">
-                    <legend>hier der Name</legend>
-                    <?= $this->formRowTwb($personCore->get('pers_name')) ?>
-                </fieldset>
+
             </div>
             <div class="tab-pane active" id="personExtended">
                 <fieldset>

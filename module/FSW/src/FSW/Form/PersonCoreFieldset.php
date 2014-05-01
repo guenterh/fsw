@@ -85,6 +85,141 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
             )
         ));
 
+        $this->add(array(
+            'name' => 'pers_fullname',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'pers_fullname'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'pers_anrede',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'pers_anrede'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'pers_titel',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'pers_titel'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'pers_titel_OLD',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'pers_titel_OLD'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'pers_sex',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'pers_sex'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'pers_strasse',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'pers_strasse'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'pers_plz',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'pers_plz'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'pers_ort',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'pers_ort'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'pers_land',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'pers_land'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+
+        $this->add(array(
+            'name' => 'pers_tel_privat',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'pers_tel_privat'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'pers_tel_mobile',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'pers_tel_mobile'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'pers_email',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'pers_email'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+
+
 
         /*
         $this->add(array(
