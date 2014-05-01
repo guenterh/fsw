@@ -73,7 +73,12 @@ class PersonFacade extends BaseFacade {
             $persExtended = $this->runSelect(array('pers_id' => (int)$persID), $this->tableGatewayPersExtended);
 
             if ($persExtended) {
-                $persCore->setPersonExtended($persExtended);
+
+                //sollen die extended Attribute des FSW als collection angezeigt werden
+                //(duch die collection erscheinen bei Personen die nicht zur FSW gehören keine Eingabeelemente)
+                //muss die gefundene Struktur als array übergeben werden. Ansonsten gibt es ein Problem beim Binden des Modells an die Form
+                //dies passiert im Controller, der die Form dann der View übergibt
+                $persCore->setPersonExtended(array($persExtended));
                 $id = (int) $persExtended->getId();
                 //$rowExtendedZora = $this->tableGatewayZoraAuthor->select(array('fid_personen' => $id))->current();
                 $persExtendedZoraAuthorNames = $this->runSelect(array('fid_personen' => $id), $this->tableGatewayZoraAuthor,false);

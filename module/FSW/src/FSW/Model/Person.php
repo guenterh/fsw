@@ -35,7 +35,7 @@ class Person extends BaseModel implements InputFilterAwareInterface {
     public $pers_changedate;
     public $pers_oldid;
 
-    protected $personExtended;
+    protected $personExtended = array();
     protected $zoraAuthors = array();
 
 

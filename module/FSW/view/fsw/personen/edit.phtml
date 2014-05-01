@@ -52,10 +52,10 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
     <div class="tabbable">
         <ul class="nav nav-tabs formTabs">
             <li class="active">
-                <a href="#personCore"><?= $this->translate('personCore', 'Libadmin') ?></a>
+                <a href="#personCore"><?= $this->translate('personCore HS', 'Libadmin') ?></a>
             </li>
-            <li><a href="#personExtended"><?= $this->translate('personExtended', 'Libadmin') ?></a></li>
-            <li><a href="#zoraAuthors"><?= $this->translate('zoraNamen', 'Libadmin') ?></a></li>
+            <li><a href="#personExtended"><?= $this->translate('personExtended FSW', 'Libadmin') ?></a></li>
+            <li><a href="#zoraAuthors"><?= $this->translate('zoraNamen FSW', 'Libadmin') ?></a></li>
         </ul>
 
         <div class="tab-content">
@@ -81,14 +81,19 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
                 <fieldset>
                     <legend>core attributes</legend>
 
-                    <div class="row-fluid">
-                        <div class="span6">
-                            <?= $this->formRowTwb($personExtended->get('pers_id')) ?>
+                    <?php foreach ($personExtended as $singleExtended) :?>
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <?= $this->formRowTwb($singleExtended->get('pers_id')) ?>
+                            </div>
+                            <div class="span6">
+                                <?= $this->formRowTwb($singleExtended->get('profilURL')) ?>
+                            </div>
                         </div>
-                        <div class="span6">
-                            <?= $this->formRowTwb($personExtended->get('profilURL')) ?>
-                        </div>
-                    </div>
+
+                    <?php endforeach; ?>
+
+
                 </fieldset>
 
             </div>
