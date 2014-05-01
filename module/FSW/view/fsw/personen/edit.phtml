@@ -49,6 +49,69 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
 <?= $this->ztbFlashMessenger()->render() ?>
 
+    <div class="tabbable">
+        <ul class="nav nav-tabs formTabs">
+            <li class="active">
+                <a href="#personCore"><?= $this->translate('personCore', 'Libadmin') ?></a>
+            </li>
+            <li><a href="#personExtended"><?= $this->translate('personExtended', 'Libadmin') ?></a></li>
+            <li><a href="#zoraAuthors"><?= $this->translate('zoraNamen', 'Libadmin') ?></a></li>
+        </ul>
 
+        <div class="tab-content">
+            <div class="tab-pane active" id="personCore">
+                <fieldset>
+                    <legend>core attributes</legend>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?= $this->formRowTwb($personCore->get('pers_uzhshortname')) ?>
+                        </div>
+                        <div class="span6">
+                            <?= $this->formRowTwb($personCore->get('pers_vorname')) ?>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="notes">
+                    <legend>hier der Name</legend>
+                    <?= $this->formRowTwb($personCore->get('pers_name')) ?>
+                </fieldset>
+            </div>
+            <div class="tab-pane active" id="personExtended">
+                <fieldset>
+                    <legend>core attributes</legend>
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?= $this->formRowTwb($personExtended->get('pers_id')) ?>
+                        </div>
+                        <div class="span6">
+                            <?= $this->formRowTwb($personExtended->get('profilURL')) ?>
+                        </div>
+                    </div>
+                </fieldset>
+
+            </div>
+            <div class="tab-pane active" id="zoraAuthors">
+                <fieldset>
+                    <legend>zora Namen</legend>
+                    <?php foreach ($zoraAuthors as $zoraAuthor) :?>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?= $this->formRowTwb($zoraAuthor->get('zora_name')) ?>
+                        </div>
+                        <div class="span6">
+                            <?= $this->formRowTwb($zoraAuthor->get('zora_name_customized')) ?>
+                        </div>
+                    </div>
+
+                    <?php endforeach; ?>
+                </fieldset>
+
+            </div>
+
+
+        </div>
+    </div>
 
 <?= $this->form()->closeTag(); ?>

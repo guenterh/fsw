@@ -103,7 +103,7 @@ class PersonenController extends BaseController{
         }
         return $this->getAjaxView(array(
             'form' => $coreFS,
-            'title' => $this->translate('medien_edit', 'FSW'),
+            'title' => $this->translate('Personenanzeige', 'FSW'),
         ));
 
 

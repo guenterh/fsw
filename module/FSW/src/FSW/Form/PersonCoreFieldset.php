@@ -85,6 +85,7 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
             )
         ));
 
+
         $this->add(array(
             'type' => 'FSW\Form\PersonExtendedFieldset',
 
@@ -93,6 +94,23 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
                 'label' => 'Personenattribute FSW'
             )
         ));
+
+        /*
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Collection',
+            'name' => 'personExtended',
+            'options' => array(
+                'label' => 'extended Attributes FSW',
+                'count' => 1,
+                'should_create_template' => true,
+                'allow_add' => true,
+                'target_element' => array(
+                    'type' => 'FSW\Form\PersonExtendedFieldset'
+                )
+            )
+        ));
+        */
+
 
         $this->add(array(
             'type' => 'Zend\Form\Element\Collection',
