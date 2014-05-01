@@ -77,7 +77,7 @@ class PersonZoraAuthor extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $fid_personen
      */
-    public function setFidPersonen($fid_personen)
+    public function setFid_personen($fid_personen)
     {
         $this->fid_personen = $fid_personen;
     }
@@ -85,57 +85,9 @@ class PersonZoraAuthor extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getFidPersonen()
+    public function getFid_personen()
     {
         return $this->fid_personen;
-    }
-
-    /**
-     * @param mixed $pers_id
-     */
-    public function setPersId($pers_id)
-    {
-        $this->pers_id = $pers_id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPersId()
-    {
-        return $this->pers_id;
-    }
-
-    /**
-     * @param mixed $zora_name
-     */
-    public function setZoraName($zora_name)
-    {
-        $this->zora_name = $zora_name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getZoraName()
-    {
-        return $this->zora_name;
-    }
-
-    /**
-     * @param mixed $zora_name_customized
-     */
-    public function setZoraNameCustomized($zora_name_customized)
-    {
-        $this->zora_name_customized = $zora_name_customized;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getZoraNameCustomized()
-    {
-        return $this->zora_name_customized;
     }
 
     /**
@@ -153,6 +105,56 @@ class PersonZoraAuthor extends BaseModel implements InputFilterAwareInterface {
     {
         return $this->id;
     }
+
+
+    /**
+     * @param mixed $pers_id
+     */
+    public function setPers_id($pers_id)
+    {
+        $this->pers_id = $pers_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPers_id()
+    {
+        return $this->pers_id;
+    }
+
+    /**
+     * @param mixed $zora_name
+     */
+    public function setZora_name($zora_name)
+    {
+        $this->zora_name = $zora_name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZora_name()
+    {
+        return $this->zora_name;
+    }
+
+    /**
+     * @param mixed $zora_name_customized
+     */
+    public function setZora_name_customized($zora_name_customized)
+    {
+        $this->zora_name_customized = $zora_name_customized;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZora_name_customized()
+    {
+        return $this->zora_name_customized;
+    }
+
 
 
 }

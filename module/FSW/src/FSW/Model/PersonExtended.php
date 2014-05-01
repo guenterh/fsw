@@ -92,7 +92,7 @@ class PersonExtended extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $pers_id
      */
-    public function setPersId($pers_id)
+    public function setPers_id($pers_id)
     {
         $this->pers_id = $pers_id;
     }
@@ -100,7 +100,7 @@ class PersonExtended extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getPersId()
+    public function getPers_id()
     {
         return $this->pers_id;
     }
