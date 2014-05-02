@@ -8,6 +8,7 @@
 
 namespace FSW\Services;
 
+use FSW\Services\Facade\MedienFacade;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
@@ -193,6 +194,18 @@ class Factory {
         return $oaiClient;
 
     }
+
+    public static function getMedienFacade(ServiceManager $sm) {
+
+
+        $tableGatewayMedien = $sm->get('MediumTableGateway');
+
+        $facade = new MedienFacade($tableGatewayMedien);
+        return $facade;
+
+
+    }
+
 
 
 

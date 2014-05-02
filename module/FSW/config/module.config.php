@@ -80,21 +80,7 @@ return array(
                     ),
                 ),
 
-            ),
-            'utilities' => array(
-                'type'  =>  'segment',
-                'options' => array(
-                    'route'    => '/utilities[/][:action]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'FSW\Controller\Utilities'
-                    ),
-                ),
-
             )
-
 
 
 
@@ -136,6 +122,8 @@ return array(
 
             'FSW\Services\Facade\AktivitaetFacade'    =>  'FSW\Services\Factory::getAktivitaetFassade',
             'FSW\Services\Facade\PersonenFacade'    =>  'FSW\Services\Factory::getPersonFacade',
+            'FSW\Services\Facade\MedienFacade'    =>  'FSW\Services\Factory::getMedienFacade',
+
             'AktivitaetTableGateway'          =>  'FSW\Services\Factory::getAktivitaetTableGateway',
 
             'ZoraDocTableGateway'          =>  'FSW\Services\Factory::getZoraDocTableGateway',
@@ -159,7 +147,6 @@ return array(
 
     'controllers' => array(
         'invokables' => array(
-            'FSW\Controller\Medien' => 'FSW\Controller\MedienController',
             'FSW\Controller\Kolloquien' => 'FSW\Controller\KolloquienController',
             'FSW\Controller\Aktivitaeten' => 'FSW\Controller\AktivitaetenController',
 
@@ -169,7 +156,8 @@ return array(
         ),
         'factories' => array(
             'FSW\Controller\Personen' => 'FSW\Controller\Factory::getPersonenController',
-            'FSW\Controller\Utilities' => 'FSW\Controller\Factory::getUtilitiesController'
+            'FSW\Controller\Medien' => 'FSW\Controller\Factory::getMedienController',
+
         )
         //'factories' => array(
         //    'FSW\Controller\Personen' => 'FSW\Controller\Factories\PersonenControllerFactory'

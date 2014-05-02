@@ -26,13 +26,14 @@ class Factory {
         return $pC;
     }
 
-    public static function getUtilitiesController(ServiceManager $sm) {
+
+    public static function getMedienController(ServiceManager $sm) {
 
 
-        $uC = new \FSW\Controller\UtilitiesController();
+        $uC = new \FSW\Controller\MedienController();
         if ($uC instanceof FacadeAwareInterface)  {
 
-            $uC->setFacadeService($sm->getServiceLocator()->get('FSW\Services\Facade\PersonenFacade'));
+            $uC->setFacadeService($sm->getServiceLocator()->get('FSW\Services\Facade\MedienFacade'));
 
         }
         return $uC;

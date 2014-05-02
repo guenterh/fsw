@@ -108,4 +108,12 @@ class PersonenController extends BaseController{
 
 
     }
+
+    public function insertExtendedMAFSWAction () {
+
+
+        $this->facade->insertIntoFSWExtended();
+
+    }
+
 }

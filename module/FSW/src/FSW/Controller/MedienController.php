@@ -213,6 +213,14 @@ class MedienController extends BaseController {
 
     }
 
+    public function insertMedienFSWAction () {
+
+
+        $this->facade->insertMedienFSW();
+
+    }
+
+
 
 
 } 
