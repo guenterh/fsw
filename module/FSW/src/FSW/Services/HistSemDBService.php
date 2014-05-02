@@ -37,18 +37,27 @@ use Zend\ServiceManager\ServiceManagerAwareInterface;
 class HistSemDBService implements ServiceManagerAwareInterface {
 
     protected $adapter;
+    protected $oldFSWadapter;
+
     protected $serviceManager;
 
-    public function __construct(Adapter $adapter) {
+    public function __construct(Adapter $adapter, Adapter $oldFSWDB) {
 
 
         $this->adapter = $adapter;
+        $this->oldFSWadapter = $oldFSWDB;
 
     }
 
     public function getAdapter() {
         return $this->adapter;
     }
+
+
+    public function getOldFSWAdapter() {
+        return $this->oldFSWadapter;
+    }
+
 
 
     public function getAktivitatetFacade() {

@@ -80,7 +80,23 @@ return array(
                     ),
                 ),
 
+            ),
+            'utilities' => array(
+                'type'  =>  'segment',
+                'options' => array(
+                    'route'    => '/utilities[/][:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'FSW\Controller\Utilities'
+                    ),
+                ),
+
             )
+
+
+
 
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
@@ -147,12 +163,13 @@ return array(
             'FSW\Controller\Kolloquien' => 'FSW\Controller\KolloquienController',
             'FSW\Controller\Aktivitaeten' => 'FSW\Controller\AktivitaetenController',
 
-            'FSW\Controller\Harvest' => 'FSW\Controller\HarvestController',
+            'FSW\Controller\Harvest' => 'FSW\Controller\HarvestController'
 
 
         ),
         'factories' => array(
             'FSW\Controller\Personen' => 'FSW\Controller\Factory::getPersonenController',
+            'FSW\Controller\Utilities' => 'FSW\Controller\Factory::getUtilitiesController'
         )
         //'factories' => array(
         //    'FSW\Controller\Personen' => 'FSW\Controller\Factories\PersonenControllerFactory'

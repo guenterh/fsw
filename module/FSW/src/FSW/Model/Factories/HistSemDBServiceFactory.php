@@ -47,6 +47,8 @@ class HistSemDBServiceFactory implements FactoryInterface{
     {
         $histSemDBAdapter = $serviceLocator->get("HistSemDBAdapter");
 
-        return new HistSemDBService($histSemDBAdapter);
+        $adapterOldDB = $serviceLocator->get('Zend\Db\Adapter\Adapter');
+
+        return new HistSemDBService($histSemDBAdapter, $adapterOldDB);
     }
 }

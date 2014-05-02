@@ -227,11 +227,14 @@ EOD;
      * Each value inserted into DB has to be quoted and escaped
      * for the target storage (in our case MySQL)
      */
+
+    /* neu in BaseFacade
     private function qV ($value) {
 
         return $this->getAdapter()->getPlatform()->quoteValue($value);
 
     }
+    */
 
 
     /**
@@ -291,54 +294,6 @@ EOD;
 
 
 
-    public function insertIntoFSWExtended() {
-
-
-        $sql = 'select * from Per_Personen;';
-
-        $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
-
-        foreach ($result as $row) {
-
-            $r = $row->getArrayCopy();
-            if (is_null($r['pers_name']) || empty ($r['pers_name'])) {
-                continue;
-            }
-
-            $sql = 'select * from FSWmitarbeiter m ' ;
-            $sql = $sql . ' where  m.name like "%' . $r['pers_name'] . '%" and m.name like "%' . $r['pers_vorname'] . '%";';
-            $resultFSW =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
-
-            foreach ($resultFSW as $rowFSW) {
-
-                $f = $rowFSW->getArrayCopy();
-                $sql = "insert into fsw_personen_extended (pers_id,fullname,profilURL) ";
-                $sql = $sql .  "values (" . $this->qV($r['pers_id']) . ',';
-                $sql = $sql .  $this->qV($r['pers_name'] . ', ' . $r['pers_vorname']) . ',';
-                $sql = $sql .  $this->qV($f['profilURL']) . ' )';
-
-                $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
-                $genIdPersonenExtended = $this->getAdapter()->getDriver()->getLastGeneratedValue();
-
-
-                $sql = 'select * from FSWmitarbeiterZoraName mz where mz.mit_id = ' . $rowFSW['mit_id'];
-                $resultZoraName =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
-
-                foreach ($resultZoraName as $zN) {
-                    $z = $zN->getArrayCopy();
-
-                    $sql = "insert into fsw_zora_author (fid_personen,pers_id,zora_name,zora_name_customized) ";
-                    $sql = $sql .  "values (" . $this->qV($genIdPersonenExtended) . ',';
-                    $sql = $sql .  $this->qV($r['pers_id']) . ',';
-                    $sql = $sql .  $this->qV($z['zoraName']) . ',';
-                    $sql = $sql .  $this->qV($z['zoraNameCustomized']) . ' )';
-
-                    $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
-
-                }
-            }
-        }
-    }
 
     private function insertValuesIntoZoraTables($zR) {
 

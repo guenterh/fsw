@@ -34,6 +34,8 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface
     protected $histSemDBService;
 
     private $adapater;
+    private $oldFSWadapater;
+
 
 
 	/**
@@ -211,6 +213,17 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface
         return $this->adapater;
     }
 
+    protected function getOldAdapter() {
+
+
+        if (is_null($this->oldFSWadapater)) {
+            $this->oldFSWadapater = $this->histSemDBService->getOldFSWAdapter();
+        }
+        return $this->oldFSWadapater;
+    }
+
+
+
     protected function runSelect($where = array(), $gateway = null, $single = true) {
 
         $tGateway = $gateway;
@@ -220,4 +233,18 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface
 
         return  $single ?  $tGateway->select($where)->current() : $tGateway->select($where);
     }
+
+    /**
+     * @param $value
+     * @return string
+     * Each value inserted into DB has to be quoted and escaped
+     * for the target storage (in our case MySQL)
+     */
+    protected function qV ($value) {
+
+        return $this->getAdapter()->getPlatform()->quoteValue($value);
+
+    }
+
+
 }

@@ -23,10 +23,20 @@ class Factory {
             $pC->setFacadeService($sm->getServiceLocator()->get('FSW\Services\Facade\PersonenFacade'));
 
         }
-
         return $pC;
-
-
     }
 
-} 
+    public static function getUtilitiesController(ServiceManager $sm) {
+
+
+        $uC = new \FSW\Controller\UtilitiesController();
+        if ($uC instanceof FacadeAwareInterface)  {
+
+            $uC->setFacadeService($sm->getServiceLocator()->get('FSW\Services\Facade\PersonenFacade'));
+
+        }
+        return $uC;
+    }
+
+
+}
