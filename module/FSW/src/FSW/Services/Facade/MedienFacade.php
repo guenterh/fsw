@@ -63,7 +63,7 @@ class MedienFacade extends BaseFacade {
     public function getMedium($id)
     {
         $id  = (int) $id;
-        $rowset = $this->tableGateway->select(array('medienid' => $id));
+        $rowset = $this->tableGateway->select(array('id' => $id));
         $row = $rowset->current();
         if (!$row) {
             throw new \Exception("Could not find row $id");
@@ -71,9 +71,38 @@ class MedienFacade extends BaseFacade {
         return $row;
     }
 
+    public function getMedienPersonen()
+    {
+
+        $personenTableGateway = $this->histSemDBService->getPersonenGateway();
+        //$sql = $personenTableGateway->getSql();
+        $select = $personenTableGateway->getSql()->select();
+        /*
+         * mit mehrfachem join, dann erhält man nur die Persone, die bereits einen MedienEintrag haben
+         * wir wollen aber alle FSW Personen
+        $select->join(array(
+            'pers_extended' => 'fsw_personen_extended'),
+             'pers_extended.pers_id = Per_Personen.pers_id'   )->
+        join(array(
+            'medien' => 'fsw_medien'),
+            'pers_extended.pers_id = medien.mit_id_per_extended'   );
+
+        */
+
+        $select->join(array(
+                'pers_extended' => 'fsw_personen_extended'),
+            'pers_extended.pers_id = Per_Personen.pers_id'   );
+
+        $rowset =  $personenTableGateway->selectWith($select);
+        return $rowset;
+    }
+
+
+
+
     public function deleteMedium($id)
     {
-        $this->tableGateway->delete(array('medienid' => $id));
+        $this->tableGateway->delete(array('id' => $id));
     }
 
 
@@ -94,7 +123,7 @@ class MedienFacade extends BaseFacade {
             $this->tableGateway->insert($data);
         } else {
             if ($this->getMedium($id)) {
-                $this->tableGateway->update($data, array('medienid' => $id));
+                $this->tableGateway->update($data, array('id' => $id));
             } else {
                 throw new \Exception('Form id does not exist');
             }

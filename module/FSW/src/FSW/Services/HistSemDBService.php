@@ -39,6 +39,8 @@ class HistSemDBService implements ServiceManagerAwareInterface {
     protected $adapter;
     protected $oldFSWadapter;
 
+    protected $personenTableGateway;
+
     protected $serviceManager;
 
     public function __construct(Adapter $adapter, Adapter $oldFSWDB) {
@@ -77,6 +79,17 @@ class HistSemDBService implements ServiceManagerAwareInterface {
     public function getAktivitaetFacade() {
         $aF = $this->serviceManager->get('FSW\Services\Facade\AktivitaetFacade');
         return $aF;
+    }
+
+
+    public function getPersonenGateway() {
+
+        if (is_null($this->personenTableGateway)) {
+            $this->personenTableGateway = $this->serviceManager->get('PersonTableGateway');
+        }
+
+        return $this->personenTableGateway;
+
     }
 
 

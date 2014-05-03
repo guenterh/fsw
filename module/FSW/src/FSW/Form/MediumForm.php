@@ -20,7 +20,7 @@ class MediumForm extends Form {
         parent::__construct($name);
 
         $this->add(array(
-            'name' => 'medienid',
+            'name' => 'id',
             'type' => 'Hidden',
         ));
 
@@ -55,11 +55,11 @@ class MediumForm extends Form {
         $selectarray = array();
         foreach ($personen as $key => $person) {
 
-            $selectarray[$key] = $person->getName();
+            $selectarray[$key] = $person->getPers_vorname() . " " . $person->getPers_name();
         }
 
         $this->add(array(
-            'name' => 'mit_id',
+            'name' => 'mit_id_per_extended',
             'type' => 'select',
             'options' => array(
                 'empty_option' => '- Kein Mitarbeiter -',

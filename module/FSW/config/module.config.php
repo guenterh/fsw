@@ -102,12 +102,14 @@ return array(
             'FSW\Model\MediumTable' =>  'FSW\Model\Factories\MediumTableFactory',
             //todo bessere namensgebung
             'FSW\Model\MedienTable' =>  'FSW\Model\Factories\MediumTableFactory',
-            'MediumTableGateway' => 'FSW\Model\Factories\MediumTableGatewayFactory',
 
             'FSW\Table\PersonTable' => 'FSW\Services\Factory::getPersonFacade',
             'PersonTableGateway' => 'FSW\Services\Factory::getPersonTableGateway',
             'PersonExtendedTableGateway' => 'FSW\Services\Factory::getPersonExtendedTableGateway',
             'PersonZoraAuthorTableGateway' => 'FSW\Services\Factory::getPersonZoraAuthorTableGateway',
+
+            'MediumTableGateway' => 'FSW\Services\Factory::getMedienTableGateway',
+
 
 
 

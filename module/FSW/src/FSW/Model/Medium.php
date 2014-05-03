@@ -13,38 +13,20 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
 
-class Medium implements InputFilterAwareInterface {
+class Medium extends BaseModel implements InputFilterAwareInterface {
 
 
-    public $medienid;
-    public $mit_id;
-    public $sendetitel;
-    public $gespraechstitel;
-    public $link;
-    public $icon;
     public $datum;
+    public $gespraechstitel;
+    public $icon;
+    public $id;
+    public $link;
     public $medientyp;
+    public $mit_id_per_extended;
+    public $sendetitel;
 
     protected $inputFilter;
 
-    public function exchangeArray($data)
-    {
-        $this->medienid     = (isset($data['medienid'])) ? $data['medienid'] : null;
-        $this->mit_id = (isset($data['mit_id'])) ? $data['mit_id'] : null;
-        $this->sendetitel  = (isset($data['sendetitel'])) ? $data['sendetitel'] : null;
-        $this->gespraechstitel  = (isset($data['gespraechstitel'])) ? $data['gespraechstitel'] : null;
-        $this->link  = (isset($data['link'])) ? $data['link'] : null;
-        $this->icon  = (isset($data['icon'])) ? $data['icon'] : null;
-        $this->datum  = (isset($data['datum'])) ? $data['datum'] : null;
-        $this->medientyp  = (isset($data['medientyp'])) ? $data['medientyp'] : null;
-
-
-    }
-
-    public function getArrayCopy()
-    {
-        return get_object_vars($this);
-    }
 
     // Add content to these methods:
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -54,7 +36,7 @@ class Medium implements InputFilterAwareInterface {
 
 
     public function getID() {
-        return $this->medienid;
+        return $this->id;
     }
 
     public function getListLabel() {
@@ -67,7 +49,7 @@ class Medium implements InputFilterAwareInterface {
             $inputFilter = new InputFilter();
 
             $inputFilter->add(array(
-                'name'     => 'medienid',
+                'name'     => 'id',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'Int'),
@@ -75,7 +57,7 @@ class Medium implements InputFilterAwareInterface {
             ));
 
             $inputFilter->add(array(
-                'name'     => 'mit_id',
+                'name'     => 'mit_id_per_extended',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'Int'),

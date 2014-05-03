@@ -48,10 +48,12 @@ class MediumTableGatewayFactory implements FactoryInterface {
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $dbAdapter = $serviceLocator->get('Zend\Db\Adapter\Adapter');
+        //$dbAdapter = $serviceLocator->get('Zend\Db\Adapter\Adapter');
+        //todo: Ändern -> in die Facade legen
+        $dbAdapter = $serviceLocator->get('HistSemDBAdapter');
         $resultSetPrototype = new ResultSet();
         $resultSetPrototype->setArrayObjectPrototype(new Medium());
-        return new TableGateway('medien', $dbAdapter, null, $resultSetPrototype);
+        return new TableGateway('fsw_medien', $dbAdapter, null, $resultSetPrototype);
     }
 
 

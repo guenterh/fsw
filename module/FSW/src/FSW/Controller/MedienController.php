@@ -63,42 +63,6 @@ class MedienController extends BaseController {
             ));
         }
 
-        // Get the Album with the specified id.  An exception is thrown
-        // if it cannot be found, in which case go to the index page.
-        try {
-            $medium = $this->getMediumTable()->getMedium($id);
-        }
-        catch (\Exception $ex) {
-            return $this->redirect()->toRoute('medien', array(
-                'action' => 'index'
-            ));
-        }
-
-        $form  = new MediumForm();
-        $form->bind($medium);
-        $form->get('submit')->setAttribute('value', 'Edit');
-
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $form->setInputFilter($medium->getInputFilter());
-            $form->setData($request->getPost());
-
-            if ($form->isValid()) {
-                $this->getMediumTable()->saveMedium($medium);
-
-                // Redirect to list of albums
-                return $this->redirect()->toRoute('medien');
-            } else {
-                $test =  $form->getMessages();
-                $eins = "";
-            }
-        }
-
-        //return array(
-        //    'id' => $id,
-        //    'form' => $form,
-        //);
-
 
         //new
 
@@ -115,7 +79,7 @@ class MedienController extends BaseController {
         // Get the Medium with the specified id.  An exception is thrown
         // if it cannot be found, in which case go to the index page.
         try {
-            $medium = $this->getMediumTable()->getMedium($id);
+            $medium = $this->facade->getMedium($id);
         }
         catch (\Exception $ex) {
             return $this->redirect()->toRoute('medien', array(
@@ -123,8 +87,9 @@ class MedienController extends BaseController {
             ));
         }
 
-        $personTable = $this->getPersonTable();
-        $rL = $personTable->find(null,200);
+        $rL = $this->facade->getMedienPersonen();
+        //$personTable = $this->getPersonTable();
+        //$rL = $personTable->find(null,200);
         $simpleList = $this->toList($rL,true);
 
 

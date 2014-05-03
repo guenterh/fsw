@@ -29,7 +29,7 @@ class MediumTable extends BaseTable
     public function getMedium($id)
     {
         $id  = (int) $id;
-        $rowset = $this->tableGateway->select(array('medienid' => $id));
+        $rowset = $this->tableGateway->select(array('id' => $id));
         $row = $rowset->current();
         if (!$row) {
             throw new \Exception("Could not find row $id");
@@ -63,7 +63,7 @@ class MediumTable extends BaseTable
 
     public function deleteMedium($id)
     {
-        $this->tableGateway->delete(array('medienid' => $id));
+        $this->tableGateway->delete(array('id' => $id));
     }
 
     /**

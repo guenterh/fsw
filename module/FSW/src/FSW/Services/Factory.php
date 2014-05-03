@@ -8,6 +8,7 @@
 
 namespace FSW\Services;
 
+use FSW\Model\Medium;
 use FSW\Services\Facade\MedienFacade;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Db\ResultSet\ResultSet;
@@ -126,6 +127,16 @@ class Factory {
         $resultSetPrototype->setArrayObjectPrototype(new Person());
         return new TableGateway('Per_Personen', $dbAdapter, null, $resultSetPrototype);
     }
+
+
+    public static function getMedienTableGateway(ServiceManager $sm) {
+
+        $dbAdapter = $sm->get('HistSemDBService')->getAdapter();
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new Medium());
+        return new TableGateway('fsw_medien', $dbAdapter, null, $resultSetPrototype);
+    }
+
 
     public static function getPersonExtendedTableGateway(ServiceManager $sm) {
 
