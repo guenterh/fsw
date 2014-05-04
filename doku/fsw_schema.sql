@@ -29,6 +29,7 @@ USE `histsem`;
 DROP TABLE IF EXISTS `fsw_kolloquium`;
 CREATE TABLE IF NOT EXISTS `fsw_kolloquium` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_kolloquium` bigint(20) NOT NULL,
   `titel` varchar(65000) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
@@ -38,6 +39,11 @@ CREATE TABLE IF NOT EXISTS `fsw_kolloquium` (
 --
 -- Tabellenstruktur für Tabelle `fsw_kolloquium_veranstaltung`
 --
+-- mit Manuela genauer anschauen!
+-- es fehlt noch
+-- Personenbeschreibung, Personenlink, Nachname / Vorname getrennt, Institution, Institutionenlink, Beschriebung (hier ist im Moment die ganze Struktur eingetragen)
+-- weiterhin sollte noch die Möglichkeit gegeben werden, mehere Personen als Vortragende auftreten zu lassen
+-- neu könnte die Möglochkeit geschaffen werden, Personen mit link auf das Profil auf die Webseite zu setzen.
 
 DROP TABLE IF EXISTS `fsw_kolloquium_veranstaltung`;
 CREATE TABLE IF NOT EXISTS `fsw_kolloquium_veranstaltung` (

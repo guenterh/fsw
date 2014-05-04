@@ -46,9 +46,12 @@ class KolloquiumVeranstaltungTableGatewayFactory implements FactoryInterface{
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+        //$dbAdapter = $serviceLocator->get('HistSemDBAdapter');
         $dbAdapter = $serviceLocator->get('Zend\Db\Adapter\Adapter');
+
         $resultSetPrototype = new ResultSet();
         $resultSetPrototype->setArrayObjectPrototype(new Veranstaltung());
+        //return new TableGateway('fsw_kolloquium_veranstaltung', $dbAdapter, null, $resultSetPrototype);
         return new TableGateway('kolloquium_veranstaltung', $dbAdapter, null, $resultSetPrototype);
     }
 }

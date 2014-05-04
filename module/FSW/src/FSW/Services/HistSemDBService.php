@@ -40,6 +40,10 @@ class HistSemDBService implements ServiceManagerAwareInterface {
     protected $oldFSWadapter;
 
     protected $personenTableGateway;
+    protected $kolloquienTableGateway;
+    protected $kolloquienVeranstaltungenTableGateway;
+
+
 
     protected $serviceManager;
 
@@ -83,14 +87,30 @@ class HistSemDBService implements ServiceManagerAwareInterface {
 
 
     public function getPersonenGateway() {
-
         if (is_null($this->personenTableGateway)) {
             $this->personenTableGateway = $this->serviceManager->get('PersonTableGateway');
         }
 
         return $this->personenTableGateway;
-
     }
+
+    public function getKolloquienGateway() {
+        if (is_null($this->kolloquienTableGateway)) {
+            $this->kolloquienTableGateway = $this->serviceManager->get('KolloquiumTableGateway');
+        }
+
+        return $this->kolloquienTableGateway;
+    }
+
+    public function getKolloquienVeranstaltungenGateway() {
+        if (is_null($this->kolloquienVeranstaltungenTableGateway)) {
+            $this->kolloquienVeranstaltungenTableGateway = $this->serviceManager->get('KolloquiumVeranstaltungTableGateway');
+        }
+
+        return $this->kolloquienVeranstaltungenTableGateway;
+    }
+
+
 
 
 } 

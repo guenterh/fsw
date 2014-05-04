@@ -204,6 +204,8 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface
 
     }
 
+
+
     protected function getAdapter() {
 
 

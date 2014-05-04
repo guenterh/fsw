@@ -113,9 +113,11 @@ return array(
 
 
 
-            'FSW\Model\KolloquiumTable' =>  'FSW\Model\Factories\KolloquiumTableFactory',
+            //'FSW\Model\KolloquiumTable' =>  'FSW\Model\Factories\KolloquiumTableFactory',
+            //lege die Factory in eine statische Methode von services
             'KolloquiumTableGateway' => 'FSW\Model\Factories\KolloquiumTableGatewayFactory',
-            'FSW\Model\KolloqiumVeranstaltungTable' =>  'FSW\Model\Factories\KolloqiumVeranstaltungTableFactory',
+            //'FSW\Model\KolloqiumVeranstaltungTable' =>  'FSW\Model\Factories\KolloqiumVeranstaltungTableFactory',
+            //lege die Factory in eine statische Methode von services
             'KolloquiumVeranstaltungTableGateway' => 'FSW\Model\Factories\KolloquiumVeranstaltungTableGatewayFactory',
             'FSWPersonenExtendedAdapter' => 'FSW\Model\Factories\DB\PersonenExtendedAdapterFactory',
             'HistSemDBService'          =>  'FSW\Model\Factories\HistSemDBServiceFactory',
@@ -140,6 +142,9 @@ return array(
 
 
         ),
+        'invokables' => array(
+            'KolloquienFacade' => 'FSW\Services\Facade\KolloquienFacade',
+        ),
         'initializers' => array(
             'FSW\Services\Initializer\Initializer::initInstance',
         )
@@ -149,7 +154,6 @@ return array(
 
     'controllers' => array(
         'invokables' => array(
-            'FSW\Controller\Kolloquien' => 'FSW\Controller\KolloquienController',
             'FSW\Controller\Aktivitaeten' => 'FSW\Controller\AktivitaetenController',
 
             'FSW\Controller\Harvest' => 'FSW\Controller\HarvestController'
@@ -159,6 +163,7 @@ return array(
         'factories' => array(
             'FSW\Controller\Personen' => 'FSW\Controller\Factory::getPersonenController',
             'FSW\Controller\Medien' => 'FSW\Controller\Factory::getMedienController',
+            'FSW\Controller\Kolloquien' => 'FSW\Controller\Factory::getKolloquienController',
 
         )
         //'factories' => array(

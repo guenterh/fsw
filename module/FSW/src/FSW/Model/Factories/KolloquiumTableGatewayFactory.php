@@ -50,9 +50,12 @@ class KolloquiumTableGatewayFactory implements FactoryInterface {
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+
         $dbAdapter = $serviceLocator->get('Zend\Db\Adapter\Adapter');
+        //$dbAdapter = $serviceLocator->get('HistSemDBAdapter');
         $resultSetPrototype = new ResultSet();
         $resultSetPrototype->setArrayObjectPrototype(new Kolloqium());
+        //return new TableGateway('fsw_kolloquium', $dbAdapter, null, $resultSetPrototype);
         return new TableGateway('kolloquium', $dbAdapter, null, $resultSetPrototype);
     }
 }

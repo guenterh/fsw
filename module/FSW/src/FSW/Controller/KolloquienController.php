@@ -14,38 +14,26 @@ use Zend\View\Model\ViewModel;
 
 class KolloquienController extends BaseController {
 
-    protected $kolloquiumTable;
-    protected $veranstaltungenTable;
 
     public function indexAction () {
+
+        $kolloquien = $this->facade->getKolloquien();
+
 
         //201201
         return new ViewModel(
             array(
-                "kolloquien" => $this->getKolloquiumTable()->fetchAll()
+                "kolloquien" => $kolloquien
             )
 
         );
 
     }
 
-    public function getKolloquiumTable()
-    {
-        if (!$this->kolloquiumTable) {
-            $sm = $this->getServiceLocator();
-            $this->kolloquiumTable = $sm->get('FSW\Model\KolloquiumTable');
-        }
+    public function insertKolloquienFSWAction () {
 
-        //$extendedAdapter = $this->getServiceLocator()->get("HistSemDBService");
-        return $this->kolloquiumTable;
-    }
 
-    public function getVeranstaltungen () {
-        if (!$this->veranstaltungenTable) {
-            $sm = $this->getServiceLocator();
-            $this->veranstaltungenTable = $sm->get('FSW\Model\KolloqiumVeranstaltungTable');
-        }
-        return $this->veranstaltungenTable;
+        $this->facade->insertKolloquienFSW();
 
     }
 
