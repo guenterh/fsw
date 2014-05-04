@@ -50,6 +50,20 @@ class KolloquienFacade extends BaseFacade {
         return $resultSet;
     }
 
+    public function getKolloquim($id)
+    {
+        $id  = (int) $id;
+        $kolloquienTableGateway =  $this->histSemDBService->getKolloquienGateway();
+        $rowset = $kolloquienTableGateway->select(array('id' => $id));
+        $row = $rowset->current();
+        if (!$row) {
+            throw new \Exception("Could not find row $id");
+        }
+        return $row;
+    }
+
+
+
 
 
     public function insertKolloquienFSW () {
