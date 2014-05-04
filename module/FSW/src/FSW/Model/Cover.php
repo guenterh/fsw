@@ -14,6 +14,8 @@ use Zend\InputFilter\InputFilterInterface;
 
 class Cover extends BaseModel implements InputFilterAwareInterface{
 
+
+    public $id;
     /**
      * Set input filter
      *
@@ -34,4 +36,25 @@ class Cover extends BaseModel implements InputFilterAwareInterface{
     {
         // TODO: Implement getInputFilter() method.
     }
+
+    /**
+     * Get record ID
+     *
+     * @return    Integer
+     */
+    public function getId()
+    {
+       $this->id;
+    }
+
+    /**
+     * Get list label key
+     *
+     * @return    String
+     */
+    public function getListLabel()
+    {
+        // TODO: Implement getListLabel() method.
+    }
+
 }

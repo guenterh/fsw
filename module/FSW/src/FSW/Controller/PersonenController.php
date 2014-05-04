@@ -37,19 +37,12 @@ use Zend\View\Model\ViewModel;
 class PersonenController extends BaseController{
 
 
-    /**
-     * @var DBService to access histsem DB
-     */
-
-
-    protected $personenFacade;
 
 
     public function indexAction() {
 
 
-        $this->personenFacade =  $this->getServiceLocator()->get('FSW\Services\Facade\PersonenFacade');
-        $personen = $this->personenFacade->fetchAll();
+        $personen = $this->facade->fetchAll();
         return new ViewModel(array('personen' => $personen));
 
     }
@@ -63,13 +56,11 @@ class PersonenController extends BaseController{
      **/
     public function searchAction($limit = 15)
     {
-        $this->personenFacade =  $this->getServiceLocator()->get('FSW\Services\Facade\PersonenFacade');
-
 
         $query = $this->params()->fromQuery('query', '');
         $data = array(
             'route' => strtolower($this->getTypeName()),
-            'listItems' => $this->personenFacade->find($query, $limit)
+            'listItems' => $this->facade->find($query, $limit)
         );
 
         return $this->getAjaxView($data, 'fsw/global/search');

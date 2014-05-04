@@ -62,17 +62,7 @@ abstract class BaseModel
 	 *
 	 * @return    Integer
 	 */
-	public function getId()
-	{
-		return (int)$this->id;
-	}
-
-
-
-	public function setId($id)
-	{
-		$this->id = $id;
-	}
+	public abstract function getId();
 
 
 
@@ -97,10 +87,7 @@ abstract class BaseModel
 	 *
 	 * @return    String
 	 */
-	public function getListLabel()
-	{
-		return get_class($this);
-	}
+	public abstract function getListLabel();
 
 
 

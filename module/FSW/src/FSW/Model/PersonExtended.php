@@ -138,9 +138,13 @@ class PersonExtended extends BaseModel implements InputFilterAwareInterface {
     }
 
 
-
-
-
-
-
-} 
+    /**
+     * Get list label key
+     *
+     * @return    String
+     */
+    public function getListLabel()
+    {
+        return $this->fullname;
+    }
+}

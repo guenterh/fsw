@@ -13,7 +13,7 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
 
-class Veranstaltung implements InputFilterAwareInterface {
+class Veranstaltung extends BaseModel implements InputFilterAwareInterface {
 
 
     public $idveranstaltung;
@@ -21,6 +21,8 @@ class Veranstaltung implements InputFilterAwareInterface {
     public $datum;
     public $personenname;
     public $beschreibung;
+
+    public $id;
 
     protected $inputFilter;
 
@@ -131,4 +133,23 @@ class Veranstaltung implements InputFilterAwareInterface {
     }
 
 
-} 
+    /**
+     * Get record ID
+     *
+     * @return    Integer
+     */
+    public function getId()
+    {
+       return $this->id;
+    }
+
+    /**
+     * Get list label key
+     *
+     * @return    String
+     */
+    public function getListLabel()
+    {
+        // TODO: Implement getListLabel() method.
+    }
+}

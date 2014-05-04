@@ -11,28 +11,14 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\InputFilter;
 
-class Kolloqium implements InputFilterAwareInterface{
+class Kolloqium extends BaseModel implements InputFilterAwareInterface{
 
-    public $idkolloquium;
+    public $id;
+    public $id_kolloquium;
     public $titel;
 
     protected $inputFilter;
 
-    public function exchangeArray($data)
-    {
-        $this->idkolloquium     = (isset($data['idkolloquium'])) ? $data['idkolloquium'] : null;
-        $this->titel = (isset($data['titel'])) ? $data['titel'] : null;
-    }
-
-    /**
-     * Retrieve object array
-     *
-     * @return array
-     */
-    public function getArrayCopy()
-    {
-        return get_object_vars($this);
-    }
 
 
     /**
@@ -88,5 +74,65 @@ class Kolloqium implements InputFilterAwareInterface{
             $this->inputFilter = $inputFilter;
         }
         return $this->inputFilter;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id_kolloquium
+     */
+    public function setId_kolloquium($id_kolloquium)
+    {
+        $this->id_kolloquium = $id_kolloquium;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId_kolloquium()
+    {
+        return $this->id_kolloquium;
+    }
+
+
+    /**
+     * @param mixed $titel
+     */
+    public function setTitel($titel)
+    {
+        $this->titel = $titel;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitel()
+    {
+        return $this->titel;
+    }
+
+
+    /**
+     * Get list label key
+     *
+     * @return    String
+     */
+    public function getListLabel()
+    {
+        return $this->titel;
     }
 }

@@ -22,6 +22,9 @@ class KolloquienFacade extends BaseFacade {
 
     public function getKolloquien() {
 
+        $kolloquienTableGateway =  $this->histSemDBService->getKolloquienGateway();
+        $resultset =  $kolloquienTableGateway->select();
+        return $resultset;
 
     }
 

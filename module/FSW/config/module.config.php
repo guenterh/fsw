@@ -113,12 +113,9 @@ return array(
 
 
 
-            //'FSW\Model\KolloquiumTable' =>  'FSW\Model\Factories\KolloquiumTableFactory',
-            //lege die Factory in eine statische Methode von services
-            'KolloquiumTableGateway' => 'FSW\Model\Factories\KolloquiumTableGatewayFactory',
+            'KolloquiumTableGateway' => 'FSW\Services\Factory::getKolloquienTableGateway',
             //'FSW\Model\KolloqiumVeranstaltungTable' =>  'FSW\Model\Factories\KolloqiumVeranstaltungTableFactory',
-            //lege die Factory in eine statische Methode von services
-            'KolloquiumVeranstaltungTableGateway' => 'FSW\Model\Factories\KolloquiumVeranstaltungTableGatewayFactory',
+            'KolloquiumVeranstaltungTableGateway' => 'FSW\Services\Factory::getKolloquiumVeranstaltungenTableGateway',
             'FSWPersonenExtendedAdapter' => 'FSW\Model\Factories\DB\PersonenExtendedAdapterFactory',
             'HistSemDBService'          =>  'FSW\Model\Factories\HistSemDBServiceFactory',
             'HistSemDBAdapter'          =>  'FSW\Model\Factories\DB\HistSemDBAdapterFactory',
