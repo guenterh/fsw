@@ -177,7 +177,7 @@ class MedienFacade extends BaseFacade {
                 $sql = $sql .  $this->qV($r['link']) . ',';
                 $sql = $sql .  $this->qV($r['medientyp']) . ',';
                 $sql = $sql .  $this->qV($matching[$r['mit_id']]) . ',';
-                $sql = $sql .  $this->qV($matching[$r['sendetitel']]) . ')';
+                $sql = $sql .  $this->qV($r['sendetitel']) . ')';
                 $resultFSW =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
             }
 
