@@ -1,0 +1,2 @@
+Abfrage Rolle:
+SELECT * FROM `Per_Rolle` WHERE not isnull(roll_hs_fsw)
