@@ -91,6 +91,42 @@ return array(
 
         ),
     ),
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+                'personen-insertExtendedMAFSW' => array(
+                    'options' => array(
+                        'route' => 'personen',
+                        'defaults' => array(
+                            'controller' => 'FSW\Controller\Personen',
+                            'action' => 'insertExtendedMAFSW'
+                        )
+                    )
+                ),
+                'zoradoc-insert' => array(
+                    'options' => array(
+                        'route' => 'zora',
+                        'defaults' => array(
+                            'controller' => 'FSW\Controller\Harvest',
+                            'action' => 'oai'
+                        )
+                    )
+                ),
+                'medien-insert' => array(
+                    'options' => array(
+                        'route' => 'medien',
+                        'defaults' => array(
+                            'controller' => 'FSW\Controller\Medien',
+                            'action' => 'insertMedienFSW'
+                        )
+                    )
+                )
+
+
+            )
+
+        ),
+    ),
 
     'service_manager' => array(
         'allow_override' => true,

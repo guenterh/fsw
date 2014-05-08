@@ -64,9 +64,12 @@ class HarvestController extends BaseController
                 $oaiClient = $zoraFacade->getOAIClient();
 
                 //missing set config, do something
-                $oaiClient->setStartDate($this->params()->fromQuery('from','1900-01-01'));
-                $oaiClient->setEndDate($this->params()->fromQuery('until','2050-12-31'));
+                //todo: Abfrage, on ich einen Consolerequest habe, in diesem Fall existiert fromQuery nicht
+                //$oaiClient->setStartDate($this->params()->fromQuery('from','1900-01-01'));
+                //$oaiClient->setEndDate($this->params()->fromQuery('until','2050-12-31'));
 
+                $oaiClient->setStartDate('1900-01-01');
+                $oaiClient->setEndDate('2050-12-31');
                 if ($oaiSection->usedSets) {
                     $sets = explode('###',$oaiSection->usedSets);
                     foreach($sets as $set) {
