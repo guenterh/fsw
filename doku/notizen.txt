@@ -7,3 +7,11 @@ http://www.id.uzh.ch/dl/web/webhosting/php/phpumstellung53.html
 http://mwop.net/blog/243-Running-mod_php-and-FastCGI-side-by-side.html
 
 
+
+
+Installation von phpunit
+http://phpunit.de/manual/current/en/installation.html
+
+in phpstorm kann zur Zeit nur phpunit <= 3.7.x verwendet werden
+http://youtrack.jetbrains.com/issue/WI-21666
+http://stackoverflow.com/questions/21415898/unable-to-run-unit-tests-in-phpstorms-ide
