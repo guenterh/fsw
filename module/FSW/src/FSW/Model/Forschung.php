@@ -13,7 +13,7 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
 
-class Aktivitaet extends BaseModel implements InputFilterAwareInterface {
+class Forschung extends BaseModel implements InputFilterAwareInterface {
 
 
     public $qarb_arb_id;

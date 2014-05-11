@@ -56,16 +56,16 @@ return array(
                     ),
                 ),
             ),
-            'aktivitaeten' => array(
+            'forschung' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/aktivitaeten[/][/:mitid]',
+                    'route'    => '/forschung[/][/:mitid]',
                     'constraints' => array(
                         //'aktivitaetentyp' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'mitid'     => '[0-9]+',
                     ),
                     'defaults' => array(
-                        'controller' => 'FSW\Controller\Aktivitaeten',
+                        'controller' => 'FSW\Controller\Forschung',
                         'action'     => 'index',
                     ),
                 ),
@@ -157,11 +157,11 @@ return array(
             'HistSemDBAdapter'          =>  'FSW\Model\Factories\DB\HistSemDBAdapterFactory',
 
 
-            'FSW\Services\Facade\AktivitaetFacade'    =>  'FSW\Services\Factory::getAktivitaetFassade',
+            'FSW\Services\Facade\ForschungFacade'    =>  'FSW\Services\Factory::getForschungFacade',
             'FSW\Services\Facade\PersonenFacade'    =>  'FSW\Services\Factory::getPersonFacade',
             'FSW\Services\Facade\MedienFacade'    =>  'FSW\Services\Factory::getMedienFacade',
 
-            'AktivitaetTableGateway'          =>  'FSW\Services\Factory::getAktivitaetTableGateway',
+            'ForschungTableGateway'          =>  'FSW\Services\Factory::getForschungTableGateway',
 
             'ZoraDocTableGateway'          =>  'FSW\Services\Factory::getZoraDocTableGateway',
             'ZoraAuthorTableGateway'          =>  'FSW\Services\Factory::getZoraAuthorTableGateway',
@@ -187,7 +187,7 @@ return array(
 
     'controllers' => array(
         'invokables' => array(
-            'FSW\Controller\Aktivitaeten' => 'FSW\Controller\AktivitaetenController',
+            'FSW\Controller\Forschung' => 'FSW\Controller\ForschungController',
 
             'FSW\Controller\Harvest' => 'FSW\Controller\HarvestController'
 
@@ -237,7 +237,7 @@ return array(
             ),
             'master_lizz_diss' => array(
                 'label' => 'master_lizz_diss',
-                'route' => 'aktivitaeten'
+                'route' => 'forschung'
             )
 
         ),

@@ -80,8 +80,8 @@ class HistSemDBService implements ServiceManagerAwareInterface {
         $this->serviceManager = $serviceManager;
     }
 
-    public function getAktivitaetFacade() {
-        $aF = $this->serviceManager->get('FSW\Services\Facade\AktivitaetFacade');
+    public function getForschungFacade() {
+        $aF = $this->serviceManager->get('FSW\Services\Facade\ForschungFacade');
         return $aF;
     }
 

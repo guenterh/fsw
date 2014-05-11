@@ -97,8 +97,8 @@ class Module {
                 'HistSemDBAdapter'          =>  'FSW\Model\Factories\DB\HistSemDBAdapterFactory',
 
 
-                'FSW\Services\Facade\AktivitaetFacade'    =>  'FSW\Services\Factory::getAktivitaetFassade',
-                'AktivitaetTableGateway'          =>  'FSW\Services\Factory::getAktivitaetTableGateway'
+                //'FSW\Services\Facade\ForschungFacade'    =>  'FSW\Services\Factory::getAktivitaetFassade',
+                //'ForschungTableGateway'          =>  'FSW\Services\Factory::getAktivitaetTableGateway'
             ),
         );
     }

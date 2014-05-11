@@ -12,7 +12,7 @@ namespace FSW\Services\Facade;
 //use Libadmin\Model\BaseModel;
 use Zend\Db\TableGateway\TableGateway;
 
-class AktivitaetFacade extends BaseFacade {
+class ForschungFacade extends BaseFacade {
 
     /**
      * Constructor
@@ -40,7 +40,7 @@ class AktivitaetFacade extends BaseFacade {
         return $test;
     }
 
-    public function getActivities ($activityType = array(), $mitID = 0)
+    public function getForschungen ($activityType = array(), $mitID = 0)
     {
 
         $select = $this->tableGateway->getSql()->select();

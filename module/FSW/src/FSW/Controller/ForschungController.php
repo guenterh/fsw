@@ -12,7 +12,7 @@ namespace FSW\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class AktivitaetenController extends BaseController {
+class ForschungController extends BaseController {
 
 
 
@@ -32,10 +32,10 @@ class AktivitaetenController extends BaseController {
 
 
         //todo Facaden sollten nicht direkt über den ServiceLocator vom Controller geholt sondern über Factory gesetzt werden
-        $aktivitaetenFacade = $this->getServiceLocator()->get('FSW\Services\Facade\AktivitaetFacade');
+        $aktivitaetenFacade = $this->getServiceLocator()->get('FSW\Services\Facade\ForschungFacade');
 
         //$t = array('Lizentiatsarbeit');
-        $result = $aktivitaetenFacade->getActivities($aktivitaetentyp,$mitid);
+        $result = $aktivitaetenFacade->getForschungen($aktivitaetentyp,$mitid);
         $simpleList = $this->toList($result);
         $model = array('items' => $simpleList);
         return new ViewModel($model);

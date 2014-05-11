@@ -21,9 +21,9 @@ use FSW\Model\ZoraDoc;
 use FSW\Model\ZoraDocType;
 use FSW\Model\ZoraAuthor;
 use FSW\Model\Cover;
-use FSW\Model\Aktivitaet;
+use FSW\Model\Forschung;
 use FSW\Services\Facade\PersonFacade;
-use FSW\Services\Facade\AktivitaetFacade;
+use FSW\Services\Facade\ForschungFacade;
 use FSW\Services\Facade\ZoraFacade;
 use FSW\Services\OAI;
 use FSW\Model\Kolloqium;
@@ -52,11 +52,11 @@ class Factory {
 
 
     }
-    //getAktivitaetFassade
-    public static function getAktivitaetFassade(ServiceManager $sm) {
+    //getForschungFassade
+    public static function getForschungFacade(ServiceManager $sm) {
 
-        $tableGateway = $sm->get('AktivitaetTableGateway');
-        $facade = new AktivitaetFacade($tableGateway);
+        $tableGateway = $sm->get('ForschungTableGateway');
+        $facade = new ForschungFacade($tableGateway);
         return $facade;
 
     }
@@ -172,12 +172,12 @@ class Factory {
         return new TableGateway('fsw_zora_author', $dbAdapter, null, $resultSetPrototype);
     }
 
-    public static function getAktivitaetTableGateway(ServiceManager $sm) {
+    public static function getForschungTableGateway(ServiceManager $sm) {
 
         $histSemDBService = $sm->get('HistSemDBService');
         $dbAdapter = $histSemDBService->getAdapter();
         $resultSetPrototype = new ResultSet();
-        $resultSetPrototype->setArrayObjectPrototype(new Aktivitaet());
+        $resultSetPrototype->setArrayObjectPrototype(new Forschung());
         return new TableGateway('Qarb_ArbeitenV2', $dbAdapter, null, $resultSetPrototype);
     }
 
