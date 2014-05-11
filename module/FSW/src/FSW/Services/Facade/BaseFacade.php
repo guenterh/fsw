@@ -249,4 +249,39 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface
     }
 
 
+    public function getFSWPersonen () {
+
+
+        $personenTableGateway = $this->histSemDBService->getPersonenGateway();
+        $select = $personenTableGateway->getSql()->select();
+        /*
+         * mit mehrfachem join, dann erhält man nur die Persone, die bereits einen MedienEintrag haben
+         * wir wollen aber alle FSW Personen
+        $select->join(array(
+            'pers_extended' => 'fsw_personen_extended'),
+             'pers_extended.pers_id = Per_Personen.pers_id'   )->
+        join(array(
+            'medien' => 'fsw_medien'),
+            'pers_extended.pers_id = medien.mit_id_per_extended'   );
+
+        */
+
+        $select->join(array(
+                'pers_extended' => 'fsw_personen_extended'),
+            'pers_extended.pers_id = Per_Personen.pers_id'   );
+
+        $rowset =  $personenTableGateway->selectWith($select);
+
+        //foreach ($rowset as $row) {
+        //    \Zend\Debug\Debug::dump($row);
+        //}
+
+        return $rowset;
+
+
+
+
+    }
+
+
 }

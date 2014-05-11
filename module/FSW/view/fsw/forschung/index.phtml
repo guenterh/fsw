@@ -1,15 +1,15 @@
 
 
-<ul class="type1">
 
-    <?php $i = 0; ?>
-    <?php foreach ($this->items as $item): ?>
-    <li>
-        <?php $i++; ?>
-
-        <p class="noMarginBottom"><?= $i?>:  <?= $item->getQarbArbAbschlussjahr() ?> :&nbsp;<b> <?= $item->getQarbArbTitel() ?></b></p>
-
-    </li>
-    <?php endforeach; ?>
-
-</ul>
+<div class="row">
+    <div class="span3" id="sidebar">
+        <?=
+        $this->render('fsw/global/sidebar', array(
+            'route' => 'forschung',
+            'listItems' => $forschung
+        ));?>
+    </div>
+    <div class="span9" id="content">
+        <?= $this->render('fsw/forschung/home'); ?>
+    </div>
+</div>

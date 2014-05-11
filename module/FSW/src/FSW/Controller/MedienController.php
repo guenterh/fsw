@@ -87,7 +87,7 @@ class MedienController extends BaseController {
             ));
         }
 
-        $rL = $this->facade->getMedienPersonen();
+        $rL = $this->facade->getFSWPersonen();
         //$personTable = $this->getPersonTable();
         //$rL = $personTable->find(null,200);
         $simpleList = $this->toList($rL,true);

@@ -71,33 +71,6 @@ class MedienFacade extends BaseFacade {
         return $row;
     }
 
-    public function getMedienPersonen()
-    {
-
-        $personenTableGateway = $this->histSemDBService->getPersonenGateway();
-        //$sql = $personenTableGateway->getSql();
-        $select = $personenTableGateway->getSql()->select();
-        /*
-         * mit mehrfachem join, dann erhält man nur die Persone, die bereits einen MedienEintrag haben
-         * wir wollen aber alle FSW Personen
-        $select->join(array(
-            'pers_extended' => 'fsw_personen_extended'),
-             'pers_extended.pers_id = Per_Personen.pers_id'   )->
-        join(array(
-            'medien' => 'fsw_medien'),
-            'pers_extended.pers_id = medien.mit_id_per_extended'   );
-
-        */
-
-        $select->join(array(
-                'pers_extended' => 'fsw_personen_extended'),
-            'pers_extended.pers_id = Per_Personen.pers_id'   );
-
-        $rowset =  $personenTableGateway->selectWith($select);
-        return $rowset;
-    }
-
-
 
 
     public function deleteMedium($id)

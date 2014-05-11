@@ -1,0 +1,10 @@
+<?php
+
+echo $this->render('fsw/global/home-crud', array(
+
+    'entityName' => 'Forschung',
+    'entityNamePlural' => 'Forschungen',
+
+    'route' => 'forschung',
+	'listItems' => $forschung
+));

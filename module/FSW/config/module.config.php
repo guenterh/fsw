@@ -59,10 +59,10 @@ return array(
             'forschung' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/forschung[/][/:mitid]',
+                    'route'    => '/forschung[/][:action][/:id]',
                     'constraints' => array(
-                        //'aktivitaetentyp' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'mitid'     => '[0-9]+',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
                     ),
                     'defaults' => array(
                         'controller' => 'FSW\Controller\Forschung',
@@ -197,7 +197,6 @@ return array(
 
     'controllers' => array(
         'invokables' => array(
-            'FSW\Controller\Forschung' => 'FSW\Controller\ForschungController',
 
             'FSW\Controller\Harvest' => 'FSW\Controller\HarvestController'
 
@@ -207,6 +206,7 @@ return array(
             'FSW\Controller\Personen' => 'FSW\Controller\Factory::getPersonenController',
             'FSW\Controller\Medien' => 'FSW\Controller\Factory::getMedienController',
             'FSW\Controller\Kolloquien' => 'FSW\Controller\Factory::getKolloquienController',
+            'FSW\Controller\Forschung' => 'FSW\Controller\Factory::getForschungController',
 
         )
         //'factories' => array(

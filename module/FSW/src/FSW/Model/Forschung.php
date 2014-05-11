@@ -8,12 +8,15 @@
 
 namespace FSW\Model;
 
+use Traversable;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
 
 class Forschung extends BaseModel implements InputFilterAwareInterface {
+
+
 
 
     public $qarb_arb_id;
@@ -41,12 +44,8 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     public $qarb_arb_changed;
 
 
-
-
-
-
-
-
+    private $arbeiten = array();
+    privATE    $position = 0;
 
 
     protected $inputFilter;
@@ -84,7 +83,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_DOI
      */
-    public function setQarbArbDOI($qarb_arb_DOI)
+    public function setQarb_arb_DOI($qarb_arb_DOI)
     {
         $this->qarb_arb_DOI = $qarb_arb_DOI;
     }
@@ -92,7 +91,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbDOI()
+    public function getQarb_arb_DOI()
     {
         return $this->qarb_arb_DOI;
     }
@@ -100,7 +99,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_FDB
      */
-    public function setQarbArbFDB($qarb_arb_FDB)
+    public function setQarb_arb_FDB($qarb_arb_FDB)
     {
         $this->qarb_arb_FDB = $qarb_arb_FDB;
     }
@@ -108,7 +107,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbFDB()
+    public function getQarb_arb_FDB()
     {
         return $this->qarb_arb_FDB;
     }
@@ -116,7 +115,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_ISBN
      */
-    public function setQarbArbISBN($qarb_arb_ISBN)
+    public function setQarb_arb_ISBN($qarb_arb_ISBN)
     {
         $this->qarb_arb_ISBN = $qarb_arb_ISBN;
     }
@@ -124,7 +123,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbISBN()
+    public function getQarb_arb_ISBN()
     {
         return $this->qarb_arb_ISBN;
     }
@@ -132,7 +131,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_ISSN
      */
-    public function setQarbArbISSN($qarb_arb_ISSN)
+    public function setQarb_arb_ISSN($qarb_arb_ISSN)
     {
         $this->qarb_arb_ISSN = $qarb_arb_ISSN;
     }
@@ -140,7 +139,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbISSN()
+    public function getQarb_arb_ISSN()
     {
         return $this->qarb_arb_ISSN;
     }
@@ -148,7 +147,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_URL
      */
-    public function setQarbArbURL($qarb_arb_URL)
+    public function setQarb_arb_URL($qarb_arb_URL)
     {
         $this->qarb_arb_URL = $qarb_arb_URL;
     }
@@ -156,7 +155,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbURL()
+    public function getQarb_arb_URL()
     {
         return $this->qarb_arb_URL;
     }
@@ -164,7 +163,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_ZORA
      */
-    public function setQarbArbZORA($qarb_arb_ZORA)
+    public function setQarb_arb_ZORA($qarb_arb_ZORA)
     {
         $this->qarb_arb_ZORA = $qarb_arb_ZORA;
     }
@@ -172,7 +171,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbZORA()
+    public function getQarb_arb_ZORA()
     {
         return $this->qarb_arb_ZORA;
     }
@@ -180,7 +179,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_abschlussjahr
      */
-    public function setQarbArbAbschlussjahr($qarb_arb_abschlussjahr)
+    public function setQarb_arb_abschlussjahr($qarb_arb_abschlussjahr)
     {
         $this->qarb_arb_abschlussjahr = $qarb_arb_abschlussjahr;
     }
@@ -188,7 +187,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbAbschlussjahr()
+    public function getQarb_arb_abschlussjahr()
     {
         return $this->qarb_arb_abschlussjahr;
     }
@@ -196,7 +195,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_abstract
      */
-    public function setQarbArbAbstract($qarb_arb_abstract)
+    public function setQarb_arb_abstract($qarb_arb_abstract)
     {
         $this->qarb_arb_abstract = $qarb_arb_abstract;
     }
@@ -204,7 +203,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbAbstract()
+    public function getQarb_arb_abstract()
     {
         return $this->qarb_arb_abstract;
     }
@@ -212,7 +211,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_autor_rollid
      */
-    public function setQarbArbAutorRollid($qarb_arb_autor_rollid)
+    public function setQarb_arb_autor_rollid($qarb_arb_autor_rollid)
     {
         $this->qarb_arb_autor_rollid = $qarb_arb_autor_rollid;
     }
@@ -220,7 +219,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbAutorRollid()
+    public function getQarb_arb_autor_rollid()
     {
         return $this->qarb_arb_autor_rollid;
     }
@@ -228,7 +227,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_autorid
      */
-    public function setQarbArbAutorid($qarb_arb_autorid)
+    public function setQarb_arb_autorid($qarb_arb_autorid)
     {
         $this->qarb_arb_autorid = $qarb_arb_autorid;
     }
@@ -236,7 +235,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbAutorid()
+    public function getQarb_arb_autorid()
     {
         return $this->qarb_arb_autorid;
     }
@@ -244,7 +243,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_bemerkungen
      */
-    public function setQarbArbBemerkungen($qarb_arb_bemerkungen)
+    public function setQarb_arb_bemerkungen($qarb_arb_bemerkungen)
     {
         $this->qarb_arb_bemerkungen = $qarb_arb_bemerkungen;
     }
@@ -252,7 +251,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbBemerkungen()
+    public function getQarb_arb_bemerkungen()
     {
         return $this->qarb_arb_bemerkungen;
     }
@@ -260,7 +259,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_betreuer1
      */
-    public function setQarbArbBetreuer1($qarb_arb_betreuer1)
+    public function setQarb_arb_betreuer1($qarb_arb_betreuer1)
     {
         $this->qarb_arb_betreuer1 = $qarb_arb_betreuer1;
     }
@@ -268,7 +267,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbBetreuer1()
+    public function getQarb_arb_betreuer1()
     {
         return $this->qarb_arb_betreuer1;
     }
@@ -276,7 +275,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_betreuer1_rollid
      */
-    public function setQarbArbBetreuer1Rollid($qarb_arb_betreuer1_rollid)
+    public function setQarb_arb_betreuer1_rollid($qarb_arb_betreuer1_rollid)
     {
         $this->qarb_arb_betreuer1_rollid = $qarb_arb_betreuer1_rollid;
     }
@@ -284,7 +283,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbBetreuer1Rollid()
+    public function getQarb_arb_betreuer1_rollid()
     {
         return $this->qarb_arb_betreuer1_rollid;
     }
@@ -292,7 +291,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_betreuer2
      */
-    public function setQarbArbBetreuer2($qarb_arb_betreuer2)
+    public function setQarb_arb_betreuer2($qarb_arb_betreuer2)
     {
         $this->qarb_arb_betreuer2 = $qarb_arb_betreuer2;
     }
@@ -300,7 +299,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbBetreuer2()
+    public function getQarb_arb_betreuer2()
     {
         return $this->qarb_arb_betreuer2;
     }
@@ -308,7 +307,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_changed
      */
-    public function setQarbArbChanged($qarb_arb_changed)
+    public function setQarb_arb_changed($qarb_arb_changed)
     {
         $this->qarb_arb_changed = $qarb_arb_changed;
     }
@@ -316,7 +315,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbChanged()
+    public function getQarb_arb_changed()
     {
         return $this->qarb_arb_changed;
     }
@@ -324,7 +323,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_id
      */
-    public function setQarbArbId($qarb_arb_id)
+    public function setQarb_arb_id($qarb_arb_id)
     {
         $this->qarb_arb_id = $qarb_arb_id;
     }
@@ -332,7 +331,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbId()
+    public function getQarb_arb_id()
     {
         return $this->qarb_arb_id;
     }
@@ -340,7 +339,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_imwebsichtbar
      */
-    public function setQarbArbImwebsichtbar($qarb_arb_imwebsichtbar)
+    public function setQarb_arb_imwebsichtbar($qarb_arb_imwebsichtbar)
     {
         $this->qarb_arb_imwebsichtbar = $qarb_arb_imwebsichtbar;
     }
@@ -348,7 +347,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbImwebsichtbar()
+    public function getQarb_arb_imwebsichtbar()
     {
         return $this->qarb_arb_imwebsichtbar;
     }
@@ -356,7 +355,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_istabgeschlossen
      */
-    public function setQarbArbIstabgeschlossen($qarb_arb_istabgeschlossen)
+    public function setQarb_arb_istabgeschlossen($qarb_arb_istabgeschlossen)
     {
         $this->qarb_arb_istabgeschlossen = $qarb_arb_istabgeschlossen;
     }
@@ -364,7 +363,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbIstabgeschlossen()
+    public function getQarb_arb_istabgeschlossen()
     {
         return $this->qarb_arb_istabgeschlossen;
     }
@@ -372,7 +371,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_semester
      */
-    public function setQarbArbSemester($qarb_arb_semester)
+    public function setQarb_arb_semester($qarb_arb_semester)
     {
         $this->qarb_arb_semester = $qarb_arb_semester;
     }
@@ -380,7 +379,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbSemester()
+    public function getQarb_arb_semester()
     {
         return $this->qarb_arb_semester;
     }
@@ -388,7 +387,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_titel
      */
-    public function setQarbArbTitel($qarb_arb_titel)
+    public function setQarb_arb_titel($qarb_arb_titel)
     {
         $this->qarb_arb_titel = $qarb_arb_titel;
     }
@@ -396,7 +395,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbTitel()
+    public function getQarb_arb_titel()
     {
         return $this->qarb_arb_titel;
     }
@@ -404,7 +403,7 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @param mixed $qarb_arb_typ
      */
-    public function setQarbArbTyp($qarb_arb_typ)
+    public function setQarb_arb_typ($qarb_arb_typ)
     {
         $this->qarb_arb_typ = $qarb_arb_typ;
     }
@@ -412,13 +411,81 @@ class Forschung extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getQarbArbTyp()
+    public function getQarb_arb_typ()
     {
         return $this->qarb_arb_typ;
     }
 
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Retrieve an external iterator
+     * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
+     * @return Traversable An instance of an object implementing <b>Iterator</b> or
+     * <b>Traversable</b>
+     */
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Return the current element
+     * @link http://php.net/manual/en/iterator.current.php
+     * @return mixed Can return any type.
+     */
+    public function current()
+    {
+       return $this->arbeiten[$this->position];
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Move forward to next element
+     * @link http://php.net/manual/en/iterator.next.php
+     * @return void Any returned value is ignored.
+     */
+    public function next()
+    {
+        ++$this->position;
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Return the key of the current element
+     * @link http://php.net/manual/en/iterator.key.php
+     * @return mixed scalar on success, or null on failure.
+     */
+    public function key()
+    {
+        $this->position;
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Checks if current position is valid
+     * @link http://php.net/manual/en/iterator.valid.php
+     * @return boolean The return value will be casted to boolean and then evaluated.
+     * Returns true on success or false on failure.
+     */
+    public function valid()
+    {
+        return isset($this->arbeiten[$this->position]);
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Rewind the Iterator to the first element
+     * @link http://php.net/manual/en/iterator.rewind.php
+     * @return void Any returned value is ignored.
+     */
+    public function rewind()
+    {
+        $this->position = 0;
+    }
+
+    public function addForschungsarbeit($arbeit) {
+        $this->arbeiten[] = $arbeit;
+    }
+
+    public function getArbeiten() {
+        return $this->arbeiten;
+    }
 
 
-
-
-} 
+}

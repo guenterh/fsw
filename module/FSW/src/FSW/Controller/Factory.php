@@ -53,5 +53,20 @@ class Factory {
         return $uC;
     }
 
+    public static function getForschungController(ServiceManager $sm) {
+
+
+        $uC = new \FSW\Controller\ForschungController();
+        if ($uC instanceof FacadeAwareInterface)  {
+
+            $uC->setFacadeService($sm->getServiceLocator()->get('FSW\Services\Facade\ForschungFacade'));
+
+        }
+        return $uC;
+    }
+
+
+
+
 
 }
