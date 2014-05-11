@@ -120,7 +120,17 @@ return array(
                             'action' => 'insertMedienFSW'
                         )
                     )
+                ),
+                'kolloquien-insert' => array(
+                    'options' => array(
+                        'route' => 'kolloquien',
+                        'defaults' => array(
+                            'controller' => 'FSW\Controller\Kolloquien',
+                            'action' => 'insertKolloquienFSW'
+                        )
+                    )
                 )
+
 
 
             )
