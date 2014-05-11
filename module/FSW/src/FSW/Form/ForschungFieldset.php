@@ -19,7 +19,7 @@ use Zend\InputFilter\InputFilterProviderInterface;
 
 class ForschungFieldset extends Fieldset implements InputFilterProviderInterface{
 
-    public function __construct($name = 'forschung',$forschungen) {
+    public function __construct($name = 'forschung') {
 
         parent::__construct($name);
 
