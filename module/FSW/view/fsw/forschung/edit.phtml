@@ -19,6 +19,8 @@ $form->prepare();
 
 $lizz_master = $form->get('lizentiatmaster');
 $dissertations = $form->get('dissertation');
+$habil = $form->get('habilitation');
+
 
 
 $saveButtonLabel = "Speichern";
@@ -50,54 +52,30 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
 <div class="tabbable">
     <ul class="nav nav-tabs formTabs">
-        <li class="active">
-            <a href="#lizentiate_masters"><?= $this->translate('Lizentiate_masters ', 'Libadmin') ?></a>
-        </li>
+        <li class="active"><a href="#lizentiate_masters"><?= $this->translate('Lizentiate_masters ', 'Libadmin') ?></a></li>
         <li><a href="#dissertations"><?= $this->translate('dissertations', 'Libadmin') ?></a></li>
+        <li><a href="#habil"><?= $this->translate('Habilitationen', 'Libadmin') ?></a></li>
     </ul>
 
 
     <div class="tab-content">
         <div class="tab-pane active" id="lizentiate_masters">
-            <fieldset>
-                <legend>lizz / master arbeiten</legend>
-
-                    <?php foreach ($lizz_master as $singlelizzmaster) :?>
-                        <div class="row-fluid">
-                            <div class="span6">
-                               <?= $singlelizzmaster?>
-                            </div>
-                            <div class="span6">
-                                test 2
-                            </div>
-                        </div>
-
-                    <?php endforeach; ?>
-
-            </fieldset>
-
+            <?= $this->render('fsw/global/forschungen', array('forschungen' => $lizz_master,
+                                                                'legende' => 'lizz master arbeiten')); ?>
         </div>
     </div>
 
     <div class="tab-content">
         <div class="tab-pane" id="dissertations">
-            <fieldset>
-                <legend>Dissertationen</legend>
+                <?= $this->render('fsw/global/forschungen', array('forschungen' => $dissertations,
+                    'legende' => 'dissertations')); ?>
+        </div>
+    </div>
 
-                    <?php foreach ($dissertations as $dissertation) :?>
-                        <div class="row-fluid">
-                            <div class="span6">
-                                <?= $this->formRowTwb($dissertation->get('qarb_arb_autorid')) ?>
-                            </div>
-                            <div class="span6">
-                                <?= $this->formRowTwb($dissertation->get('qarb_arb_titel')) ?>
-                            </div>
-                        </div>
-
-                    <?php endforeach; ?>
-
-
-            </fieldset>
+    <div class="tab-content">
+        <div class="tab-pane" id="habil">
+            <?= $this->render('fsw/global/forschungen', array('forschungen' => $habil,
+                'legende' => 'Habilitationen')); ?>
         </div>
     </div>
 

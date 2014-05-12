@@ -49,6 +49,22 @@ class ForschungForm extends Form {
             )
         ));
 
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Collection',
+            'name' => 'habilitation',
+            'options' => array(
+                'label' => 'habilitation',
+                'should_create_template' => true,
+                'allow_add' => true,
+                'target_element' => array(
+                    'type' => 'FSW\Form\ForschungFieldset'
+                )
+            )
+        ));
+
+
+
+
 
         /*
         $this->add(array(

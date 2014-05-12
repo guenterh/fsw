@@ -9,10 +9,10 @@
 namespace FSW\Controller;
 
 
-use FSW\Form\ForschungFieldset;
 use FSW\Form\ForschungForm;
 use FSW\Model\PersonForschungUebersicht;
-use Zend\Mvc\Controller\AbstractActionController;
+
+use Zend\Stdlib\ArrayObject;
 use Zend\View\Model\ViewModel;
 
 class ForschungController extends BaseController {
@@ -74,10 +74,23 @@ class ForschungController extends BaseController {
 
         $dissertations = $this->facade->getForschungen($params);
 
-        $forschungUebersicht =  new PersonForschungUebersicht();
+        $forschungstypen = array('Habilitation');
+        $params = compact('pers_id','forschungstypen');
 
-        $forschungUebersicht->setLizentiatmaster($lizz_master);
-        $forschungUebersicht->setDissertation($dissertations);
+        $habil = $this->facade->getForschungen($params);
+
+
+        //$forschungUebersicht =  new PersonForschungUebersicht();
+
+
+        $bindObject = new ArrayObject();
+        $bindObject['dissertation'] = $dissertations;
+        $bindObject['lizentiatmaster'] = $lizz_master;
+        $bindObject['habilitation'] = $habil;
+
+
+        //$forschungUebersicht->setLizentiatmaster($lizz_master);
+        //$forschungUebersicht->setDissertation($dissertations);
 
         //$dissertations = new ForschungFieldset('dissertations',$dissertations);
         //$fs = new ForschungFieldset('lizz_master',$lizz_master);
@@ -86,7 +99,7 @@ class ForschungController extends BaseController {
         //$test = $dissertations->getElements();
 
         $form = new ForschungForm('forschungen');
-        $form->bind($forschungUebersicht);
+        $form->bind($bindObject);
 
 
         return $this->getAjaxView(array(
