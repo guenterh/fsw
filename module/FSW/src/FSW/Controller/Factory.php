@@ -65,6 +65,21 @@ class Factory {
         return $uC;
     }
 
+    public static function getPersonAktivitaetController(ServiceManager $sm) {
+
+
+        $uC = new \FSW\Controller\PersonenAktivitaetenController();
+        if ($uC instanceof FacadeAwareInterface)  {
+
+            $uC->setFacadeService($sm->getServiceLocator()->get('FSW\Services\Facade\PersonenAktivitaetFacade'));
+
+        }
+        return $uC;
+    }
+
+
+
+
 
 
 

@@ -35,7 +35,7 @@ class Medium extends BaseModel implements InputFilterAwareInterface {
     }
 
 
-    public function getID() {
+    public function getId() {
         return $this->id;
     }
 
@@ -127,6 +127,137 @@ class Medium extends BaseModel implements InputFilterAwareInterface {
 
         return $this->inputFilter;
     }
+
+    /**
+     * @param mixed $datum
+     */
+    public function setDatum($datum)
+    {
+        $this->datum = $datum;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDatum()
+    {
+        return $this->datum;
+    }
+
+    /**
+     * @param mixed $gespraechstitel
+     */
+    public function setGespraechstitel($gespraechstitel)
+    {
+        $this->gespraechstitel = $gespraechstitel;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGespraechstitel()
+    {
+        return $this->gespraechstitel;
+    }
+
+    /**
+     * @param mixed $icon
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    /*
+    public function getId()
+    {
+        return $this->id;
+    }
+    */
+
+    /**
+     * @param mixed $link
+     */
+    public function setLink($link)
+    {
+        $this->link = $link;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    /**
+     * @param mixed $medientyp
+     */
+    public function setmedientyp($medientyp)
+    {
+        $this->medientyp = $medientyp;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMedientyp()
+    {
+        return $this->medientyp;
+    }
+
+    /**
+     * @param mixed $mit_id_per_extended
+     */
+    public function setMit_id_per_extended($mit_id_per_extended)
+    {
+        $this->mit_id_per_extended = $mit_id_per_extended;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMit_id_per_extended()
+    {
+        return $this->mit_id_per_extended;
+    }
+
+    /**
+     * @param mixed $sendetitel
+     */
+    public function setSendetitel($sendetitel)
+    {
+        $this->sendetitel = $sendetitel;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSendetitel()
+    {
+        return $this->sendetitel;
+    }
+
 
 
 } 

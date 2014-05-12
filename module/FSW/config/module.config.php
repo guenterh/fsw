@@ -56,6 +56,21 @@ return array(
                     ),
                 ),
             ),
+            'personenaktivitaet' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/personenaktivitaet[/][:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'FSW\Controller\PersonenAktivitaeten',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+
             'forschung' => array(
                 'type'    => 'segment',
                 'options' => array(
@@ -169,6 +184,7 @@ return array(
 
             'FSW\Services\Facade\ForschungFacade'    =>  'FSW\Services\Factory::getForschungFacade',
             'FSW\Services\Facade\PersonenFacade'    =>  'FSW\Services\Factory::getPersonFacade',
+            'FSW\Services\Facade\PersonenAktivitaetFacade'    =>  'FSW\Services\Factory::getPersonAktivitaetFacade',
             'FSW\Services\Facade\MedienFacade'    =>  'FSW\Services\Factory::getMedienFacade',
 
             'ForschungTableGateway'          =>  'FSW\Services\Factory::getForschungTableGateway',
@@ -207,6 +223,7 @@ return array(
             'FSW\Controller\Medien' => 'FSW\Controller\Factory::getMedienController',
             'FSW\Controller\Kolloquien' => 'FSW\Controller\Factory::getKolloquienController',
             'FSW\Controller\Forschung' => 'FSW\Controller\Factory::getForschungController',
+            'FSW\Controller\PersonenAktivitaeten' => 'FSW\Controller\Factory::getPersonAktivitaetController'
 
         )
         //'factories' => array(
@@ -248,7 +265,12 @@ return array(
             'master_lizz_diss' => array(
                 'label' => 'master_lizz_diss',
                 'route' => 'forschung'
+            ),
+            'person_aktivitaet' => array(
+                'label' => 'person_aktivitaet',
+                'route' => 'personenaktivitaet'
             )
+
 
         ),
     ),

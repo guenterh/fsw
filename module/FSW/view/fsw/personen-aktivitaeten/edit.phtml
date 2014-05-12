@@ -1,0 +1,109 @@
+<?php
+
+
+$this->headTitle("Forschungsarbeiten");
+
+
+$form = $this->form;
+
+$form->setAttribute('action', $this->url(
+    'forschung',
+    array(
+        'action' => 'edit',
+        'id'     => $this->id,
+    )
+));
+
+$form->prepare();
+
+
+$forschungsarbeiten = $form->get('forschungsarbeiten');
+$medien = $form->get('medien');
+
+
+
+$saveButtonLabel = "Speichern";
+
+$formType = 'horizontal';
+
+// Force Libadmin text domain (@todo cleaner way?)
+$this->formLabelTwb()->setTranslatorTextDomain('Libadmin');
+$this->formLabel()->setTranslatorTextDomain('Libadmin');
+$this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
+
+?>
+
+
+
+<?= $this->formTwb()->openTag($form, $formType) ?>
+    <div class="topButtons">
+        <input type="submit" value="<?= $this->escapeHtml($saveButtonLabel) ?>"
+               class="submitButton btn btn-primary btn-medium" id="submitbutton" name="submit">
+        <a href="<?= $this->url('forschung', array('action' => 'index')); ?>"
+           class="ajaxButton closeButton btn btn-medium" id="closebutton">
+            "Hier schliessen"
+        </a>
+    </div>
+
+    <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?= $this->ztbFlashMessenger()->render() ?>
+
+<div class="tabbable">
+    <ul class="nav nav-tabs formTabs">
+        <li class="active"><a href="#forschungsarbeiten"><?= $this->translate('Forschungsarbeiten ', 'Libadmin') ?></a></li>
+        <li><a href="#medien"><?= $this->translate('Medien', 'Libadmin') ?></a></li>
+    </ul>
+
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="forschungsarbeiten">
+            <fieldset class="general">
+                <legend><?= $this->translate('Liste der Forschungsarbeiten ','Libadmin') ?></legend>
+                    <?php foreach ($forschungsarbeiten as $forschung) :?>
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <?= $this->formRowTwb($forschung->get('qarb_arb_id')); ?>
+                            </div>
+                            <div class="span6">
+                                <?= $this->formRowTwb($forschung->get('qarb_arb_titel')); ?>
+                            </div>
+                        </div>
+
+                    <?php endforeach; ?>
+
+            </fieldset>
+
+
+
+        </div>
+    </div>
+
+    <div class="tab-content">
+        <div class="tab-pane" id="medien">
+
+            <fieldset class="general">
+                <legend><?= $this->translate('Liste der Medien ','Libadmin') ?></legend>
+                <?php foreach ($medien as $medium) :?>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?= $this->formRowTwb($medium->get('id')); ?>
+                        </div>
+                        <div class="span6">
+                            <?= $this->formRowTwb($medium->get('gespraechstitel')); ?>
+                        </div>
+                    </div>
+
+                <?php endforeach; ?>
+
+            </fieldset>
+
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<?= $this->form()->closeTag(); ?>

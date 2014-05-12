@@ -11,6 +11,7 @@ namespace FSW\Services;
 use FSW\Model\Medium;
 use FSW\Model\Veranstaltung;
 use FSW\Services\Facade\MedienFacade;
+use FSW\Services\Facade\PersonAktivitaetenFacade;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
@@ -38,6 +39,9 @@ class Factory {
     public static function getPersonFacade(ServiceManager $sm) {
 
 
+        //todo:
+        //das Zeug kann man wegnehmen, da die Facade sich die Gateways selber besoregen soll
+        //Referenz auf DBService
         $tableGatewayPersonCore = $sm->get('PersonTableGateway');
         $tableGatewayPersExtended = $sm->get('PersonExtendedTableGateway');
         $tableGatewayZoraAuthor = $sm->get('PersonZoraAuthorTableGateway');
@@ -52,6 +56,30 @@ class Factory {
 
 
     }
+
+    public static function getPersonAktivitaetFacade(ServiceManager $sm) {
+
+
+        $tableGatewayPersonCore = $sm->get('PersonTableGateway');
+        $tableGatewayPersExtended = $sm->get('PersonExtendedTableGateway');
+        $tableGatewayZoraAuthor = $sm->get('PersonZoraAuthorTableGateway');
+
+
+
+        $facade = new PersonAktivitaetenFacade($tableGatewayPersonCore,
+            $tableGatewayPersExtended,
+            $tableGatewayZoraAuthor
+        );
+
+
+        return $facade;
+
+    }
+
+
+
+
+
     //getForschungFassade
     public static function getForschungFacade(ServiceManager $sm) {
 
