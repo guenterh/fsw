@@ -109,5 +109,23 @@ class ForschungController extends BaseController {
 
     }
 
+    /**
+     * Search matching records
+     *
+     * @param	Integer		$limit        Search result limit
+     * @return	ViewModel
+     **/
+    public function searchAction()
+    {
+        $query = $this->params()->fromQuery('query', '');
+        $data = array(
+            'route' => 'forschung',
+            'listItems' => $this->facade->searchFSWPersonen($query, 15)
+        );
+
+        return $this->getAjaxView($data, 'fsw/global/search');
+    }
+
+
 
 } 

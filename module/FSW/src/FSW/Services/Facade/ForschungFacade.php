@@ -24,6 +24,8 @@ class ForschungFacade extends BaseFacade {
     public function __construct(TableGateway $tableGateway)
     {
         $this->tableGateway = $tableGateway;
+        //$this->defaultTableGateway =  $this->histSemDBService->getForschungenGateway();
+
     }
 
 

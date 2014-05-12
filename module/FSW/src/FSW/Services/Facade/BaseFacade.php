@@ -36,6 +36,8 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface
     private $adapater;
     private $oldFSWadapater;
 
+    protected $defaultTableGateway;
+
 
 
 	/**
@@ -72,21 +74,25 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface
 	 * @param    Integer            $limit
 	 * @return    ResultSet
 	 */
-	protected function findFulltext($searchString, $order, $limit = 30)
+	protected function findFulltext($searchString, $order,$tableGatewayToUse = null, $limit = 30)
 	{
 		$select = new Select();
 		$likeCondition = $this->getSearchFieldsLikeCondition($searchString);
 
-		$select->from($this->getTable())
+
+        $targetGateway = is_null($tableGatewayToUse)? $this->defaultTableGateway : $tableGatewayToUse;
+
+		$select->from($targetGateway->getTable())
 				->order($order)
 				->limit($limit)
 				->where($likeCondition);
 
-		$sql = new Sql($this->tableGateway->getAdapter(), $this->getTable());
-        $test = $sql->getSqlStringForSqlObject($select);
+
+		//$sql = new Sql($this->tableGateway->getAdapter(), $this->getTable());
+        //$test = $sql->getSqlStringForSqlObject($select);
 		//var_dump($sql->getSqlStringForSqlObject($select));
 
-		return $this->tableGateway->selectWith($select);
+		return $targetGateway->selectWith($select);
 	}
 
 
@@ -249,7 +255,45 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface
     }
 
 
+
+
+    public function searchFSWPersonen ($query, $limit = 15) {
+
+        $personenTableGateway = $this->histSemDBService->getPersonenGateway();
+        $select = $personenTableGateway->getSql()->select();
+        /*
+         * mit mehrfachem join, dann erhält man nur die Persone, die bereits einen MedienEintrag haben
+         * wir wollen aber alle FSW Personen
+        $select->join(array(
+            'pers_extended' => 'fsw_personen_extended'),
+             'pers_extended.pers_id = Per_Personen.pers_id'   )->
+        join(array(
+            'medien' => 'fsw_medien'),
+            'pers_extended.pers_id = medien.mit_id_per_extended'   );
+
+        */
+
+        $select->join(array(
+                'pers_extended' => 'fsw_personen_extended'),
+            'pers_extended.pers_id = Per_Personen.pers_id'   );
+        //$select->order($order);
+        //$select->limit($limit);
+        $select->where->like('pers_extended.fullname','%' . $query . '%');
+        $select->order('Per_Personen.pers_name');
+
+        $rowset =  $personenTableGateway->selectWith($select);
+
+        return $rowset;
+
+
+
+    }
+
+
     public function getFSWPersonen () {
+
+
+
 
 
         $personenTableGateway = $this->histSemDBService->getPersonenGateway();
@@ -269,16 +313,11 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface
         $select->join(array(
                 'pers_extended' => 'fsw_personen_extended'),
             'pers_extended.pers_id = Per_Personen.pers_id'   );
+        $select->order('Per_Personen.pers_name');
 
         $rowset =  $personenTableGateway->selectWith($select);
 
-        //foreach ($rowset as $row) {
-        //    \Zend\Debug\Debug::dump($row);
-        //}
-
         return $rowset;
-
-
 
 
     }
