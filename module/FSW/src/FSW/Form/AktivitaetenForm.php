@@ -50,6 +50,20 @@ class AktivitaetenForm extends Form {
         ));
 
 
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Collection',
+            'name' => 'zoradocs',
+            'options' => array(
+                'label' => 'zoradocs',
+                'should_create_template' => true,
+                'allow_add' => true,
+                'target_element' => array(
+                    'type' => 'FSW\Form\ZoraDocFieldset'
+                )
+            )
+        ));
+
+
 
 
 

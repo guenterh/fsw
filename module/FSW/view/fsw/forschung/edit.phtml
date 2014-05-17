@@ -63,16 +63,11 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
             <?= $this->render('fsw/global/forschungen', array('forschungen' => $lizz_master,
                                                                 'legende' => 'lizz master arbeiten')); ?>
         </div>
-    </div>
-
-    <div class="tab-content">
         <div class="tab-pane" id="dissertations">
                 <?= $this->render('fsw/global/forschungen', array('forschungen' => $dissertations,
                     'legende' => 'dissertations')); ?>
         </div>
-    </div>
 
-    <div class="tab-content">
         <div class="tab-pane" id="habil">
             <?= $this->render('fsw/global/forschungen', array('forschungen' => $habil,
                 'legende' => 'Habilitationen')); ?>

@@ -42,7 +42,7 @@ class PersonenController extends BaseController{
     public function indexAction() {
 
 
-        $personen = $this->facade->fetchAll();
+        $personen = $this->facade->getAllPersonen();
         return new ViewModel(array('personen' => $personen));
 
     }
@@ -60,7 +60,7 @@ class PersonenController extends BaseController{
         $query = $this->params()->fromQuery('query', '');
         $data = array(
             'route' => strtolower($this->getTypeName()),
-            'listItems' => $this->facade->find($query, $limit)
+            'listItems' => $this->facade->searchPersonen($query, $limit)
         );
 
         return $this->getAjaxView($data, 'fsw/global/search');

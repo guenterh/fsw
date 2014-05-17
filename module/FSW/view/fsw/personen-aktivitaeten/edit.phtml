@@ -19,6 +19,7 @@ $form->prepare();
 
 $forschungsarbeiten = $form->get('forschungsarbeiten');
 $medien = $form->get('medien');
+$zoradocs = $form->get("zoradocs");
 
 
 
@@ -53,6 +54,7 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
     <ul class="nav nav-tabs formTabs">
         <li class="active"><a href="#forschungsarbeiten"><?= $this->translate('Forschungsarbeiten ', 'Libadmin') ?></a></li>
         <li><a href="#medien"><?= $this->translate('Medien', 'Libadmin') ?></a></li>
+        <li><a href="#zoradocs"><?= $this->translate('Zora Docs', 'Libadmin') ?></a></li>
     </ul>
 
 
@@ -77,9 +79,8 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
 
         </div>
-    </div>
 
-    <div class="tab-content">
+
         <div class="tab-pane" id="medien">
 
             <fieldset class="general">
@@ -100,7 +101,34 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
 
         </div>
-    </div>
+
+        <div class="tab-pane" id="zoradocs">
+
+            <fieldset class="general">
+                <legend><?= $this->translate('Liste der Zoraarbeiten ','Libadmin') ?></legend>
+                <?php foreach ($zoradocs as $zoradoc) :?>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?= $this->formRowTwb($zoradoc->get('title')); ?>
+                        </div>
+                        <div class="span6">
+                            <?php $identifier = $zoradoc->get('oai_identifier')->getValue();
+                            $matches = array();
+
+                            $grepresult =  preg_match('/oai:www\.zora\.uzh\.ch:(\d+)$/',$identifier,$matches);
+                            ?>
+                            <a  target="_blank" href='<?=  'http://www.zora.uzh.ch/' .   $matches[1] ?>'>Link zu Zora</a>
+                        </div>
+                    </div>
+
+                <?php endforeach; ?>
+
+            </fieldset>
+
+
+        </div>
+
+
 
 
 </div>

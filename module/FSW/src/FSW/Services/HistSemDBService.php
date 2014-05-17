@@ -45,6 +45,8 @@ class HistSemDBService implements ServiceManagerAwareInterface {
     protected $forschungenTableGateway;
     protected $medienTableGateway;
 
+    protected $zoraDocTableGateway;
+
 
 
     protected $serviceManager;
@@ -127,6 +129,15 @@ class HistSemDBService implements ServiceManagerAwareInterface {
         }
 
         return $this->medienTableGateway;
+    }
+
+    public function getZoraDocGateway() {
+
+        if (is_null($this->zoraDocTableGateway)) {
+            $this->zoraDocTableGateway = $this->serviceManager->get("ZoraDocTableGateway");
+        }
+
+        return $this->zoraDocTableGateway;
     }
 
 

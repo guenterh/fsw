@@ -66,11 +66,16 @@ class PersonenAktivitaetenController extends BaseController{
 
         $medien = $this->facade->getMedien($pers_id);
 
+        $params = compact('pers_id');
+        $zoraDocs = $this->facade->getZoraDocs($params);
+
+
 
 
         $bindObject = new ArrayObject();
         $bindObject['forschungsarbeiten'] = $forschungsarbeiten;
         $bindObject['medien'] = $medien;
+        $bindObject['zoradocs'] = $zoraDocs;
 
 
 

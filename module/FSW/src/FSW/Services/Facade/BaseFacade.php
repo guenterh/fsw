@@ -290,6 +290,38 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface
     }
 
 
+    public function getAllPersonen () {
+
+        $personenTableGateway = $this->histSemDBService->getPersonenGateway();
+        $select = $personenTableGateway->getSql()->select()->order('Per_Personen.pers_name');
+        $rowset =  $personenTableGateway->selectWith($select);
+
+        return $rowset;
+
+
+
+    }
+
+
+
+    public function searchPersonen ($query, $limit = 15) {
+
+        $personenTableGateway = $this->histSemDBService->getPersonenGateway();
+        $select = $personenTableGateway->getSql()->select();
+        $select->where->like('Per_Personen.pers_name','%' . $query . '%');
+        $select->order('Per_Personen.pers_name');
+
+        $rowset =  $personenTableGateway->selectWith($select);
+
+        return $rowset;
+
+
+
+    }
+
+
+
+
     public function getFSWPersonen () {
 
 
@@ -354,6 +386,50 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface
 
         return $forschungen;
     }
+
+
+    public function getZoraDocs ( $params = array())
+    {
+        //Masterarbeit
+        //Habilitation
+        //Lizentiatsarbeit
+        //Dissertation
+        //SELECT * FROM `Qarb_ArbeitenV2` WHERE `qarb_arb_typ` not in ('Lizentiatsarbeit', 'Dissertation', 'Masterarbeit', 'Habilitation') ORDER BY `qarb_arb_autorid`
+
+        $zoraDocTG = $this->histSemDBService->getZoraDocGateway();
+        $select = $zoraDocTG->getSql()->select();
+
+        //$select->columns(array('title','oai_identifier'));
+        if (array_key_exists('pers_id', $params)) {
+
+            $select->join(array(
+                    'zora_author_relation' => 'fsw_relation_zora_author_zora_doc'),
+                'zora_author_relation.fid_zora_doc = fsw_zora_doc.id'   );
+
+
+            $select->join(array(
+                    'zora_author' => 'fsw_zora_author'),
+                'zora_author.id = zora_author_relation.fid_zora_author'   );
+
+
+            $select->where->equalTo(
+                'zora_author.pers_id',$params['pers_id']);
+
+
+        }
+
+
+
+        $resultset = $zoraDocTG->selectWith($select);
+        $zoradocs = array();
+        foreach ($resultset as $arbeit) {
+            $zoradocs[] = $arbeit;
+        }
+
+        return $zoradocs;
+    }
+
+
 
 
 
