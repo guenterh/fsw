@@ -146,5 +146,32 @@ abstract class BaseController extends AbstractActionController implements Facade
         $this->facade = $facadeService;
     }
 
+    /**
+     * Make url based on route
+     * Add action and element id to route if specified
+     *
+     * @param    String $route
+     * @param    String $action
+     * @param    Integer $idElement
+     * @param    Array $additionalParams
+     * @return    String
+     */
+    protected function makeUrl($route, $action, $idElement = 0, array $additionalParams = array())
+    {
+        $params = array(
+            'action' => $action
+        );
+
+        if ($idElement) {
+            $params['id'] = $idElement;
+        }
+        $params = array_merge($params, $additionalParams);
+
+        $test = $this->url()->fromRoute($route, $params);
+
+        return $this->url()->fromRoute($route, $params);
+    }
+
+
 
 }

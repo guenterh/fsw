@@ -85,6 +85,24 @@ class PersonenController extends BaseController{
             $coreFS = new PersonForm('Person');
             $coreFS->bind($person);
 
+            $request = $this->getRequest();
+            if ($request->isPost()) {
+                $coreFS->setData($request->getPost());
+
+                if ($coreFS->isValid()) {
+
+                    $formData = $coreFS->getData();
+                    $this->facade->savePersonEdit($formData);
+                } else {
+                    $test = "das war nichts";
+//				$messages = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($form->getMessages()));
+//				foreach($messages as $message) {
+//					$flashMessenger->addErrorMessage($message);
+//				}
+                }
+            }
+
+
 
         }
         catch (\Exception $ex) {
@@ -92,6 +110,9 @@ class PersonenController extends BaseController{
                 'action' => 'index'
             ));
         }
+
+        $coreFS->setAttribute('action', $this->makeUrl('personen', 'edit', $id));
+
         return $this->getAjaxView(array(
             'form' => $coreFS,
             'title' => $this->translate('Personenanzeige', 'FSW'),

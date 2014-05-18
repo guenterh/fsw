@@ -155,5 +155,62 @@ class PersonFacade extends BaseFacade {
     }
 
 
+    public function savePersonEdit($personData) {
+
+        $idRecord = $personData->getId();
+        $personExtended = $personData->getPersonExtended();
+        $zoraAuthors = $personData->getZoraAuthors();
+        $data = $personData->getBaseData();
+        unset($data["personExtended"]);
+        unset($data["zoraAuthors"]);
+
+        $personenGateway = $this->histSemDBService->getPersonenGateway();
+        if ($idRecord == 0) {
+            //sollte nicht vorkommen da ich es (bis jetzt) trenne
+
+            $numRows = $personenGateway->insert($data);
+
+            if ($numRows == 1) {
+                $idRecord = $this->tableGateway->getLastInsertValue();
+            }
+        } else {
+            //if ($this->getRecord($idRecord)) {
+                //todo: vorher noch versuchen den record zu lesen -> siehe libadmin
+                $personenGateway->update($data, array('pers_id' => $idRecord));
+                if (count($personExtended) == 1) {
+                    $extendedGateway = $this->histSemDBService->getFSWPersonenExtendedGateway();
+                    $extendedData = $personExtended[0];
+                    $extendedRow = $extendedGateway->select(array("pers_id" => $extendedData->getPers_id));
+                    if ($extendedRow->count() > 0) {
+                        // run an update
+                        $extendedGateway->update(array($extendedData, array("pers_id" => $extendedData->getPers_id)));
+                    } else {
+                        //run insert
+                        //$personData->getPers_vorname();
+                        //$personData->getPers_name();
+                        $extendedData->setFullname($personData->getPers_name() . ', ' . $personData->getPers_vorname());
+                        $extendedArray = $extendedData->getBaseData();
+                        $extendedGateway->insert($extendedArray);
+                        $idExtended =  $extendedGateway->getLastInsertValue();
+                        $test = "";
+
+
+
+                    }
+
+                    $test = "";
+
+                }
+
+            //} else {
+            //    throw new \Exception(get_class($record) . ' [' . $idRecord . '] does not exist');
+            //}
+        }
+
+        return $idRecord;
+
+    }
+
+
 
 }
