@@ -382,7 +382,7 @@
     <node id="n12">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="111.0" width="282.5727990970655" x="196.11794582392758" y="65.5"/>
+          <y:Geometry height="111.0" width="282.5727990970655" x="217.11794582392758" y="65.5"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="240.671875" x="20.950462048532756" y="4.0">fsw_relation_hspersonen_fsw_personen</y:NodeLabel>
