@@ -34,6 +34,7 @@ class Person extends BaseModel implements InputFilterAwareInterface {
     public $pers_sex;
     public $pers_changedate;
     public $pers_oldid;
+    public $pers_verstorben;
 
     protected $personExtended = array();
     protected $zoraAuthors = array();
@@ -467,6 +468,25 @@ class Person extends BaseModel implements InputFilterAwareInterface {
     {
         return $this->pers_vorname;
     }
+
+    /**
+     * @param mixed $pers_verstorben
+     */
+    public function setPers_verstorben($pers_verstorben)
+    {
+        $this->pers_verstorben = $pers_verstorben;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPers_verstorben()
+    {
+        return $this->pers_verstorben;
+    }
+
+
+
 
     /**
      * @param mixed $personExtended

@@ -5,7 +5,7 @@ select * from per_personen p, per_rolle r where p.pers_id = r.roll_pers_id and r
 select * from Per_Personen p, Per_Rolle r where p.pers_id = r.roll_pers_id and roll_hs_fsw = 'fsw';
 
 -- ohne having Einschränkung
-select p.pers_id, p.pers_name, p.pers_vorname, r.roll_id,r.roll_fswfunktion from Per_Personen p, Per_Rolle r where p.pers_id = r.roll_pers_id and roll_hs_fsw = 'fsw' order by p.pers_name, p.pers_vorname;
+select p.pers_id, p.pers_name, p.pers_vorname, r.roll_id,r.roll_fswfunktion, r.roll_hs_fsw, r.roll_funk_id, r.roll_istangestellt from Per_Personen p, Per_Rolle r where p.pers_id = r.roll_pers_id and roll_hs_fsw = 'fsw' order by p.pers_name, p.pers_vorname;
 
 
 -- diese Abfrage scheint die Personen zu zeigen, welche doppelte Rollen besitzen

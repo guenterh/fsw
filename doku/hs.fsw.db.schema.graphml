@@ -21,7 +21,7 @@
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="85.29296875" x="28.853515625" y="4.0">Per_Personen</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="269.40625" modelName="custom" textColor="#000000" visible="true" width="134.0078125" x="2.0" y="29.96875">  pers_id
+          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="283.375" modelName="custom" textColor="#000000" visible="true" width="134.0078125" x="2.0" y="29.96875">  pers_id
   pers_uzhshortname 
   pers_name 
   pers_midname
@@ -40,6 +40,7 @@
   pers_sex
   pers_changedate
   pers_oldid
+  pers_verstorben
 <y:LabelModel>
               <y:ErdAttributesNodeLabelModel/>
             </y:LabelModel>
@@ -295,7 +296,7 @@
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="59.283203125" x="69.3583984375" y="4.0">Per_Rolle</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="395.125" modelName="custom" textColor="#000000" visible="true" width="165.71875" x="2.0" y="29.96875">  roll_id
+          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="409.09375" modelName="custom" textColor="#000000" visible="true" width="165.71875" x="2.0" y="29.96875">  roll_id
   roll_pers_id
   roll_abt_id
   roll_arbe_id
@@ -322,6 +323,7 @@
   roll_verteiler_koordnz
   roll_changedate
   roll_oldid
+  roll_fswfunktion
   PRIMARY KEY (`roll_id`),
 <y:LabelModel>
               <y:ErdAttributesNodeLabelModel/>
@@ -339,19 +341,21 @@
     <node id="n11">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="362.0" width="198.0" x="565.5110045146725" y="588.5"/>
+          <y:Geometry height="411.6" width="198.0" x="565.5110045146725" y="588.5"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="106.36328125" x="45.818359375" y="4.0">Qarb_ArbeitenV2</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="325.28125" modelName="custom" textColor="#000000" visible="true" width="187.123046875" x="2.0" y="29.96875">  qarb_arb_id
+          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="353.21875" modelName="custom" textColor="#000000" visible="true" width="187.123046875" x="2.0" y="29.96875">  qarb_arb_id
   qarb_arb_autorid
   qarb_arb_autor_rollid
+  qarb_arb_autor2_rollid
   qarb_arb_rollid
   qarb_arb_titel
   qarb_arb_typ
   qarb_arb_betreuer1
   qarb_arb_betreuer1_rollid
   qarb_arb_betreuer2
+  qarb_arb_betreuer2_rollid
   qarb_arb_istabgeschlossen
   qarb_arb_abschlussjahr
   qarb_arb_semester
@@ -488,12 +492,12 @@
     <edge id="e8" source="n11" target="n10">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="-32.76354401805861" sy="-68.5" tx="27.382054176072415" ty="-115.5">
+          <y:Path sx="-32.76354401805861" sy="-77.88563535911601" tx="27.382054176072415" ty="-115.5">
             <y:Point x="632.5" y="496.0"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="crows_foot_one_mandatory" target="crows_foot_one"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="59.875" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="158.8984375" x="-156.0760368536612" y="-122.4527587890625">roll_id/
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="59.875" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="158.8984375" x="-156.09990159975496" y="-122.41357421875">roll_id/
 qarb_arb_rollid /
 qarb_arb_betreuer1_rollid
 ?<y:LabelModel>
