@@ -100,15 +100,21 @@ class PersonFacade extends BaseFacade {
 
     public function insertIntoFSWExtended() {
 
+        //zuerst: loesche die bereits vorhandenen items in den Tabellen die ich befuellen moeche
+
         $sql = 'delete from fsw_personen_extended';
         $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
         $sql = 'delete from fsw_zora_author';
         $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
-        //zuerst: loesche die bereits bestehenden
+
+        $sql = 'delete from fsw_relation_hspersonen_fsw_personen';
+        $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        $sql = 'delete from fsw_medien';
+        $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
 
-
-        $sql = 'select * from Per_Personen';
+        //$sql = 'select * from Per_Personen';
+        $sql = 'select p.pers_id, p.pers_name, p.pers_vorname, r.roll_id,r.roll_fswfunktion, r.roll_hs_fsw, r.roll_funk_id, r.roll_istangestellt from Per_Personen p, Per_Rolle r where p.pers_id = r.roll_pers_id and roll_hs_fsw = \'fsw\' and p.pers_id NOT IN (select p.pers_id from Per_Personen p, Per_Rolle r where p.pers_id = r.roll_pers_id and roll_hs_fsw = \'fsw\' group by p.pers_name,p.pers_vorname having count(p.pers_name) > 1) order by p.pers_name, p.pers_vorname  ;';
 
         $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
@@ -119,23 +125,28 @@ class PersonFacade extends BaseFacade {
                 continue;
             }
 
-            $sql = 'select * from mitarbeiter m ' ;
-            $sql = $sql . ' where  m.name like "%' . $r['pers_name'] . '%" and m.name like "%' . $r['pers_vorname'] . '%";';
-            $resultFSW =  $this->getOldAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+            $oldMitarbeiterValues = $this->getOldMitarbeiter($r['pers_name'], $r['pers_vorname']);
 
-            foreach ($resultFSW as $rowFSW) {
+            $sql = "insert into fsw_personen_extended (pers_id,fullname,profilURL) ";
+            $sql = $sql .  "values (" . $this->qV($r['pers_id']) . ',';
+            $sql = $sql .  $this->qV($r['pers_name'] . ', ' . $r['pers_vorname']) . ',';
+            $sql =   (count($oldMitarbeiterValues > 0) && !empty($oldMitarbeiterValues['profilURL']) &&
+                    !is_null($oldMitarbeiterValues['profilURL'])) ? $sql . ($this->qV($oldMitarbeiterValues['profilURL']) . ' )') : $sql . ($this->qV('') . ' )') ;
 
-                $f = $rowFSW->getArrayCopy();
-                $sql = "insert into fsw_personen_extended (pers_id,fullname,profilURL) ";
-                $sql = $sql .  "values (" . $this->qV($r['pers_id']) . ',';
-                $sql = $sql .  $this->qV($r['pers_name'] . ', ' . $r['pers_vorname']) . ',';
-                $sql = $sql .  $this->qV($f['profilURL']) . ' )';
+            $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+            $genIdPersonenExtended = $this->getAdapter()->getDriver()->getLastGeneratedValue();
 
-                $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
-                $genIdPersonenExtended = $this->getAdapter()->getDriver()->getLastGeneratedValue();
+            $sql = "insert into fsw_relation_hspersonen_fsw_personen (fpersonen_extended_id, fper_personen_pers_id, fper_rolle_roll_id) ";
+            $sql = $sql .  "values (" . $this->qV($genIdPersonenExtended) . ',';
+            $sql = $sql . $this->qV($r['pers_id']) . ',';
+            $sql = $sql . $this->qV($r['roll_id']) . ' )';
 
+            $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
-                $sql = 'select * from mitarbeiterZoraName mz where mz.mit_id = ' . $rowFSW['mit_id'];
+            //ich habe einen alten Mitarbeiter gefunden, so dass ich seine Zoranamen zuordenn kann falls es welche gibt
+            if (count($oldMitarbeiterValues) > 0) {
+
+                $sql = 'select * from mitarbeiterZoraName mz where mz.mit_id = ' . $oldMitarbeiterValues['oldMitId'];
                 $resultZoraName =  $this->getOldAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
                 foreach ($resultZoraName as $zN) {
@@ -150,8 +161,58 @@ class PersonFacade extends BaseFacade {
                     $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
                 }
+
+                //gibt es noch Medien zum einfügen?
+                $sql = 'select * from medien where mit_id = ' . $oldMitarbeiterValues['oldMitId'];
+
+                $result =  $this->getOldAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+                foreach ($result as $row) {
+
+                    $mRow = $row->getArrayCopy();
+                    if (is_null($mRow['mit_id']) || empty ($mRow['mit_id'])) {
+                        continue;
+                    }
+
+                    $sql = "insert into fsw_medien (datum, gespraechstitel, icon, link , medientyp, mit_id_per_extended, sendetitel) ";
+                    $sql = $sql .  "values (" . $this->qV($mRow['datum']) . ',';
+                    $sql = $sql .  $this->qV($mRow['gespraechstitel']) . ',';
+                    $sql = $sql .  $this->qV($mRow['icon']) . ',';
+                    $sql = $sql .  $this->qV($mRow['link']) . ',';
+                    $sql = $sql .  $this->qV($mRow['medientyp']) . ',';
+                    $sql = $sql .  $this->qV($r['pers_id']) . ',';
+                    $sql = $sql .  $this->qV($mRow['sendetitel']) . ')';
+
+                    $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+                }
+
             }
+
         }
+    }
+
+
+    private function getOldMitarbeiter ($name, $vorname) {
+
+        $sql = 'select * from mitarbeiter m ' ;
+        $sql = $sql . ' where  m.name like "%' . $name . '%" and m.name like "%' . $vorname . '%";';
+        $resultFSW =  $this->getOldAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+        $rValues = array();
+        $i = 0;
+        foreach ($resultFSW as $rowFSW) {
+
+            //only one persone from old mitarbeiter table even it might be wrong
+            if ($i > 0) continue;
+            $i++;
+            $f = $rowFSW->getArrayCopy();
+
+            $rValues['oldMitId'] = $f['mit_id'];
+            $rValues['profilURL'] = $f['profilURL'];
+
+        }
+
+        return $rValues;
     }
 
 

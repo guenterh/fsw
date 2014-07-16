@@ -175,6 +175,27 @@ CREATE TABLE IF NOT EXISTS `fsw_zora_doctype` (
   KEY `typform` (`typform`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
+
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `typOAI`
+--
+
+DROP TABLE IF EXISTS `fsw_relation_hspersonen_fsw_personen`;
+CREATE TABLE IF NOT EXISTS `fsw_relation_hspersonen_fsw_personen` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `fper_personen_pers_id` bigint(20) NOT NULL COMMENT 'foreign key Per_Personen (pers_id)',
+  `fpersonen_extended_id` bigint(20) NOT NULL COMMENT 'foreign key fsw_personen_extend (id)',
+  `fper_rolle_roll_id` bigint(20) NOT NULL COMMENT 'foreign key Per_Rolle (roll_id)',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+
+
+
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
