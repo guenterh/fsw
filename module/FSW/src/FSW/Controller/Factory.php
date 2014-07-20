@@ -26,6 +26,18 @@ class Factory {
         return $pC;
     }
 
+    public static function getPublicationsController(ServiceManager $sm) {
+
+        $pC = new \FSW\Controller\PublicationsController();
+        if ($pC instanceof FacadeAwareInterface)  {
+
+            $pC->setFacadeService($sm->getServiceLocator()->get('FSW\Services\Facade\PublicationsFacade'));
+
+        }
+        return $pC;
+
+    }
+
 
     public static function getMedienController(ServiceManager $sm) {
 

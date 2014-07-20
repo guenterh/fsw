@@ -155,7 +155,7 @@ class PersonFacade extends BaseFacade {
 
                 $idExtendedperson= $tablePersonenFswExtendedGateway->lastInsertValue;
 
-                $tableRelationHSFSWPersonen = $this->histSemDBService->getRelationHSFSWPerson();
+                $tableRelationHSFSWPersonen = $this->histSemDBService->getRelationHSFSWPersonGateway();
 
                 foreach ($rollenIds as $rID) {
                     $tableRelationHSFSWPersonen->insert(array(
@@ -171,7 +171,7 @@ class PersonFacade extends BaseFacade {
                 $tExtendedPerson = $extendedResult->current();
 
                 foreach ($rollenIds as $rID) {
-                    $tableRelationHSFSWPersonen = $this->histSemDBService->getRelationHSFSWPerson();
+                    $tableRelationHSFSWPersonen = $this->histSemDBService->getRelationHSFSWPersonGateway();
                     $tRolleCurrent = $tableRelationHSFSWPersonen->select(array('fper_rolle_roll_id' => (int)$rID));
 
                     if ($tRolleCurrent->count() == 0) {
@@ -186,7 +186,7 @@ class PersonFacade extends BaseFacade {
                 }
 
                 //gibt es noch RollenIDs in der Relationentabelle, die nicht mehr in Per_Rolle eingetragen sind?
-                $tableRelationHSFSWPersonen = $this->histSemDBService->getRelationHSFSWPerson();
+                $tableRelationHSFSWPersonen = $this->histSemDBService->getRelationHSFSWPersonGateway();
 
                 $rS = $tableRelationHSFSWPersonen->select(array(
                     'fpersonen_extended_id' =>  (int)$tExtendedPerson->getID(),

@@ -120,7 +120,7 @@ class HistSemDBService implements ServiceManagerAwareInterface {
         return $this->kolloquienTableGateway;
     }
 
-    public function getRelationHSFSWPerson () {
+    public function getRelationHSFSWPersonGateway () {
 
         if (is_null($this->relationHSPersonFSWPersonTableGateway)) {
             $this->relationHSPersonFSWPersonTableGateway = $this->serviceManager->get('RelationHSPersonFSWPersonTableGateway');
@@ -128,8 +128,10 @@ class HistSemDBService implements ServiceManagerAwareInterface {
 
         return $this->relationHSPersonFSWPersonTableGateway;
 
-
     }
+
+
+
 
     public function getKolloquienVeranstaltungenGateway() {
         if (is_null($this->kolloquienVeranstaltungenTableGateway)) {
