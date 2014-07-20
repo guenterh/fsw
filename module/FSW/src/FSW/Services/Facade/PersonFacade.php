@@ -7,6 +7,7 @@
  */
 
 namespace FSW\Services\Facade;
+use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
 
@@ -66,11 +67,26 @@ class PersonFacade extends BaseFacade {
 
 
 
-        $persCore =  $this->runSelect(array('pers_id' => (int) $persID));
+        $persCore =  $this->histSemDBService->getPersonenGateway()->select(array('pers_id' => (int) $persID));
 
-        if (!$persCore) {
+        $persCoreType = $persCore->current();
+
+        if ($persCore->count() != 1)  {
             throw new \Exception("Could not find any person with id:  $persID");
         } else  {
+
+
+            $this->isPersonFSWRelatedAndCorrectLinked($persCoreType);
+
+            //hat die Person eine FSW Rolle und ist diese mit den FSW Tabellen verlinkt
+            $tableRollenGateway = $this->histSemDBService->getRollenGateway();
+            $rollen = $tableRollenGateway->select(array('roll_pers_id' => (int)$persID));
+            $rollenArray = array();
+            foreach ($rollen as $rolle) {
+                $rollenArray[] = $rolle;
+            }
+
+
             $persExtended = $this->runSelect(array('pers_id' => (int)$persID), $this->tableGatewayPersExtended);
 
             if ($persExtended) {
@@ -79,7 +95,9 @@ class PersonFacade extends BaseFacade {
                 //(duch die collection erscheinen bei Personen die nicht zur FSW gehören keine Eingabeelemente)
                 //muss die gefundene Struktur als array übergeben werden. Ansonsten gibt es ein Problem beim Binden des Modells an die Form
                 //dies passiert im Controller, der die Form dann der View übergibt
-                $persCore->setPersonExtended(array($persExtended));
+
+
+                $persCoreType->setPersonExtended(array($persExtended));
                 $id = (int) $persExtended->getId();
                 //$rowExtendedZora = $this->tableGatewayZoraAuthor->select(array('fid_personen' => $id))->current();
                 $persExtendedZoraAuthorNames = $this->runSelect(array('fid_personen' => $id), $this->tableGatewayZoraAuthor,false);
@@ -89,7 +107,7 @@ class PersonFacade extends BaseFacade {
                     $zoraAuthorNames[$zoraAuthor->getId()] = $zoraAuthor;
                 }
 
-                $persCore->setZoraAuthors($zoraAuthorNames);
+                $persCoreType->setZoraAuthors($zoraAuthorNames);
 
             }
 
@@ -100,11 +118,106 @@ class PersonFacade extends BaseFacade {
                 $rollenArray[] = $rolle;
             }
 
-            $persCore->setPersonRollen($rollenArray);
+            $persCoreType->setPersonRollen($rollenArray);
+
+
+
 
 
         }
-        return $persCore;
+        return $persCoreType;
+
+    }
+
+
+    private function isPersonFSWRelatedAndCorrectLinked($personType) {
+
+        $tableRollenGateway = $this->histSemDBService->getRollenGateway();
+        //suche nach Rollen mit link zu FSW
+        $rollenSelect = $tableRollenGateway->getSql()->select();
+        $rollenSelect->where (array('roll_pers_id' => $personType->getID(),
+                        'roll_hs_fsw' => 'fsw'));
+        $rollen = $tableRollenGateway->selectWith($rollenSelect);
+        $rollenIds = array();
+        foreach ($rollen as $rolle) {
+            $rollenIds[] = $rolle->getID();
+        }
+
+        if (count($rollenIds) > 0) {
+            $tablePersonenFswExtendedGateway = $this->histSemDBService->getFSWPersonenExtendedGateway();
+            $extendedResult = $tablePersonenFswExtendedGateway->select(array('pers_id' => (int)$personType->getID()));
+            //$extendedResult = $tablePersonenFswExtendedGateway->select(array('pers_id' => (int)$persID));
+
+            if ($extendedResult->count() == 0) {
+
+                $tablePersonenFswExtendedGateway->insert(array('pers_id' => (int)(int)$personType->getID(),
+                          'fullname' => $this->qV($personType->getPers_name() . ', ' . $personType->getPers_vorname())));
+
+                $idExtendedperson= $tablePersonenFswExtendedGateway->lastInsertValue;
+
+                $tableRelationHSFSWPersonen = $this->histSemDBService->getRelationHSFSWPerson();
+
+                foreach ($rollenIds as $rID) {
+                    $tableRelationHSFSWPersonen->insert(array(
+                       'fpersonen_extended_id' =>  $idExtendedperson,
+                        'fper_personen_pers_id' => (int)$personType->getID(),
+                        'fper_rolle_roll_id' => (int)$rID
+                    ));
+
+                }
+
+            } else {
+
+                $tExtendedPerson = $extendedResult->current();
+
+                foreach ($rollenIds as $rID) {
+                    $tableRelationHSFSWPersonen = $this->histSemDBService->getRelationHSFSWPerson();
+                    $tRolleCurrent = $tableRelationHSFSWPersonen->select(array('fper_rolle_roll_id' => (int)$rID));
+
+                    if ($tRolleCurrent->count() == 0) {
+                        $tableRelationHSFSWPersonen->insert(array(
+                            'fpersonen_extended_id' =>  (int)$tExtendedPerson->getID(),
+                            'fper_personen_pers_id' => (int)$personType->getID(),
+                            'fper_rolle_roll_id' => (int)$rID
+                        ));
+
+                    }
+
+                }
+
+                //gibt es noch RollenIDs in der Relationentabelle, die nicht mehr in Per_Rolle eingetragen sind?
+                $tableRelationHSFSWPersonen = $this->histSemDBService->getRelationHSFSWPerson();
+
+                $rS = $tableRelationHSFSWPersonen->select(array(
+                    'fpersonen_extended_id' =>  (int)$tExtendedPerson->getID(),
+                ));
+
+
+
+                $rollenIDSToDelete = array();
+                foreach ($rS as $tR) {
+                    if (!in_array($tR->getFper_rolle_roll_id(),$rollenIds)) {
+
+                        $rollenIDSToDelete[] = $tR->getID();
+                    }
+
+                }
+
+                if (count($rollenIDSToDelete) > 0) {
+
+                    foreach ($rollenIDSToDelete as $tID) {
+                        $tableRelationHSFSWPersonen->delete(array('id' => (int)$tID));
+                    }
+                }
+
+
+
+
+                //array_map (function ($tRID));
+            }
+        }
+
+
 
     }
 
@@ -156,7 +269,8 @@ class PersonFacade extends BaseFacade {
 
             if ($tResult->count() > 0) {
 
-                $genIdPersonenExtended = $r['pers_id'];
+                $tExendedType = $genIdPersonenExtended = $tResult->current();
+                $genIdPersonenExtended = $tExendedType['id'];
 
             } else {
 

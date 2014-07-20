@@ -23,6 +23,7 @@ use FSW\Model\ZoraDocType;
 use FSW\Model\ZoraAuthor;
 use FSW\Model\Cover;
 use FSW\Model\Rolle;
+use FSW\Model\RelationHSFSWPerson;
 use FSW\Model\Forschung;
 use FSW\Services\Facade\PersonFacade;
 use FSW\Services\Facade\ForschungFacade;
@@ -184,6 +185,15 @@ class Factory {
         $resultSetPrototype = new ResultSet();
         $resultSetPrototype->setArrayObjectPrototype(new Veranstaltung());
         return new TableGateway('fsw_kolloquium_veranstaltung', $dbAdapter, null, $resultSetPrototype);
+    }
+
+    public static function getRelationHSFSWPersonTableGateway (ServiceManager $sm) {
+
+        $dbAdapter = $sm->get('HistSemDBAdapter');
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new RelationHSFSWPerson());
+        return new TableGateway('fsw_relation_hspersonen_fsw_personen', $dbAdapter, null, $resultSetPrototype);
+
     }
 
 

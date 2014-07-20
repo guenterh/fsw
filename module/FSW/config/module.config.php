@@ -175,6 +175,9 @@ return array(
 
 
             'KolloquiumTableGateway' => 'FSW\Services\Factory::getKolloquienTableGateway',
+            'RelationHSPersonFSWPersonTableGateway' => 'FSW\Services\Factory::getRelationHSFSWPersonTableGateway',
+
+
             //'FSW\Model\KolloqiumVeranstaltungTable' =>  'FSW\Model\Factories\KolloqiumVeranstaltungTableFactory',
             'KolloquiumVeranstaltungTableGateway' => 'FSW\Services\Factory::getKolloquiumVeranstaltungenTableGateway',
             'FSWPersonenExtendedAdapter' => 'FSW\Model\Factories\DB\PersonenExtendedAdapterFactory',

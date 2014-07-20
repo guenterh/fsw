@@ -57,9 +57,14 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
             <li class="active">
                 <a href="#personCore"><?= $this->translate('personCore HS', 'Libadmin') ?></a>
             </li>
-            <li><a href="#personExtended"><?= $this->translate('personExtended FSW', 'Libadmin') ?></a></li>
-            <li><a href="#zoraAuthors"><?= $this->translate('zoraNamen FSW', 'Libadmin') ?></a></li>
 
+            <!-- wenn eine Person FSW extended Attribute besitzt auch Zora anzeigen, da diese Attribute evtl. noch erfasst werden muessen-->
+            <? if($personExtended->getCount() > 0):?>
+
+                <li><a href="#personExtended"><?= $this->translate('personExtended FSW', 'Libadmin') ?></a></li>
+
+                <li><a href="#zoraAuthors"><?= $this->translate('zoraNamen FSW', 'Libadmin') ?></a></li>
+            <? endif; ?>
 
             <li><a href="#personRollen"><?= $this->translate('Rollen HistSem', 'Libadmin') ?></a></li>
 
@@ -156,6 +161,9 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
 
             </div>
+
+
+            <? if($personExtended->getCount() > 0):?>
             <div class="tab-pane" id="personExtended">
 
 
@@ -186,6 +194,10 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
                 </fieldset>
 
             </div>
+
+
+
+
             <div class="tab-pane" id="zoraAuthors">
                 <fieldset>
                     <legend>zora Namen</legend>
@@ -203,6 +215,8 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
                 </fieldset>
 
             </div>
+
+            <? endif; ?>
 
             <div class="tab-pane" id="personRollen">
                 <h2>Rollen der Person</h2>

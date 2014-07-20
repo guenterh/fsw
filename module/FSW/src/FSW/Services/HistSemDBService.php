@@ -49,6 +49,8 @@ class HistSemDBService implements ServiceManagerAwareInterface {
     protected $zoraDocTableGateway;
     protected $rollenTableGateway;
 
+    protected $relationHSPersonFSWPersonTableGateway;
+
 
 
     protected $serviceManager;
@@ -116,6 +118,17 @@ class HistSemDBService implements ServiceManagerAwareInterface {
         }
 
         return $this->kolloquienTableGateway;
+    }
+
+    public function getRelationHSFSWPerson () {
+
+        if (is_null($this->relationHSPersonFSWPersonTableGateway)) {
+            $this->relationHSPersonFSWPersonTableGateway = $this->serviceManager->get('RelationHSPersonFSWPersonTableGateway');
+        }
+
+        return $this->relationHSPersonFSWPersonTableGateway;
+
+
     }
 
     public function getKolloquienVeranstaltungenGateway() {
