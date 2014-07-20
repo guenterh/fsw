@@ -190,6 +190,7 @@ return array(
             'ForschungTableGateway'          =>  'FSW\Services\Factory::getForschungTableGateway',
 
             'ZoraDocTableGateway'          =>  'FSW\Services\Factory::getZoraDocTableGateway',
+            'RollenTableGateway'          =>  'FSW\Services\Factory::getRollenTableGateway',
             'ZoraAuthorTableGateway'          =>  'FSW\Services\Factory::getZoraAuthorTableGateway',
             'ZoraDocTypeTableGateway'          =>  'FSW\Services\Factory::getZoraDocTypeTableGateway',
             'CoverTableGateway'          =>  'FSW\Services\Factory::getCoverTableGateway',

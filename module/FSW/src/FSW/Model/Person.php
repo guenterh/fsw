@@ -40,6 +40,9 @@ class Person extends BaseModel implements InputFilterAwareInterface {
     protected $zoraAuthors = array();
 
 
+    protected $personRollen = array();
+
+
 
 
     //public $mit_id;
@@ -518,6 +521,22 @@ class Person extends BaseModel implements InputFilterAwareInterface {
     public function getZoraAuthors()
     {
         return $this->zoraAuthors;
+    }
+
+    /**
+     * @param array $personRollen
+     */
+    public function setPersonRollen($personRollen)
+    {
+        $this->personRollen = $personRollen;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPersonRollen()
+    {
+        return $this->personRollen;
     }
 
 

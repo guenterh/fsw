@@ -22,6 +22,7 @@ use FSW\Model\ZoraDoc;
 use FSW\Model\ZoraDocType;
 use FSW\Model\ZoraAuthor;
 use FSW\Model\Cover;
+use FSW\Model\Rolle;
 use FSW\Model\Forschung;
 use FSW\Services\Facade\PersonFacade;
 use FSW\Services\Facade\ForschungFacade;
@@ -147,6 +148,17 @@ class Factory {
         $resultSetPrototype->setArrayObjectPrototype(new Cover());
         return new TableGateway('fsw_cover', $dbAdapter, null, $resultSetPrototype);
     }
+
+
+    public static function getRollenTableGateway(ServiceManager $sm) {
+
+        $histSemDBService = $sm->get('HistSemDBService');
+        $dbAdapter = $histSemDBService->getAdapter();
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new Rolle());
+        return new TableGateway('Per_Rolle', $dbAdapter, null, $resultSetPrototype);
+    }
+
 
 
 

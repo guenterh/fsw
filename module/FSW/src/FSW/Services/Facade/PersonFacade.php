@@ -92,6 +92,17 @@ class PersonFacade extends BaseFacade {
                 $persCore->setZoraAuthors($zoraAuthorNames);
 
             }
+
+            $tableRollenGateway = $this->histSemDBService->getRollenGateway();
+            $rollen = $tableRollenGateway->select(array('roll_pers_id' => (int)$persID));
+            $rollenArray = array();
+            foreach ($rollen as $rolle) {
+                $rollenArray[] = $rolle;
+            }
+
+            $persCore->setPersonRollen($rollenArray);
+
+
         }
         return $persCore;
 
