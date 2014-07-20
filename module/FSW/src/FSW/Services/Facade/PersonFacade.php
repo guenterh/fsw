@@ -112,9 +112,21 @@ class PersonFacade extends BaseFacade {
         $sql = 'delete from fsw_medien';
         $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
+        //Jetzt die Zora-Beziehungen und Dokumente loeschen (durch den Neuaufbau von Personen sollten auch diese angepasst werden
+        $sql = 'delete from fsw_zora_author';
+        $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+        $sql = 'delete from fsw_zora_doc';
+        $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+        $sql = 'delete from fsw_relation_zora_author_zora_doc';
+        $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+
 
         //$sql = 'select * from Per_Personen';
-        $sql = 'select p.pers_id, p.pers_name, p.pers_vorname, r.roll_id,r.roll_fswfunktion, r.roll_hs_fsw, r.roll_funk_id, r.roll_istangestellt from Per_Personen p, Per_Rolle r where p.pers_id = r.roll_pers_id and roll_hs_fsw = \'fsw\' and p.pers_id NOT IN (select p.pers_id from Per_Personen p, Per_Rolle r where p.pers_id = r.roll_pers_id and roll_hs_fsw = \'fsw\' group by p.pers_name,p.pers_vorname having count(p.pers_name) > 1) order by p.pers_name, p.pers_vorname  ;';
+        //$sql = 'select p.pers_id, p.pers_name, p.pers_vorname, r.roll_id,r.roll_fswfunktion, r.roll_hs_fsw, r.roll_funk_id, r.roll_istangestellt from Per_Personen p, Per_Rolle r where p.pers_id = r.roll_pers_id and roll_hs_fsw = \'fsw\' and p.pers_id NOT IN (select p.pers_id from Per_Personen p, Per_Rolle r where p.pers_id = r.roll_pers_id and roll_hs_fsw = \'fsw\' group by p.pers_name,p.pers_vorname having count(p.pers_name) > 1) order by p.pers_name, p.pers_vorname  ;';
+        $sql = 'select p.pers_id, p.pers_name, p.pers_vorname, r.roll_id,r.roll_fswfunktion, r.roll_hs_fsw, r.roll_funk_id, r.roll_istangestellt from Per_Personen p, Per_Rolle r where p.pers_id = r.roll_pers_id and roll_hs_fsw = \'fsw\'  order by p.pers_name, p.pers_vorname  ;';
 
         $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
@@ -125,16 +137,33 @@ class PersonFacade extends BaseFacade {
                 continue;
             }
 
-            $oldMitarbeiterValues = $this->getOldMitarbeiter($r['pers_name'], $r['pers_vorname']);
 
-            $sql = "insert into fsw_personen_extended (pers_id,fullname,profilURL) ";
-            $sql = $sql .  "values (" . $this->qV($r['pers_id']) . ',';
-            $sql = $sql .  $this->qV($r['pers_name'] . ', ' . $r['pers_vorname']) . ',';
-            $sql =   (count($oldMitarbeiterValues > 0) && !empty($oldMitarbeiterValues['profilURL']) &&
+            //Pruefe, ob der MA bereits in der Extended Tabelle eingetragen ist (bei n-Roles)
+
+            $tSQL = "select * from fsw_personen_extended where pers_id = " . $this->qV($r['pers_id']);
+            $tResult =  $this->getAdapter()->query($tSQL,Adapter::QUERY_MODE_EXECUTE);
+
+            if ($tResult->count() > 0) {
+
+                $genIdPersonenExtended = $r['pers_id'];
+
+            } else {
+
+                $oldMitarbeiterValues = $this->getOldMitarbeiter($r['pers_name'], $r['pers_vorname']);
+
+                $sql = "insert into fsw_personen_extended (pers_id,fullname,profilURL) ";
+                $sql = $sql .  "values (" . $this->qV($r['pers_id']) . ',';
+                $sql = $sql .  $this->qV($r['pers_name'] . ', ' . $r['pers_vorname']) . ',';
+                $sql =   (count($oldMitarbeiterValues > 0) && !empty($oldMitarbeiterValues['profilURL']) &&
                     !is_null($oldMitarbeiterValues['profilURL'])) ? $sql . ($this->qV($oldMitarbeiterValues['profilURL']) . ' )') : $sql . ($this->qV('') . ' )') ;
 
-            $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
-            $genIdPersonenExtended = $this->getAdapter()->getDriver()->getLastGeneratedValue();
+                $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+                $genIdPersonenExtended = $this->getAdapter()->getDriver()->getLastGeneratedValue();
+
+            }
+
+
+
 
             $sql = "insert into fsw_relation_hspersonen_fsw_personen (fpersonen_extended_id, fper_personen_pers_id, fper_rolle_roll_id) ";
             $sql = $sql .  "values (" . $this->qV($genIdPersonenExtended) . ',';
@@ -187,8 +216,48 @@ class PersonFacade extends BaseFacade {
                 }
 
             }
-
         }
+
+
+    }
+
+    public function insertIntoFSWExtendedNRoles() {
+
+
+        $sql = 'select p.pers_name, p.pers_vorname, r.roll_fswfunktion, roll_funk_id  from Per_Personen p, Per_Rolle r where p.pers_id = r.roll_pers_id and roll_hs_fsw = \'fsw\'  and p.pers_id in (select r.roll_pers_id from Per_Personen p, Per_Rolle r where p.pers_id = r.roll_pers_id and roll_hs_fsw = \'fsw\' group by p.pers_name,p.pers_vorname having count(p.pers_name) > 1)  order by p.pers_name, p.pers_id';
+
+        $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+        $persname = '';
+
+        foreach ($result as $row) {
+
+            $r = $row->getArrayCopy();
+            if (is_null($r['pers_name']) || empty ($r['pers_name'])) {
+                continue;
+            }
+
+
+
+            $this->processInsertFSWMitarbeiter($r);
+        }
+
+
+
+    }
+
+    private function processInsertFSWMitarbeiter(array $r) {
+
+
+
+
+
+
+
+
+
+
+
     }
 
 
