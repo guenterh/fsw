@@ -27,6 +27,34 @@ class ZoraRecord  {
     //2 = deleted
     private $recordStatus = "normal";
 
+
+
+    //for presentation
+    private $identifierLink = null;
+    private $subject = array();
+    private $description = null;
+    private $publisher = null;
+    private $originallyPublished = null;
+    private $journalTitle= null;
+    private $swissbibISBN = null;
+    private $format = null;
+    private $relationZora = null;
+    private $relationExtern = null;
+    private $pagerange = null;
+    private $institution = null;
+    private $fulltext = null;
+    private $booktitle = null;
+    private $place_of_pub = null;
+    private $language = null;
+    private $referee = array();
+    private $faculty = null;
+    private $source = null;
+    private $customcreators = null ;
+    private $customcontributors = null;
+    private $coverLink = null;
+
+
+
     private $rawXMLPrepared;
     private $rawXML;
 
@@ -280,5 +308,383 @@ class ZoraRecord  {
         return substr($contributorsConcatenated,0,strlen($contributorsConcatenated) -3 );
 
     }
+
+    public function getCoverLink() {
+
+        return $this->coverLink;
+    }
+
+    /**
+     * @return null
+     */
+    public function getFulltext()
+    {
+        return $this->fulltext;
+    }
+
+    /**
+     * @return null
+     */
+    public function getFormat()
+    {
+        return $this->format;
+    }
+
+    /**
+     * @return null
+     */
+    public function getFaculty()
+    {
+        return $this->faculty;
+    }
+
+    /**
+     * @return null
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return null
+     */
+    public function getIdentifierLink()
+    {
+        return $this->identifierLink;
+    }
+
+    /**
+     * @return null
+     */
+    public function getInstitution()
+    {
+        return $this->institution;
+    }
+
+    /**
+     * @return null
+     */
+    public function getJournalTitle()
+    {
+        return $this->journalTitle;
+    }
+
+    /**
+     * @return null
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @return null
+     */
+    public function getOriginallyPublished()
+    {
+        return $this->originallyPublished;
+    }
+
+    /**
+     * @return null
+     */
+    public function getPagerange()
+    {
+        return $this->pagerange;
+    }
+
+    /**
+     * @return null
+     */
+    public function getPlaceOfPub()
+    {
+        return $this->place_of_pub;
+    }
+
+    /**
+     * @return null
+     */
+    public function getPublisher()
+    {
+        return $this->publisher;
+    }
+
+    /**
+     * @return array
+     */
+    public function getReferee()
+    {
+        return $this->referee;
+    }
+
+    /**
+     * @return null
+     */
+    public function getRelationExtern()
+    {
+        return $this->relationExtern;
+    }
+
+    /**
+     * @return null
+     */
+    public function getRelationZora()
+    {
+        return $this->relationZora;
+    }
+
+    /**
+     * @return null
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+
+    /**
+     * @return null
+     */
+    public function getSwissbibISBN()
+    {
+        return $this->swissbibISBN;
+    }
+
+
+
+    public function renderRecord(){
+
+
+        $journal_article = false;
+        $isbn = false;
+
+
+
+
+
+        $this->identifierLink = "http://www.zora.uzh.ch/cgi/oai2?verb=GetRecord&identifier=" . $this->identifier . "&metadataPrefix=oai_dc";
+
+
+        //$result = $this->simpleXMLElement->xpath("//dc:creator");
+        //while(list( , $node) = each($result)) {
+        //    $this->creators[] = (string)$node;
+        //}
+
+        //if (count($this->creators) > 0) {
+        //    $this->creators = FSWUtils::getMAFirstInListWithFullname($this->mitID, $this->creators);
+        //}
+
+
+        //$result = $this->recxml->xpath("//dc:contributor");
+        //while(list( , $node) = each($result)) {
+        //    $this->contributors[] = (string)$node;
+        //}
+
+        //if (count($this->contributors) > 0) {
+        //    $this->contributors = FSWUtils::getMAFirstInListWithFullname($this->mitID, $this->contributors);
+        //}
+
+        $sxml= new \SimpleXMLElement($this->recxml);
+
+
+        $result = $sxml->xpath("//dc:subject");
+        while(list( , $node) = each($result)) {
+            $this->subject[] = (string)$node;
+        }
+
+        $result = $sxml->xpath("//dc:description");
+        if (count($result)  > 0 ) $this->description = (string)$result[0];
+
+        $result = $sxml->xpath("//dc:date");
+        if (count($result)  > 0) $this->date = (string)$result[0];
+
+
+        $result = $sxml->xpath("//dc:publisher");
+        if (count($result)  > 0)    $this->publisher = (string)$result[0];
+
+
+        $result = $sxml->xpath("//dc:type");
+        while(list( , $node) = each($result)) {
+            $this->type[] = (string)$node;
+            switch ((string)$node) {
+                case "Journal Article":
+                    $journal_article = true;
+                    break;
+                case "Edited Scientific Work":
+                case "Monograph":
+                case "Book Section":
+                    $isbn = true;
+                    break;
+
+
+            }
+        }
+
+
+        //mit neuer Zoraversion (voraussichtlich) weggefallen -> kann spaeter entfernt werden
+        $result = $sxml->xpath("//dc:originallypublishedat");
+        if (count($result)  > 0) {
+            $this->originallyPublished = (string)$result[0];
+            if ($journal_article) {
+                $analyzedString = (string)$result[0];
+
+                //example
+                //http://www.zora.uzh.ch/cgi/oai2?verb=GetRecord&identifier=oai:www.zora.uzh.ch:44541&metadataPrefix=oai_dc
+                //Tanner, J (2010). "Das Grosse im Kleinen": Rudolf Braun als Innovator der Geschichtswissenschaft. Historische Anthropologie, 18(1):140-156.
+
+                $myint = preg_match("/\.\W(?P<TITLE>[^.]+):[^:]*$/",$analyzedString,$matches);
+                $this->journalTitle = $matches["TITLE"];
+
+
+            } elseif ($isbn){
+                //two different alternatives are possible
+                //3-518-12368-8
+                //978-0-521-11271-0
+
+                $analyzedString = (string)$result[0];
+                //Tanner, J (2009). Offenheit und Spezialisierung: ein Weg in den Wohlstand. In: Hebeisen, E. Geschichte Schweiz: Katalog der Dauerausstellung im Landesmuseum Zürich. Zürich, 171-174. ISBN 978-3-905875-04-1.
+                //ISBN 978-3-905875-04-1
+                $matches = array();
+                //echo $analyzedString;
+                //$myint = preg_match("/ISBN (\d{3}-\d{1}-\d{3,6}-\d{2,5}-\d{1})/",$analyzedString,$matches);
+                $myint = preg_match("/ISBN ([-\d]*) {0,1}\./",$analyzedString,$matches);
+                if (count($matches) == 2) {
+                    $isbnHyphen = $matches[1];
+                    $isbnNoHypen = preg_replace("/-/","",$isbnHyphen);
+                    //http://www.swissbib.ch/TouchPoint/start.do?Language=de&View=nose&Query=0540=%22978-3-8273-2482-5%22
+                    $this->swissbibISBN = "http://www.swissbib.ch/TouchPoint/start.do?Language=de&View=nose&Query=0540=%22" . $isbnNoHypen . "%22";
+                } //else {
+                //  $matches = array();
+                //$myint = preg_match("/ISBN (\d{1}-\d{3}-\d{3,6}-\d{1})/",$analyzedString,$matches);
+                //$myint = preg_match("/ISBN ([-\d]*)\./",$analyzedString,$matches);
+                //  if (count($matches) == 2) {
+                //      $isbnHyphen = $matches[1];
+                //      $isbnNoHypen = preg_replace("/-/","",$isbnHyphen);
+                //http://www.swissbib.ch/TouchPoint/start.do?Language=de&View=nose&Query=0540=%22978-3-8273-2482-5%22
+                //      $this->swissbibISBN = "http://www.swissbib.ch/TouchPoint/start.do?Language=de&View=nose&Query=0540=%22" . $isbnNoHypen . "%22";
+                //  }
+                //}
+
+                //evtl. noch eine Suche nach Booktitle
+
+            }
+        }
+
+
+        $result = $sxml->xpath("//dc:format");
+        if (count($result)  > 0) $this->format = (string)$result[0];
+
+
+        $result = $sxml->xpath("//dc:relation");
+        while(list( , $node) = each($result)) {
+            //relation werden wohl immer auf die eigentliche Zoraadresse gesetzt
+            //gelegentlich aber auch auf externe Adressen
+            //<dc:relation>http://www.zora.uzh.ch/1/</dc:relation>
+            // <dc:relation>http://www.biomedcentral.com/content/pdf/1472-6963-7-7.pdf</dc:relation>
+            $tMatches = array();
+
+            preg_match("/www\.zora\.uzh\.ch/",(string)$node,$tMatches);
+            if (count($tMatches) > 0) {
+                $this->relationZora = (string)$node;
+            } else {
+                $this->relationExtern = (string)$node;
+            }
+
+
+        }
+
+
+        $result = $sxml->xpath("//dc:status");
+        if (count($result)  > 0) $this->recordStatus = (string)$result[0];
+
+
+        //mit neuer Zoraversion weggefallen -> kann spaeter entfernt werden
+        $result = $sxml->xpath("//dc:pagerange");
+        if (count($result)  > 0) $this->pagerange = (string)$result[0];
+
+        $result = $sxml->xpath("//dc:institution");
+        if (count($result)  > 0) $this->institution = (string)$result[0];
+
+        //mit neuer Zoraversion (voraussichtlich) weggefallen -> kann spaeter entfernt werden
+        $result = $sxml->xpath("//dc:subtype");
+        while(list( , $node) = each($result)) {
+            $this->subtype[] = (string)$node;
+        }
+
+        //dc:idetifier is used for different puposes
+        //a) complete citation mark
+        //b) link to the 'fulltext' of the resource (implemented at the moment only for pdf - which oher formats are used??
+        //
+        $result = $sxml->xpath("//dc:identifier");
+        while(list( , $node) = each($result)) {
+
+            $tMatches = array();
+            preg_match("/\.pdf$/",(string)$node,$tMatches);
+            if (count($tMatches) > 0) {
+                $this->fulltext = (string)$node;
+            }
+
+
+            //<dc:identifier>urn:isbn:978-3-7965-1910-9</dc:identifier>
+
+            preg_match("/:isbn:([-\d]*)$/",(string)$node,$tMatches);
+            if (count($tMatches) == 2) {
+                $isbnHyphen = $tMatches[1];
+                $isbnNoHypen = preg_replace("/-/","",$isbnHyphen);
+                //http://www.swissbib.ch/TouchPoint/start.do?Language=de&View=nose&Query=0540=%22978-3-8273-2482-5%22
+                //$this->swissbibISBN = "http://www.swissbib.ch/TouchPoint/start.do?Language=de&View=nose&Query=20=%22" . $isbnNoHypen . "%22";
+                $this->swissbibISBN = "https://www.swissbib.ch/Search/Results?lookfor=" . $isbnNoHypen;
+            }
+
+
+        }
+
+        //mit neuer Zoraversion (voraussichtlich) weggefallen -> kann spaeter entfernt werden
+        $result = $sxml->xpath("//dc:book_title");
+        if (count($result)  > 0) $this->booktitle = (string)$result[0];
+
+        $result = $sxml->xpath("//dc:place_of_pub");
+        if (count($result)  > 0) $this->place_of_pub = (string)$result[0];
+
+
+        $result = $sxml->xpath("//dc:language");
+        if (count($result)  > 0) $this->language = (string)$result[0];
+
+
+        $result = $sxml->xpath("//dc:referee");
+        while(list( , $node) = each($result)) {
+            $this->referee[] = ((string)$node);
+        }
+
+
+        $result = $sxml->xpath("//dc:faculty");
+        if (count($result)  > 0) $this->faculty = (string)$result[0];
+
+        $result = $sxml->xpath("//dc:source");
+        if (count($result)  > 0) $this->source = (string)$result[0];
+
+        $result = $sxml->xpath("//dc:customizedCreators");
+
+        if (count($result)  > 0 && strlen((string)$result[0]) > 0) {
+            $this->customcreators = explode("##",(string)$result[0]);
+        }
+
+
+        $result = $sxml->xpath("//dc:customizedcontributors");
+
+        if (count($result)  > 0 && strlen((string)$result[0]) > 0) {
+            $this->customcontributors = explode("##",(string)$result[0]);
+        }
+
+    }
+
 
 }

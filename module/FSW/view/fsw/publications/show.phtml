@@ -1,0 +1,151 @@
+
+
+<?php
+
+    $zoraDocs = $this->zoraDocs;
+    $s = "";
+
+?>
+
+<a name="dies ist ein Name"><!-- --></a>
+<h2 class="zoraSectionName">hier eine section</h2>
+
+<ul class="type1">
+
+
+
+    <?php foreach ($zoraDocs as $doc): ?>
+
+    <!--ist ein Bild vorhanden wird die Struktur unterschiedlich aufgebaut (Liste oder nicht)
+    beachte: dei Ende tags der Struktur sind am Ende und müssen wieder durch entsprechende Abfragen ermittelt werden
+    -->
+
+    <? if ($doc->getCoverLink() != null): ?>
+    <div class="objectContainer">
+        <div class="objectFloat left" style="width:70px;">
+            <img src="<?= $doc->getCoverLink()?>" />
+        </div>
+        <p>
+     <? else: ?>
+
+            <li>
+        <p>
+
+    <? endif; ?>
+
+        <?= $doc->getSource() ?>
+
+    <? if ( $doc->getRelationExtern() != null && (strpos($doc->getRelationExtern(),"e-collection") == true) ||
+            strpos($doc->getRelationExtern(),"lir") == true ||
+            strpos($doc->getRelationExtern(),"hls") == true ||
+            strpos($doc->getRelationExtern(),"ssoar") == true ||
+            strpos($doc->getRelationExtern(),"hermes") == true ||
+            strpos($doc->getRelationExtern(),"prokla") == true ||
+            strpos($doc->getRelationExtern(),"zfmw") == true ||
+            strpos($doc->getRelationExtern(),"sgg") == true ||
+            strpos($doc->getRelationExtern(),"apuz") == true ||
+            strpos($doc->getRelationExtern(),"224_Arni") == true ||
+            strpos($doc->getRelationExtern(),"seals") == true  ||
+            strpos($doc->getRelationExtern(),"zeitenblicke") == true ||
+            strpos($doc->getRelationExtern(),"hsozkult") == true ||
+            strpos($doc->getRelationExtern(),"gei") == true ||
+            strpos($doc->getRelationExtern(),"bezg") == true ||
+            in_array("Scientific Publication in Electronic Form",$doc->getType())    ): ?>
+
+
+
+            <!-- Fall 1
+
+            ein super dooper link auf einen Volltext
+            -->
+
+
+            <? if ($doc->getRelationExtern() != null) : ?>
+            &nbsp;
+            <a class="uzh" href="<?=$doc->getRelationExtern()?>" target="_blank">Volltext</a>
+            <? endif; ?>
+
+
+            <? if ($doc->getSwissbibISBN() != null) : ?>
+            &nbsp;
+            <a class="uzh" href="<?= $doc->getSwissbibISBN()?>" target="_blank">swissbib</a>
+            <? endif; ?>
+
+            <? if ($doc->getRelationZora() != null) : ?>
+            &nbsp;
+            <a class="uzh" href="<?= $doc->getRelationZora()?>" target="_blank">Zora</a>
+            <? endif; ?>
+
+
+
+
+
+
+        <? elseif (strpos(strtolower($doc->getFormat()),"pdf") == true) : ?>
+
+
+            <!-- Fall 2-- ein PDF vorhanden, dies kann jedoch zugangsbeschränkt sein -->
+
+            <? if ($doc->getRelationExtern() != null): ?>
+            &nbsp;
+            <a class="uzh" href="<?= $doc->getRelationExtern()?>" target="_blank">Verlagsinfo</a>
+            <? endif; ?>
+
+
+            <? if ($doc->getSwissbibISBN() != null): ?>
+            &nbsp;
+            <a class="uzh" href="<?= $doc->getSwissbibISBN() ?>" target="_blank">swissbib</a>
+            <? endif; ?>
+
+            <? if ($doc->getRelationZora() != null): ?>
+            &nbsp;
+            <a class="uzh" href="<?= $doc->getRelationZora()?>" target="_blank">Volltext (evt. mit Zugangsbeschränkung)</a>
+            <? endif; ?>
+
+
+            <? else: ?>
+
+
+            <!-- Fall 3: kein PDF im Zora ich knn jedoch Verlagsinfo haben -->
+
+            <? if ($doc->getRelationExtern() != null): ?>
+            &nbsp;
+            <a class="uzh" href="{$item->getRelationExtern()}" target="_blank">Verlagsinfo</a>
+            <? endif; ?>
+
+
+            <? if ($doc->getSwissbibISBN() != null): ?>
+            &nbsp;
+            <a class="uzh" href="<?= $doc->getSwissbibISBN()?>" target="_blank">swissbib</a>
+            <? endif; ?>
+
+            <? if ($doc->getRelationZora() != null): ?>
+            &nbsp;
+            <a class="uzh" href="<?= $doc->getRelationZora()?>" target="_blank">Zora</a>
+            <? endif; ?>
+
+            <? endif; ?>
+
+
+            <!--Abschluss der Struktur - entweder mit oder ohne Bild  -->
+
+
+            {if $item->getRecordToRender()->getCoverLink() != null}
+            <? if ($doc->getCoverLink() != null): ?>
+        </p>
+    </div>
+    <? else: ?>
+
+    </p>
+    </li>
+
+
+    <? endif; ?>
+
+
+
+
+    <? endforeach; ?>
+
+
+</ul>

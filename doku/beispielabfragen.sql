@@ -46,3 +46,13 @@ select p.pers_name, p.pers_vorname from Per_Personen p, Per_Rolle r where p.pers
 -- http://www.nachbarnetbasel.ch/
 
 
+
+-- delete zora docs
+delete from fsw_zora_doc;
+delete from fsw_relation_zora_author_zora_doc;
+delete from fsw_zora_doctype;
+delete from fsw_cover;
+
+
+
+

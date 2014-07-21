@@ -26,9 +26,9 @@ class PublicationsController extends BaseController {
     {
 
         $type = $this->params('type');
-        $publications = $this->facade->getPublications($type);
-        return new ViewModel(array(
 
+        return new ViewModel(array(
+            'zoraDocs' => $this->facade->getPublications($type)
         ));
 
     }
