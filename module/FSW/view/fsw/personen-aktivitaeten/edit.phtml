@@ -36,11 +36,11 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
 
 
-<?= $this->formTwb()->openTag($form, $formType) ?>
+<?php echo  $this->formTwb()->openTag($form, $formType) ?>
     <div class="topButtons">
-        <input type="submit" value="<?= $this->escapeHtml($saveButtonLabel) ?>"
+        <input type="submit" value="<?php echo  $this->escapeHtml($saveButtonLabel) ?>"
                class="submitButton btn btn-primary btn-medium" id="submitbutton" name="submit">
-        <a href="<?= $this->url('forschung', array('action' => 'index')); ?>"
+        <a href="<?php echo  $this->url('forschung', array('action' => 'index')); ?>"
            class="ajaxButton closeButton btn btn-medium" id="closebutton">
             "Hier schliessen"
         </a>
@@ -48,27 +48,27 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
     <h1><?php echo $this->escapeHtml($title); ?></h1>
 
-<?= $this->ztbFlashMessenger()->render() ?>
+<?php echo  $this->ztbFlashMessenger()->render() ?>
 
 <div class="tabbable">
     <ul class="nav nav-tabs formTabs">
-        <li class="active"><a href="#forschungsarbeiten"><?= $this->translate('Forschungsarbeiten ', 'Libadmin') ?></a></li>
-        <li><a href="#medien"><?= $this->translate('Medien', 'Libadmin') ?></a></li>
-        <li><a href="#zoradocs"><?= $this->translate('Zora Docs', 'Libadmin') ?></a></li>
+        <li class="active"><a href="#forschungsarbeiten"><?php echo  $this->translate('Forschungsarbeiten ', 'Libadmin') ?></a></li>
+        <li><a href="#medien"><?php echo  $this->translate('Medien', 'Libadmin') ?></a></li>
+        <li><a href="#zoradocs"><?php echo  $this->translate('Zora Docs', 'Libadmin') ?></a></li>
     </ul>
 
 
     <div class="tab-content">
         <div class="tab-pane active" id="forschungsarbeiten">
             <fieldset class="general">
-                <legend><?= $this->translate('Liste der Forschungsarbeiten ','Libadmin') ?></legend>
+                <legend><?php echo  $this->translate('Liste der Forschungsarbeiten ','Libadmin') ?></legend>
                     <?php foreach ($forschungsarbeiten as $forschung) :?>
                         <div class="row-fluid">
                             <div class="span6">
-                                <?= $this->formRowTwb($forschung->get('qarb_arb_id')); ?>
+                                <?php echo  $this->formRowTwb($forschung->get('qarb_arb_id')); ?>
                             </div>
                             <div class="span6">
-                                <?= $this->formRowTwb($forschung->get('qarb_arb_titel')); ?>
+                                <?php echo  $this->formRowTwb($forschung->get('qarb_arb_titel')); ?>
                             </div>
                         </div>
 
@@ -84,14 +84,14 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
         <div class="tab-pane" id="medien">
 
             <fieldset class="general">
-                <legend><?= $this->translate('Liste der Medien ','Libadmin') ?></legend>
+                <legend><?php echo  $this->translate('Liste der Medien ','Libadmin') ?></legend>
                 <?php foreach ($medien as $medium) :?>
                     <div class="row-fluid">
                         <div class="span6">
-                            <?= $this->formRowTwb($medium->get('id')); ?>
+                            <?php echo  $this->formRowTwb($medium->get('id')); ?>
                         </div>
                         <div class="span6">
-                            <?= $this->formRowTwb($medium->get('gespraechstitel')); ?>
+                            <?php echo  $this->formRowTwb($medium->get('gespraechstitel')); ?>
                         </div>
                     </div>
 
@@ -105,11 +105,11 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
         <div class="tab-pane" id="zoradocs">
 
             <fieldset class="general">
-                <legend><?= $this->translate('Liste der Zoraarbeiten ','Libadmin') ?></legend>
+                <legend><?php echo  $this->translate('Liste der Zoraarbeiten ','Libadmin') ?></legend>
                 <?php foreach ($zoradocs as $zoradoc) :?>
                     <div class="row-fluid">
                         <div class="span6">
-                            <?= $this->formRowTwb($zoradoc->get('title')); ?>
+                            <?php echo  $this->formRowTwb($zoradoc->get('title')); ?>
                         </div>
                         <div class="span6">
                             <?php $identifier = $zoradoc->get('oai_identifier')->getValue();
@@ -117,7 +117,7 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
                             $grepresult =  preg_match('/oai:www\.zora\.uzh\.ch:(\d+)$/',$identifier,$matches);
                             ?>
-                            <a  target="_blank" href='<?=  'http://www.zora.uzh.ch/' .   $matches[1] ?>'>Link zu Zora</a>
+                            <a  target="_blank" href='<?php echo   'http://www.zora.uzh.ch/' .   $matches[1] ?>'>Link zu Zora</a>
                         </div>
                     </div>
 
@@ -134,4 +134,4 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 </div>
 
 
-<?= $this->form()->closeTag(); ?>
+<?php echo  $this->form()->closeTag(); ?>

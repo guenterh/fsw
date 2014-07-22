@@ -6,7 +6,7 @@
  */
 ?>
 <?php foreach ($listItems as $listItem): ?>
-	<li><a href="<?= $this->url($route, array('action' => 'edit', 'id' => $listItem->getID())); ?>">
-			<?= $this->escapeHtml($listItem->getListLabel()) ?>
+	<li><a href="<?php echo $this->url($route, array('action' => 'edit', 'id' => $listItem->getID())); ?>">
+			<?php echo $this->escapeHtml($listItem->getListLabel()) ?>
 		</a></li>
 <?php endforeach; ?>

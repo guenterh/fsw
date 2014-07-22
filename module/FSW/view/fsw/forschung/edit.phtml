@@ -36,11 +36,11 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
 
 
-<?= $this->formTwb()->openTag($form, $formType) ?>
+<?php echo $this->formTwb()->openTag($form, $formType) ?>
     <div class="topButtons">
-        <input type="submit" value="<?= $this->escapeHtml($saveButtonLabel) ?>"
+        <input type="submit" value="<?php echo $this->escapeHtml($saveButtonLabel) ?>"
                class="submitButton btn btn-primary btn-medium" id="submitbutton" name="submit">
-        <a href="<?= $this->url('forschung', array('action' => 'index')); ?>"
+        <a href="<?php echo $this->url('forschung', array('action' => 'index')); ?>"
            class="ajaxButton closeButton btn btn-medium" id="closebutton">
             "Hier schliessen"
         </a>
@@ -48,28 +48,28 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
     <h1><?php echo $this->escapeHtml($title); ?></h1>
 
-<?= $this->ztbFlashMessenger()->render() ?>
+<?php echo $this->ztbFlashMessenger()->render() ?>
 
 <div class="tabbable">
     <ul class="nav nav-tabs formTabs">
-        <li class="active"><a href="#lizentiate_masters"><?= $this->translate('Lizentiate_masters ', 'Libadmin') ?></a></li>
-        <li><a href="#dissertations"><?= $this->translate('dissertations', 'Libadmin') ?></a></li>
-        <li><a href="#habil"><?= $this->translate('Habilitationen', 'Libadmin') ?></a></li>
+        <li class="active"><a href="#lizentiate_masters"><?php echo $this->translate('Lizentiate_masters ', 'Libadmin') ?></a></li>
+        <li><a href="#dissertations"><?php echo $this->translate('dissertations', 'Libadmin') ?></a></li>
+        <li><a href="#habil"><?php echo $this->translate('Habilitationen', 'Libadmin') ?></a></li>
     </ul>
 
 
     <div class="tab-content">
         <div class="tab-pane active" id="lizentiate_masters">
-            <?= $this->render('fsw/global/forschungen', array('forschungen' => $lizz_master,
+            <?php echo $this->render('fsw/global/forschungen', array('forschungen' => $lizz_master,
                                                                 'legende' => 'lizz master arbeiten')); ?>
         </div>
         <div class="tab-pane" id="dissertations">
-                <?= $this->render('fsw/global/forschungen', array('forschungen' => $dissertations,
+                <?php echo $this->render('fsw/global/forschungen', array('forschungen' => $dissertations,
                     'legende' => 'dissertations')); ?>
         </div>
 
         <div class="tab-pane" id="habil">
-            <?= $this->render('fsw/global/forschungen', array('forschungen' => $habil,
+            <?php echo $this->render('fsw/global/forschungen', array('forschungen' => $habil,
                 'legende' => 'Habilitationen')); ?>
         </div>
     </div>
@@ -78,4 +78,4 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 </div>
 
 
-<?= $this->form()->closeTag(); ?>
+<?php echo $this->form()->closeTag(); ?>

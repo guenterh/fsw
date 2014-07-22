@@ -1,12 +1,12 @@
 <div class="topButtons">
-	<a href="<?= $this->url($route, array('action' => 'add')); ?>"
-	   class="ajaxButton addButton btn btn-primary btn-medium" id="add-<?= strtolower($entityName) ?>">
-		<?= $this->translate('add_new_xxx', 'Libadmin') ?> <?= $entityName ?>
+	<a href="<?php echo $this->url($route, array('action' => 'add')); ?>"
+	   class="ajaxButton addButton btn btn-primary btn-medium" id="add-<?php echo strtolower($entityName) ?>">
+		<?php echo $this->translate('add_new_xxx', 'Libadmin') ?> <?php echo $entityName ?>
 	</a>
 </div>
-<h1><?= $entityNamePlural ?></h1>
+<h1><?php echo $entityNamePlural ?></h1>
 
-<?= $this->ztbFlashMessenger()->render() ?>
+<?php echo $this->ztbFlashMessenger()->render() ?>
 
 <?php if (is_null($listItems) || $listItems->count() == 0): ?>
 	<?php
@@ -14,5 +14,5 @@
 	echo sprintf($baseLabel, $entityNamePlural);
 	?>
 <?php else: ?>
-	<p><?= $this->translate('home_select_record', 'Libadmin') ?></p>
+	<p><?php echo $this->translate('home_select_record', 'Libadmin') ?></p>
 <?php endif ?>

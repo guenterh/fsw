@@ -23,7 +23,7 @@
     <? if ($doc->getCoverLink() != null): ?>
     <div class="objectContainer">
         <div class="objectFloat left" style="width:70px;">
-            <img src="<?= $doc->getCoverLink()?>" />
+            <img src="<?php echo  $doc->getCoverLink()?>" />
         </div>
         <p>
      <? else: ?>
@@ -33,7 +33,7 @@
 
     <? endif; ?>
 
-        <?= $doc->getSource() ?>
+        <?php echo  $doc->getSource() ?>
 
     <? if ( $doc->getRelationExtern() != null && (strpos($doc->getRelationExtern(),"e-collection") == true) ||
             strpos($doc->getRelationExtern(),"lir") == true ||
@@ -62,18 +62,18 @@
 
             <? if ($doc->getRelationExtern() != null) : ?>
             &nbsp;
-            <a class="uzh" href="<?=$doc->getRelationExtern()?>" target="_blank">Volltext</a>
+            <a class="uzh" href="<?php echo $doc->getRelationExtern()?>" target="_blank">Volltext</a>
             <? endif; ?>
 
 
             <? if ($doc->getSwissbibISBN() != null) : ?>
             &nbsp;
-            <a class="uzh" href="<?= $doc->getSwissbibISBN()?>" target="_blank">swissbib</a>
+            <a class="uzh" href="<?php echo  $doc->getSwissbibISBN()?>" target="_blank">swissbib</a>
             <? endif; ?>
 
             <? if ($doc->getRelationZora() != null) : ?>
             &nbsp;
-            <a class="uzh" href="<?= $doc->getRelationZora()?>" target="_blank">Zora</a>
+            <a class="uzh" href="<?php echo  $doc->getRelationZora()?>" target="_blank">Zora</a>
             <? endif; ?>
 
 
@@ -88,18 +88,18 @@
 
             <? if ($doc->getRelationExtern() != null): ?>
             &nbsp;
-            <a class="uzh" href="<?= $doc->getRelationExtern()?>" target="_blank">Verlagsinfo</a>
+            <a class="uzh" href="<?php echo  $doc->getRelationExtern()?>" target="_blank">Verlagsinfo</a>
             <? endif; ?>
 
 
             <? if ($doc->getSwissbibISBN() != null): ?>
             &nbsp;
-            <a class="uzh" href="<?= $doc->getSwissbibISBN() ?>" target="_blank">swissbib</a>
+            <a class="uzh" href="<?php echo  $doc->getSwissbibISBN() ?>" target="_blank">swissbib</a>
             <? endif; ?>
 
             <? if ($doc->getRelationZora() != null): ?>
             &nbsp;
-            <a class="uzh" href="<?= $doc->getRelationZora()?>" target="_blank">Volltext (evt. mit Zugangsbeschränkung)</a>
+            <a class="uzh" href="<?php echo  $doc->getRelationZora()?>" target="_blank">Volltext (evt. mit Zugangsbeschränkung)</a>
             <? endif; ?>
 
 
@@ -116,12 +116,12 @@
 
             <? if ($doc->getSwissbibISBN() != null): ?>
             &nbsp;
-            <a class="uzh" href="<?= $doc->getSwissbibISBN()?>" target="_blank">swissbib</a>
+            <a class="uzh" href="<?php echo  $doc->getSwissbibISBN()?>" target="_blank">swissbib</a>
             <? endif; ?>
 
             <? if ($doc->getRelationZora() != null): ?>
             &nbsp;
-            <a class="uzh" href="<?= $doc->getRelationZora()?>" target="_blank">Zora</a>
+            <a class="uzh" href="<?php echo  $doc->getRelationZora()?>" target="_blank">Zora</a>
             <? endif; ?>
 
             <? endif; ?>

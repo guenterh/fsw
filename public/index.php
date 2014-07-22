@@ -13,6 +13,7 @@ if (php_sapi_name() === 'cli-server' && is_file(__DIR__ . parse_url($_SERVER['RE
 // Setup autoloading
 require 'init_autoloader.php';
 
+ini_set('short_open_tag', '1');
 
 define("APP_PATH",dirname(__DIR__));
 
