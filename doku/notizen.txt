@@ -15,3 +15,6 @@ http://phpunit.de/manual/current/en/installation.html
 in phpstorm kann zur Zeit nur phpunit <= 3.7.x verwendet werden
 http://youtrack.jetbrains.com/issue/WI-21666
 http://stackoverflow.com/questions/21415898/unable-to-run-unit-tests-in-phpstorms-ide
+
+uzH server - wie rufe ich die Testumgebung auf - ein Beipiel:
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/personen/
