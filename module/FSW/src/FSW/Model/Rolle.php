@@ -42,8 +42,11 @@ class Rolle extends BaseModel implements InputFilterAwareInterface  {
     protected  $roll_verteiler_koordma;
     protected  $roll_verteiler_koordnz;
     protected  $roll_changedate;
+    protected  $roll_changedby;
+    protected  $roll_changedip;
     protected  $roll_oldid;
     protected  $roll_fswfunktion;
+
 
 
     protected $inputFilter;
@@ -197,6 +200,40 @@ class Rolle extends BaseModel implements InputFilterAwareInterface  {
     {
         return $this->roll_changedate;
     }
+
+    /**
+     * @param mixed $roll_changedby
+     */
+    public function setRoll_changedby($roll_changedby)
+    {
+        $this->roll_changedby = $roll_changedby;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRoll_changedby()
+    {
+        return $this->roll_changedby;
+    }
+
+    /**
+     * @param mixed $roll_changedip
+     */
+    public function setRoll_changedip($roll_changedip)
+    {
+        $this->roll_changedip = $roll_changedip;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRoll_changedip()
+    {
+        return $this->roll_changedip;
+    }
+
+
 
     /**
      * @param mixed $roll_dateend

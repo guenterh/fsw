@@ -14,7 +14,7 @@
 
 
 
-    <?php foreach ($zoraDocs as $doc): ?>
+    <?php foreach ($zoraDocs as $key => $doc): ?>
 
     <!--ist ein Bild vorhanden wird die Struktur unterschiedlich aufgebaut (Liste oder nicht)
     beachte: dei Ende tags der Struktur sind am Ende und müssen wieder durch entsprechende Abfragen ermittelt werden
@@ -110,7 +110,7 @@
 
             <? if ($doc->getRelationExtern() != null): ?>
             &nbsp;
-            <a class="uzh" href="{$item->getRelationExtern()}" target="_blank">Verlagsinfo</a>
+            <a class="uzh" href="<?php echo $doc->getRelationExtern()?>" target="_blank">Verlagsinfo</a>
             <? endif; ?>
 
 
@@ -130,8 +130,8 @@
             <!--Abschluss der Struktur - entweder mit oder ohne Bild  -->
 
 
-            {if $item->getRecordToRender()->getCoverLink() != null}
-            <? if ($doc->getCoverLink() != null): ?>
+
+            <? if ($doc->getCoverLink() != null):?>
         </p>
     </div>
     <? else: ?>

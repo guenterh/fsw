@@ -33,6 +33,9 @@ class Person extends BaseModel implements InputFilterAwareInterface {
     public $pers_email;
     public $pers_sex;
     public $pers_changedate;
+    public $pers_changedby;
+    public $pers_changedip;
+
     public $pers_oldid;
     public $pers_verstorben;
 
@@ -199,6 +202,40 @@ class Person extends BaseModel implements InputFilterAwareInterface {
     {
         return $this->pers_changedate;
     }
+
+    /**
+     * @param mixed $pers_changedby
+     */
+    public function setPers_changedby($pers_changedby)
+    {
+        $this->pers_changedby = $pers_changedby;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPers_changedby()
+    {
+        return $this->pers_changedby;
+    }
+
+    /**
+     * @param mixed $pers_changedip
+     */
+    public function setPers_changedip($pers_changedip)
+    {
+        $this->pers_changedip = $pers_changedip;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPers_changedip()
+    {
+        return $this->pers_changedip;
+    }
+
+
 
     /**
      * @param mixed $pers_email

@@ -36,13 +36,16 @@ class PublicationsFacade extends BaseFacade {
 
     public function getPublications($type = 'all') {
 
-        $sql = 'select p.*, zdoc.*, zdt.*, za.*, fc.coverlink, fc.frontpage  from fsw_zora_doctype zdt,';
+        $sql = 'select distinct p.*, zdoc.*, zdt.*, za.*, fc.coverlink, fc.frontpage  from fsw_zora_doctype zdt,';
         $sql .= ' fsw_relation_zora_author_zora_doc r_zdza, fsw_zora_author za,';
         $sql .= ' Per_Personen p, fsw_zora_doc zdoc LEFT JOIN fsw_cover fc on (zdoc.oai_identifier = fc.oai_identifier)';
         $sql .= ' where zdoc.oai_identifier = zdt.oai_identifier and ';
         $sql .= ' zdoc.oai_identifier = r_zdza.oai_identifier and ';
         $sql .= ' za.id =  r_zdza.fid_zora_author and ';
-        $sql .= ' p.pers_id = za.pers_id';
+        $sql .= ' p.pers_id = za.pers_id and ';
+        $sql .= 'zdt.oai_recordtyp <> \'PeerReviewed\' and ';
+        $sql .= 'zdt.oai_recordtyp <> \'NonPeerReviewed\' ';
+
 
 
         $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
@@ -55,9 +58,10 @@ class PublicationsFacade extends BaseFacade {
             $z = new ZoraRecord();
             $z->setRawOAIRecord($r['xmlrecord'],$r['oai_identifier'],$r['status'],$r['datestamp']);
 
-            $zoraDocs[] = $z;
-
             $z->renderRecord();
+
+            $zoraDocs[$r['oai_identifier']] = $z;
+
 
         }
 

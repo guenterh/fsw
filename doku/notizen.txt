@@ -18,3 +18,33 @@ http://stackoverflow.com/questions/21415898/unable-to-run-unit-tests-in-phpstorm
 
 uzH server - wie rufe ich die Testumgebung auf - ein Beipiel:
 http://w3.fsw.uzh.ch/static/zf2/public/index.php/personen/
+
+
+
+was wurde geändert / Erstellen von Benutzern
+
+CREATE USER '[user]'@'%' IDENTIFIED BY '[password]';
+CREATE USER '[user]'@'localhost' IDENTIFIED BY '[password]';
+GRANT ALL PRIVILEGES ON [dbname].* TO '[user]'@'%'  WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON [dbname].* TO '[user]'@'localhost'  WITH GRANT OPTION;
+
+
+geändert
+PerRolle
+Per_Personen
+
+roll_changedby
+roll_changedip
+
+pers_changedby
+pers_changedip
+
+
+
+select distinct p.*, zdoc.*, zdt.*, za.*, fc.coverlink, fc.frontpage  from fsw_zora_doctype zdt, fsw_relation_zora_author_zora_doc r_zdza, fsw_zora_author za, Per_Personen p, fsw_zora_doc zdoc LEFT JOIN fsw_cover fc on (zdoc.oai_identifier = fc.oai_identifier) where zdoc.oai_identifier = zdt.oai_identifier and  zdoc.oai_identifier = r_zdza.oai_identifier and  za.id =  r_zdza.fid_zora_author and  p.pers_id = za.pers_id and zdt.oai_recordtyp <> 'PeerReviewed' and zdt.oai_recordtyp <> 'NonPeerReviewed';
+9255 -> Rossfeld und Straumann (wie mache ich das eindeutig?)
+
+select p.*, zdoc.*,  za.*, fc.coverlink, fc.frontpage  from  fsw_relation_zora_author_zora_doc r_zdza, fsw_zora_author za, Per_Personen p, fsw_zora_doc zdoc LEFT JOIN fsw_cover fc on (zdoc.oai_identifier = fc.oai_identifier) where   zdoc.oai_identifier = r_zdza.oai_identifier and  za.id =  r_zdza.fid_zora_author and  p.pers_id = za.pers_id;
+
+
+www.zora.uzh.ch/cgi/oai2?verb=GetRecord&identifier=oai:www.zora.uzh.ch:40854&metadataPrefix=oai_dc
