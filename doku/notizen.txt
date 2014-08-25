@@ -48,3 +48,33 @@ select p.*, zdoc.*,  za.*, fc.coverlink, fc.frontpage  from  fsw_relation_zora_a
 
 
 www.zora.uzh.ch/cgi/oai2?verb=GetRecord&identifier=oai:www.zora.uzh.ch:40854&metadataPrefix=oai_dc
+
+
+select pers.*, rel.*, rolle.*, fa.*, persext.* from Per_Personen pers, Per_Rolle rolle,
+fsw_relation_hspersonen_fsw_personen rel, Qarb_ArbeitenV2 fa,
+fsw_personen_extended persext  where pers.pers_id = rel.fper_personen_pers_id and rolle.roll_id = rel.fper_rolle_roll_id and
+rel.fpersonen_extended_id = persext.id and fa.qarb_arb_rollid = rolle.roll_id
+and fa.qarb_arb_istabgeschlossen = 0;
+
+
+select pers.pers_name,  rolle.roll_email, fa.qarb_arb_titel, persext.fullname from Per_Personen pers, Per_Rolle rolle,
+fsw_relation_hspersonen_fsw_personen rel, Qarb_ArbeitenV2 fa,
+fsw_personen_extended persext  where pers.pers_id = rel.fper_personen_pers_id and rolle.roll_id = rel.fper_rolle_roll_id and
+rel.fpersonen_extended_id = persext.id and fa.qarb_arb_autorid = rolle.roll_arbe_id
+and fa.qarb_arb_istabgeschlossen = 0;
+
+
+select pers.pers_name from Per_Personen pers, fsw_relation_hspersonen_fsw_personen rel, fsw_personen_extended persext,
+  Per_Rolle rolle
+  where pers.pers_id = rel.fper_personen_pers_id and rel.fpersonen_extended_id = persext.id and rolle.roll_id = rel.fper_rolle_roll_id
+
+
+
+Forschungsarbeiten:
+
+select pers.pers_name from Per_Personen pers, fsw_relation_hspersonen_fsw_personen rel, fsw_personen_extended persext,
+  Per_Rolle rolle, Qarb_ArbeitenV2 fa
+  where pers.pers_id = rel.fper_personen_pers_id and rel.fpersonen_extended_id = persext.id and rolle.roll_id = rel.fper_rolle_roll_id
+  and fa.qarb_arb_autor_rollid = rolle.roll_id and fa.qarb_arb_istabgeschlossen = 0;
+
+-> letzte sollte einigermassen korrekte Ergebnisse liefern
