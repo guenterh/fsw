@@ -370,8 +370,10 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface
         }
         if (array_key_exists('forschungstypen', $params) && is_array($params['forschungstypen'])) {
 
+            /*
             $select->where->in(
                 'qarb_arb_typ', array('Dissertation'));
+            */
             //)->where(array('qarb_arb_autorid' => $mitID));
             $select->where->in(
                 'qarb_arb_typ', $params['forschungstypen']);

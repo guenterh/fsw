@@ -72,7 +72,7 @@ select pers.pers_name from Per_Personen pers, fsw_relation_hspersonen_fsw_person
 
 Forschungsarbeiten:
 
-select pers.pers_name from Per_Personen pers, fsw_relation_hspersonen_fsw_personen rel, fsw_personen_extended persext,
+select pers.pers_name, fa.qarb_arb_typ from Per_Personen pers, fsw_relation_hspersonen_fsw_personen rel, fsw_personen_extended persext,
   Per_Rolle rolle, Qarb_ArbeitenV2 fa
   where pers.pers_id = rel.fper_personen_pers_id and rel.fpersonen_extended_id = persext.id and rolle.roll_id = rel.fper_rolle_roll_id
   and fa.qarb_arb_autor_rollid = rolle.roll_id and fa.qarb_arb_istabgeschlossen = 0;
