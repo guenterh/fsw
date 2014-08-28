@@ -78,3 +78,12 @@ select pers.pers_name, fa.qarb_arb_typ from Per_Personen pers, fsw_relation_hspe
   and fa.qarb_arb_autor_rollid = rolle.roll_id and fa.qarb_arb_istabgeschlossen = 0;
 
 -> letzte sollte einigermassen korrekte Ergebnisse liefern
+
+
+Zu lange abstracts
+SELECT p.pers_name, p.pers_vorname, q.qarb_arb_titel, q.qarb_arb_abstract
+FROM Per_Personen p, Per_Rolle r, Qarb_ArbeitenV2 q
+WHERE p.pers_id = r.roll_pers_id
+AND r.roll_id = q.qarb_arb_autor_rollid
+AND length( q.qarb_arb_abstract ) =1500 order by p.pers_name
+LIMIT 0 , 100
