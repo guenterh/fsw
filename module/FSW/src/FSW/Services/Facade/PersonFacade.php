@@ -29,13 +29,11 @@ class PersonFacade extends BaseFacade {
         'pers_vorname',
     );
 
-    public function __construct(TableGateway $tableGatewayPersCore,
-                                TableGateway $tableGatewayPersExtended,
-                                TableGateway $tableGatewayZoraAuthor)
+    public function __construct()
     {
-        $this->tableGateway = $tableGatewayPersCore;
-        $this->tableGatewayPersExtended = $tableGatewayPersExtended;
-        $this->tableGatewayZoraAuthor = $tableGatewayZoraAuthor;
+        #$this->tableGateway = $tableGatewayPersCore;
+        #$this->tableGatewayPersExtended = $tableGatewayPersExtended;
+        #$this->tableGatewayZoraAuthor = $tableGatewayZoraAuthor;
 
     }
 
@@ -87,7 +85,7 @@ class PersonFacade extends BaseFacade {
             }
 
 
-            $persExtended = $this->runSelect(array('pers_id' => (int)$persID), $this->tableGatewayPersExtended);
+            $persExtended = $this->runSelect(array('pers_id' => (int)$persID), $this->histSemDBService->getFSWPersonenExtendedGateway());
 
             if ($persExtended) {
 
@@ -100,7 +98,8 @@ class PersonFacade extends BaseFacade {
                 $persCoreType->setPersonExtended(array($persExtended));
                 $id = (int) $persExtended->getId();
                 //$rowExtendedZora = $this->tableGatewayZoraAuthor->select(array('fid_personen' => $id))->current();
-                $persExtendedZoraAuthorNames = $this->runSelect(array('fid_personen' => $id), $this->tableGatewayZoraAuthor,false);
+
+                $persExtendedZoraAuthorNames = $this->runSelect(array('fid_personen' => $id), $this->histSemDBService->getZoraAuthorGateway(),false);
 
                 $zoraAuthorNames = array();
                 foreach ($persExtendedZoraAuthorNames as  $zoraAuthor) {

@@ -41,40 +41,17 @@ class Factory {
     public static function getPersonFacade(ServiceManager $sm) {
 
 
-        //todo:
-        //das Zeug kann man wegnehmen, da die Facade sich die Gateways selber besoregen soll
-        //Referenz auf DBService
-        $tableGatewayPersonCore = $sm->get('PersonTableGateway');
-        $tableGatewayPersExtended = $sm->get('PersonExtendedTableGateway');
-        $tableGatewayZoraAuthor = $sm->get('PersonZoraAuthorTableGateway');
+        //aktuell würd ein invokable ausreichen. (Früher habe ich in dieser factory noch spezielle TableGateways erstellt)
+        //vielleicht brauchen wir sie noch
+        return new PersonFacade();
 
-
-
-        $table = new PersonFacade($tableGatewayPersonCore,
-                                    $tableGatewayPersExtended,
-                                    $tableGatewayZoraAuthor
-                                    );
-        return $table;
 
 
     }
 
     public static function getPersonAktivitaetFacade(ServiceManager $sm) {
 
-
-        $tableGatewayPersonCore = $sm->get('PersonTableGateway');
-        $tableGatewayPersExtended = $sm->get('PersonExtendedTableGateway');
-        $tableGatewayZoraAuthor = $sm->get('PersonZoraAuthorTableGateway');
-
-
-
-        $facade = new PersonAktivitaetenFacade($tableGatewayPersonCore,
-            $tableGatewayPersExtended,
-            $tableGatewayZoraAuthor
-        );
-
-
-        return $facade;
+        return new PersonAktivitaetenFacade();
 
     }
 
