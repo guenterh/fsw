@@ -26,7 +26,8 @@ class MedienController extends BaseController {
     {
 
         return new ViewModel(array(
-            'medien' => $this->getMediumTable()->fetchAll(),
+            //'medien' => $this->getMediumTable()->fetchAll(),
+            'medien' => $this->facade->fetchAll()
         ));
 
     }
@@ -184,6 +185,24 @@ class MedienController extends BaseController {
         $this->facade->insertMedienFSW();
 
     }
+
+    /**
+     * Search matching records
+     *
+     * @param	Integer		$limit        Search result limit
+     * @return	ViewModel
+     **/
+    public function searchAction()
+    {
+        $query = $this->params()->fromQuery('query', '');
+        $data = array(
+            'route' => 'medien',
+            'listItems' => $this->facade->searchInMedien($query, 15)
+        );
+
+        return $this->getAjaxView($data, 'fsw/global/search');
+    }
+
 
 
 

@@ -9,6 +9,8 @@
 namespace FSW\Services\Facade;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
+use Zend\Db\Sql\Select;
+
 
 
 
@@ -21,7 +23,7 @@ class MedienFacade extends BaseFacade {
      */
 
     protected $tableGatewayPersExtended;
-    protected $tableGatewayZoraAuthor;
+    //protected $tableGatewayZoraAuthor;
 
     protected $searchFields = array(
         'gespraechstitel',
@@ -54,7 +56,10 @@ class MedienFacade extends BaseFacade {
 
     public function fetchAll()
     {
-        $resultSet = $this->tableGateway->select();
+        //ich möchte nicht mehr mit dedizierten tables in den Fassaden arbeiten.
+        //Facades sollten keine direkten Referenzen mehr auf Tabellen haben
+        //$resultSet = $this->tableGateway->select();
+        $resultSet = $this->histSemDBService->getMedienGateway()->select();
         return $resultSet;
     }
 
@@ -63,7 +68,8 @@ class MedienFacade extends BaseFacade {
     public function getMedium($id)
     {
         $id  = (int) $id;
-        $rowset = $this->tableGateway->select(array('id' => $id));
+        //$rowset = $this->tableGateway->select(array('id' => $id));
+        $rowset = $this->histSemDBService->getMedienGateway()->select(array('id' => $id));
         $row = $rowset->current();
         if (!$row) {
             throw new \Exception("Could not find row $id");
@@ -75,7 +81,8 @@ class MedienFacade extends BaseFacade {
 
     public function deleteMedium($id)
     {
-        $this->tableGateway->delete(array('id' => $id));
+        //$this->tableGateway->delete(array('id' => $id));
+        $this->histSemDBService->getMedienGateway()->delete(array('id' => $id));
     }
 
 
@@ -93,10 +100,12 @@ class MedienFacade extends BaseFacade {
 
         $id = (int)$medium->medienid;
         if ($id == 0) {
-            $this->tableGateway->insert($data);
+            //$this->tableGateway->insert($data);
+            $this->histSemDBService->getMedienGateway()->insert($data);
         } else {
             if ($this->getMedium($id)) {
-                $this->tableGateway->update($data, array('id' => $id));
+                //$this->tableGateway->update($data, array('id' => $id));
+                $this->histSemDBService->getMedienGateway()->update($data, array('id' => $id));
             } else {
                 throw new \Exception('Form id does not exist');
             }
@@ -157,6 +166,33 @@ class MedienFacade extends BaseFacade {
 
         }
     }
+
+    public function searchInMedien ($query, $limit = 15) {
+
+
+        $select = new Select();
+        $likeCondition = $this->getSearchFieldsLikeCondition($query);
+
+
+        $targetGateway = $medienTableGateway = $this->histSemDBService->getMedienGateway();
+
+        $select->from($targetGateway->getTable())
+            ->order("gespraechstitel")
+            //->limit($limit)
+            ->where($likeCondition);
+
+
+        //$sql = new Sql($this->tableGateway->getAdapter(), $this->getTable());
+        //$test = $sql->getSqlStringForSqlObject($select);
+        //var_dump($sql->getSqlStringForSqlObject($select));
+
+        return $targetGateway->selectWith($select);
+
+
+
+
+    }
+
 
 
 }
