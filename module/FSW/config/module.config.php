@@ -88,10 +88,10 @@ return array(
                 ),
             ),
 
-            'forschung' => array(
+            'forschungAdmin' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/forschung[/][:action][/:id]',
+                    'route'    => '/forschungAdmin[/][:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
@@ -99,6 +99,20 @@ return array(
                     'defaults' => array(
                         'controller' => 'FSW\Controller\Forschung',
                         'action'     => 'index',
+                    ),
+                ),
+            ),
+            'forschungPresent' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/forschungPresent[/][:action][/:type]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'type'     => '[a-zA-Z][a-zA-Z]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'FSW\Controller\Forschung',
+                        'action'     => 'present',
                     ),
                 ),
             ),
@@ -287,7 +301,7 @@ return array(
             ),
             'master_lizz_diss' => array(
                 'label' => 'master_lizz_diss',
-                'route' => 'forschung'
+                'route' => 'forschungAdmin'
             ),
             'person_aktivitaet' => array(
                 'label' => 'person_aktivitaet',

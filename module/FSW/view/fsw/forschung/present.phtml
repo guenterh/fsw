@@ -1,0 +1,52 @@
+
+
+<?php
+
+$forschungsArbeiten = $this->forschungsArbeiten;
+$s = "";
+
+?>
+
+<a name="dies ist ein Name"><!-- --></a>
+<h2 class="zoraSectionName">hier eine section</h2>
+
+<ul class="type1">
+
+
+
+    <?php foreach ($forschungsArbeiten as $person_arbeit):
+        $person = $person_arbeit[0];
+        $arbeit = $person_arbeit[1];
+
+        ?>
+        <li>
+            <p class="noMarginBottom"><b><?php echo $person->getPersNameFormat() . ' ' .  $person->getID() ?></b><br />
+                <?php echo $arbeit->getQarb_arb_titel() ?>
+                <?php if ($arbeit->getQarb_arb_istabgeschlossen()) : ?>
+                :"Abschluss: <?php echo $arbeit->getQarb_arb_abschlussjahr() ?>
+                <?php endif; ?>
+            </p>
+
+            <?php if (!is_null($arbeit->getQarb_arb_abstract()) && strlen($arbeit->getQarb_arb_abstract()) > 0)  :?>
+
+                <div>
+                    <a class="internal abstractCaption" href="#">mehr</a>
+                    <br/>
+                    <div class="abstractText">
+                        <?php echo $arbeit->getQarb_arb_abstract() ?> &nbsp;
+                    </div>
+                </div>
+
+
+            <?php endif; ?>
+
+
+
+
+        </li>
+
+
+    <? endforeach; ?>
+
+
+</ul>

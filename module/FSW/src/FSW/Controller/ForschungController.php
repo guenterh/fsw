@@ -119,13 +119,46 @@ class ForschungController extends BaseController {
     {
         $query = $this->params()->fromQuery('query', '');
         $data = array(
-            'route' => 'forschung',
+            'route' => 'forschungAdmin',
             'listItems' => $this->facade->searchFSWPersonen($query, 15)
         );
 
         return $this->getAjaxView($data, 'fsw/global/search');
     }
 
+    public function presentAction()
+    {
+
+        //http://localhost:30000/forschungPresent/present
+        //http://localhost:30000/forschungPresent/present/liz?abgeschlossen=1&mitid=5
+        //http://localhost:30000/forschungPresent/present/diss?abgeschlossen=1&mitid=5
+        //http://localhost:30000/forschungPresent/present/master?abgeschlossen=1&mitid=5
+
+
+
+        //Pruefe gueltige Werte
+        $lower_valid_type_values = array('diss' => 'Dissertation','liz' => 'Lizentiatsarbeit',
+            'master' => 'Masterarbeit','all' => 'all');
+        $valid_abgeschlossen_types = array('0','1');
+        $tAbgeschlossen =  $this->params()->fromQuery('abgeschlossen');
+        if (!is_null($tAbgeschlossen)) {
+            $tAbgeschlossen = in_array($tAbgeschlossen,$valid_abgeschlossen_types) ? $tAbgeschlossen : null;
+        }
+        $tMitid = $this->params()->fromQuery('mitid');
+        if (!is_null($tMitid)) {
+            $tMitid =  ((int) $tMitid != 0) ? ((int) $tMitid) : null;
+        }
+
+        $type = $this->getEvent()->getRouteMatch()->getParam('type') == null ? 'all' : strtolower($this->getEvent()->getRouteMatch()->getParam('type'));
+        $type = array_key_exists($type,$lower_valid_type_values) ? $lower_valid_type_values[$type] : 'all';
+
+
+        return new ViewModel(array(
+            'forschungsArbeiten' => $this->facade->getForschungsarbeitenFSW($type, $tAbgeschlossen, $tMitid)
+        ));
+
+
+    }
 
 
 } 

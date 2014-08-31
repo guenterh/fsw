@@ -7,7 +7,7 @@ $this->headTitle("Forschungsarbeiten");
 $form = $this->form;
 
 $form->setAttribute('action', $this->url(
-    'forschung',
+    'forschungAdmin',
     array(
         'action' => 'edit',
         'id'     => $this->id,
@@ -40,7 +40,7 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
     <div class="topButtons">
         <input type="submit" value="<?php echo $this->escapeHtml($saveButtonLabel) ?>"
                class="submitButton btn btn-primary btn-medium" id="submitbutton" name="submit">
-        <a href="<?php echo $this->url('forschung', array('action' => 'index')); ?>"
+        <a href="<?php echo $this->url('forschungAdmin', array('action' => 'index')); ?>"
            class="ajaxButton closeButton btn btn-medium" id="closebutton">
             "Hier schliessen"
         </a>

@@ -525,6 +525,17 @@ class Person extends BaseModel implements InputFilterAwareInterface {
         return $this->pers_verstorben;
     }
 
+    //Format functions for presentation
+
+    /**
+     * @return mixed
+     */
+    public function getPersNameFormat()
+    {
+        return $this->pers_name . ', ' . $this->pers_vorname;
+    }
+
+
 
 
 
