@@ -35,22 +35,17 @@ class MedienController extends BaseController {
     public function addAction()
     {
 
-        $rL = $this->facade->getFSWPersonen();
-        //$personTable = $this->getPersonTable();
-        //$rL = $personTable->find(null,200);
-        $simpleList = $this->toList($rL,true);
-
-        $form = new MediumForm('medium',$simpleList);
-        $form->get('submit')->setValue('Add');
-
-        $medium =  new Medium();
-
-
-
-        $form->bind($medium);
 
         $request = $this->getRequest();
         if ($request->isPost()) {
+            $rL = $this->facade->getFSWPersonen();
+            //$personTable = $this->getPersonTable();
+            //$rL = $personTable->find(null,200);
+            $simpleList = $this->toList($rL,true);
+
+            $form = new MediumForm('medium',$simpleList);
+
+
             $medium = new Medium();
             $form->setInputFilter($medium->getInputFilter());
             $form->setData($request->getPost());
@@ -60,9 +55,29 @@ class MedienController extends BaseController {
                 $this->getMediumTable()->saveMedium($medium);
 
                 // Redirect to list of albums
-                return $this->redirect()->toRoute('medien');
+                //return $this->forward()->toRoute('medien',array("action" => 'edit','id' => '52'));
+                return $this->forward()->dispatch('FSW\Controller\Medien', array('action' => 'show','id' => 52 ));
             }
+
+
+        } else {
+
+            $rL = $this->facade->getFSWPersonen();
+            //$personTable = $this->getPersonTable();
+            //$rL = $personTable->find(null,200);
+            $simpleList = $this->toList($rL,true);
+
+            $form = new MediumForm('medium',$simpleList);
+            $form->get('submit')->setValue('Add');
+
+            $medium =  new Medium();
+
+
+
+            $form->bind($medium);
+
         }
+
         return $this->getAjaxView(array('form' => $form));
 
     }
@@ -216,7 +231,61 @@ class MedienController extends BaseController {
     }
 
 
+    public function showAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('medien', array(
+                'action' => 'add'
+            ));
+        }
+
+
+        //new
+
+
+        $idMedium = (int)$this->params()->fromRoute('id', 0);
+        $flashMessenger = $this->flashMessenger();
+
+        if (!$idMedium) {
+            return $this->redirect()->toRoute('medien', array(
+                'action' => 'add'
+            ));
+        }
+
+        // Get the Medium with the specified id.  An exception is thrown
+        // if it cannot be found, in which case go to the index page.
+        try {
+            $medium = $this->facade->getMedium($id);
+        }
+        catch (\Exception $ex) {
+            return $this->redirect()->toRoute('medien', array(
+                'action' => 'index'
+            ));
+        }
+
+        $rL = $this->facade->getFSWPersonen();
+        //$personTable = $this->getPersonTable();
+        //$rL = $personTable->find(null,200);
+        $simpleList = $this->toList($rL,true);
+
+
+        $form  = new MediumForm('medium', $simpleList);
+        $form->bind($medium);
+        $form->get('submit')->setAttribute('value', 'Edit');
 
 
 
-} 
+        return $this->getAjaxView(array(
+            'form' => $form,
+            'title' => $this->translate('medien_show', 'FSW'),
+        ));
+
+
+
+    }
+
+
+
+
+}

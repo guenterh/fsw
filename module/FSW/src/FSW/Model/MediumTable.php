@@ -39,17 +39,19 @@ class MediumTable extends BaseTable
 
     public function saveMedium(Medium $medium)
     {
+        $test = "";
         $data = array(
-            'mit_id' => $medium->mit_id,
-            'sendetitel'  => $medium->sendetitel,
-            'datum'  => $medium->datum,
-            'gespraechstitel'  => $medium->gespraechstitel,
-            'icon'  => $medium->icon,
-            'link'  => $medium->link,
-            'medientyp'  => $medium->medientyp,
+            'mit_id_per_extended' => $medium->getMit_id_per_extended(),
+
+            'sendetitel'  => $medium->getSendetitel(),
+            'datum'  => $medium->getDatum(),
+            'gespraechstitel'  => $medium->getGespraechstitel(),
+            'icon'  => $medium->getIcon(),
+            'link'  => $medium->getLink(),
+            'medientyp'  => $medium->getMedientyp()
         );
 
-        $id = (int)$medium->medienid;
+        $id = (int)$medium->getId();
         if ($id == 0) {
             $this->tableGateway->insert($data);
         } else {
