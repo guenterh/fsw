@@ -1,18 +1,68 @@
 <?php
 
-$title = 'Add new Medium';
+$title = 'hier jetzt die neue Form';
 $this->headTitle($title);
+
+$form = $this->form;
 ?>
     <h1><?php echo $this->escapeHtml($title); ?></h1>
 <?php
 $form->setAttribute('action', $this->url('medien', array('action' => 'add')));
 $form->prepare();
 
-echo $this->form()->openTag($form);
-echo $this->formHidden($form->get('medienid'));
-echo $this->formRow($form->get('gespraechstitel'));
-echo $this->formRow($form->get('sendetitel'));
-echo $this->formRow($form->get('mit_id'));
-echo $this->formRow($form->get('icon'));
-echo $this->formSubmit($form->get('submit'));
-echo $this->form()->closeTag();
+$formType = 'horizontal';
+
+// Force Libadmin text domain (@todo cleaner way?)
+$this->formLabelTwb()->setTranslatorTextDomain('Libadmin');
+$this->formLabel()->setTranslatorTextDomain('Libadmin');
+$this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
+
+
+echo $this->form()->openTag($form,$formType); ?>
+
+<fieldset class="general">
+        <legend><?php echo  $this->translate('Angaben zum Medium ','Libadmin') ?></legend>
+    <div class="row-fluid">
+
+        <div class="span5"><?php echo $this->formHidden($form->get('id')); ?></div>
+    </div>
+
+
+    <div class="row-fluid">
+
+        <div class="span5 fswTextArea"><?php echo $this->formRowTwb($form->get('gespraechstitel')); ?></div>
+    </div>
+    <div class="row-fluid">
+
+        <div class="span5"><?php echo $this->formRowTwb($form->get('sendetitel')); ?></div>
+    </div>
+    <div class="row-fluid">
+
+        <div class="span5"><?php echo $this->formRowTwb($form->get('mit_id_per_extended')); ?></div>
+    </div>
+    <div class="row-fluid">
+
+        <div class="span5"><?php echo $this->formRowTwb($form->get('icon')); ?></div>
+    </div>
+    <div class="row-fluid">
+
+        <div class="span5"><?php echo $this->formRowTwb($form->get('link')); ?></div>
+    </div>
+
+    <div class="row-fluid">
+
+        <div class="span5"><?php echo $this->formSubmit($form->get('submit')); ?></div>
+    </div>
+
+
+</fieldset>
+    <?php
+
+    echo $this->form()->closeTag();
+
+
+
+
+
+
+

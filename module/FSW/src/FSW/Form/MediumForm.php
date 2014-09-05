@@ -31,7 +31,8 @@ class MediumForm extends Form {
                 'label' => 'gespraechstitel'
             ),
             'attributes' => array(
-                'rows' => 5
+                'rows' => 5,
+                'class' => 'fswTextArea'
             )
         ));
 
@@ -44,7 +45,7 @@ class MediumForm extends Form {
             ),
             'attributes' => array(
                 'rows' => 2,
-                'cols' => 300
+                'class' => 'fswTextArea'
             )
         ));
 
@@ -65,7 +66,12 @@ class MediumForm extends Form {
                 'empty_option' => '- Kein Mitarbeiter -',
                 'label' => 'Mitarbeiter',
                 'value_options' => $selectarray
+            ),
+            'attributes' => array(
+                'rows' => 2,
+                'class' => 'fswTextArea'
             )
+
         ));
         /*
          * 				'empty_option' => '- Kein Kanton -',
@@ -100,7 +106,11 @@ class MediumForm extends Form {
 
 
                 )
+            ),
+            'attributes' => array(
+                'class' => 'fswTextArea'
             )
+
         ));
 
         $this->add(array(
@@ -110,8 +120,8 @@ class MediumForm extends Form {
                 'label' => 'sendetitel'
             ),
             'attributes' => array(
-                'rows' => 5,
-                'cols' => 300
+                'rows' => 2,
+                'class' => 'fswTextArea'
             )
         ));
 

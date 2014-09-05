@@ -34,8 +34,20 @@ class MedienController extends BaseController {
 
     public function addAction()
     {
-        $form = new MediumForm();
+
+        $rL = $this->facade->getFSWPersonen();
+        //$personTable = $this->getPersonTable();
+        //$rL = $personTable->find(null,200);
+        $simpleList = $this->toList($rL,true);
+
+        $form = new MediumForm('medium',$simpleList);
         $form->get('submit')->setValue('Add');
+
+        $medium =  new Medium();
+
+
+
+        $form->bind($medium);
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -51,7 +63,7 @@ class MedienController extends BaseController {
                 return $this->redirect()->toRoute('medien');
             }
         }
-        return array('form' => $form);
+        return $this->getAjaxView(array('form' => $form));
 
     }
 

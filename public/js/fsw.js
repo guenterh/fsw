@@ -26,6 +26,7 @@ var FSWAdmin = {
 
 
 	loadInContent: function(url, handler) {
+        //alert(handler);
 		$('#content').load(url, handler);
 		this.Sidebar.updateList();
 	},
@@ -59,10 +60,18 @@ var FSWAdmin = {
 
 
 	Editor: {
+
+
+        testButton : function () {
+
+            //alert ("in test button angekommen");
+        },
+
 		init: function(contentLoadedHandler) {
 			this.initForm(contentLoadedHandler);
 			this.initTabs();
-			this.initButtons(contentLoadedHandler);
+			//this.initButtons(this.testButton);
+            this.initButtons(contentLoadedHandler);
             this.initExtendedAttributes();
 
 		},
@@ -75,7 +84,7 @@ var FSWAdmin = {
 					if( handler ) {
 						handler();
 					}
-					LibAdmin.Sidebar.updateList();
+					FSWAdmin.Sidebar.updateList();
 				}
 			});
 		},
@@ -144,9 +153,11 @@ var FSWAdmin = {
         },
 
 		initButtons: function(handler) {
+
 			$('a.ajaxButton').click(function(e){
+
 				e.preventDefault();
-				LibAdmin.loadInContent($(this).attr('href'), handler);
+				FSWAdmin.loadInContent($(this).attr('href'), handler);
 			});
 		}
 	},
