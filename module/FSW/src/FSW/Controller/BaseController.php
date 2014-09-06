@@ -172,6 +172,29 @@ abstract class BaseController extends AbstractActionController implements Facade
         return $this->url()->fromRoute($route, $params);
     }
 
+    protected function getEntityName () {
+        return 'defaultEntityName';
+    }
+
+
+    protected function getEntityNames () {
+        return 'defaultEntityNames';
+    }
+
+
+    public function closeContentAction () {
+
+        return $this->getAjaxView(array(
+
+            'entityName' => $this->getEntityName(),
+            'entityNamePlural' => $this->getEntityNames(),
+
+            'route' => $this->getEvent()->getRouteMatch()->getMatchedRouteName(),
+            'listItems' => null),'fsw/global/home-crud');
+
+    }
+
+
 
 
 }

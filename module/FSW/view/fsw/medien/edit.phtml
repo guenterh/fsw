@@ -27,6 +27,10 @@ $this->formLabelTwb()->setTranslatorTextDomain('Libadmin');
 $this->formLabel()->setTranslatorTextDomain('Libadmin');
 $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
+//$test = $this->url('medien',array('action' => 'edit', 'id' => $form->get('id')->getValue()), array( 'query' =>  ['jdjdj' => 'jdjdj', 'bla' => 'kdkdk']));
+
+$form->setAttribute('action',$this->url('medien',array('action' => 'edit', 'id' => $form->get('id')->getValue())));
+
 ?>
 
 
@@ -35,7 +39,13 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
     <div class="topButtons">
         <input type="submit" value="<?php echo  $this->escapeHtml($saveButtonLabel) ?>"
                class="submitButton btn btn-primary btn-medium" id="submitbutton" name="submit">
-        <a href="<?php echo  $this->url('medien', array('action' => 'index')); ?>"
+
+        <a href="<?php echo  $this->url('medien', array('action' => 'delete','id'=> $form->get('id')->getValue())); ?>"
+           class="ajaxButton closeButton btn btn-medium" id="closebutton">
+            "Satz loeschen"
+
+
+        <a href="<?php echo  $this->url('medien', array('action' => 'closeContent')); ?>"
            class="ajaxButton closeButton btn btn-medium" id="closebutton">
             "Hier schliessen"
         </a>

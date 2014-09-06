@@ -123,10 +123,17 @@ class MedienController extends BaseController {
 
         $form  = new MediumForm('medium', $simpleList);
         $form->bind($medium);
+
+        //$myurl = $this->url()->fromRoute('medien',array('action' => 'edit', 'id' => 10), array( 'query' =>  ['jdjdj' => 'jdjdj', 'bla' => 'kdkdk']));
         $form->get('submit')->setAttribute('value', 'Edit');
 
         $request = $this->getRequest();
+
         if ($request->isPost()) {
+
+            $t = $request->getPost();
+
+
             $form->setInputFilter($medium->getInputFilter());
             $form->setData($request->getPost());
 
@@ -134,7 +141,7 @@ class MedienController extends BaseController {
                 $this->getMediumTable()->saveMedium($medium);
 
                 // Redirect to list of albums
-                return $this->redirect()->toRoute('medien');
+                //return $this->redirect()->toRoute('medien');
             } else {
                 $test =  $form->getMessages();
                 $eins = "";
@@ -169,7 +176,7 @@ class MedienController extends BaseController {
             $del = $request->getPost('del', 'No');
 
             if ($del == 'Yes') {
-                $id = (int) $request->getPost('id');
+                $id = (int) $id;
                 $this->getMediumTable()->deleteMedium($id);
             }
 

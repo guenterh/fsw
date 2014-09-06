@@ -56,7 +56,7 @@ class MediumTable extends BaseTable
             $this->tableGateway->insert($data);
         } else {
             if ($this->getMedium($id)) {
-                $this->tableGateway->update($data, array('medienid' => $id));
+                $this->tableGateway->update($data, array('id' => $id));
             } else {
                 throw new \Exception('Form id does not exist');
             }
