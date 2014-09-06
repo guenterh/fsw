@@ -191,9 +191,6 @@ return array(
             'Navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'VuFind\Http' => 'FSW\Services\Factory::getHttp',
 
-            'FSW\Model\MediumTable' =>  'FSW\Model\Factories\MediumTableFactory',
-            //todo bessere namensgebung
-            'FSW\Model\MedienTable' =>  'FSW\Model\Factories\MediumTableFactory',
 
             'FSW\Table\PersonTable' => 'FSW\Services\Factory::getPersonFacade',
             'PersonTableGateway' => 'FSW\Services\Factory::getPersonTableGateway',
@@ -201,9 +198,6 @@ return array(
             'PersonZoraAuthorTableGateway' => 'FSW\Services\Factory::getPersonZoraAuthorTableGateway',
 
             'MediumTableGateway' => 'FSW\Services\Factory::getMedienTableGateway',
-
-
-
 
             'KolloquiumTableGateway' => 'FSW\Services\Factory::getKolloquienTableGateway',
             'RelationHSPersonFSWPersonTableGateway' => 'FSW\Services\Factory::getRelationHSFSWPersonTableGateway',

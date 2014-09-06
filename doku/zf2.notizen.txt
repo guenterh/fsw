@@ -1,0 +1,22 @@
+
+I. Verwenden von URL Plugins
+a) als Controller Plugin
+$myurl = $this->url()->fromRoute('medien',array('action' => 'edit', 'id' => 10), array( 'query' =>  ['jdjdj' => 'jdjdj', 'bla' => 'kdkdk']));
+
+b) als View Helper
+$this->url()->fromRoute('medien',array('action' => 'edit', 'id' => 10), array( 'query' =>  ['jdjdj' => 'jdjdj', 'bla' => 'kdkdk']));
+
+
+
+
+Verwenden von redirect (mit Generierung von Parametern
+$this->redirect()->toRoute("index/article", array("article_id" => $articleId), array("query" => array("param" => "value"))); - hope this helps! :) –
+
+
+II. Wie komme ich an daten heran
+$request->getPost()
+gibt ein Objekt vom Typ Traversable zurück ==>> instanceof Traversable
+
+Dann kann ich ein Zend-Utility nutzen:
+
+array =  ArrayUtils::iteratorToArray(instanceof Traversable);

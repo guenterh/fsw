@@ -1,0 +1,6 @@
+[Sat Sep 06 18:59:56.912024 2014] [:error] [pid 2386] [client 127.0.0.1:59648] PHP Fatal error:  Call to a member function count() on a non-o
+bject in /usr/local/swissbib/fsw/module/FSW/view/fsw/global/home-crud.phtml on line 11, referer: http://localhost:30000/medien/
+
+es kann zu diesem Fehler kommen
+(scheins bei Medien add)
+
