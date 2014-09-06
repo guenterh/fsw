@@ -254,9 +254,9 @@ class Factory {
     public static function getMedienFacade(ServiceManager $sm) {
 
 
-        $tableGatewayMedien = $sm->get('MediumTableGateway');
+        //$tableGatewayMedien = $sm->get('MediumTableGateway');
 
-        $facade = new MedienFacade($tableGatewayMedien);
+        $facade = new MedienFacade();
         return $facade;
 
 

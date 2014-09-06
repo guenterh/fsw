@@ -10,30 +10,27 @@ namespace FSW\Services\Facade;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Select;
+use FSW\Model\Medium;
 
 
 
 
 class MedienFacade extends BaseFacade {
 
-    /**
-     * Constructor
-     *
-     * @param	 TableGateway	$tableGateway
-     */
 
-    protected $tableGatewayPersExtended;
-    //protected $tableGatewayZoraAuthor;
 
     protected $searchFields = array(
         'gespraechstitel',
         'sendetitel',
     );
 
-    public function __construct(TableGateway $tableMedienGateway)
+    /**
+     * Constructor
+     *
+     */
+    public function __construct()
     {
-        $this->tableGateway = $tableMedienGateway;
-
+        //in the past we used a specialized TableGateway
     }
 
 
@@ -88,29 +85,31 @@ class MedienFacade extends BaseFacade {
 
     public function saveMedium(Medium $medium)
     {
+
         $data = array(
-            'mit_id' => $medium->mit_id,
-            'sendetitel'  => $medium->sendetitel,
-            'datum'  => $medium->datum,
-            'gespraechstitel'  => $medium->gespraechstitel,
-            'icon'  => $medium->icon,
-            'link'  => $medium->link,
-            'medientyp'  => $medium->medientyp,
+            'mit_id_per_extended' => $medium->getMit_id_per_extended(),
+
+            'sendetitel'  => $medium->getSendetitel(),
+            'datum'  => $medium->getDatum(),
+            'gespraechstitel'  => $medium->getGespraechstitel(),
+            'icon'  => $medium->getIcon(),
+            'link'  => $medium->getLink(),
+            'medientyp'  => $medium->getMedientyp()
         );
 
-        $id = (int)$medium->medienid;
+        $id = (int)$medium->getId();
         if ($id == 0) {
-            //$this->tableGateway->insert($data);
             $this->histSemDBService->getMedienGateway()->insert($data);
         } else {
             if ($this->getMedium($id)) {
-                //$this->tableGateway->update($data, array('id' => $id));
                 $this->histSemDBService->getMedienGateway()->update($data, array('id' => $id));
             } else {
                 throw new \Exception('Form id does not exist');
             }
         }
     }
+
+
 
     public function insertMedienFSW () {
 
@@ -174,7 +173,7 @@ class MedienFacade extends BaseFacade {
         $likeCondition = $this->getSearchFieldsLikeCondition($query);
 
 
-        $targetGateway = $medienTableGateway = $this->histSemDBService->getMedienGateway();
+        $targetGateway = $this->histSemDBService->getMedienGateway();
 
         $select->from($targetGateway->getTable())
             ->order("gespraechstitel")

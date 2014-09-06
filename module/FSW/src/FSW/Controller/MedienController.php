@@ -19,14 +19,11 @@ use FSW\Model\Medium;
 class MedienController extends BaseController {
 
 
-    protected $mediumTable;
-    protected $personTable;
 
     public function indexAction()
     {
 
         return new ViewModel(array(
-            //'medien' => $this->getMediumTable()->fetchAll(),
             'medien' => $this->facade->fetchAll()
         ));
 
@@ -39,8 +36,7 @@ class MedienController extends BaseController {
         $request = $this->getRequest();
         if ($request->isPost()) {
             $rL = $this->facade->getFSWPersonen();
-            //$personTable = $this->getPersonTable();
-            //$rL = $personTable->find(null,200);
+
             $simpleList = $this->toList($rL,true);
 
             $form = new MediumForm('medium',$simpleList);
@@ -52,7 +48,7 @@ class MedienController extends BaseController {
 
             if ($form->isValid()) {
                 $medium->exchangeArray($form->getData());
-                $this->getMediumTable()->saveMedium($medium);
+                $this->facade->saveMedium($medium);
 
                 // Redirect to list of albums
                 //return $this->forward()->toRoute('medien',array("action" => 'edit','id' => '52'));
@@ -63,8 +59,8 @@ class MedienController extends BaseController {
         } else {
 
             $rL = $this->facade->getFSWPersonen();
-            //$personTable = $this->getPersonTable();
-            //$rL = $personTable->find(null,200);
+
+
             $simpleList = $this->toList($rL,true);
 
             $form = new MediumForm('medium',$simpleList);
@@ -116,8 +112,6 @@ class MedienController extends BaseController {
         }
 
         $rL = $this->facade->getFSWPersonen();
-        //$personTable = $this->getPersonTable();
-        //$rL = $personTable->find(null,200);
         $simpleList = $this->toList($rL,true);
 
 
@@ -138,7 +132,7 @@ class MedienController extends BaseController {
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $this->getMediumTable()->saveMedium($medium);
+                $this->facade->saveMedium($medium);
 
                 // Redirect to list of albums
                 //return $this->redirect()->toRoute('medien');
@@ -148,11 +142,7 @@ class MedienController extends BaseController {
             }
         }
 
-
         //$form->setAttribute('action', $this->makeUrl('institution', 'edit', $idInstitution));
-
-
-
 
         return $this->getAjaxView(array(
             'form' => $form,
@@ -177,7 +167,7 @@ class MedienController extends BaseController {
 
             if ($del == 'Yes') {
                 $id = (int) $id;
-                $this->getMediumTable()->deleteMedium($id);
+                $this->facade->deleteMedium($id);
             }
 
             // Redirect to list of albums
@@ -186,32 +176,12 @@ class MedienController extends BaseController {
 
         return array(
             'id'    => $id,
-            'medium' => $this->getMediumTable()->getMedium($id)
+            'medium' => $this->facade->getMedium($id)
+
         );
     }
 
 
-
-
-    public function getMediumTable()
-    {
-        if (!$this->mediumTable) {
-            $sm = $this->getServiceLocator();
-            $this->mediumTable = $sm->get('FSW\Model\MediumTable');
-        }
-        return $this->mediumTable;
-    }
-
-    public function getPersonTable() {
-
-        if (!$this->personTable) {
-            $sm = $this->getServiceLocator();
-            $this->personTable = $sm->get('FSW\Table\PersonTable');
-        }
-        return $this->personTable;
-
-
-    }
 
     public function insertMedienFSWAction () {
 
@@ -272,8 +242,6 @@ class MedienController extends BaseController {
         }
 
         $rL = $this->facade->getFSWPersonen();
-        //$personTable = $this->getPersonTable();
-        //$rL = $personTable->find(null,200);
         $simpleList = $this->toList($rL,true);
 
 
