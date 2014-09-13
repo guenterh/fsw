@@ -1,0 +1,33 @@
+<?php
+
+
+$personCore = $form->get('PersonCore');
+$zoraAuthors = $personCore->get('zoraAuthors');
+
+?>
+
+<fieldset>
+    <legend>zora Namen</legend>
+    <?php foreach ($zoraAuthors as $zoraAuthor) :?>
+        <div class="row-fluid">
+            <div class="hidden idZoraAuthor"><?php echo  $zoraAuthor->get('id')->getValue() ?></div>
+            <div class="span4 nameZoraAuthor" style="margin-right: 10px;">
+                <?php echo  $this->formRowTwb($zoraAuthor->get('zora_name')) ?>
+            </div>
+            <div class="span4 customizedNameZoraAuthor" style="margin-right: 10px;">
+                <?php echo  $this->formRowTwb($zoraAuthor->get('zora_name_customized')) ?>
+            </div>
+            <div class="span2" style="margin-right: 10px;">
+                <a href="#"
+                   class="ajaxButton zoraAuthorDeleteButton">delete</a>
+            </div>
+
+            <div class="span2 zoraAuthorUpdateButton">
+                <a href="#"
+                   class="ajaxButton">update</a>
+            </div>
+        </div>
+
+    <?php endforeach; ?>
+</fieldset>
+

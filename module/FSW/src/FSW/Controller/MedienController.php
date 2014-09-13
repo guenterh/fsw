@@ -23,6 +23,8 @@ class MedienController extends BaseController {
     public function indexAction()
     {
 
+        //return $this->forward()->dispatch('FSW\Controller\Personen', array('action' => 'edit','id' => 101 ));
+
         return new ViewModel(array(
             'medien' => $this->facade->fetchAll()
         ));

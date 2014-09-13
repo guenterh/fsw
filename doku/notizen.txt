@@ -87,3 +87,11 @@ WHERE p.pers_id = r.roll_pers_id
 AND r.roll_id = q.qarb_arb_autor_rollid
 AND length( q.qarb_arb_abstract ) =1500 order by p.pers_name
 LIMIT 0 , 100
+
+
+
+Debug Ajax requests
+http://confluence.jetbrains.com/display/PhpStorm/Zero-configuration+Web+Application+Debugging+with+Xdebug+and+PhpStorm
+-> benutze das Phone handle
+http://stackoverflow.com/questions/17859173/phpstorm-how-i-debug-php-file-when-request-is-initiated-from-js
+http://stackoverflow.com/questions/17120513/phpstorm-debugger-not-stopping-at-breakpoints-keeps-waiting-for-xdebug-session

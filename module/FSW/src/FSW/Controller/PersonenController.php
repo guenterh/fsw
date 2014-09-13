@@ -48,6 +48,24 @@ class PersonenController extends BaseController{
     }
 
 
+    public function machwasAction() {
+
+        $testJson = array('hallo' => 'null', 'zwei' => 'eins');
+        $myJson =  json_encode($testJson);
+
+
+        $this->redirect()->toRoute('medien');
+
+        $viewModel = new ViewModel(array('jsonValues' => $myJson));
+        $viewModel->setTerminal(true);
+
+
+        return $viewModel;
+
+
+    }
+
+
     /**
      * Search matching records
      *
@@ -70,7 +88,7 @@ class PersonenController extends BaseController{
     {
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('medien', array(
+            return $this->redirect()->toRoute('personen', array(
                 'action' => 'add'
             ));
         }
@@ -113,6 +131,13 @@ class PersonenController extends BaseController{
 
         $coreFS->setAttribute('action', $this->makeUrl('personen', 'edit', $id));
 
+
+        return new ViewModel(array(
+
+            'form' => $coreFS,
+            'title' => $this->translate('Personenanzeige', 'FSW'),
+        ));
+
         return $this->getAjaxView(array(
             'form' => $coreFS,
             'title' => $this->translate('Personenanzeige', 'FSW'),
@@ -125,6 +150,34 @@ class PersonenController extends BaseController{
 
 
         $this->facade->insertIntoFSWExtended();
+
+    }
+
+
+    public function editZoraAuthorAction() {
+
+        $modus =  $this->params()->fromPost('mode');
+        $zoraAuthorId = $this->params()->fromPost('zoraAutorId');
+
+        $personId =  $this->facade->getPersonFromZoraAuthorId($zoraAuthorId);
+
+        $this->facade->deleteZoraAuthor($zoraAuthorId);
+
+        $person =  $this->facade->getPerson($personId);
+
+        $coreFS = new PersonForm('Person');
+        $coreFS->bind($person);
+
+        $coreFS->setAttribute('action', $this->makeUrl('personen', 'edit', $personId));
+
+        return $this->getAjaxView(array(
+            'form' => $coreFS,
+            'title' => $this->translate('Personenanzeige', 'FSW'),
+        ));
+
+
+
+
 
     }
 

@@ -10,6 +10,7 @@ namespace FSW\Services\Facade;
 use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
+use Zend\Db\Sql\Select;
 
 
 
@@ -59,6 +60,33 @@ class PersonFacade extends BaseFacade {
         $resultSet = $this->tableGateway->select();
         return $resultSet;
     }
+
+    public function getPersonFromZoraAuthorId($authorId) {
+
+        $select	= new Select();
+        $select->from('fsw_zora_author');
+        $select->join(array('ext' => 'fsw_personen_extended'),
+            'fsw_zora_author.fid_personen = ext.id',
+            array());
+
+        $select->where(array('fsw_zora_author.id' => $authorId));
+
+        $results = $this->histSemDBService->getZoraAuthorGateway()->selectWith($select);
+
+
+        return  $results->current()->getPers_id();
+
+    }
+
+    public function deleteZoraAuthor($authorId) {
+
+
+        $results = $this->histSemDBService->getZoraAuthorGateway()->delete(array('id' => $authorId));
+
+    }
+
+
+
 
 
     public function getPerson($persID) {

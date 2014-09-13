@@ -1,100 +1,99 @@
-var FSWAdmin = {
-
-	onLoaded: function() {
-
-		if( this.hasUrlPart('/medien') || this.hasUrlPart('/personen') || this.hasUrlPart('/kolloquien') ||
-            this.hasUrlPart('/forschung') || this.hasUrlPart('/personenaktivitaet') ) {
-
-			this.Medien.init();
-		}
-/*
-		if( this.hasUrlPart('/group') ) {
-			this.Group.init();
-		}
-		if( this.hasUrlPart('/view') ) {
-			this.View.init();
-		}
-*/
-	},
-
-	hasUrlPart: function(part) {
-		return document.location.pathname.indexOf(part) !== -1;
-	},
+var FSWAdmin;
 
 
+FSWAdmin = {
+
+    onLoaded: function () {
+
+        if (this.hasUrlPart('/medien') || this.hasUrlPart('/personen') || this.hasUrlPart('/kolloquien') ||
+            this.hasUrlPart('/forschung') || this.hasUrlPart('/personenaktivitaet')) {
+
+            this.Medien.init();
+        }
+        /*
+         if( this.hasUrlPart('/group') ) {
+         this.Group.init();
+         }
+         if( this.hasUrlPart('/view') ) {
+         this.View.init();
+         }
+         */
+    },
+
+    hasUrlPart: function (part) {
+        return document.location.pathname.indexOf(part) !== -1;
+    },
 
 
-
-	loadInContent: function(url, handler) {
+    loadInContent: function (url, handler) {
         //alert(handler);
-		$('#content').load(url, handler);
-		this.Sidebar.updateList();
-	},
+        $('#content').load(url, handler);
+        this.Sidebar.updateList();
+    },
 
 
-	Medien: {
-		init: function() {
-			this.initSidebar();
-			this.initEditor();
-		},
+    Medien: {
+        init: function () {
+            this.initSidebar();
+            this.initEditor();
+        },
 
-		initSidebar: function() {
-			FSWAdmin.Sidebar.init($.proxy(this.onSearchListUpdated, this), $.proxy(this.onContentUpdated, this));
-		},
+        initSidebar: function () {
+            FSWAdmin.Sidebar.init($.proxy(this.onSearchListUpdated, this), $.proxy(this.onContentUpdated, this));
+        },
 
-		initEditor: function() {
+        initEditor: function () {
             FSWAdmin.Editor.init($.proxy(this.onContentUpdated, this));
-		},
+        },
 
-		onContentUpdated: function() {
-			this.initEditor();
-		},
+        onContentUpdated: function () {
+            this.initEditor();
+        },
 
-		onSearchListUpdated: function() {
+        onSearchListUpdated: function () {
 
-		}
+        }
 
-	},
-
-
+    },
 
 
-	Editor: {
+    Editor: {
 
 
-        testButton : function () {
+        testButton: function () {
 
             //alert ("in test button angekommen");
         },
 
-		init: function(contentLoadedHandler) {
-			this.initForm(contentLoadedHandler);
-			this.initTabs();
-			//this.initButtons(this.testButton);
+        init: function (contentLoadedHandler) {
+            this.initForm(contentLoadedHandler);
+            this.initTabs();
+            //this.initButtons(this.testButton);
             this.initButtons(contentLoadedHandler);
             this.initExtendedAttributes();
+            this.initAdditionalZoraAuthor();
 
-		},
+        },
 
-		initForm: function(handler) {
-				// Enable ajax form
-			$('#content > form').ajaxForm({
-				target: '#content',
-				success: function() {
-					if( handler ) {
-						handler();
-					}
-					FSWAdmin.Sidebar.updateList();
-				}
-			});
-		},
+        initForm: function (handler) {
+            // Enable ajax form
+            $('#content > form').ajaxForm({
+                target: '#content',
+                success: function () {
+                    if (handler) {
+                        handler();
+                    }
+                    FSWAdmin.Sidebar.updateList();
+                }
+            });
+        },
 
-		initTabs: function() {
-			$('.formTabs a').click(function(e) {
-				e.preventDefault();
-				$(this).tab('show');
-			});
-		},
+        initTabs: function () {
+            $('.formTabs a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+        },
 
 
         heredoc: function (func) {
@@ -112,9 +111,9 @@ var FSWAdmin = {
         },
 
         initExtendedAttributes: function () {
-            $('#addextendedAttributes').click(function(e) {
+            $('#addextendedAttributes').click(function (e) {
 
-                var myTemplate = function() {
+                var myTemplate = function () {
                     /*
                      <fieldset>
                      <legend>extended attributes for FSW</legend>
@@ -149,8 +148,99 @@ var FSWAdmin = {
 
             });
 
+            $('.zoraAuthorDeleteButton').click(function (e) {
+
+                //das will nicht klappen...
+                //$(e.target).parent().prevAll().find('.hidden.idZoraAuthor').size());
+                var idZoraAuthorNumber =  $(e.target).parent().prevAll().filter(function (e) {
+
+                    //console.log(this.className);
+                    return this.className == 'hidden idZoraAuthor';
+
+                //}).val();
+                }).get(0).innerHTML;
+                console.log(idZoraAuthorNumber);
+
+
+                $.post('/personen/editZoraAuthor',{
+
+                        mode : 'delAuthor',
+                        zoraAutorId : idZoraAuthorNumber
+
+                    },function (response,type,xhr) {
+
+                        $('#zoraAuthors').empty().append(response);
+
+                        //$('<div>dies ist nur ein test</div>').appendTo('#zoraAuthors');
+
+
+                        //alert(response);
+
+                        //window.location = 'http://localhost:30000/medien';
+                        //document.write(response);
+
+                    }
+                );
+
+                /*
+
+                $.getJSON('/personen/machwas',{},function (data,status,xhr) {
+                       $.each(data, function (key, value) {
+                            console.log(key);
+                        });
+                    }
+               );
+
+               */
+            });
+
 
         },
+
+
+        initAdditionalZoraAuthor: function () {
+            $('#addAdditionalZoraAuthor').click(function(e) {
+
+                var myTemplate = function() {
+                    /*
+                     <fieldset>
+                     <legend>add additional Zora Author</legend>
+                     <div class="row-fluid">
+                     <div class="span6">
+                     <div id="cgroup-PersonCore[personExtended][0][pers_id]" class="control-group">
+                     <label id="label-PersonCore[personExtended][0][pers_id]" class="control-label" for="PersonCore[personExtended][0][pers_id]">pers_id</label>
+                     <div id="controls-PersonCore[personExtended][0][pers_id]" class="controls">
+                     <textarea id="PersonCore[personExtended][0][pers_id]" rows="1" name="PersonCore[personExtended][0][pers_id]"></textarea>
+                     </div>
+                     </div>
+                     </div>
+
+                     <div class="span6">
+                     <div id="cgroup-PersonCore[personExtended][0][profilURL]" class="control-group">
+                     <label id="label-PersonCore[personExtended][0][profilURL]" class="control-label" for="PersonCore[personExtended][0][profilURL]">profilURL</label>
+                     <div id="controls-PersonCore[personExtended][0][profilURL]" class="controls">
+                     <textarea id="PersonCore[personExtended][0][profilURL]" rows="1" name="PersonCore[personExtended][0][profilURL]"></textarea>
+                     </div>
+                     </div>
+                     </div>
+                     </div>
+
+                     </fieldset>
+                     */
+                };
+
+
+                //$("#personExtended").empty().append(FSWAdmin.Editor.heredoc(myTemplate));
+                //$('#PersonCore\\[personExtended\\]\\[0\\]\\[pers_id\\]').val($('#PersonCore\\[pers_id\\]').val());
+                $("#zoraAuthors").append(FSWAdmin.Editor.heredoc(myTemplate));
+                //$('#PersonCore\\[personExtended\\]\\[0\\]\\[pers_id\\]').val($('#PersonCore\\[pers_id\\]').val());
+
+
+            });
+
+
+        },
+
 
 		initButtons: function(handler) {
 
@@ -225,7 +315,46 @@ var FSWAdmin = {
 				}, 500);
 			});
 		}
-	}
+	},
+
+    Tools:  {
+      log : function (msg) {
+
+          /*
+          var log = document.getElementById('debugLog')
+
+          if (!log) {
+              log = document.createElement("div");
+              log.id = 'debugLog';
+              log.innerHTML = '<h5>Debug Log</h5>';
+
+              //document.body.appendChild(log);
+              //add to something
+          }
+
+          var pre = document.createElement("pre");
+          var text = document.createTextNode(msg);
+          pre.appendChild(text);
+
+          log.appendChild(pre);
+
+          */
+
+          //JQuery
+
+          var log = $('#debugLog');
+          //var log = $('debugLog'); //so wir es nicht gefunden, nur zum test
+          if (log.length == 0) {
+
+              log = $('<div id="debugLog"<h5>Debug Log</h5></div>');
+              log.appendTo(document.body);
+          }
+          log.append($("<pre/>").text(msg));
+
+
+      }
+    }
+
 
 
 
