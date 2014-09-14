@@ -23,6 +23,18 @@ class PersonExtendedFieldset extends Fieldset implements InputFilterProviderInte
             ->setObject(new PersonExtended());
 
         $this->add(array(
+            'name' => 'id',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'id'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+
+        $this->add(array(
             'name' => 'pers_id',
             'type' => 'textarea',
             'options' => array(

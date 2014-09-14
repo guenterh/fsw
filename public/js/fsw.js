@@ -202,39 +202,66 @@ FSWAdmin = {
         initAdditionalZoraAuthor: function () {
             $('#addAdditionalZoraAuthor').click(function(e) {
 
-                var myTemplate = function() {
+
+
+                console.log("in add Zora Author");
+
+
+
+                var zoraAuthorTemplate = function() {
                     /*
-                     <fieldset>
-                     <legend>add additional Zora Author</legend>
-                     <div class="row-fluid">
                      <div class="span6">
-                     <div id="cgroup-PersonCore[personExtended][0][pers_id]" class="control-group">
-                     <label id="label-PersonCore[personExtended][0][pers_id]" class="control-label" for="PersonCore[personExtended][0][pers_id]">pers_id</label>
-                     <div id="controls-PersonCore[personExtended][0][pers_id]" class="controls">
-                     <textarea id="PersonCore[personExtended][0][pers_id]" rows="1" name="PersonCore[personExtended][0][pers_id]"></textarea>
+                     <div id="addGroupZoraAuthorDynamic" class="control-group">
+                     <label id="addLabelZoraAuthorDynamic" class="control-label" for="addTextZoraAuthorNameDynamic">zora_name</label>
+                     <div id="addDivZoraAuthorNameDynamic" class="controls">
+                     <textarea id="addTextareaZoraAuthorNameDynamic" rows="1" name="addTextareaNameZoraAuthorNameDynamic"></textarea>
                      </div>
                      </div>
                      </div>
 
                      <div class="span6">
-                     <div id="cgroup-PersonCore[personExtended][0][profilURL]" class="control-group">
-                     <label id="label-PersonCore[personExtended][0][profilURL]" class="control-label" for="PersonCore[personExtended][0][profilURL]">profilURL</label>
-                     <div id="controls-PersonCore[personExtended][0][profilURL]" class="controls">
-                     <textarea id="PersonCore[personExtended][0][profilURL]" rows="1" name="PersonCore[personExtended][0][profilURL]"></textarea>
+                     <div id="addGroupZoraAuthorCustomDynamic" class="control-group">
+                     <label id="addLabelZoraAuthorCustomDynamic" class="control-label" for="addTextZoraAuthorCustomNameDynamic">zora_name_customized</label>
+                     <div id="addDivZoraAuthorNameDynamic" class="controls">
+                     <textarea id="addTextareaZoraAuthorNameDynamic" rows="1" name="addTextareaNameZoraAuthorNameDynamic"></textarea>
                      </div>
                      </div>
                      </div>
-                     </div>
-
-                     </fieldset>
                      */
                 };
 
 
                 //$("#personExtended").empty().append(FSWAdmin.Editor.heredoc(myTemplate));
                 //$('#PersonCore\\[personExtended\\]\\[0\\]\\[pers_id\\]').val($('#PersonCore\\[pers_id\\]').val());
-                $("#zoraAuthors").append(FSWAdmin.Editor.heredoc(myTemplate));
+                //$("#addZoraAuthorRowSpace").append(FSWAdmin.Editor.heredoc(zoraAuthorTemplate()));
+                $("#addZoraAuthorRowSpace").empty().append($(
+                    '<div class="span4">' +
+                        '<div id="addGroupZoraAuthorDynamic" class="control-group">' +
+                            '<label id="addLabelZoraAuthorDynamic" class="control-label" for="addTextZoraAuthorNameDynamic">zora_name</label>' +
+                            '<div id="addDivZoraAuthorNameDynamic" class="controls">' +
+                                '<textarea id="addTextareaZoraAuthorNameDynamic" rows="1" name="addTextareaNameZoraAuthorNameDynamic"></textarea>' +
+                            '</div>' +
+                        '</div> ' +
+                    '</div> ' +
+
+                        '<div class="span4"> ' +
+                    '<div id="addGroupZoraAuthorCustomDynamic" class="control-group"> ' +
+                        '<label id="addLabelZoraAuthorCustomDynamic" class="control-label" for="addTextZoraAuthorCustomNameDynamic">zora_name_customized</label> ' +
+                        '<div id="addDivZoraAuthorNameDynamic" class="controls"> ' +
+                            '<textarea id="addTextareaZoraAuthorNameDynamic" rows="1" name="addTextareaNameZoraAuthorNameDynamic"></textarea> ' +
+                        '</div> ' +
+                    '</div> ' +
+                    '</div>' +
+                    '<div class="span2" style="margin-right: 10px;">' +
+                    '<a href="#" ' +
+                    'class="ajaxButton addSendZoraAuthor">send</a> ' +
+                    '</div>'
+
+
+                ));
                 //$('#PersonCore\\[personExtended\\]\\[0\\]\\[pers_id\\]').val($('#PersonCore\\[pers_id\\]').val());
+
+
 
 
             });
