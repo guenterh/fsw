@@ -6,8 +6,21 @@ $zoraAuthors = $personCore->get('zoraAuthors');
 
 ?>
 
+
+
 <fieldset>
-    <legend>zora Namen</legend>
+
+    <legend>Füge eine neue Beziehung zwischen einer FSW Person und Zoradokumenten hinzu</legend>
+    <input
+        class="ajaxButton closeButton btn btn-medium" id="addAdditionalZoraAuthor" value="add" />
+    <p>&nbsp;</p>
+    <div class="row-fluid" id="addZoraAuthorRowSpace">
+    </div>
+</fieldset>
+
+
+<fieldset>
+    <legend>bestehende Beziehungen</legend>
     <?php foreach ($zoraAuthors as $zoraAuthor) :?>
         <div class="row-fluid">
             <div class="hidden idZoraAuthor"><?php echo  $zoraAuthor->get('id')->getValue() ?></div>
@@ -30,4 +43,6 @@ $zoraAuthors = $personCore->get('zoraAuthors');
 
     <?php endforeach; ?>
 </fieldset>
+
+
 

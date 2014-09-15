@@ -58,7 +58,7 @@ FSWAdmin = {
 
 
     Editor: {
-        
+
 
 
         testButton: function () {
@@ -196,8 +196,45 @@ FSWAdmin = {
             });
 
 
+
+
         },
 
+        initAdditionalZoraAuthorSend: function () {
+
+            //console.log(window.persExtendedIdFSW);
+            //console.log(window.persIdHS);
+
+            $('.addSendZoraAuthor').click(function (e) {
+
+
+                /*
+                alert ('name: ' + $('#addTextareaZoraAuthorNameDynamic').val() + '\n' +
+                    'customized: ' + $('#addTextareaZoraAuthorCustomNameDynamic').val() + '\n' +
+                    'idExtended: '   + window.persExtendedIdFSW + '\n' +
+                    'idperson: ' + window.persIdHS
+                );
+                */
+
+                $.post('/personen/editZoraAuthor',{
+
+                        'mode'                      :   'addAuthor',
+                        'persExtendedIdFSW'         :   window.persExtendedIdFSW,
+                        'persIdHS'                  :   window.persIdHS,
+                        'zoraAuthorName'            :   $('#addTextareaZoraAuthorNameDynamic').val(),
+                        'zoraAuthorNameCustomized'  :    $('#addTextareaZoraAuthorCustomNameDynamic').val()
+
+                    },function (response,type,xhr) {
+
+
+                        $('#zoraAuthors').empty().append(response);
+
+                    }
+                );
+
+            });
+
+        },
 
         initAdditionalZoraAuthor: function () {
             $('#addAdditionalZoraAuthor').click(function(e) {
@@ -247,8 +284,8 @@ FSWAdmin = {
                         '<div class="span4"> ' +
                     '<div id="addGroupZoraAuthorCustomDynamic" class="control-group"> ' +
                         '<label id="addLabelZoraAuthorCustomDynamic" class="control-label" for="addTextZoraAuthorCustomNameDynamic">zora_name_customized</label> ' +
-                        '<div id="addDivZoraAuthorNameDynamic" class="controls"> ' +
-                            '<textarea id="addTextareaZoraAuthorNameDynamic" rows="1" name="addTextareaNameZoraAuthorNameDynamic"></textarea> ' +
+                        '<div id="addDivZoraAuthorCustomNameDynamic" class="controls"> ' +
+                            '<textarea id="addTextareaZoraAuthorCustomNameDynamic" rows="1" name="addTextareaNameZoraAuthorNameDynamic"></textarea> ' +
                         '</div> ' +
                     '</div> ' +
                     '</div>' +
@@ -260,6 +297,8 @@ FSWAdmin = {
 
                 ));
                 //$('#PersonCore\\[personExtended\\]\\[0\\]\\[pers_id\\]').val($('#PersonCore\\[pers_id\\]').val());
+
+                FSWAdmin.Editor.initAdditionalZoraAuthorSend();
 
 
 

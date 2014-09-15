@@ -38,6 +38,7 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
 
 
+
 <?php echo  $this->formTwb()->openTag($form, $formType) ?>
     <div class="topButtons">
         <input type="submit" value="<?php echo  $this->escapeHtml($saveButtonLabel) ?>"
@@ -75,7 +76,6 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
 
         </ul>
-        <div class="hidden" id="persIdHS"><?php echo  $personCore->get('pers_id')->getValue(); ?></div>
 
         <div class="tab-content">
             <div class="tab-pane active" id="personCore">
@@ -180,7 +180,16 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
                         <?php foreach ($personExtended as $singleExtended) :?>
 
                             <?php $test = $singleExtended->get('id')->getValue(); ?>
-                            <div class="hidden" id="persExtendedIdFSW"><?php echo  $singleExtended->get('id')->getValue(); ?></div>
+                            <div class="hidden" id="persExtendedIdFSW"></div>
+
+                            <script type="text/javascript">
+
+                                var persExtendedIdFSW = <?php echo  $singleExtended->get('id')->getValue(); ?>;
+                                var persIdHS = <?php echo  $personCore->get('pers_id')->getValue(); ?>;
+
+                            </script>
+
+
 
                             <div class="row-fluid">
                                 <div class="span6">
@@ -208,42 +217,13 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
             <div class="tab-pane" id="zoraAuthors">
 
-
-                <fieldset>
-
-                    <legend>Füge eine neue Beziehung zwischen einer FSW Person und Zoradokumenten hinzu</legend>
-                    <input
-                       class="ajaxButton closeButton btn btn-medium" id="addAdditionalZoraAuthor" value="add" />
-                    <p>&nbsp;</p>
-                    <div class="row-fluid" id="addZoraAuthorRowSpace">
-                    </div>
-                </fieldset>
+                <?php echo $this->render(
+                    'fsw/personen/edit-zora-author.phtml',
+                    array(
+                        'form' => $form
+                    )); ?>
 
 
-                <fieldset>
-                    <legend>bestehende Beziehungen</legend>
-                    <?php foreach ($zoraAuthors as $zoraAuthor) :?>
-                    <div class="row-fluid">
-                        <div class="hidden idZoraAuthor"><?php echo  $zoraAuthor->get('id')->getValue() ?></div>
-                        <div class="span4 nameZoraAuthor" style="margin-right: 10px;">
-                            <?php echo  $this->formRowTwb($zoraAuthor->get('zora_name')) ?>
-                        </div>
-                        <div class="span4 customizedNameZoraAuthor" style="margin-right: 10px;">
-                            <?php echo  $this->formRowTwb($zoraAuthor->get('zora_name_customized')) ?>
-                        </div>
-                        <div class="span2" style="margin-right: 10px;">
-                            <a href="#"
-                               class="ajaxButton zoraAuthorDeleteButton">delete</a>
-                        </div>
-
-                        <div class="span2 zoraAuthorUpdateButton">
-                            <a href="#"
-                               class="ajaxButton">update</a>
-                        </div>
-                    </div>
-
-                    <?php endforeach; ?>
-                </fieldset>
 
             </div>
 

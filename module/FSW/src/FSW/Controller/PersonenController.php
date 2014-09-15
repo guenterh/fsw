@@ -138,10 +138,10 @@ class PersonenController extends BaseController{
             'title' => $this->translate('Personenanzeige', 'FSW'),
         ));
 
-        return $this->getAjaxView(array(
-            'form' => $coreFS,
-            'title' => $this->translate('Personenanzeige', 'FSW'),
-        ));
+        //return $this->getAjaxView(array(
+        //    'form' => $coreFS,
+        //    'title' => $this->translate('Personenanzeige', 'FSW'),
+        //));
 
 
     }
@@ -157,11 +157,39 @@ class PersonenController extends BaseController{
     public function editZoraAuthorAction() {
 
         $modus =  $this->params()->fromPost('mode');
-        $zoraAuthorId = $this->params()->fromPost('zoraAutorId');
+        $personId = null;
 
-        $personId =  $this->facade->getPersonFromZoraAuthorId($zoraAuthorId);
 
-        $this->facade->deleteZoraAuthor($zoraAuthorId);
+        switch ($modus) {
+
+            case 'addAuthor':
+                $persExtendedIdFSW =   $this->params()->fromPost('persExtendedIdFSW');
+                $personId =            $this->params()->fromPost('persIdHS');
+                $zoraAuthorName =      $this->params()->fromPost('zoraAuthorName');
+                $zoraAuthorNameCustomized =   $this->params()->fromPost('zoraAuthorNameCustomized');
+                if (isset($personId) && isset($persExtendedIdFSW)) {
+                    $this->facade->addZoraAuthor($persExtendedIdFSW,
+                                                    $personId,
+                                                    $zoraAuthorName,
+                                                    $zoraAuthorNameCustomized);
+                }
+
+                break;
+            case 'delAuthor':
+
+                $zoraAuthorId = $this->params()->fromPost('zoraAutorId');
+                if (isset($zoraAuthorId)) {
+                    $personId =  $this->facade->getPersonFromZoraAuthorId($zoraAuthorId);
+                    $this->facade->deleteZoraAuthor($zoraAuthorId);
+                }
+                break;
+
+            case 'updAuthor';
+                //still todo
+                break;
+
+        }
+
 
         $person =  $this->facade->getPerson($personId);
 
@@ -176,9 +204,8 @@ class PersonenController extends BaseController{
         ));
 
 
-
-
-
     }
+
+
 
 }

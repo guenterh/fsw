@@ -80,10 +80,28 @@ class PersonFacade extends BaseFacade {
 
     public function deleteZoraAuthor($authorId) {
 
+        //todo: pruefe ob für die Id nicht bereits Verbindungen vorhanden sind, wenn ja, Mitteilung und kein delete!
 
         $results = $this->histSemDBService->getZoraAuthorGateway()->delete(array('id' => $authorId));
-
     }
+
+
+    public function addZoraAuthor($persExtendedFSW,
+                                    $persIdHS,
+                                    $zoraName,
+                                    $zoraNameCustomized) {
+
+        //todo: pruefe ob persIdHS mitgegeben wird, ansonsten ermittle sie
+        //ist zoraname ein gültiger Name?
+        //der Name darf nicht bereits in der Datenbank vorhanden sein
+        //werfe Exception wenn Fehler vorhanden
+        $results = $this->histSemDBService->getZoraAuthorGateway()->insert(
+                                    array('fid_personen'            => $persExtendedFSW,
+                                            'pers_id'               => $persIdHS,
+                                            'zora_name'             =>  $zoraName,
+                                            'zora_name_customized'  =>  $zoraNameCustomized));
+    }
+
 
 
 
