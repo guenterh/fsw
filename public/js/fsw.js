@@ -73,6 +73,7 @@ FSWAdmin = {
             this.initButtons(contentLoadedHandler);
             this.initExtendedAttributes();
             this.initAdditionalZoraAuthor();
+            this.initEditZoraAuthorSend();
 
         },
 
@@ -196,6 +197,51 @@ FSWAdmin = {
             });
 
 
+
+
+        },
+
+
+        initEditZoraAuthorSend: function () {
+
+            $('.zoraAuthorUpdateButton > a.ajaxButton').click(function (e) {
+
+
+                var updatedProperties = {};
+                //das will nicht klappen...
+                //$(e.target).parent().prevAll().find('.hidden.idZoraAuthor').size());
+                var idZoraAuthorNumber =  $(e.target).parent().prevAll().each(function (e) {
+
+
+                    //console.log(this.className);
+                    switch (this.className) {
+                        case 'hidden idZoraAuthor':
+                            alert ('in id\n' + this.innerHTML );
+
+                            updatedProperties.id = this.innerHTML;
+                            break;
+                        case 'span4 nameZoraAuthor':
+                            alert ($('textarea',this).get(0).innerHTML );
+                            updatedProperties.authorName = this.innerHTML;
+                            break;
+                        case 'span4 customizedNameZoraAuthor':
+                            alert ($('textarea',this).get(0).innerHTML );
+                            updatedProperties.customizedName = this.innerHTML;
+                            break;
+                    }
+
+
+
+                    //}).val();
+                });
+
+                return false;
+
+                //for (p in updatedProperties) {
+                //    alert(updatedProperties[p]);
+                //}
+
+            });
 
 
         },
