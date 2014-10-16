@@ -1,0 +1,12 @@
+
+
+        /*
+
+         $.getJSON('/personen/machwas',{},function (data,status,xhr) {
+         $.each(data, function (key, value) {
+         console.log(key);
+         });
+         }
+         );
+
+         */
