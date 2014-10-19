@@ -153,7 +153,7 @@ var FSWAdmin = {
             this.initButtons(contentLoadedHandler);
             //this.initExtendedAttributes();
 
-            //CustomFunctions.initializeZoraAuthorActions();
+            CustomFunctions.initializeZoraAuthorActions();
 
             //this.initAdditionalZoraAuthor();
             //this.initEditZoraAuthorSend();

@@ -20,7 +20,7 @@ var CustomFunctions = {
 
             //}).val();
         }).get(0).innerHTML;
-        console.log(idZoraAuthorNumber);
+        //console.log(idZoraAuthorNumber);
 
 
         $.post('/personen/editZoraAuthor',{
@@ -113,7 +113,10 @@ var CustomFunctions = {
         ));
         //$('#PersonCore\\[personExtended\\]\\[0\\]\\[pers_id\\]').val($('#PersonCore\\[pers_id\\]').val());
 
-        FSWAdmin.Editor.initAdditionalZoraAuthorSend();
+        //Warum klappt das hier ohne on??
+        $('.addSendZoraAuthor').click(function (e) {
+            CustomFunctions.addSendZoraAuthor(e);
+        });
 
 
 
@@ -165,12 +168,22 @@ var CustomFunctions = {
 
     zoraAuthorUpdate: function (e) {
 
-        alert ('einmal in update');
+        //alert ('einmal in update');
         e.preventDefault();
 
         var updatedProperties = {};
+
+
         //das will nicht klappen...
         //$(e.target).parent().prevAll().find('.hidden.idZoraAuthor').size());
+
+
+        //alert($('.hidden .idZoraAuthor').get(0).innerHTML);
+
+        //alert($('.hidden .idZoraAuthor').size());
+
+
+
         var idZoraAuthorNumber =  $(e.target).parent().prevAll().each(function (e) {
 
 
@@ -182,7 +195,7 @@ var CustomFunctions = {
                     updatedProperties.id = this.innerHTML;
                     break;
                 case 'span4 nameZoraAuthor':
-                    //alert ($('textarea',this).get(0).innerHTML );
+                    alert ($('textarea',this).get(0).innerHTML );
                     updatedProperties.authorName = this.innerHTML;
                     break;
                 case 'span4 customizedNameZoraAuthor':
@@ -194,11 +207,53 @@ var CustomFunctions = {
         });
 
 
+        //var test = '#PersonCore[zoraAuthors][' + updatedProperties['id']     + '][zora_name]';
+        //alert($('PersonCore[zoraAuthors][' + updatedProperties['id']     + '][zora_name]').size());
+        //alert(test);
+        //alert($(test).val());
+
+        /*
         for (p in updatedProperties) {
-            alert(updatedProperties[p]);
+            alert(p + ":  " + updatedProperties[p]);
         }
+        */
+        /*
+
+        $.post('/personen/editZoraAuthor',{
+
+                mode : 'delAuthor',
+                zoraAutorId : idZoraAuthorNumber
+
+                'mode': 'updAuthor',
+                'persExtendedIdFSW': window.persExtendedIdFSW,
+                'persIdHS': window.persIdHS,
+                'zoraAuthorName': $('#addTextareaZoraAuthorNameDynamic').val(),
+                'zoraAuthorNameCustomized': $('#addTextareaZoraAuthorCustomNameDynamic').val()
 
 
+            },function (response,type,xhr) {
+
+                $('#zoraAuthors').empty().append(response);
+
+                $('#addAdditionalZoraAuthor').on('click', function (e) {
+                    CustomFunctions.addAdditionalZoraAuthor(e);
+
+                });
+
+                $('.addSendZoraAuthor').on('click', function (e) {
+
+                    CustomFunctions.addSendZoraAuthor(e);
+                });
+
+                $('.zoraAuthorDeleteButton').on('click', function (e) {
+                    CustomFunctions.zoraAuthorDelete(e);
+                });
+
+
+            }
+        );
+
+        */
 
     },
 
