@@ -195,7 +195,7 @@ var CustomFunctions = {
                     updatedProperties.id = this.innerHTML;
                     break;
                 case 'span4 nameZoraAuthor':
-                    alert ($('textarea',this).get(0).innerHTML );
+                    //alert ($('textarea',this).get(0).innerHTML );
                     updatedProperties.authorName = this.innerHTML;
                     break;
                 case 'span4 customizedNameZoraAuthor':
@@ -207,10 +207,10 @@ var CustomFunctions = {
         });
 
 
-        //var test = '#PersonCore[zoraAuthors][' + updatedProperties['id']     + '][zora_name]';
+        var test = '#PersonCore\\[zoraAuthors\\]\\[' + updatedProperties['id']     + '\\]\\[zora_name\\]';
         //alert($('PersonCore[zoraAuthors][' + updatedProperties['id']     + '][zora_name]').size());
         //alert(test);
-        //alert($(test).val());
+        alert($(test).val());
 
         /*
         for (p in updatedProperties) {
