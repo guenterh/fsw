@@ -132,16 +132,18 @@ class PersonenController extends BaseController{
         $coreFS->setAttribute('action', $this->makeUrl('personen', 'edit', $id));
 
 
+        /*
         return new ViewModel(array(
 
             'form' => $coreFS,
             'title' => $this->translate('Personenanzeige', 'FSW'),
         ));
+        */
 
-        //return $this->getAjaxView(array(
-        //    'form' => $coreFS,
-        //    'title' => $this->translate('Personenanzeige', 'FSW'),
-        //));
+        return $this->getAjaxView(array(
+            'form' => $coreFS,
+            'title' => $this->translate('Personenanzeige', 'FSW'),
+        ));
 
 
     }

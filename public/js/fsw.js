@@ -1,25 +1,19 @@
-var FSWAdmin;
+
+var FSWAdmin = {
 
 
-
-
-FSWAdmin = {
+    //PersonenUpdated : false,
 
     onLoaded: function () {
 
-        if (this.hasUrlPart('/medien') || this.hasUrlPart('/personen') || this.hasUrlPart('/kolloquien') ||
-            this.hasUrlPart('/forschung') || this.hasUrlPart('/personenaktivitaet')) {
+        if (this.hasUrlPart('/medien/') ||  this.hasUrlPart('/kolloquien/') ||
+            this.hasUrlPart('/forschung/') || this.hasUrlPart('/personenaktivitaet/') || this.hasUrlPart('/forschungAdmin/')) {
+            this.Allgemein.init();
+        } else if (this.hasUrlPart('/personen/')) {
 
-            this.Medien.init();
+            this.Personen.init();
+
         }
-        /*
-         if( this.hasUrlPart('/group') ) {
-         this.Group.init();
-         }
-         if( this.hasUrlPart('/view') ) {
-         this.View.init();
-         }
-         */
     },
 
     hasUrlPart: function (part) {
@@ -28,29 +22,32 @@ FSWAdmin = {
 
 
     loadInContent: function (url, handler) {
-        alert('wo bin ich denn jetzt?');
+        //alert('in FSWAdmin.loadInContent');
         $('#content').load(url, handler);
         this.Sidebar.updateList();
     },
 
 
-    Medien: {
+    Allgemein: {
         init: function () {
+            //alert ('Allgemein.init()');
             this.initSidebar();
             this.initEditor();
         },
 
         initSidebar: function () {
+            //alert (this.constructor);
+            //alert('Allgemein.initSidebar');
             FSWAdmin.Sidebar.init($.proxy(this.onSearchListUpdated, this), $.proxy(this.onContentUpdated, this));
         },
 
         initEditor: function () {
-            //alert ('jetzt Medien init Editor');
+            //alert ('Allgemein.initEditor()');
             FSWAdmin.Editor.init($.proxy(this.onContentUpdated, this));
         },
 
         onContentUpdated: function () {
-            //alert ('on content update');
+            //alert ('Allgemein.onContentUpdate');
             this.initEditor();
         },
 
@@ -60,60 +57,34 @@ FSWAdmin = {
 
     },
 
-
-    Editor: {
-
-
-
-        testButton: function () {
-
-            //alert ("in test button angekommen");
+    Personen: {
+        init: function () {
+            //alert ('Personen.init()');
+            this.initSidebar();
+            this.initEditor();
         },
 
-        init: function (contentLoadedHandler) {
-            this.initForm(contentLoadedHandler);
-            this.initTabs();
-            //this.initButtons(this.testButton);
-            this.initButtons(contentLoadedHandler);
-            this.initExtendedAttributes();
-            this.initAdditionalZoraAuthor();
-            this.initEditZoraAuthorSend();
+        initSidebar: function () {
+            //alert (this.constructor);
+            //alert('Personen.initSidebar');
+            FSWAdmin.Sidebar.init($.proxy(this.onSearchListUpdated, this), $.proxy(this.onContentUpdated, this));
+        },
+
+        initEditor: function () {
+            //alert ('Personen.initEditor()');
+            FSWAdmin.Editor.init($.proxy(this.onContentUpdated, this));
+            //this.initExtendedAttributes();
 
         },
 
-        initForm: function (handler) {
-            // Enable ajax form
-            $('#content > form').ajaxForm({
-                target: '#content',
-                success: function () {
-                    if (handler) {
-                        handler();
-                    }
-                    FSWAdmin.Sidebar.updateList();
-                }
-            });
+        onContentUpdated: function () {
+            //alert ('Personen.onContentUpdated');
+            //FSWAdmin.PersonenUpdated = true;
+            this.initEditor();
         },
 
-        initTabs: function () {
-            $('.formTabs a').click(function (e) {
-                e.preventDefault();
-                $(this).tab('show');
-            });
-        },
+        onSearchListUpdated: function () {
 
-
-        heredoc: function (func) {
-            // get function code as string
-            var hd = func.toString();
-
-            // remove { /* using a regular expression
-            hd = hd.replace(/(^.*\{\s*\/\*\s*)/g, '');
-
-            // remove */ } using a regular expression
-            hd = hd.replace(/(\s*\*\/\s*\}.*)$/g, '');
-
-            // return output
-            return hd;
         },
 
         initExtendedAttributes: function () {
@@ -154,85 +125,85 @@ FSWAdmin = {
 
             });
 
-            $('.zoraAuthorDeleteButton').click(function (e) {
-                CustomFunctions.zoraAuthorDelete(e);
-            });
+            //$('.zoraAuthorDeleteButton').click(function (e) {
+            //    CustomFunctions.zoraAuthorDelete(e);
+            //});
 
+
+        }
+
+
+    },
+
+
+
+
+    Editor: {
+
+
+        init: function (contentLoadedHandler) {
+
+
+            //hier habe ich ein Problem - wird mehrfach aufgerufen, warum???
+            //alert ('in init doppelt');
+
+            this.initForm(contentLoadedHandler);
+            this.initTabs();
+            //this.initButtons(this.testButton);
+            this.initButtons(contentLoadedHandler);
+            //this.initExtendedAttributes();
+
+            //CustomFunctions.initializeZoraAuthorActions();
+
+            //this.initAdditionalZoraAuthor();
+            //this.initEditZoraAuthorSend();
 
         },
 
-
-        initEditZoraAuthorSend: function () {
-
-            $('.zoraAuthorUpdateButton > a.ajaxButton').click(function (e) {
-
-                var updatedProperties = {};
-                //das will nicht klappen...
-                //$(e.target).parent().prevAll().find('.hidden.idZoraAuthor').size());
-                var idZoraAuthorNumber =  $(e.target).parent().prevAll().each(function (e) {
+        initForm: function (handler) {
+            // Enable ajax form
+            $('#content > form').ajaxForm({
+                target: '#content',
+                success: function () {
+                    //alert ('Editor.initForm');
+                    //wird aufgerufen wenn ich zum Beipspiel auf Speicherm bei Meden drücke.
 
 
-                    //console.log(this.className);
-                    switch (this.className) {
-                        case 'hidden idZoraAuthor':
-                            alert ('in id\n' + this.innerHTML );
-
-                            updatedProperties.id = this.innerHTML;
-                            break;
-                        case 'span4 nameZoraAuthor':
-                            alert ($('textarea',this).get(0).innerHTML );
-                            updatedProperties.authorName = this.innerHTML;
-                            break;
-                        case 'span4 customizedNameZoraAuthor':
-                            alert ($('textarea',this).get(0).innerHTML );
-                            updatedProperties.customizedName = this.innerHTML;
-                            break;
+                    if (handler) {
+                        handler();
                     }
-
-
-
-                    //}).val();
-                });
-
-                return false;
-
-                //for (p in updatedProperties) {
-                //    alert(updatedProperties[p]);
-                //}
-
+                    FSWAdmin.Sidebar.updateList();
+                }
             });
-
-
         },
 
-        initAdditionalZoraAuthorSend: function () {
-
-
-
-            //console.log(window.persExtendedIdFSW);
-            //console.log(window.persIdHS);
-
-            $('.addSendZoraAuthor').click(function (e) {
-
-
-                CustomFunctions.addSendZoraAuthor(e);
+        initTabs: function () {
+            $('.formTabs a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
             });
-
         },
 
-        initAdditionalZoraAuthor: function () {
-            //console.log('in additional zora author');
-            $('#addAdditionalZoraAuthor').click(function(e) {
 
-                CustomFunctions.addAdditionalZoraAuthor(e);
+        heredoc: function (func) {
+            // get function code as string
+            var hd = func.toString();
 
-            });
+            // remove { /* using a regular expression
+            hd = hd.replace(/(^.*\{\s*\/\*\s*)/g, '');
 
+            // remove */ } using a regular expression
+            hd = hd.replace(/(\s*\*\/\s*\}.*)$/g, '');
 
+            // return output
+            return hd;
         },
+
+
 
 
 		initButtons: function(handler) {
+
 
 			$('a.ajaxButton').click(function(e){
 
@@ -241,6 +212,11 @@ FSWAdmin = {
 			});
 		}
 	},
+
+
+
+
+
 
 	Sidebar: {
 
