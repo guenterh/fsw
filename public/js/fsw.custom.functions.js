@@ -9,15 +9,12 @@ var CustomFunctions = {
 
         e.preventDefault();
 
-
         //das will nicht klappen...
         //$(e.target).parent().prevAll().find('.hidden.idZoraAuthor').size());
 
         var idZoraAuthorNumber =  $(e.target).parent().prevAll().filter(function (e) {
-
             //console.log(this.className);
             return this.className == 'hidden idZoraAuthor';
-
             //}).val();
         }).get(0).innerHTML;
         //console.log(idZoraAuthorNumber);
@@ -31,22 +28,7 @@ var CustomFunctions = {
             },function (response,type,xhr) {
 
                 $('#zoraAuthors').empty().append(response);
-
-                $('#addAdditionalZoraAuthor').on('click', function (e) {
-                    CustomFunctions.addAdditionalZoraAuthor(e);
-
-                });
-
-                $('.addSendZoraAuthor').on('click', function (e) {
-
-                    CustomFunctions.addSendZoraAuthor(e);
-                });
-
-                $('.zoraAuthorDeleteButton').on('click', function (e) {
-
-                    CustomFunctions.zoraAuthorDelete(e);
-                });
-
+                CustomFunctions.initializeZoraAuthorActionsDynamicContent();
 
             }
         );
@@ -144,23 +126,7 @@ var CustomFunctions = {
 
 
                 $('#zoraAuthors').empty().append(response);
-
-                $('#addAdditionalZoraAuthor').on('click', function (e) {
-                    CustomFunctions.addAdditionalZoraAuthor(e);
-
-                });
-
-                $('.addSendZoraAuthor').on('click', function (e) {
-
-                    CustomFunctions.addSendZoraAuthor(e);
-                });
-
-                $('.zoraAuthorDeleteButton').on('click', function (e) {
-                    CustomFunctions.zoraAuthorDelete(e);
-                });
-
-
-
+                CustomFunctions.initializeZoraAuthorActionsDynamicContent();
 
             }
         )
@@ -179,15 +145,8 @@ var CustomFunctions = {
         //$(e.target).parent().prevAll().find('.hidden.idZoraAuthor').size());
 
 
-        //alert($('.hidden .idZoraAuthor').get(0).innerHTML);
 
-        //alert($('.hidden .idZoraAuthor').size());
-
-
-
-        var idZoraAuthorNumber =  $(e.target).parent().prevAll().each(function (e) {
-
-
+        $(e.target).parent().prevAll().each(function (e) {
             //console.log(this.className);
             switch (this.className) {
                 case 'hidden idZoraAuthor':
@@ -195,6 +154,7 @@ var CustomFunctions = {
 
                     updatedProperties.id = this.innerHTML;
                     break;
+                /*
                 case 'span4 nameZoraAuthor':
                     //alert ($('textarea',this).get(0).innerHTML );
                     updatedProperties.authorName = this.innerHTML;
@@ -203,65 +163,42 @@ var CustomFunctions = {
                     //alert ($('textarea',this).get(0).innerHTML );
                     updatedProperties.customizedName = this.innerHTML;
                     break;
+                */
             }
 
         });
 
 
-        var test = '#PersonCore\\[zoraAuthors\\]\\[' + updatedProperties['id']     + '\\]\\[zora_name\\]';
-        //alert($('PersonCore[zoraAuthors][' + updatedProperties['id']     + '][zora_name]').size());
-        //alert(test);
-        alert($(test).val());
+        var zoraAttributes = {
+            zoraName:  $('#PersonCore\\[zoraAuthors\\]\\[' + updatedProperties['id']     + '\\]\\[zora_name\\]').val(),
+            zoraNameCustomized: $('#PersonCore\\[zoraAuthors\\]\\[' + updatedProperties['id']     + '\\]\\[zora_name_customized\\]').val(),
+            idZoraAuthor: updatedProperties['id'],
+            mode: 'updAuthor'
+        };
 
-        /*
-        for (p in updatedProperties) {
-            alert(p + ":  " + updatedProperties[p]);
-        }
-        */
-        /*
-
-        $.post('/personen/editZoraAuthor',{
-
-                mode : 'delAuthor',
-                zoraAutorId : idZoraAuthorNumber
-
-                'mode': 'updAuthor',
-                'persExtendedIdFSW': window.persExtendedIdFSW,
-                'persIdHS': window.persIdHS,
-                'zoraAuthorName': $('#addTextareaZoraAuthorNameDynamic').val(),
-                'zoraAuthorNameCustomized': $('#addTextareaZoraAuthorCustomNameDynamic').val()
+        //for (p in zoraAttributes) {
+        //    alert(p + ":  " + zoraAttributes[p]);
+        //}
 
 
-            },function (response,type,xhr) {
+
+        $.post('/personen/editZoraAuthor',
+            zoraAttributes ,
+            function (response, type, xhr) {
 
                 $('#zoraAuthors').empty().append(response);
-
-                $('#addAdditionalZoraAuthor').on('click', function (e) {
-                    CustomFunctions.addAdditionalZoraAuthor(e);
-
-                });
-
-                $('.addSendZoraAuthor').on('click', function (e) {
-
-                    CustomFunctions.addSendZoraAuthor(e);
-                });
-
-                $('.zoraAuthorDeleteButton').on('click', function (e) {
-                    CustomFunctions.zoraAuthorDelete(e);
-                });
-
+                CustomFunctions.initializeZoraAuthorActionsDynamicContent();
 
             }
         );
 
-        */
+
 
     },
 
 
     initializeZoraAuthorActions: function () {
 
-        //alert('in initialze actions');
 
         $('.zoraAuthorUpdateButton').click(function (e) {
 
@@ -286,9 +223,31 @@ var CustomFunctions = {
 
 
 
+    },
+
+
+    initializeZoraAuthorActionsDynamicContent: function () {
+
+        $('#addAdditionalZoraAuthor').on('click', function (e) {
+            CustomFunctions.addAdditionalZoraAuthor(e);
+
+        });
+
+        $('.addSendZoraAuthor').on('click', function (e) {
+
+            CustomFunctions.addSendZoraAuthor(e);
+        });
+
+        $('.zoraAuthorDeleteButton').on('click', function (e) {
+            CustomFunctions.zoraAuthorDelete(e);
+        });
+
+        $('.zoraAuthorUpdateButton').on('click', function (e) {
+
+            CustomFunctions.zoraAuthorUpdate(e);
+        });
 
     }
-
 
 
 

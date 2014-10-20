@@ -1,6 +1,12 @@
 <?php
 
 
+//edit-zora-author kann auch im Kontext von z.B. edit (Personen) aufgerufen werden
+//->dann wenn die Daten einer Person komplett zum erste Mal im Editor - Bereich der Oberfläche ngezeigt werden
+if (!isset($formPrepared) || $formPrepared == false) {
+    $form->prepare();
+}
+
 $personCore = $form->get('PersonCore');
 $zoraAuthors = $personCore->get('zoraAuthors');
 
@@ -43,6 +49,14 @@ $zoraAuthors = $personCore->get('zoraAuthors');
 
     <?php endforeach; ?>
 </fieldset>
+
+<?php
+    if (!isset($formPrepared) || $formPrepared == false) {
+        echo  $this->form()->closeTag();
+    }
+
+?>
+
 
 
 

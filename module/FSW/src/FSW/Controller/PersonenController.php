@@ -187,6 +187,17 @@ class PersonenController extends BaseController{
                 break;
 
             case 'updAuthor';
+                $zoraAuthorID =    $this->params()->fromPost('idZoraAuthor');
+                $zoraAuthorName =      $this->params()->fromPost('zoraName');
+                $zoraAuthorNameCustomized =   $this->params()->fromPost('zoraNameCustomized');
+                $personId =  $this->facade->getPersonFromZoraAuthorId($zoraAuthorID);
+
+                if (isset($zoraAuthorID) &&  $zoraAuthorID) {
+                    $this->facade->updateZoraAuthor($zoraAuthorID,
+                        $zoraAuthorName,
+                        $zoraAuthorNameCustomized);
+                }
+
                 //still todo
                 break;
 

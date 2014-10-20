@@ -104,6 +104,27 @@ class PersonFacade extends BaseFacade {
 
 
 
+    public function updateZoraAuthor ($zoraAuthorId,
+                                      $zoraAuthorName,
+                                      $zoraAuthorNameCustomized) {
+
+        $daten = array('id' => $zoraAuthorId,
+            'zora_name' => $zoraAuthorName,
+            'zora_name_customized' => $zoraAuthorNameCustomized);
+
+        $results = $this->histSemDBService->getZoraAuthorGateway()->update(
+
+            array(
+            'zora_name' => $zoraAuthorName,
+            'zora_name_customized' => $zoraAuthorNameCustomized),
+            array('id' => $zoraAuthorId)
+
+        );
+        $test = "";
+
+    }
+
+
 
 
 
