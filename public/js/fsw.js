@@ -73,6 +73,7 @@ var FSWAdmin = {
         initEditor: function () {
             //alert ('Personen.initEditor()');
             FSWAdmin.Editor.init($.proxy(this.onContentUpdated, this));
+            CustomFunctions.initializeZoraAuthorActions();
             //this.initExtendedAttributes();
 
         },

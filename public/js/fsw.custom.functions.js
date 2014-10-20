@@ -43,6 +43,7 @@ var CustomFunctions = {
                 });
 
                 $('.zoraAuthorDeleteButton').on('click', function (e) {
+
                     CustomFunctions.zoraAuthorDelete(e);
                 });
 
@@ -278,6 +279,13 @@ var CustomFunctions = {
             CustomFunctions.addAdditionalZoraAuthor(e);
 
         });
+
+        $('.zoraAuthorDeleteButton').click( function (e) {
+            CustomFunctions.zoraAuthorDelete(e);
+        });
+
+
+
 
     }
 
