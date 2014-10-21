@@ -16,16 +16,18 @@ use Zend\InputFilter\InputFilterInterface;
 class Veranstaltung extends BaseModel implements InputFilterAwareInterface {
 
 
-    public $idveranstaltung;
-    public $idkolloquium;
+    public $id;
+    public $id_kolloquium;
+    public $id_person_veranstaltung;
     public $datum;
-    public $personenname;
+    public $veranstaltung_titel;
     public $beschreibung;
 
-    public $id;
+
 
     protected $inputFilter;
 
+    /*
     public function exchangeArray($data)
     {
         $this->idveranstaltung     = (isset($data['idveranstaltung'])) ? $data['idveranstaltung'] : null;
@@ -39,6 +41,7 @@ class Veranstaltung extends BaseModel implements InputFilterAwareInterface {
     {
         return get_object_vars($this);
     }
+    */
 
     // Add content to these methods:
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -60,7 +63,7 @@ class Veranstaltung extends BaseModel implements InputFilterAwareInterface {
             ));
 
             $inputFilter->add(array(
-                'name'     => 'idkolloquium',
+                'name'     => 'id_kolloquium',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'Int'),
@@ -88,24 +91,6 @@ class Veranstaltung extends BaseModel implements InputFilterAwareInterface {
             ));
             */
 
-            $inputFilter->add(array(
-                'name'     => 'personenname',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 100,
-                        ),
-                    ),
-                ),
-            ));
 
             $inputFilter->add(array(
                 'name'     => 'beschreibung',
@@ -152,4 +137,90 @@ class Veranstaltung extends BaseModel implements InputFilterAwareInterface {
     {
         // TODO: Implement getListLabel() method.
     }
+
+    /**
+     * @return mixed
+     */
+    public function getBeschreibung()
+    {
+        return $this->beschreibung;
+    }
+
+    /**
+     * @param mixed $beschreibung
+     */
+    public function setBeschreibung($beschreibung)
+    {
+        $this->beschreibung = $beschreibung;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDatum()
+    {
+        return $this->datum;
+    }
+
+    /**
+     * @param mixed $datum
+     */
+    public function setDatum($datum)
+    {
+        $this->datum = $datum;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId_kolloquium()
+    {
+        return $this->id_kolloquium;
+    }
+
+    /**
+     * @param mixed $id_kolloquium
+     */
+    public function setId_kolloquium($id_kolloquium)
+    {
+        $this->id_kolloquium = $id_kolloquium;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId_person_veranstaltung()
+    {
+        return $this->id_person_veranstaltung;
+    }
+
+    /**
+     * @param mixed $id_person_veranstaltung
+     */
+    public function setId_person_veranstaltung($id_person_veranstaltung)
+    {
+        $this->id_person_veranstaltung = $id_person_veranstaltung;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVeranstaltung_titel()
+    {
+        return $this->veranstaltung_titel;
+    }
+
+    /**
+     * @param mixed $veranstaltung_titel
+     */
+    public function setVeranstaltung_titel($veranstaltung_titel)
+    {
+        $this->veranstaltung_titel = $veranstaltung_titel;
+    }
+
+
+
+
+
+
 }
