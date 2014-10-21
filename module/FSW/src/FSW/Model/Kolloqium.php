@@ -153,7 +153,7 @@ class Kolloqium extends BaseModel implements InputFilterAwareInterface{
 
             switch ($attr) {
                 case "idKolloqium":
-                    $this->id = (string) $val;
+                    $this->id_kolloquium = (string) $val;
                     break;
                 case "titelKolloqium":
                     $this->titel = (string) $val;
@@ -174,6 +174,24 @@ class Kolloqium extends BaseModel implements InputFilterAwareInterface{
 
 
     }
+
+    /**
+     * @return mixed
+     */
+    public function getVeranstaltung()
+    {
+        return $this->veranstaltung;
+    }
+
+    /**
+     * @param mixed $veranstaltung
+     */
+    public function setVeranstaltung($veranstaltung)
+    {
+        $this->veranstaltung = $veranstaltung;
+    }
+
+
 
 
 

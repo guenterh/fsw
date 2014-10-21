@@ -289,6 +289,22 @@ class VeranstaltungKolloquium extends BaseModel implements InputFilterAwareInter
 
     }
 
+    /**
+     * @return array
+     */
+    public function getVortragend()
+    {
+        return $this->vortragend;
+    }
+
+    /**
+     * @param array $vortragend
+     */
+    public function setVortragend($vortragend)
+    {
+        $this->vortragend = $vortragend;
+    }
+
 
 
 

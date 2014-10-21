@@ -172,6 +172,61 @@ class KolloquienFacade extends BaseFacade {
 
             }
 
+
+            foreach ($kolloquien as $kolloquium) {
+
+                $kollGateway->insert(
+
+                    array(
+                        'id_kolloquium' => $kolloquium->getId_kolloquium(),
+                        'titel' => $kolloquium->getTitel()
+
+                    )
+
+                );
+
+                $insertValueKolloquium = $kollGateway->getLastInsertValue();
+
+                foreach ($kolloquium->getVeranstaltung() as $veranstaltung){
+
+                    $kollVeranstaltungGateway->insert(
+
+                      array(
+                          'id_kolloquium' => $insertValueKolloquium,
+                          'beschreibung' => $veranstaltung->getBeschreibung(),
+                          'datum'   => $veranstaltung->getDatum(),
+                          'veranstaltung_titel' => $veranstaltung->getVeranstaltung_titel()
+                      )
+
+                    );
+
+                    $insertValueVeranstaltung = $kollVeranstaltungGateway->getLastInsertValue();
+
+                    foreach($veranstaltung->getVortragend() as $vortragend) {
+
+                        $kollVeranstaltungPersonGateway->insert(
+
+                            array(
+                                'id_kolloquium_veranstaltung' => $insertValueVeranstaltung,
+                                'institution_link'  => $vortragend->getInstitution_link(),
+                                'institution_link_bild' =>  $vortragend->getInstitution_link_bild(),
+                                'institution_name'  =>  $vortragend->getInstitution_name(),
+                                'nach_name' =>  $vortragend->getNach_name(),
+                                'vor_name'  =>  $vortragend->getVor_name()
+                            )
+                        );
+
+                    }
+
+                  
+
+                }
+
+
+
+
+            }
+
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
