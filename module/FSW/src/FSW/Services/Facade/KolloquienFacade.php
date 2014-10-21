@@ -7,8 +7,9 @@
  */
 
 namespace FSW\Services\Facade;
-use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
+
+use FSW\Model\Kolloqium;
 
 
 
@@ -68,6 +69,11 @@ class KolloquienFacade extends BaseFacade {
 
     public function insertKolloquienFSW () {
 
+
+
+
+
+
         $sql = 'delete from fsw_kolloquium';
         $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
@@ -119,6 +125,57 @@ class KolloquienFacade extends BaseFacade {
 
 
         }
+    }
+
+    public function insertKolloquienFromXMLFile ($url) {
+
+
+
+        $kollGateway =  $this->histSemDBService->getKolloquienGateway();
+        $kollVeranstaltungGateway = $this->histSemDBService->getKolloquienVeranstaltungenGateway();
+        $kollVeranstaltungPersonGateway = $this->histSemDBService->getKolloquienVeranstaltungenPersonGateway();
+
+        $kollGateway->delete();
+        $kollVeranstaltungGateway->delete();
+        $kollVeranstaltungPersonGateway->delete();
+
+
+
+        $content = file_get_contents("http://www.fsw.uzh.ch/static/classes/kolloquien/kolloquien.xml");
+
+        try {
+            $sxml = new \SimpleXMLElement($content);
+
+
+            $kolloquien = array();
+
+            foreach($sxml->children() as $attr=>$val)
+            {
+
+
+
+                //echo $val;
+                switch ($attr) {
+                    case "Kolloqium":
+
+                        $oKolloqium = new Kolloqium();
+
+                        $oKolloqium->initFromFile($val);
+                        $oKolloqium->parseFromFile();
+                        $kolloquien[] = $oKolloqium;
+
+                        break;
+                    default:
+                        //todo: error logging
+                }
+
+
+            }
+
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+
     }
 
 

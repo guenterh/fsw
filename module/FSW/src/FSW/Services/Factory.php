@@ -9,7 +9,8 @@
 namespace FSW\Services;
 
 use FSW\Model\Medium;
-use FSW\Model\Veranstaltung;
+use FSW\Model\VeranstaltungKolloquium;
+use FSW\Model\VeranstaltungKolloquiumPerson;
 use FSW\Services\Facade\MedienFacade;
 use FSW\Services\Facade\PersonAktivitaetenFacade;
 use Zend\ServiceManager\ServiceManager;
@@ -160,9 +161,18 @@ class Factory {
 
         $dbAdapter = $sm->get('HistSemDBAdapter');
         $resultSetPrototype = new ResultSet();
-        $resultSetPrototype->setArrayObjectPrototype(new Veranstaltung());
+        $resultSetPrototype->setArrayObjectPrototype(new VeranstaltungKolloquium());
         return new TableGateway('fsw_kolloquium_veranstaltung', $dbAdapter, null, $resultSetPrototype);
     }
+
+    public static function getKolloquiumVeranstaltungenPersonTableGateway(ServiceManager $sm) {
+
+        $dbAdapter = $sm->get('HistSemDBAdapter');
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new VeranstaltungKolloquiumPerson());
+        return new TableGateway('fsw_kolloquium_veranstaltung_person', $dbAdapter, null, $resultSetPrototype);
+    }
+
 
     public static function getRelationHSFSWPersonTableGateway (ServiceManager $sm) {
 

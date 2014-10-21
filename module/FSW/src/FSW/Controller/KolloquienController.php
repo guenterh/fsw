@@ -106,7 +106,8 @@ class KolloquienController extends BaseController {
     public function insertKolloquienFSWAction () {
 
 
-        $this->facade->insertKolloquienFSW();
+        //$this->facade->insertKolloquienFSW();
+        $this->facade->insertKolloquienFromXMLFile();
 
     }
 

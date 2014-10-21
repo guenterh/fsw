@@ -13,6 +13,10 @@ use Zend\InputFilter\InputFilter;
 
 class Kolloqium extends BaseModel implements InputFilterAwareInterface{
 
+
+    private $resourceKolloqium;
+    private $veranstaltung;
+
     public $id;
     public $id_kolloquium;
     public $titel;
@@ -135,4 +139,43 @@ class Kolloqium extends BaseModel implements InputFilterAwareInterface{
     {
         return $this->titel;
     }
+
+    public function initFromFile($resource) {
+        $this->resourceKolloqium = $resource;
+    }
+
+
+    public function parseFromFile() {
+
+        foreach($this->resourceKolloqium->children() as $attr=>$val)
+        {
+
+
+            switch ($attr) {
+                case "idKolloqium":
+                    $this->id = (string) $val;
+                    break;
+                case "titelKolloqium":
+                    $this->titel = (string) $val;
+                    break;
+                case "Veranstaltung":
+                    $oVeranstaltung = new VeranstaltungKolloquium();
+                    $oVeranstaltung->initFromSource($val);
+                    $oVeranstaltung->parse();
+                    $this->veranstaltung[] = $oVeranstaltung;
+
+
+                    break;
+                default:
+                    //todo: error logging
+            }
+
+        }
+
+
+    }
+
+
+
+
 }

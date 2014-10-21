@@ -57,18 +57,20 @@ CREATE TABLE IF NOT EXISTS `fsw_kolloquium_veranstaltung` (
 
 --
 -- Tabellenstruktur für Tabelle `fsw_kolloquium_veranstaltung_person`
+-- mit id_person_veranstaltung da evtl ein link auf FSW Person vorhanden sein kann
 --
 
 DROP TABLE IF EXISTS `fsw_kolloquium_veranstaltung_person`;
 CREATE TABLE IF NOT EXISTS `fsw_kolloquium_veranstaltung_person` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `veranstaltung_titel` varchar(30000) NOT NULL,
-  `nach_name` varchar(1000) NOT NULL,
-  `vor_name` varchar(1000) DEFAULT NULL,
-  `institution_name` varchar(1000) DEFAULT NULL,
-  `institution_link` varchar(1000) DEFAULT NULL,
-  `institution_link_bild` varchar(1000) DEFAULT NULL,
-  `personen_extended_id` bigint(20) DEFAULT NULL,
+  `id_kolloquium_veranstaltung` bigint(20) NOT NULL,
+  `id_personen_extended` bigint(20) DEFAULT NULL,
+  `nach_name` varchar(2000) NOT NULL,
+  `vor_name` varchar(2000) DEFAULT NULL,
+  `person_link` varchar(2000) DEFAULT NULL,
+  `institution_name` varchar(2000) DEFAULT NULL,
+  `institution_link` varchar(2000) DEFAULT NULL,
+  `institution_link_bild` varchar(2000) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 

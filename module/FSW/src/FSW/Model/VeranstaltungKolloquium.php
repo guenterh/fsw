@@ -13,8 +13,12 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
 
-class Veranstaltung extends BaseModel implements InputFilterAwareInterface {
+class VeranstaltungKolloquium extends BaseModel implements InputFilterAwareInterface {
 
+
+
+    private $resource;
+    private $vortragend = array();
 
     public $id;
     public $id_kolloquium;
@@ -217,6 +221,74 @@ class Veranstaltung extends BaseModel implements InputFilterAwareInterface {
     {
         $this->veranstaltung_titel = $veranstaltung_titel;
     }
+
+
+    public function initFromSource($resource) {
+
+        $this->resource = $resource;
+
+    }
+
+
+    public function parse() {
+        foreach($this->resource->children() as $attr=>$val)
+        {
+
+
+            switch ($attr) {
+                case "idveranstaltung":
+                    $this->id = (string) $val;
+                    break;
+                case "veranstaltungsdatum":
+                    $this->datum = (string) $val;
+                    break;
+                case "bemerkung":
+                    $this->beschreibung = (string) $val;
+                    break;
+                case "topic":
+
+                    foreach($val->children() as $attrtopic=>$valtopic)
+                    {
+
+
+                        switch ($attrtopic) {
+                            case "titel":
+                                $this->veranstaltung_titel = (string) $valtopic;
+                                break;
+                            default:
+                                //todo: error logging
+                        }
+
+                    }
+
+
+                    break;
+                case "vortragende":
+
+                    foreach($val->children() as $attrVortragend=>$valVortragend)
+                    {
+
+                        switch ($attrVortragend) {
+                            case "person":
+                                $oPerson = new VeranstaltungKolloquiumPerson();
+                                $oPerson->initFromSource($valVortragend);
+                                $oPerson->parse();
+                                $this->vortragend[] = $oPerson;
+                                break;
+
+                        }
+
+                    }
+
+                    break;
+
+
+            }
+
+        }
+
+    }
+
 
 
 

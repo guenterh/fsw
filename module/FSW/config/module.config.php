@@ -205,6 +205,7 @@ return array(
 
             //'FSW\Model\KolloqiumVeranstaltungTable' =>  'FSW\Model\Factories\KolloqiumVeranstaltungTableFactory',
             'KolloquiumVeranstaltungTableGateway' => 'FSW\Services\Factory::getKolloquiumVeranstaltungenTableGateway',
+            'KolloquiumVeranstaltungPersonTableGateway' => 'FSW\Services\Factory::getKolloquiumVeranstaltungenTableGateway',
             'FSWPersonenExtendedAdapter' => 'FSW\Model\Factories\DB\PersonenExtendedAdapterFactory',
             'HistSemDBService'          =>  'FSW\Model\Factories\HistSemDBServiceFactory',
             'HistSemDBAdapter'          =>  'FSW\Model\Factories\DB\HistSemDBAdapterFactory',
