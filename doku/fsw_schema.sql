@@ -39,21 +39,40 @@ CREATE TABLE IF NOT EXISTS `fsw_kolloquium` (
 --
 -- Tabellenstruktur für Tabelle `fsw_kolloquium_veranstaltung`
 --
--- mit Manuela genauer anschauen!
--- es fehlt noch
--- Personenbeschreibung, Personenlink, Nachname / Vorname getrennt, Institution, Institutionenlink, Beschriebung (hier ist im Moment die ganze Struktur eingetragen)
--- weiterhin sollte noch die Möglichkeit gegeben werden, mehere Personen als Vortragende auftreten zu lassen
--- neu könnte die Möglochkeit geschaffen werden, Personen mit link auf das Profil auf die Webseite zu setzen.
 
 DROP TABLE IF EXISTS `fsw_kolloquium_veranstaltung`;
 CREATE TABLE IF NOT EXISTS `fsw_kolloquium_veranstaltung` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `id_kolloquium` bigint(20) NOT NULL,
+  `id_person_veranstaltung` bigint(20) NOT NULL,
   `datum` date NOT NULL,
-  `personenname` varchar(65000) NOT NULL,
-  `beschreibung` longtext NOT NULL,
+  `veranstaltung_titel` varchar(65000) NOT NULL,
+  `beschreibung` longtext DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `fsw_kolloquium_veranstaltung_person`
+--
+
+DROP TABLE IF EXISTS `fsw_kolloquium_veranstaltung_person`;
+CREATE TABLE IF NOT EXISTS `fsw_kolloquium_veranstaltung_person` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `veranstaltung_titel` varchar(30000) NOT NULL,
+  `nach_name` varchar(1000) NOT NULL,
+  `vor_name` varchar(1000) DEFAULT NULL,
+  `institution_name` varchar(1000) DEFAULT NULL,
+  `institution_link` varchar(1000) DEFAULT NULL,
+  `institution_link_bild` varchar(1000) DEFAULT NULL,
+  `personen_extended_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
 
 -- --------------------------------------------------------
 
