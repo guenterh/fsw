@@ -9,7 +9,7 @@
 namespace FSW\Form;
 
 use FSW\Model\PersonExtended;
-use FSW\Model\Veranstaltung;
+use FSW\Model\VeranstaltungKolloquium;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
@@ -21,7 +21,22 @@ class VeranstaltungenFieldset extends Fieldset implements InputFilterProviderInt
         parent::__construct('Veranstaltungen');
 
         $this->setHydrator(new ClassMethodsHydrator(false))
-            ->setObject(new Veranstaltung());
+            ->setObject(new VeranstaltungKolloquium());
+
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Collection',
+            'name' => 'vortragend',
+            'options' => array(
+                'label' => 'Vortragende',
+                'count' => 1,
+                'should_create_template' => true,
+                'allow_add' => true,
+                'target_element' => array(
+                    'type' => 'FSW\Form\PersonVortragendFieldset'
+                )
+            )
+        ));
+
 
     }
 

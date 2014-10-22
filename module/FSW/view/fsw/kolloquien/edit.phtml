@@ -18,6 +18,16 @@ $form->prepare();
 
 $kolloquium = $form->get('Kolloqium');
 
+$veranstaltungen = $kolloquium->get('veranstaltung');
+
+foreach ($veranstaltungen as $veranstaltung) {
+
+   $person = $veranstaltung->get('vortragend');
+
+}
+
+
+
 
 
 $saveButtonLabel = "Speichern";

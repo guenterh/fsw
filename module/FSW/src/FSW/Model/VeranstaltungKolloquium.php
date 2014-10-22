@@ -305,6 +305,17 @@ class VeranstaltungKolloquium extends BaseModel implements InputFilterAwareInter
         $this->vortragend = $vortragend;
     }
 
+    public function addVortragend($vortragend) {
+        if ($vortragend  instanceof VeranstaltungKolloquiumPerson) {
+            if (!is_array($this->vortragend)) {
+                $this->vortragend = array();
+            }
+            $this->vortragend[] = $vortragend;
+
+        }
+    }
+
+
 
 
 

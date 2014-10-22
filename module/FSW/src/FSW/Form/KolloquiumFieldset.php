@@ -66,16 +66,18 @@ class KolloquiumFieldset extends Fieldset implements InputFilterProviderInterfac
 
 
 
+
+
         $this->add(array(
             'type' => 'Zend\Form\Element\Collection',
-            'name' => 'personExtended',
+            'name' => 'veranstaltung',
             'options' => array(
-                'label' => 'extended Attributes FSW',
+                'label' => 'Veranstaltungen',
                 'count' => 1,
                 'should_create_template' => true,
                 'allow_add' => true,
                 'target_element' => array(
-                    'type' => 'FSW\Form\PersonExtendedFieldset'
+                    'type' => 'FSW\Form\VeranstaltungenFieldset'
                 )
             )
         ));

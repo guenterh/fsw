@@ -10,12 +10,13 @@ namespace FSW\Model;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\InputFilter;
+use FSW\Model\VeranstaltungKolloquium;
 
 class Kolloqium extends BaseModel implements InputFilterAwareInterface{
 
 
     private $resourceKolloqium;
-    private $veranstaltung;
+    private $veranstaltung = array();
 
     public $id;
     public $id_kolloquium;
@@ -188,9 +189,28 @@ class Kolloqium extends BaseModel implements InputFilterAwareInterface{
      */
     public function setVeranstaltung($veranstaltung)
     {
-        $this->veranstaltung = $veranstaltung;
+
+
+        if (!is_array($veranstaltung) && $veranstaltung instanceof  VeranstaltungKolloquium ) {
+            $this->veranstaltung = array($veranstaltung);
+        } else if (is_array($veranstaltung)){
+            $this->veranstaltung = $veranstaltung;
+        }
+
     }
 
+
+    public function addVeranstaltung($veranstaltung)
+    {
+        if ($veranstaltung  instanceof VeranstaltungKolloquium) {
+            if (!is_array($this->veranstaltung)) {
+                $this->veranstaltung = array();
+            }
+            $this->veranstaltung[] = $veranstaltung;
+
+        }
+
+    }
 
 
 

@@ -56,11 +56,37 @@ class KolloquienFacade extends BaseFacade {
         $id  = (int) $id;
         $kolloquienTableGateway =  $this->histSemDBService->getKolloquienGateway();
         $rowset = $kolloquienTableGateway->select(array('id' => $id));
-        $row = $rowset->current();
-        if (!$row) {
+        $kolloquium = $rowset->current();
+        if (!$kolloquium) {
             throw new \Exception("Could not find row $id");
         }
-        return $row;
+
+        $idKolloquium = $kolloquium->getId();
+        $veranstaltungenTableGateway = $this->histSemDBService->getKolloquienVeranstaltungenGateway();
+
+        $personenVeranstaltungTableGateway =  $this->histSemDBService->getKolloquienVeranstaltungenPersonGateway();
+        $rowsetVeranstaltungen =  $veranstaltungenTableGateway->select(array('id_kolloquium' => $idKolloquium));
+
+
+
+        foreach ($rowsetVeranstaltungen as $veranstaltung) {
+
+            $idVeranstaltung = $veranstaltung->getId();
+
+            $rowsetPersonenVeranstaltung = $personenVeranstaltungTableGateway->select(array('id_kolloquium_veranstaltung' => $idVeranstaltung));
+
+            foreach ($rowsetPersonenVeranstaltung as $personVeranstaltung) {
+
+                $veranstaltung->addVortragend($personVeranstaltung);
+            }
+
+            $kolloquium->addVeranstaltung($veranstaltung);
+
+        }
+
+
+
+        return $kolloquium;
     }
 
 
@@ -218,7 +244,7 @@ class KolloquienFacade extends BaseFacade {
 
                     }
 
-                  
+
 
                 }
 
