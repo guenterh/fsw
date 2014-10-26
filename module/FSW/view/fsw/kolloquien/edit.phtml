@@ -134,13 +134,14 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
                                 <?php endforeach; ?>
 
 
+                            <div class="row-fluid">
                             <div class="span2" style="margin-right: 10px;">
                                 <a href="#"
                                    class="showPersonenVeranstaltung" veranstaltungID="<?php echo $veranstaltung->get('id')->getValue(); ?>">zeige Personen zur Veranstaltung</a>
                             </div>
+                            </div>
 
 
-                            <legend>Personen dieser Veranstaltung</legend>
 
                             <?php $numberVeranstaltung++; ?>
                         <?php endforeach; ?>

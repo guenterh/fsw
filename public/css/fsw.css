@@ -2,3 +2,9 @@
 .fswTextArea {
     width: 900px;
 }
+
+.ui-dialog-titlebar {
+    background-color: #999999;
+    background-image: none;
+    color: #000;
+}

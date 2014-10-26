@@ -166,9 +166,9 @@ var FSWAdmin = {
                     open: function(){
                         $(this).load('/kolloquien/editPersonenVeranstaltung/' + veranstaltungID );
 
-                        $('.fswDialogBox').css('background-color','red');
+                        $('.fswDialogBox').css('background-color','#d9d9d9');
                     },
-                    title: 'A dynamically loaded dialog',
+                    title: 'Vortragende der ausgewählten Veranstaltung',
                     width: '1000px',
                     modal: true
 
