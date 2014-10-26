@@ -18,11 +18,11 @@ class VeranstaltungKolloquium extends BaseModel implements InputFilterAwareInter
 
 
     private $resource;
-    private $vortragend = array();
+    public $vortragend = array();
+
 
     public $id;
     public $id_kolloquium;
-    public $id_person_veranstaltung;
     public $datum;
     public $veranstaltung_titel;
     public $beschreibung;
@@ -190,21 +190,6 @@ class VeranstaltungKolloquium extends BaseModel implements InputFilterAwareInter
         $this->id_kolloquium = $id_kolloquium;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getId_person_veranstaltung()
-    {
-        return $this->id_person_veranstaltung;
-    }
-
-    /**
-     * @param mixed $id_person_veranstaltung
-     */
-    public function setId_person_veranstaltung($id_person_veranstaltung)
-    {
-        $this->id_person_veranstaltung = $id_person_veranstaltung;
-    }
 
     /**
      * @return mixed

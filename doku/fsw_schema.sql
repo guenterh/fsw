@@ -44,7 +44,6 @@ DROP TABLE IF EXISTS `fsw_kolloquium_veranstaltung`;
 CREATE TABLE IF NOT EXISTS `fsw_kolloquium_veranstaltung` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `id_kolloquium` bigint(20) NOT NULL,
-  `id_person_veranstaltung` bigint(20) NOT NULL,
   `datum` date NOT NULL,
   `veranstaltung_titel` varchar(65000) NOT NULL,
   `beschreibung` longtext DEFAULT NULL,

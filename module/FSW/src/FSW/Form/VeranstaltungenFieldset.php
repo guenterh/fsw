@@ -13,6 +13,7 @@ use FSW\Model\VeranstaltungKolloquium;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Zend\Stdlib\Hydrator\ArraySerializable;
 
 class VeranstaltungenFieldset extends Fieldset implements InputFilterProviderInterface {
 
@@ -23,11 +24,84 @@ class VeranstaltungenFieldset extends Fieldset implements InputFilterProviderInt
         $this->setHydrator(new ClassMethodsHydrator(false))
             ->setObject(new VeranstaltungKolloquium());
 
+
+
+        $this->add(array(
+            'name' => 'id',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'id'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+
+        $this->add(array(
+            'name' => 'id',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'id'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+
+        $this->add(array(
+            'name' => 'id_kolloquium',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'id_kolloquium'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'datum',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'datum'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+
+        $this->add(array(
+            'name' => 'veranstaltung_titel',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'veranstaltung_titel'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'beschreibung',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'beschreibung'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+
         $this->add(array(
             'type' => 'Zend\Form\Element\Collection',
             'name' => 'vortragend',
+
             'options' => array(
-                'label' => 'Vortragende',
+                'label' => 'vortragend',
                 'count' => 1,
                 'should_create_template' => true,
                 'allow_add' => true,
