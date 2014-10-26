@@ -6,13 +6,15 @@ var FSWAdmin = {
 
     onLoaded: function () {
 
-        if (this.hasUrlPart('/medien/') ||  this.hasUrlPart('/kolloquien/') ||
+        if (this.hasUrlPart('/medien/') ||
             this.hasUrlPart('/forschung/') || this.hasUrlPart('/personenaktivitaet/') || this.hasUrlPart('/forschungAdmin/')) {
             this.Allgemein.init();
         } else if (this.hasUrlPart('/personen/')) {
 
             this.Personen.init();
+        } else if (this.hasUrlPart('/kolloquien/')) {
 
+            this.Kolloquien.init();
         }
     },
 
@@ -137,6 +139,59 @@ var FSWAdmin = {
     },
 
 
+    Kolloquien: {
+        init: function () {
+            //alert ('Personen.init()');
+            this.initSidebar();
+            this.initEditor();
+        },
+
+        initSidebar: function () {
+            //alert (this.constructor);
+            //alert('Personen.initSidebar');
+            FSWAdmin.Sidebar.init($.proxy(this.onSearchListUpdated, this), $.proxy(this.onContentUpdated, this));
+        },
+
+        initEditor: function () {
+            //alert ('Personen.initEditor()');
+            FSWAdmin.Editor.init($.proxy(this.onContentUpdated, this));
+
+            $(".showPersonenVeranstaltung").click(function(e) {
+                e.preventDefault();
+
+
+                var veranstaltungID =  ($(e.target).attr('veranstaltungID'));
+                //$("<iframe scrolling='yes' class='fswDialogBox' width='1000' height='1000'  src='/kolloquien/editPersonenVeranstaltung/15'  >").dialog({
+                $("<div class='fswDialogBox'>").dialog({
+                    open: function(){
+                        $(this).load('/kolloquien/editPersonenVeranstaltung/' + veranstaltungID );
+
+                        $('.fswDialogBox').css('background-color','red');
+                    },
+                    title: 'A dynamically loaded dialog',
+                    width: '1000px',
+                    modal: true
+
+                });
+
+            });
+
+        },
+
+        onContentUpdated: function () {
+            //alert ('Personen.onContentUpdated');
+            //FSWAdmin.PersonenUpdated = true;
+            this.initEditor();
+        },
+
+        onSearchListUpdated: function () {
+
+        }
+
+
+
+    },
+
 
 
     Editor: {
@@ -152,6 +207,7 @@ var FSWAdmin = {
             this.initTabs();
             //this.initButtons(this.testButton);
             this.initButtons(contentLoadedHandler);
+
             //this.initExtendedAttributes();
 
             //CustomFunctions.initializeZoraAuthorActions();

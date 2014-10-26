@@ -9,6 +9,7 @@
 namespace FSW\Controller;
 
 use FSW\Form\KolloquiumForm;
+use FSW\Form\VeranstaltungForm;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -30,6 +31,33 @@ class KolloquienController extends BaseController {
         );
 
     }
+
+
+    public function editPersonenVeranstaltungAction () {
+
+
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('kolloquien', array(
+                'action' => 'index'
+            ));
+        }
+
+        $idVeranstaltung = (int)$this->params()->fromRoute('id', 0);
+        $veranstaltung = $this->facade->getVeranstaltung($idVeranstaltung);
+
+        $form  = new VeranstaltungForm('Veranstaltung');
+        $form->bind($veranstaltung);
+
+
+        return $this->getAjaxView(array(
+            'form' => $form
+
+        ));
+
+    }
+
+
 
 
     public function editAction () {
@@ -69,6 +97,13 @@ class KolloquienController extends BaseController {
 
 
         $form  = new KolloquiumForm('kolloquium');
+
+        //$veranstaltungen = $form->get('Kolloqium')->get('veranstaltung');
+        //foreach ($veranstaltungen as $veranstaltung) {
+        //    $test =  $veranstaltung->get("vortragend");
+        //    $t = "";
+        //}
+
         $form->bind($kolloquium);
         $form->get('submit')->setAttribute('value', 'Edit');
 

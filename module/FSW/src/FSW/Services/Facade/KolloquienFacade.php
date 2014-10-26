@@ -93,6 +93,39 @@ class KolloquienFacade extends BaseFacade {
 
 
 
+    public function getVeranstaltung($id)
+    {
+        $id  = (int) $id;
+        $veranstaltungenTableGateway = $this->histSemDBService->getKolloquienVeranstaltungenGateway();
+
+        $personenVeranstaltungTableGateway =  $this->histSemDBService->getKolloquienVeranstaltungenPersonGateway();
+        $rowsetVeranstaltungen =  $veranstaltungenTableGateway->select(array('id' => $id));
+
+        $veranstaltungsObject = $rowsetVeranstaltungen->current();
+
+
+
+
+        $idVeranstaltung = $veranstaltungsObject->getId();
+
+        $rowsetPersonenVeranstaltung = $personenVeranstaltungTableGateway->select(array('id_kolloquium_veranstaltung' => $idVeranstaltung));
+
+        foreach ($rowsetPersonenVeranstaltung as $personVeranstaltung) {
+
+            $veranstaltungsObject->addVortragend($personVeranstaltung);
+        }
+
+
+
+
+
+        return $veranstaltungsObject;
+    }
+
+
+
+
+
     public function insertKolloquienFSW () {
 
 
