@@ -59,6 +59,28 @@ class KolloquienController extends BaseController {
 
 
 
+    public function addKolloquiumAction() {
+
+
+        $id_kolloquium = $this->params()->fromRoute('id_kolloquium', null);
+        $titel = $this->params()->fromRoute('titel', null);
+
+        $pruefung =  isset($id_kolloquium) ? "djdjdj": 'jjjj';
+
+        $kolloquium = $this->facade->getEmptyKolloquium();
+        $form = new KolloquiumForm('Kolloquium');
+
+        $form->bind($kolloquium);
+
+
+        return $this->getAjaxView(
+            array(
+                'form' => $form
+            )
+        );
+
+
+    }
 
     public function editAction () {
 

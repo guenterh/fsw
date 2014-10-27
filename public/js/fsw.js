@@ -162,11 +162,14 @@ var FSWAdmin = {
 
                 var veranstaltungID =  ($(e.target).attr('veranstaltungID'));
                 //$("<iframe scrolling='yes' class='fswDialogBox' width='1000' height='1000'  src='/kolloquien/editPersonenVeranstaltung/15'  >").dialog({
-                $("<div class='fswDialogBox'>").dialog({
+                $("<div id='fswDialogBox'>").dialog({
                     open: function(){
                         $(this).load('/kolloquien/editPersonenVeranstaltung/' + veranstaltungID );
 
-                        $('.fswDialogBox').css('background-color','#d9d9d9');
+                        $('#fswDialogBox').css('background-color','#d9d9d9');
+                    },
+                    close: function (event, ui) {
+                        $(this).dialog('destroy').remove();
                     },
                     title: 'Vortragende der ausgewählten Veranstaltung',
                     width: '1000px',
@@ -174,6 +177,45 @@ var FSWAdmin = {
 
                 });
 
+            });
+
+            $("#addKolloqiumButton").click(function(e) {
+                e.preventDefault();
+
+
+                //$("<iframe scrolling='yes' class='fswDialogBox' width='1000' height='1000'  src='/kolloquien/editPersonenVeranstaltung/15'  >").dialog({
+                $("<div id='fswDialogBox'>").dialog({
+                    open: function(){
+                        $(this).load('/kolloquien/addKolloquium' );
+
+                        $('#fswDialogBox').css('background-color','#d9d9d9');
+                    },
+
+                    beforeClose: function( event, ui ) {
+                        //alert($('textarea#Kolloqium\\[id_kolloquium\\]',event.target).val());
+                        //alert($('textarea#Kolloqium\\[titel\\]',event.target).val());
+
+                        return true;
+                    },
+                    close: function (event, ui) {
+                        $(this).dialog('destroy').remove();
+                    },
+                    title: 'Erfassen eines neuen Kolloquiums',
+                    width: '1000px',
+                    modal: true
+
+                });
+
+            });
+
+            $("#updateKolloqiumButton").click(function(e) {
+                e.preventDefault();
+
+
+            });
+
+            $("#deleteKolloqiumButton").click(function(e) {
+                e.preventDefault();
             });
 
         },

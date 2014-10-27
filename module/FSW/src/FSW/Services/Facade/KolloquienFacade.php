@@ -123,14 +123,15 @@ class KolloquienFacade extends BaseFacade {
     }
 
 
+    public function getEmptyKolloquium() {
 
+
+        return new Kolloqium();
+
+    }
 
 
     public function insertKolloquienFSW () {
-
-
-
-
 
 
         $sql = 'delete from fsw_kolloquium';

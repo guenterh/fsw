@@ -1,0 +1,26 @@
+
+<?php
+    $this->headTitle("Zufügen eines Kolloquiums");
+    $form = $this->form;
+    $kolloquium = $form->get('Kolloqium');
+    $form->prepare();
+?>
+<?php echo  $this->formTwb()->openTag($form, 'horizontal') ?>
+
+
+<fieldset>
+    <legend>Kolloquiumatribute</legend>
+    <div class="row-fluid">
+        <div class="span6">
+            <?php echo  $this->formRowTwb($kolloquium->get('id_kolloquium')) ?>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span6">
+            <?php echo  $this->formRowTwb($kolloquium->get('titel')) ?>
+        </div>
+    </div>
+</fieldset>
+
+
+<?php echo  $this->form()->closeTag(); ?>
