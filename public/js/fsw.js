@@ -195,6 +195,41 @@ var FSWAdmin = {
                         //alert($('textarea#Kolloqium\\[id_kolloquium\\]',event.target).val());
                         //alert($('textarea#Kolloqium\\[titel\\]',event.target).val());
 
+                        /*
+                        $.get('/kolloquien/testValidKolloquium', {
+
+                                'titel': $('textarea#Kolloqium\\[titel\\]',event.target).val(),
+                                'id_kolloquium': $('textarea#Kolloqium\\[id_kolloquium\\]',event.target).val()
+
+                            }, function (response, type, xhr) {
+
+                                $.each( response, function( key, val ) {
+                                  alert (key + "    " + val)  ;
+                                });
+                                //alert ('nun vor parse');
+                                //var returnedData = JSON.parse(response);
+                                //alert (response.a);
+
+                            }, 'json'
+                        );
+                        */
+                        $.getJSON('/kolloquien/testValidKolloquium', {
+
+                            'titel': $('textarea#Kolloqium\\[titel\\]',event.target).val(),
+                            'id_kolloquium': $('textarea#Kolloqium\\[id_kolloquium\\]',event.target).val()
+
+                        }, function (response, type, xhr) {
+
+                                //$.each( response, function( key, val ) {
+                                //    alert (key + "    " + val)  ;
+                                //});
+
+                            }
+
+                        );
+
+
+
                         return true;
                     },
                     close: function (event, ui) {

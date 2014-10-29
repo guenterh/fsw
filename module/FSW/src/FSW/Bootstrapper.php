@@ -11,6 +11,12 @@ use Zend\Console\Console, Zend\Mvc\MvcEvent, Zend\Mvc\Router\Http\RouteMatch;
 
 class Bootstrapper {
 
+
+    private $jsonActions = array(
+        'FSW\Controller\Kolloquien' => array('testValidKolloquium')
+    );
+
+
     public function __construct(MvcEvent $event)
     {
         $this->event = $event;
@@ -32,6 +38,17 @@ class Bootstrapper {
                 $this->$method();
             }
         }
+
+
+    }
+
+
+    public function initJson ()
+    {
+        $this->events->attach(
+            'render', array($this, 'registerJSONStrategy')
+        );
+
     }
 
 
@@ -53,6 +70,30 @@ class Bootstrapper {
 
         // Use the manager to load the configuration used in subsequent init methods:
         //$this->config = $serviceManager->get('VuFind\Config')->get('config');
+    }
+
+
+
+
+
+    public function registerJSONStrategy($e) {
+
+
+
+        $controller = $e->getRouteMatch()->getParam('controller');
+        $action = $e->getRouteMatch()->getParam('action');
+
+        //if (array_key_exists($controller, $this->jsonActions) && in_array($this->jsonActions, $action)) {
+        if (array_key_exists($controller, $this->jsonActions) && in_array($action, $this->jsonActions[$controller]) ) {
+
+            $serviceManager = $e->getApplication()->getServiceManager();
+            $view = $serviceManager->get('Zend\View\View');
+            $jsonStrategy = $serviceManager->get('ViewJsonStrategy');
+
+            $view->getEventManager()->attach($jsonStrategy,100);
+        }
+
+
     }
 
 

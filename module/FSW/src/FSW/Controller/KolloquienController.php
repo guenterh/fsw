@@ -10,7 +10,10 @@ namespace FSW\Controller;
 
 use FSW\Form\KolloquiumForm;
 use FSW\Form\VeranstaltungForm;
+use Zend\InputFilter\Input;
+use Zend\InputFilter\InputFilter;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
 
@@ -165,6 +168,54 @@ class KolloquienController extends BaseController {
 
         //$this->facade->insertKolloquienFSW();
         $this->facade->insertKolloquienFromXMLFile();
+
+    }
+
+
+    public function testValidKolloquiumAction() {
+
+        //$titel = $this->params()->fromQuery('titel', null);
+        //$id_kolloquium =  $this->params()->fromQuery('id_kolloquium', null);
+
+        $inputData = array(
+            'titel' => $this->params()->fromQuery('titel', null),
+            'id_kolloquium' => $this->params()->fromQuery('id_kolloquium', null)
+        );
+
+
+
+        $titleInput = new Input('titel');
+        $id_kolloquium = new Input('id_kolloquium');
+
+
+        $inputFilter = new InputFilter();
+        $inputFilter->add($titleInput)->add($id_kolloquium);
+
+        $inputFilter->setData($inputData);
+        if (!$inputFilter->isValid())
+        {
+            $messages = array();
+            foreach ($inputFilter->getMessages() as $element => $message) {
+                $messages[$element] = $message;
+            }
+
+            $jsonResponse = array(
+                'status' => 'notok',
+                'messages' => $messages
+            );
+        } else {
+            $jsonResponse = array(
+                'status' => 'ok',
+            );
+
+        }
+
+        //$messages = $inputFilter->getMessages();
+        //$arr = array('a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5);
+
+        return new JsonModel(
+            $jsonResponse
+        );
 
     }
 
