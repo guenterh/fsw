@@ -182,7 +182,6 @@ var FSWAdmin = {
             $("#addKolloqiumButton").click(function(e) {
                 e.preventDefault();
 
-
                 //$("<iframe scrolling='yes' class='fswDialogBox' width='1000' height='1000'  src='/kolloquien/editPersonenVeranstaltung/15'  >").dialog({
                 $("<div id='fswDialogBox'>").dialog({
                     open: function(){
@@ -190,48 +189,69 @@ var FSWAdmin = {
 
                         $('#fswDialogBox').css('background-color','#d9d9d9');
                     },
-
                     beforeClose: function( event, ui ) {
-                        //alert($('textarea#Kolloqium\\[id_kolloquium\\]',event.target).val());
-                        //alert($('textarea#Kolloqium\\[titel\\]',event.target).val());
 
-                        /*
-                        $.get('/kolloquien/testValidKolloquium', {
+                        var returnValue = true;
+                        var myDialog = $('#fswDialogBox');
+                        $('#Kolloqium\\[titel\\]', myDialog).siblings().remove();
+                        $('#Kolloqium\\[id_kolloquium\\]', myDialog).siblings().remove();
 
-                                'titel': $('textarea#Kolloqium\\[titel\\]',event.target).val(),
-                                'id_kolloquium': $('textarea#Kolloqium\\[id_kolloquium\\]',event.target).val()
+                        var tempTitel = $('textarea#Kolloqium\\[titel\\]',event.target).val();
+                        var tempId_kolloquium = $('textarea#Kolloqium\\[id_kolloquium\\]',event.target).val();
 
-                            }, function (response, type, xhr) {
+                        $.ajax({
+                            url: '/kolloquien/testValidKolloquium',
+                            dataType: 'json',
+                            //async false ist wichtig da ansonsten success function als callback aufgerufen wird.
+                            //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
+                            async: false,
+                            data: {
 
-                                $.each( response, function( key, val ) {
-                                  alert (key + "    " + val)  ;
-                                });
-                                //alert ('nun vor parse');
-                                //var returnedData = JSON.parse(response);
-                                //alert (response.a);
+                                'titel': tempTitel,
+                                'id_kolloquium': tempId_kolloquium
 
-                            }, 'json'
-                        );
-                        */
-                        $.getJSON('/kolloquien/testValidKolloquium', {
+                            },
+                            success: function(response) {
+                                if (response.status === 'notok') {
+                                    $.each( response.messages, function( key, val ) {
+                                        $('#Kolloqium\\[' + key + '\\]', $('#fswDialogBox')).after('<ul class="error"><li>' + response.messages[key] + '</li></ul>');
+                                    });
+                                    returnValue = false;
+                                } else {
 
-                            'titel': $('textarea#Kolloqium\\[titel\\]',event.target).val(),
-                            'id_kolloquium': $('textarea#Kolloqium\\[id_kolloquium\\]',event.target).val()
 
-                        }, function (response, type, xhr) {
 
-                                //$.each( response, function( key, val ) {
-                                //    alert (key + "    " + val)  ;
-                                //});
-
+                                }
                             }
+                        });
 
-                        );
+                        if (returnValue) {
+
+                            $.ajax({
+                                url: '/kolloquien/addSaveKolloquium',
+                                dataType: 'json',
+                                //async false ist wichtig da ansonsten success function als callback aufgerufen wird.
+                                //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
+                                //async: false,
+                                data: {
+
+                                    'titel': tempTitel,
+                                    'id_kolloquium': tempId_kolloquium
+
+                                },
+                                success: function(response) {
+
+                                    alert ('gesichert');
+                                }
+                            });
 
 
+                        }
 
-                        return true;
+                        return returnValue;
+
                     },
+
                     close: function (event, ui) {
                         $(this).dialog('destroy').remove();
                     },

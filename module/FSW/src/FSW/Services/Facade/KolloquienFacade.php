@@ -293,5 +293,22 @@ class KolloquienFacade extends BaseFacade {
 
     }
 
+    public function addSaveKolloquim($inputData = array()) {
+
+        $kollGateway =  $this->histSemDBService->getKolloquienGateway();
+
+        $kollGateway->insert(
+
+            array(
+                'id_kolloquium' => $inputData['id_kolloquium'],
+                'titel' => $inputData['titel']
+
+            )
+
+        );
+
+
+    }
+
 
 }

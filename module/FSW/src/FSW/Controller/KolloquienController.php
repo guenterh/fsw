@@ -65,10 +65,8 @@ class KolloquienController extends BaseController {
     public function addKolloquiumAction() {
 
 
-        $id_kolloquium = $this->params()->fromRoute('id_kolloquium', null);
-        $titel = $this->params()->fromRoute('titel', null);
 
-        $pruefung =  isset($id_kolloquium) ? "djdjdj": 'jjjj';
+
 
         $kolloquium = $this->facade->getEmptyKolloquium();
         $form = new KolloquiumForm('Kolloquium');
@@ -81,7 +79,6 @@ class KolloquienController extends BaseController {
                 'form' => $form
             )
         );
-
 
     }
 
@@ -196,7 +193,7 @@ class KolloquienController extends BaseController {
         {
             $messages = array();
             foreach ($inputFilter->getMessages() as $element => $message) {
-                $messages[$element] = $message;
+                $messages[$element] = current($message);
             }
 
             $jsonResponse = array(
@@ -216,6 +213,22 @@ class KolloquienController extends BaseController {
         return new JsonModel(
             $jsonResponse
         );
+
+    }
+
+    public function addSaveKolloquiumAction () {
+
+
+        //im Moment hier keine Validierungen mehr da vorher testValidKolloquiumAction
+        //aufgerufen worden ist
+        //kann man noch ändern
+        $inputData = array(
+            'titel' => $this->params()->fromQuery('titel', null),
+            'id_kolloquium' => $this->params()->fromQuery('id_kolloquium', null)
+        );
+
+        $kolloquium = $this->facade->addSaveKolloquim($inputData);
+
 
     }
 
