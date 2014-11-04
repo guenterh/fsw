@@ -191,68 +191,76 @@ var FSWAdmin = {
 
                         $('#fswDialogBox').css('background-color','#d9d9d9');
                     },
-                    beforeClose: function( event, ui ) {
+                    buttons: [
+                        {
+                            text: "Sichern",
+                            click: function() {
 
-                        var returnValue = true;
-                        var myDialog = $('#fswDialogBox');
-                        $('#Kolloqium\\[titel\\]', myDialog).siblings().remove();
-                        $('#Kolloqium\\[id_kolloquium\\]', myDialog).siblings().remove();
+                                var returnValue = true;
+                                var myDialog = $('#fswDialogBox');
+                                $('#Kolloqium\\[titel\\]', myDialog).siblings().remove();
+                                $('#Kolloqium\\[id_kolloquium\\]', myDialog).siblings().remove();
 
-                        var tempTitel = $('textarea#Kolloqium\\[titel\\]',event.target).val();
-                        var tempId_kolloquium = $('textarea#Kolloqium\\[id_kolloquium\\]',event.target).val();
+                                var tempTitel = $('textarea#Kolloqium\\[titel\\]',myDialog).val();
+                                var tempId_kolloquium = $('textarea#Kolloqium\\[id_kolloquium\\]',myDialog).val();
 
-                        $.ajax({
-                            url: '/kolloquien/testValidKolloquium',
-                            dataType: 'json',
-                            //async false ist wichtig da ansonsten success function als callback aufgerufen wird.
-                            //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
-                            async: false,
-                            data: {
+                                $.ajax({
+                                    url: '/kolloquien/testValidKolloquium',
+                                    dataType: 'json',
+                                    //async false ist wichtig da ansonsten success function als callback aufgerufen wird.
+                                    //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
+                                    async: false,
+                                    data: {
 
-                                'titel': tempTitel,
-                                'id_kolloquium': tempId_kolloquium
+                                        'titel': tempTitel,
+                                        'id_kolloquium': tempId_kolloquium
 
-                            },
-                            success: function(response) {
-                                if (response.status === 'notok') {
-                                    $.each( response.messages, function( key, val ) {
-                                        $('#Kolloqium\\[' + key + '\\]', $('#fswDialogBox')).after('<ul class="error"><li>' + response.messages[key] + '</li></ul>');
+                                    },
+                                    success: function(response) {
+                                        if (response.status === 'notok') {
+                                            $.each( response.messages, function( key, val ) {
+                                                $('#Kolloqium\\[' + key + '\\]', $('#fswDialogBox')).after('<ul class="error"><li>' + response.messages[key] + '</li></ul>');
+                                            });
+                                            returnValue = false;
+                                        }
+                                    }
+                                });
+
+                                if (returnValue) {
+
+                                    $.ajax({
+                                        url: '/kolloquien/addSaveKolloquium',
+                                        dataType: 'json',
+                                        //async false ist wichtig da ansonsten success function als callback aufgerufen wird.
+                                        //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
+                                        //async: false,
+                                        data: {
+
+                                            'titel': tempTitel,
+                                            'id_kolloquium': tempId_kolloquium
+
+                                        },
+                                        success: function(response) {
+
+                                            alert ('Kolloquium erfolgreich gespeichert, bitte neu laden');
+                                            $( myDialog ).dialog( "close" );
+                                        }
                                     });
-                                    returnValue = false;
-                                } else {
-
 
 
                                 }
                             }
-                        });
-
-                        if (returnValue) {
-
-                            $.ajax({
-                                url: '/kolloquien/addSaveKolloquium',
-                                dataType: 'json',
-                                //async false ist wichtig da ansonsten success function als callback aufgerufen wird.
-                                //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
-                                //async: false,
-                                data: {
-
-                                    'titel': tempTitel,
-                                    'id_kolloquium': tempId_kolloquium
-
-                                },
-                                success: function(response) {
-
-                                    alert ('gesichert');
-                                }
-                            });
-
-
+                        },
+                        {
+                            text: "Abbrechen",
+                            click: function() {
+                                $( this ).dialog( "close" );
+                            }
                         }
 
-                        return returnValue;
+                    ],
 
-                    },
+
 
                     close: function (event, ui) {
                         $(this).dialog('destroy').remove();
@@ -261,7 +269,9 @@ var FSWAdmin = {
                     width: '1000px',
                     modal: true
 
-                });
+                }).dialog( "widget")
+                    .find( ".ui-dialog-titlebar-close" )
+                    .hide();
 
             });
 
