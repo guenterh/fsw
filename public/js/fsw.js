@@ -179,6 +179,8 @@ var FSWAdmin = {
 
             });
 
+
+
             $("#addKolloqiumButton").click(function(e) {
                 e.preventDefault();
 
@@ -271,8 +273,53 @@ var FSWAdmin = {
 
             $("#deleteKolloqiumButton").click(function(e) {
                 e.preventDefault();
-            });
 
+                $('<div id="okEscDialog" title="Loeschen eines Kolloquiums"><p>' +
+                'Wollen Sie das Kolloqium (zusammen mit allen zugehörigen' +
+                'Veranstaltungen und Personen loeschen?' +
+                '</p></div>')
+                .dialog({
+                        buttons: [
+                            {
+                                text: "OK",
+                                click: function() {
+
+                                    $.ajax({
+                                        url: '/kolloquien/deleteKolloquium',
+                                        dataType: 'json',
+                                        //async false ist wichtig da ansonsten success function als callback aufgerufen wird.
+                                        //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
+                                        async: false,
+                                        data: {
+                                            'id': $('#Kolloqium\\[id\\]').val()
+                                        },
+                                        success: function(response) {
+                                            alert('Loeschen erfolgreich, bitte die Kolloquien neu laden');
+                                        }
+                                    });
+                                    $( this ).dialog( "close" );
+                                }
+                            },
+                            {
+                                text: "Abbrechen",
+                                click: function() {
+                                    $( this ).dialog( "close" );
+                                }
+                            }
+
+                        ],
+                        open: function(){
+
+                            $('#okEscDialog').css('background-color','#d9d9d9');
+                        },
+                        close: function (event, ui) {
+                            $(this).dialog('destroy').remove();
+                        }
+
+                    }).dialog( "widget")
+                    .find( ".ui-dialog-titlebar-close" )
+                    .hide();
+            });
         },
 
         onContentUpdated: function () {
@@ -436,9 +483,6 @@ var FSWAdmin = {
 			});
 		}
 	}
-
-
-
 
 };
 

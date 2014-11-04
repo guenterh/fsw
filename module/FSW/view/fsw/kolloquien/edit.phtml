@@ -44,11 +44,6 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
 
 <?php echo  $this->formTwb()->openTag($form, $formType) ?>
-    <div class="topButtons">
-        <a href="#"  class="btn btn-medium" id="addKolloqiumButton">add new Kolloquium</a>
-        <a href="#"  class="btn btn-medium" id="updateKolloqiumButton">update Kolloquium</a>
-        <a href="#"  class="btn btn-medium" id="deleteKolloqiumButton">delete Kolloquium</a>
-    </div>
 
     <h3><?php echo $this->escapeHtml($title); ?></h3>
 
@@ -65,6 +60,13 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
         <div class="tab-content">
             <div class="tab-pane active" id="kolloquiumPane">
 
+                <fieldset>
+                <div class="topButtons">
+                    <a href="#"  class="btn btn-medium" id="addKolloqiumButton">add new Kolloquium</a>
+                    <a href="#"  class="btn btn-medium" id="updateKolloqiumButton">update Kolloquium</a>
+                    <a href="#"  class="btn btn-medium" id="deleteKolloqiumButton">delete Kolloquium</a>
+                </div>
+                </fieldset>
                 <fieldset>
                     <legend>Kolloquiumatribute</legend>
                     <div class="row-fluid">

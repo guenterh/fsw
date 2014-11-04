@@ -211,7 +211,7 @@ class KolloquienController extends BaseController {
         //$arr = array('a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5);
 
         return new JsonModel(
-            $jsonResponse
+            array()
         );
 
     }
@@ -229,6 +229,23 @@ class KolloquienController extends BaseController {
 
         $kolloquium = $this->facade->addSaveKolloquim($inputData);
 
+        return new JsonModel(
+            array()
+        );
+
+    }
+
+    function deleteKolloquiumAction() {
+
+        $inputData = array(
+            'id' => $this->params()->fromQuery('id', null),
+        );
+
+        $kolloquium = $this->facade->deleteKolloquim($inputData);
+
+        return new JsonModel(
+            array()
+        );
 
     }
 

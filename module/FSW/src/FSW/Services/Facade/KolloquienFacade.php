@@ -10,7 +10,7 @@ namespace FSW\Services\Facade;
 use Zend\Db\Adapter\Adapter;
 
 use FSW\Model\Kolloqium;
-
+use Zend\Db\Sql\Where;
 
 
 class KolloquienFacade extends BaseFacade {
@@ -298,14 +298,55 @@ class KolloquienFacade extends BaseFacade {
         $kollGateway =  $this->histSemDBService->getKolloquienGateway();
 
         $kollGateway->insert(
-
             array(
                 'id_kolloquium' => $inputData['id_kolloquium'],
                 'titel' => $inputData['titel']
 
             )
-
         );
+
+    }
+
+
+    public function deleteKolloquim($inputData = array()) {
+
+        $kollGateway =  $this->histSemDBService->getKolloquienGateway();
+        $kollVeranstaltungGateway = $this->histSemDBService->getKolloquienVeranstaltungenGateway();
+        $kollVeranstaltungPersonGateway = $this->histSemDBService->getKolloquienVeranstaltungenPersonGateway();
+
+        $id = (int) $inputData['id'];
+        //$id = 3;
+
+        $rowsVeranstaltungen =  $kollVeranstaltungGateway->select(array('id_kolloquium' =>  $id));
+
+        $veranstaltungenIds = array();
+        $personenIds = array();
+        foreach ($rowsVeranstaltungen as  $veranstaltung) {
+            $veranstaltungenIds[] = $veranstaltung->getId();
+            $rowsPersonen =  $kollVeranstaltungPersonGateway->select(array('id_kolloquium_veranstaltung' => (int) $veranstaltung->getId()));
+            foreach($rowsPersonen as $person) {
+                $personenIds[] = $person->getId();
+            }
+        }
+
+        if (count($personenIds) > 0) {
+            $where = new Where();
+            $where->in('id', $personenIds);
+            $OkFalse = $kollVeranstaltungPersonGateway->delete($where);
+        }
+        if (count($veranstaltungenIds)>0) {
+            $where = new Where();
+            $where->in('id', $veranstaltungenIds);
+            $OkFalse = $kollVeranstaltungGateway->delete($where);
+        }
+
+        $OkFalse =  $kollGateway->delete(array('id' => $id));
+
+
+
+
+        //jetzt alle loeschen
+
 
 
     }

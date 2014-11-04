@@ -13,7 +13,9 @@ class Bootstrapper {
 
 
     private $jsonActions = array(
-        'FSW\Controller\Kolloquien' => array('testValidKolloquium')
+        'FSW\Controller\Kolloquien' => array('testValidKolloquium',
+                                            'addSaveKolloquium',
+                                            'deleteKolloquium')
     );
 
 
