@@ -133,6 +133,18 @@ class VeranstaltungKolloquium extends BaseModel implements InputFilterAwareInter
     }
 
     /**
+     * Set record ID
+     *
+     * @return    Integer
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+
+
+    /**
      * Get list label key
      *
      * @return    String

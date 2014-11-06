@@ -7,6 +7,8 @@
  */
 
 namespace FSW\Services\Facade;
+
+use FSW\Model\VeranstaltungKolloquium;
 use Zend\Db\Adapter\Adapter;
 
 use FSW\Model\Kolloqium;
@@ -128,6 +130,15 @@ class KolloquienFacade extends BaseFacade {
 
 
         return new Kolloqium();
+
+    }
+
+    public function getEmptyVeranstaltung() {
+
+
+        $v = new VeranstaltungKolloquium();
+        $v->setId(0);
+        return $v;
 
     }
 
@@ -392,11 +403,23 @@ class KolloquienFacade extends BaseFacade {
             'veranstaltung_titel'   =>  $veranstaltungData['veranstaltung_titel'],
             'beschreibung'  => $veranstaltungData['beschreibung']
         ),
-            array(
-               'id' =>  $veranstaltungData['id']
-            ));
+        array(
+           'id' =>  $veranstaltungData['id']
+        ));
 
-        $test = "";
+    }
+
+
+    public function insertVeranstaltung($veranstaltungData = array()) {
+        $kollVeranstaltungGateway = $this->histSemDBService->getKolloquienVeranstaltungenGateway();
+        $kollVeranstaltungGateway->insert(array(
+                'id_kolloquium' =>  $veranstaltungData['id_kolloquium'],
+                'datum' =>  $veranstaltungData['datum'],
+                'veranstaltung_titel'   =>  $veranstaltungData['veranstaltung_titel'],
+                'beschreibung'  => $veranstaltungData['beschreibung']
+        ));
+
+        return $kollVeranstaltungGateway->getLastInsertValue();
 
     }
 

@@ -105,6 +105,52 @@ class KolloquienController extends BaseController {
     }
 
 
+    public function addVeranstaltungAction () {
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+
+            $form  = new VeranstaltungForm('Veranstaltung');
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+
+                $lastInsertedValue = $this->facade->insertVeranstaltung($request->getPost()->toArray()['Veranstaltungen']);
+                $form->getBaseFieldset()->get('id')->setValue($lastInsertedValue);
+
+            }
+
+            $templateDaten = array(
+                'form' => $form,
+                'id'    =>  0,
+                'update' => true
+            );
+
+
+        } else {
+            //hier noch Pruefung einbauen
+
+            $veranstaltung = $this->facade->getEmptyVeranstaltung();
+            $idKoll = $this->params()->fromQuery('id_kolloquium', 0);
+            $veranstaltung->setId_kolloquium($idKoll);
+            $veranstaltung->setId(0);
+
+            $form  = new VeranstaltungForm('Veranstaltung');
+            $form->bind($veranstaltung);
+
+            $templateDaten = array(
+                'form' => $form,
+                'id'    =>  0,
+                'update' => false
+            );
+
+        }
+
+
+        return $this->getAjaxView(
+            $templateDaten
+        );
+    }
+
 
 
     public function addKolloquiumAction() {

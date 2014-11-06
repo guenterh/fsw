@@ -278,6 +278,66 @@ var FSWAdmin = {
                     .hide();
             });
 
+            $('#addVeranstaltungButton').click(function(event) {
+
+                event.preventDefault();
+
+
+                $("<div id='fswDialogBox'>").dialog({
+                    open: function(){
+
+                        var id_kolloquium = $('#Kolloqium\\[id\\]').val();
+
+
+                        $(this).load('/kolloquien/addVeranstaltung?id_kolloquium=' + id_kolloquium );
+
+                        $('#fswDialogBox').css('background-color','#d9d9d9');
+                    },
+                    buttons: [
+                        {
+                            text: "Sichern",
+                            click: function() {
+
+                                if ($('#Veranstaltungen\\[id\\]',this).val() == 0) {
+
+                                    $(this).load('/kolloquien/addVeranstaltung', $('#Veranstaltung', this).serializeArray());
+                                } else {
+                                    alert ('kein doppeltes Einfuegen')
+                                }
+                                //das fuktioniert nach dem Laden nicht mehr
+                                //$('#idButtonSave',this).attr('disabled', 'disabled');
+
+                            },
+                            id: "idButtonSave"
+                            //disabled: 'disabled'
+
+                        },
+                        {
+                            text: "Abbrechen",
+                            click: function() {
+                                $( this ).dialog( "close" );
+                            }
+                        }
+
+                    ],
+
+
+
+                    close: function (event, ui) {
+                        $(this).dialog('destroy').remove();
+                    },
+                    title: 'Erfassen einer neuen Veranstaltung',
+                    width: '1000px',
+                    modal: true
+
+                }).dialog( "widget")
+                    .find( ".ui-dialog-titlebar-close" )
+                    .hide();
+
+
+
+            });
+
             $("#addKolloqiumButton").click(function(e) {
                 e.preventDefault();
 

@@ -117,6 +117,7 @@ class VeranstaltungenFieldset extends Fieldset implements InputFilterProviderInt
             'id' => array(
                 'required' => true,
             ),
+
             'id_kolloquium' => array(
                 'required' => true,
             ),
