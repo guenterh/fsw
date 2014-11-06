@@ -1,0 +1,57 @@
+
+<?php
+
+        $this->headTitle("Dies ist eine Veranstaltung");
+
+    $form = $this->form;
+
+
+    $form->prepare();
+
+    $veranstaltung = $form->get('Veranstaltungen');
+
+    $form->setAttribute('action', $this->url(
+        'kolloquien',
+        array(
+            'action' => 'editVeranstaltung',
+            'id'     => $this->id,
+        )
+    ));
+
+
+
+?>
+<?php echo  $this->formTwb()->openTag($form, 'horizontal') ?>
+
+<fieldset>
+
+    <legend><?php echo isset($this->update) && $this->update === True && count($form->getMessages()) == 0 ? "update der Veranstaltungsdaten erfolgreich" : "Veranstaltungsdaten"  ?></legend>
+
+    <div class="row-fluid">
+        <div class="span6">
+            <?php echo  $this->formRowTwb($veranstaltung->get('id')) ?>
+        </div>
+        <div class="span6">
+            <?php echo  $this->formRowTwb($veranstaltung->get('id_kolloquium')) ?>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span6">
+            <?php echo  $this->formRowTwb($veranstaltung->get('datum')) ?>
+        </div>
+        <div class="span6">
+            <?php echo  $this->formRowTwb($veranstaltung->get('veranstaltung_titel')) ?>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span6">
+            <?php echo  $this->formRowTwb($veranstaltung->get('beschreibung')) ?>
+        </div>
+    </div>
+
+
+</fieldset>
+
+<?php echo  $this->form()->closeTag(); ?>
