@@ -233,11 +233,49 @@ var FSWAdmin = {
                     .find( ".ui-dialog-titlebar-close" )
                     .hide();
 
+            });
+
+            $('.updateVeranstaltungButton').click(function (event) {
+
+                var currentIndex = $(event.target).attr("data-currentIndex");
+
+                var veranstaltungID = $('#Kolloqium\\[veranstaltung\\]\\[' + currentIndex  + '\\]\\[id\\]').val();
+
+                $("<div id='fswDialogBox'>").dialog({
+                    open: function(){
+                        $(this).load('/kolloquien/editVeranstaltung/' + veranstaltungID );
+
+                        $('#fswDialogBox').css('background-color','#d9d9d9');
+                    },
+                    buttons: [
+                        {
+                            text: "Sichern",
+                            click: function() {
+
+                                $(this).load('/kolloquien/editVeranstaltung/' + veranstaltungID, $('#Veranstaltung', this).serializeArray() );
+
+                            }
+                        },
+                        {
+                            text: "Abbrechen",
+                            click: function() {
+                                $( this ).dialog( "close" );
+                            }
+                        }
+
+                    ],
 
 
-                //alert ($(event.target).attr("data-currentIndex"));
-                //"Kolloqium[veranstaltung][0][veranstaltung_titel]
+                    close: function (event, ui) {
+                        $(this).dialog('destroy').remove();
+                    },
+                    title: 'Attribute einer Veranstaltung',
+                    width: '1000px',
+                    modal: true
 
+                }).dialog( "widget")
+                    .find( ".ui-dialog-titlebar-close" )
+                    .hide();
             });
 
             $("#addKolloqiumButton").click(function(e) {

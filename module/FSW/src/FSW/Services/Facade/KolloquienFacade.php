@@ -11,6 +11,7 @@ use Zend\Db\Adapter\Adapter;
 
 use FSW\Model\Kolloqium;
 use Zend\Db\Sql\Where;
+use Zend\Stdlib\ArrayObject;
 
 
 class KolloquienFacade extends BaseFacade {
@@ -379,6 +380,24 @@ class KolloquienFacade extends BaseFacade {
         }
 
         $test = "";
+    }
+
+
+    public function updateVeranstaltung ($veranstaltungData = array()) {
+
+        $kollVeranstaltungGateway = $this->histSemDBService->getKolloquienVeranstaltungenGateway();
+        $kollVeranstaltungGateway->update(array(
+            'id_kolloquium' =>  $veranstaltungData['id_kolloquium'],
+            'datum' =>  $veranstaltungData['datum'],
+            'veranstaltung_titel'   =>  $veranstaltungData['veranstaltung_titel'],
+            'beschreibung'  => $veranstaltungData['beschreibung']
+        ),
+            array(
+               'id' =>  $veranstaltungData['id']
+            ));
+
+        $test = "";
+
     }
 
 }

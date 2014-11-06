@@ -38,16 +38,6 @@ class VeranstaltungenFieldset extends Fieldset implements InputFilterProviderInt
         ));
 
 
-        $this->add(array(
-            'name' => 'id',
-            'type' => 'textarea',
-            'options' => array(
-                'label' => 'id'
-            ),
-            'attributes' => array(
-                'rows' => 1
-            )
-        ));
 
 
         $this->add(array(
@@ -124,9 +114,19 @@ class VeranstaltungenFieldset extends Fieldset implements InputFilterProviderInt
     public function getInputFilterSpecification()
     {
         return array(
-            'pers_id' => array(
+            'id' => array(
                 'required' => true,
-            )
+            ),
+            'id_kolloquium' => array(
+                'required' => true,
+            ),
+            'datum' => array(
+                'required' => true,
+            ),
+            'veranstaltung_titel' => array(
+                'required' => true,
+            ),
+
         );
     }
 }

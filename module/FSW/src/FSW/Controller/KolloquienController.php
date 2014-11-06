@@ -24,13 +24,11 @@ class KolloquienController extends BaseController {
 
         $kolloquien = $this->facade->getKolloquien();
 
-
-        //201201
         return new ViewModel(
             array(
                 "kolloquien" => $kolloquien
             )
-
+    
         );
 
     }
@@ -39,12 +37,14 @@ class KolloquienController extends BaseController {
     public function editPersonenVeranstaltungAction () {
 
 
+        /*
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
             return $this->redirect()->toRoute('kolloquien', array(
                 'action' => 'index'
             ));
         }
+        */
 
         $idVeranstaltung = (int)$this->params()->fromRoute('id', 0);
         $veranstaltung = $this->facade->getVeranstaltung($idVeranstaltung);
@@ -59,6 +59,51 @@ class KolloquienController extends BaseController {
         ));
 
     }
+
+
+    public function editVeranstaltungAction () {
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+
+            $idVeranstaltung = $this->params()->fromPost('id', null);
+            $form  = new VeranstaltungForm('Veranstaltung');
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+
+                $this->facade->updateVeranstaltung($request->getPost()->toArray()['Veranstaltungen']);
+            } else {
+
+                $test = $form->getMessages();
+            }
+
+            $templateDaten = array(
+                'form' => $form,
+                'id'    =>  $idVeranstaltung,
+                'update' => true
+            );
+
+
+        } else {
+            //hier noch Pruefung einbauen
+            $idVeranstaltung = (int)$this->params()->fromRoute('id', 0);
+            $veranstaltung = $this->facade->getVeranstaltung($idVeranstaltung);
+
+            $form  = new VeranstaltungForm('Veranstaltung');
+            $form->bind($veranstaltung);
+
+            $templateDaten = array(
+                'form' => $form,
+                'id'    =>  $idVeranstaltung,
+                'update' => false
+            );
+
+        }
+        return $this->getAjaxView(
+            $templateDaten
+        );
+    }
+
 
 
 
