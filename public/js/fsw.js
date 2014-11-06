@@ -180,6 +180,65 @@ var FSWAdmin = {
             });
 
 
+            $(".deleteVeranstaltungButton").click(function(event){
+
+                var currentIndex = $(event.target).attr("data-currentIndex");
+                var currentId = $('#Kolloqium\\[veranstaltung\\]\\[' + currentIndex  + '\\]\\[id\\]').val();
+                var currentTitel =  $('#Kolloqium\\[veranstaltung\\]\\[' + currentIndex  + '\\]\\[veranstaltung_titel\\]').val();
+
+                $('<div id="okEscDialog" title="Loeschen einer Veranstaltung">' +
+                '<p>Wollen Sie die Veranstaltung mit dem Titel</p>' +
+                '<p>' + currentTitel + '</p>' +
+                '<p>loeschen?</p>' +
+                '</div>')
+                    .dialog({
+                        buttons: [
+                            {
+                                text: "OK",
+                                click: function() {
+                                    $.ajax({
+                                        url: '/kolloquien/deleteVeranstaltung',
+                                        dataType: 'json',
+                                        //async false ist wichtig da ansonsten success function als callback aufgerufen wird.
+                                        //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
+                                        async: false,
+                                        data: {
+                                            'id': currentId
+                                        },
+                                        success: function(response) {
+                                            alert('Loeschen der Veranstaltung erfolgreich, bitte die Kolloquien neu laden');
+                                        }
+                                    });
+                                    $( this ).dialog( "close" );
+
+                                }
+                            },
+                            {
+                                text: "Abbrechen",
+                                click: function() {
+                                    $( this ).dialog( "close" );
+                                }
+                            }
+
+                        ],
+                        open: function(){
+
+                            $('#okEscDialog').css('background-color','#d9d9d9');
+                        },
+                        close: function (event, ui) {
+                            $(this).dialog('destroy').remove();
+                        }
+
+                    }).dialog( "widget")
+                    .find( ".ui-dialog-titlebar-close" )
+                    .hide();
+
+
+
+                //alert ($(event.target).attr("data-currentIndex"));
+                //"Kolloqium[veranstaltung][0][veranstaltung_titel]
+
+            });
 
             $("#addKolloqiumButton").click(function(e) {
                 e.preventDefault();

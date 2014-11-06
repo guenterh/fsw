@@ -249,5 +249,20 @@ class KolloquienController extends BaseController {
 
     }
 
+    public function deleteVeranstaltungAction () {
+
+        $inputData = array(
+            'id' => $this->params()->fromQuery('id', null),
+        );
+
+        $kolloquium = $this->facade->deleteVeranstaltung($inputData);
+
+        return new JsonModel(
+            array()
+        );
+
+
+    }
+
 
 } 

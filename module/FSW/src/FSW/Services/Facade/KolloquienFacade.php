@@ -344,12 +344,41 @@ class KolloquienFacade extends BaseFacade {
 
 
 
-
-        //jetzt alle loeschen
-
-
-
     }
 
+
+    public function deleteVeranstaltung ($inputData = array()) {
+
+        $kollVeranstaltungGateway = $this->histSemDBService->getKolloquienVeranstaltungenGateway();
+        $kollVeranstaltungPersonGateway = $this->histSemDBService->getKolloquienVeranstaltungenPersonGateway();
+
+        $id = (int) $inputData['id'];
+        //$id = 3;
+
+        $rowsVeranstaltungen =  $kollVeranstaltungGateway->select(array('id' =>  $id));
+
+        if ($rowsVeranstaltungen->count() == 1) {
+
+            $veranstaltung = $rowsVeranstaltungen->current();
+
+            $personenIds = array();
+                $rowsPersonen =  $kollVeranstaltungPersonGateway->select(array('id_kolloquium_veranstaltung' => (int) $veranstaltung->getId()));
+                foreach($rowsPersonen as $person) {
+                    $personenIds[] = $person->getId();
+                }
+
+
+            if (count($personenIds) > 0) {
+                $where = new Where();
+                $where->in('id', $personenIds);
+                $OkFalse = $kollVeranstaltungPersonGateway->delete($where);
+            }
+
+            $OkFalse = $kollVeranstaltungGateway->delete(array('id' => $veranstaltung->getId()));
+
+        }
+
+        $test = "";
+    }
 
 }
