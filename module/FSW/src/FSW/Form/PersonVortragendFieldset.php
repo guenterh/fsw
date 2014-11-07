@@ -152,8 +152,16 @@ class PersonVortragendFieldset extends Fieldset implements InputFilterProviderIn
     public function getInputFilterSpecification()
     {
         return array(
-            'zora_name' => array(
+            'id' => array(
                 'required' => true,
-            )
-        );    }
+            ),
+            'id_kolloquium_veranstaltung' => array(
+                'required' => true,
+            ),
+
+            'nach_name' => array(
+                'required' => true,
+            ),
+        );
+    }
 }

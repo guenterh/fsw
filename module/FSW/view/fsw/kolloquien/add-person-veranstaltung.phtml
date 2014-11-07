@@ -1,34 +1,33 @@
 
 <?php
 
-        $this->headTitle("Dies ist eine Veranstaltung");
 
     $form = $this->form;
 
 
     $form->prepare();
 
-    $veranstaltung = $form->get('Veranstaltungen');
+    $vortragend = $form->get('vortragend');
 
-    $vortragende = $veranstaltung->get('vortragend');
 
 ?>
 <?php echo  $this->formTwb()->openTag($form, 'horizontal') ?>
 
 <fieldset>
-    <legend>Personen</legend>
-    <?php foreach ( $veranstaltung->get('vortragend') as $vortragend) :?>
+    <legend>Person</legend>
 
-        <div class="row-fluid">
-            <div class="span6">
-                <?php echo  $this->formRowTwb($vortragend->get('id')) ?>
-            </div>
-
-            <div class="span6">
-                <?php echo  $this->formRowTwb($vortragend->get('id_kolloquium_veranstaltung')) ?>
-            </div>
-
+    <div class="row-fluid">
+        <div class="span6">
+            <?php echo  $this->formRowTwb($vortragend->get('id')) ?>
         </div>
+
+        <div class="span6">
+            <?php echo  $this->formRowTwb($vortragend->get('id_kolloquium_veranstaltung')) ?>
+        </div>
+
+    </div>
+
+
         <div class="row-fluid">
             <div class="span6">
                 <?php echo  $this->formRowTwb($vortragend->get('nach_name')) ?>
@@ -67,11 +66,15 @@
             <div class="span6">
                 <?php echo  $this->formRowTwb($vortragend->get('institution_link_bild')) ?>
             </div>
+            <div class="span6">
+                <?php echo  $this->formRowTwb($vortragend->get('id_personen_extended')) ?>
+            </div>
+
+
 
 
         </div>
 
-    <?php endforeach; ?>
 </fieldset>
 
 <?php echo  $this->form()->closeTag(); ?>

@@ -70,6 +70,8 @@ CREATE TABLE IF NOT EXISTS `fsw_kolloquium_veranstaltung_person` (
   `institution_name` varchar(2000) DEFAULT NULL,
   `institution_link` varchar(2000) DEFAULT NULL,
   `institution_link_bild` varchar(2000) DEFAULT NULL,
+  `personeninformation` varchar(2000) DEFAULT NULL,
+
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 

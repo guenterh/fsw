@@ -150,10 +150,14 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
 
                             <div class="row-fluid">
-                            <div class="span2" style="margin-right: 10px;">
-                                <a href="#"
-                                   class="showPersonenVeranstaltung" veranstaltungID="<?php echo $veranstaltung->get('id')->getValue(); ?>">zeige Personen zur Veranstaltung</a>
-                            </div>
+                                <div class="span2" style="margin-right: 10px;">
+                                    <a href="#"
+                                       class="showPersonenVeranstaltung" data-veranstaltungID="<?php echo $veranstaltung->get('id')->getValue(); ?>">zeige Personen zur Veranstaltung</a>
+                                </div>
+                                <div class="span2" style="margin-right: 10px;">
+                                    <a href="#"
+                                       class="addPersonenVeranstaltung" data-veranstaltungID="<?php echo $veranstaltung->get('id')->getValue(); ?>">fuege Person zur Veranstaltung hinzu</a>
+                                </div>
                             </div>
 
                             <div class="row-fluid">

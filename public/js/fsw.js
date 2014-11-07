@@ -160,7 +160,7 @@ var FSWAdmin = {
                 e.preventDefault();
 
 
-                var veranstaltungID =  ($(e.target).attr('veranstaltungID'));
+                var veranstaltungID =  ($(e.target).attr('data-veranstaltungID'));
                 //$("<iframe scrolling='yes' class='fswDialogBox' width='1000' height='1000'  src='/kolloquien/editPersonenVeranstaltung/15'  >").dialog({
                 $("<div id='fswDialogBox'>").dialog({
                     open: function(){
@@ -168,6 +168,15 @@ var FSWAdmin = {
 
                         $('#fswDialogBox').css('background-color','#d9d9d9');
                     },
+                    buttons: [
+                        {
+                            text: "Abbrechen",
+                            click: function() {
+                                $( this ).dialog( "close" );
+                            }
+                        }
+
+                    ],
                     close: function (event, ui) {
                         $(this).dialog('destroy').remove();
                     },
@@ -175,9 +184,71 @@ var FSWAdmin = {
                     width: '1000px',
                     modal: true
 
-                });
+                }).dialog( "widget")
+                    .find( ".ui-dialog-titlebar-close" )
+                    .hide();
 
             });
+
+
+            $(".addPersonenVeranstaltung").click(function(e) {
+                e.preventDefault();
+
+
+                var veranstaltungID =  ($(e.target).attr('data-veranstaltungID'));
+
+
+
+                $("<div id='fswDialogBox'>").dialog({
+                    open: function(){
+                        $(this).load('/kolloquien/addPersonVeranstaltung/' + veranstaltungID );
+
+                        $('#fswDialogBox').css('background-color','#d9d9d9');
+                    },
+                    buttons: [
+                        {
+                            text: "Sichern",
+                            click: function() {
+
+                                if ($('#vortragend\\[id\\]',this).val() == 0) {
+
+                                    $(this).load('/kolloquien/addPersonVeranstaltung', $('#Vortragend', this).serializeArray());
+                                } else {
+                                    alert ('kein doppeltes Einfuegen')
+                                }
+                                //das fuktioniert nach dem Laden nicht mehr
+                                //$('#idButtonSave',this).attr('disabled', 'disabled');
+
+                            }
+                        },
+                        {
+                            text: "Abbrechen",
+                            click: function() {
+                                $( this ).dialog( "close" );
+                            }
+                        }
+
+                    ],
+
+
+
+                    close: function (event, ui) {
+                        $(this).dialog('destroy').remove();
+                    },
+                    title: 'Erfassen eines neuen Kolloquiums',
+                    width: '1000px',
+                    modal: true
+
+                }).dialog( "widget")
+                    .find( ".ui-dialog-titlebar-close" )
+                    .hide();
+
+
+
+
+            });
+
+
 
 
             $(".deleteVeranstaltungButton").click(function(event){

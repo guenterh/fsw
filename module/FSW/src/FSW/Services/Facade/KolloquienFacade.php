@@ -9,6 +9,7 @@
 namespace FSW\Services\Facade;
 
 use FSW\Model\VeranstaltungKolloquium;
+use FSW\Model\VeranstaltungKolloquiumPerson;
 use Zend\Db\Adapter\Adapter;
 
 use FSW\Model\Kolloqium;
@@ -141,6 +142,17 @@ class KolloquienFacade extends BaseFacade {
         return $v;
 
     }
+
+    public function getEmptyPerson() {
+
+
+        $v = new VeranstaltungKolloquiumPerson();
+        $v->setId(0);
+        return $v;
+
+    }
+
+
 
 
     public function insertKolloquienFSW () {
@@ -284,7 +296,9 @@ class KolloquienFacade extends BaseFacade {
                                 'institution_link_bild' =>  $vortragend->getInstitution_link_bild(),
                                 'institution_name'  =>  $vortragend->getInstitution_name(),
                                 'nach_name' =>  $vortragend->getNach_name(),
-                                'vor_name'  =>  $vortragend->getVor_name()
+                                'vor_name'  =>  $vortragend->getVor_name(),
+                                'person_link'   =>  $vortragend->getPerson_link(),
+                                'personeninformation'    =>  $vortragend->getPersoneninformation()
                             )
                         );
 
@@ -433,6 +447,24 @@ class KolloquienFacade extends BaseFacade {
 
         return $kollVeranstaltungGateway->getLastInsertValue();
 
+    }
+
+    public function insertVortragendKolloquium ($vortragendData = array()) {
+
+        $kollVeranstaltungPersonGateway = $this->histSemDBService->getKolloquienVeranstaltungenPersonGateway();
+        $kollVeranstaltungPersonGateway->insert(array(
+            'id_kolloquium_veranstaltung' =>  $vortragendData['id_kolloquium_veranstaltung'],
+            'id_personen_extended' =>  $vortragendData['id_personen_extended'],
+            'institution_link'   =>  $vortragendData['institution_link'],
+            'institution_name'   =>  $vortragendData['institution_name'],
+            'nach_name'   =>  $vortragendData['nach_name'],
+            'person_link'   =>  $vortragendData['person_link'],
+            'vor_name'   =>  $vortragendData['vor_name'],
+            'institution_link_bild'  => $vortragendData['institution_link_bild'],
+            'personeninformation'   => $vortragendData['personeninformation']
+        ));
+
+        return $kollVeranstaltungPersonGateway->getLastInsertValue();
     }
 
 }

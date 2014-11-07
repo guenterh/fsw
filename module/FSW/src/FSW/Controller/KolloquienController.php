@@ -12,6 +12,7 @@ use FSW\Form\KolloquiumFieldset;
 use FSW\Form\KolloquiumForm;
 use FSW\Form\KolloquiumFormSingle;
 use FSW\Form\VeranstaltungForm;
+use FSW\Form\VeranstaltungKolloquiumPersonForm;
 use Zend\InputFilter\Input;
 use Zend\InputFilter\InputFilter;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -59,6 +60,55 @@ class KolloquienController extends BaseController {
             'form' => $form
 
         ));
+
+    }
+
+
+    public function addPersonVeranstaltungAction() {
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+
+            $form  = new VeranstaltungKolloquiumPersonForm('Vortragend');
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+
+                $lastInsertedValue = $this->facade->insertVortragendKolloquium($request->getPost()->toArray()['vortragend']);
+                $form->getBaseFieldset()->get('id')->setValue($lastInsertedValue);
+
+            }
+
+            $templateDaten = array(
+                'form' => $form,
+                'id'    =>  0,
+                'update' => true
+            );
+
+
+        } else {
+            //hier noch Pruefung einbauen
+
+            $veranstaltungsId = $this->params()->fromRoute('id',0);
+
+            $person = $this->facade->getEmptyPerson();
+            $person->setId_kolloquium_veranstaltung($veranstaltungsId);
+
+            $form  = new VeranstaltungKolloquiumPersonForm('Vortragend');
+            $form->bind($person);
+
+            $templateDaten = array(
+                'form' => $form,
+                'id'    =>  0,
+                'update' => false
+            );
+
+        }
+
+
+        return $this->getAjaxView(
+            $templateDaten
+        );
+
 
     }
 
