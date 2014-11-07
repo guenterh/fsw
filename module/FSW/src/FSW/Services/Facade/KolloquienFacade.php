@@ -409,6 +409,18 @@ class KolloquienFacade extends BaseFacade {
 
     }
 
+    public function updateKolloquium($kolloquiumData = array()) {
+        $kollGateway =  $this->histSemDBService->getKolloquienGateway();
+        $kollGateway->update(array(
+                'id_kolloquium' =>  $kolloquiumData['id_kolloquium'],
+                'titel' =>  $kolloquiumData['titel'],
+            ),
+            array(
+                'id' =>  $kolloquiumData['id']
+            ));
+
+    }
+
 
     public function insertVeranstaltung($veranstaltungData = array()) {
         $kollVeranstaltungGateway = $this->histSemDBService->getKolloquienVeranstaltungenGateway();

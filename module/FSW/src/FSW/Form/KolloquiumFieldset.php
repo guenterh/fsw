@@ -12,10 +12,10 @@ use FSW\Model\Kolloqium;
 
 use Zend\Form\Fieldset;
 
-use Zend\ModuleManager\Feature\InputFilterProviderInterface;
+use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 
-class KolloquiumFieldset extends Fieldset implements InputFilterProviderInterface {
+class KolloquiumFieldset extends Fieldset implements InputFilterProviderInterface{
 
 
 
@@ -109,12 +109,20 @@ class KolloquiumFieldset extends Fieldset implements InputFilterProviderInterfac
      *
      * @return array|\Zend\ServiceManager\Config
      */
-    public function getInputFilterConfig()
+    public function getInputFilterSpecification()
     {
         return array(
             'titel' => array(
                 'required' => true,
+            ),
+            'id' => array(
+                'required' => true,
+            ),
+            'id_kolloquium' => array(
+                'required' => true,
             )
+
+
         );
     }
 }

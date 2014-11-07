@@ -434,6 +434,44 @@ var FSWAdmin = {
 
             $("#updateKolloqiumButton").click(function(e) {
                 e.preventDefault();
+                var id = $('#Kolloqium\\[id\\]').val();
+
+
+                $("<div id='fswDialogBox'>").dialog({
+                    open: function(){
+                        $(this).load('/kolloquien/editKolloquiumAttr/' + id );
+
+                        $('#fswDialogBox').css('background-color','#d9d9d9');
+                    },
+                    buttons: [
+                        {
+                            text: "Sichern",
+                            click: function() {
+
+                                $(this).load('/kolloquien/editKolloquiumAttr/' + id, $('#Kolloquium', this).serializeArray() );
+
+                            }
+                        },
+                        {
+                            text: "Abbrechen",
+                            click: function() {
+                                $( this ).dialog( "close" );
+                            }
+                        }
+
+                    ],
+
+
+                    close: function (event, ui) {
+                        $(this).dialog('destroy').remove();
+                    },
+                    title: 'Attribute eines bestehenden Kolloquiums',
+                    width: '1000px',
+                    modal: true
+
+                }).dialog( "widget")
+                    .find( ".ui-dialog-titlebar-close" )
+                    .hide();
 
 
             });

@@ -49,7 +49,7 @@ class Kolloqium extends BaseModel implements InputFilterAwareInterface{
             $inputFilter = new InputFilter();
 
             $inputFilter->add(array(
-                    'name'     => 'idkolloquium',
+                    'name'     => 'id_kolloquium',
                     'required' => true,
                     'filters'  => array(
                         array('name' => 'Int'),

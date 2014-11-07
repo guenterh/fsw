@@ -8,7 +8,9 @@
 
 namespace FSW\Controller;
 
+use FSW\Form\KolloquiumFieldset;
 use FSW\Form\KolloquiumForm;
+use FSW\Form\KolloquiumFormSingle;
 use FSW\Form\VeranstaltungForm;
 use Zend\InputFilter\Input;
 use Zend\InputFilter\InputFilter;
@@ -336,6 +338,57 @@ class KolloquienController extends BaseController {
 
         return new JsonModel(
             array()
+        );
+
+    }
+
+    function editKolloquiumAttrAction() {
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+
+            $idKolloquium = $request->getPost()->toArray()['Kolloqium']['id'];
+            $form  = new KolloquiumForm('Kolloquium');
+            $test = $request->getPost()->toArray();
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+
+                $this->facade->updateKolloquium($request->getPost()->toArray()['Kolloqium']);
+
+            }
+
+            $templateDaten = array(
+                'form' => $form,
+                'id'    =>  $idKolloquium,
+                'update' => true
+            );
+
+
+        } else {
+            //hier noch Pruefung einbauen
+            $idKolloquium = (int)$this->params()->fromRoute('id', 0);
+            try {
+                $kolloquium = $this->facade->getKolloquim($idKolloquium);
+
+                $form  = new KolloquiumForm('Kolloquium');
+                $form->bind($kolloquium);
+            }
+            catch (\Exception $ex) {
+                return $this->redirect()->toRoute('kolloquien', array(
+                    'action' => 'index'
+                ));
+            }
+
+
+            $templateDaten = array(
+                'form' => $form,
+                'id'    =>  $idKolloquium,
+                'update' => false
+            );
+
+        }
+        return $this->getAjaxView(
+            $templateDaten
         );
 
     }
