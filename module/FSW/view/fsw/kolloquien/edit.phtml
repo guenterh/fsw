@@ -45,7 +45,11 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
 <?php echo  $this->formTwb()->openTag($form, $formType) ?>
 
-    <h3><?php echo $this->escapeHtml($title); ?></h3>
+<fieldset class="edit_legend_title">
+
+    <legend><?php echo $this->escapeHtml($kolloquium->get('titel')->getValue()); ?></legend>
+
+</fieldset>
 
 <?php echo  $this->ztbFlashMessenger()->render() ?>
 

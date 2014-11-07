@@ -4,7 +4,12 @@
 		<?php echo $this->translate('add_new_xxx', 'Libadmin') ?> <?php echo $entityName ?>
 	</a>
 </div>
-<h1><?php echo $entityNamePlural ?></h1>
+
+<fieldset class="edit_legend_title">
+
+    <legend><?php echo $entityNamePlural; ?></legend>
+
+</fieldset>
 
 <?php echo $this->ztbFlashMessenger()->render() ?>
 
