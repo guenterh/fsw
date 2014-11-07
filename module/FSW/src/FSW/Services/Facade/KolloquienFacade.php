@@ -467,4 +467,32 @@ class KolloquienFacade extends BaseFacade {
         return $kollVeranstaltungPersonGateway->getLastInsertValue();
     }
 
+
+    public function deletePersonVeranstaltung ($personData = array()) {
+
+        $personID = $personData['id'];
+        $personenVeranstaltungTableGateway =  $this->histSemDBService->getKolloquienVeranstaltungenPersonGateway();
+
+        $personenVeranstaltungTableGateway->delete(array(
+            'id' => $personID
+        ));
+
+    }
+
+
+    public function getVeranstaltungZuPerson ($personData = array()) {
+
+        $personId = $personData['id'];
+
+        $personenVeranstaltungTableGateway =  $this->histSemDBService->getKolloquienVeranstaltungenPersonGateway();
+
+        $result = $personenVeranstaltungTableGateway->select(array(
+           'id' => $personId
+        ));
+
+        return $result->current();
+
+
+    }
+
 }

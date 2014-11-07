@@ -459,4 +459,23 @@ class KolloquienController extends BaseController {
     }
 
 
+    public function deletePersonVeranstaltungAction () {
+
+        $inputData = array(
+            'id' => $this->params()->fromRoute('id', null),
+        );
+
+        $veranstaltung = $this->facade->getVeranstaltungZuPerson($inputData);
+        $kolloquium = $this->facade->deletePersonVeranstaltung($inputData);
+
+        $params = array(
+            'action' => 'editPersonenVeranstaltung',
+            'id'    =>  $veranstaltung->getId_kolloquium_veranstaltung()
+        );
+
+        return $this->forward()->dispatch('FSW\Controller\Kolloquien', $params);
+
+    }
+
+
 } 
