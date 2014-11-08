@@ -35,7 +35,8 @@ class LehrveranstaltungFieldset extends Fieldset implements InputFilterProviderI
                 'label' => 'id'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'class' => 'fswTextAreaSmall'
             )
         ));
 
@@ -47,7 +48,8 @@ class LehrveranstaltungFieldset extends Fieldset implements InputFilterProviderI
                 'label' => 'bis_zeit'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'class' => 'fswTextAreaSmall'
             )
         ));
 
@@ -58,7 +60,8 @@ class LehrveranstaltungFieldset extends Fieldset implements InputFilterProviderI
                 'label' => 'olatlink'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 2,
+                'class' => 'fswTextAreaSmall'
             )
         ));
 
@@ -71,7 +74,8 @@ class LehrveranstaltungFieldset extends Fieldset implements InputFilterProviderI
                 'label' => 'semester'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'class' => 'fswTextAreaSmall'
             )
         ));
 
@@ -82,7 +86,8 @@ class LehrveranstaltungFieldset extends Fieldset implements InputFilterProviderI
                 'label' => 'tag'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'class' => 'fswTextAreaSmall'
             )
         ));
 
@@ -93,7 +98,8 @@ class LehrveranstaltungFieldset extends Fieldset implements InputFilterProviderI
                 'label' => 'titel'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 2,
+                'class' => 'fswTextAreaSmall'
             )
         ));
 
@@ -104,7 +110,8 @@ class LehrveranstaltungFieldset extends Fieldset implements InputFilterProviderI
                 'label' => 'von_zeit'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'class' => 'fswTextAreaSmall'
             )
         ));
 
@@ -115,7 +122,8 @@ class LehrveranstaltungFieldset extends Fieldset implements InputFilterProviderI
                 'label' => 'vvzlink'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 2,
+                'class' => 'fswTextAreaSmall'
             )
         ));
 

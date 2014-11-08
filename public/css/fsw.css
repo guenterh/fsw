@@ -3,6 +3,12 @@
     width: 900px;
 }
 
+.fswTextAreaSmall {
+    width: 700px;
+}
+
+
+
 .ui-dialog-titlebar {
     background-color: #999999;
     background-image: none;
