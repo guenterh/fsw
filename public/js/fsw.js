@@ -7,7 +7,8 @@ var FSWAdmin = {
     onLoaded: function () {
 
         if (this.hasUrlPart('/medien/') ||
-            this.hasUrlPart('/forschung/') || this.hasUrlPart('/personenaktivitaet/') || this.hasUrlPart('/forschungAdmin/')) {
+            this.hasUrlPart('/forschung/') || this.hasUrlPart('/personenaktivitaet/') || this.hasUrlPart('/forschungAdmin/') ||
+            this.hasUrlPart('/lehrveranstaltung/')) {
             this.Allgemein.init();
         } else if (this.hasUrlPart('/personen/')) {
 
@@ -38,6 +39,7 @@ var FSWAdmin = {
         },
 
         initSidebar: function () {
+
             //alert (this.constructor);
             //alert('Allgemein.initSidebar');
             FSWAdmin.Sidebar.init($.proxy(this.onSearchListUpdated, this), $.proxy(this.onContentUpdated, this));

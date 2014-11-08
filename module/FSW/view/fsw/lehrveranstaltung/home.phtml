@@ -1,0 +1,11 @@
+<?php
+
+
+echo $this->render('fsw/global/home-crud', array(
+
+    'entityName' => 'Lehrveranstaltung',
+    'entityNamePlural' => 'Lehrveranstaltung',
+
+    'route' => 'lehrveranstaltung',
+    'listItems' => $lehrveranstaltungen
+));

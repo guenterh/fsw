@@ -49,7 +49,8 @@ class Lehrveranstaltung extends BaseModel implements InputFilterAwareInterface{
      */
     public function getInputFilter()
     {
-        // TODO: Implement getInputFilter() method.
+        //gebe ich heir nichts zurück erhält die Form beim Aufruf von prepare eine null message Exception
+        return array();
     }
 
     /**
@@ -59,7 +60,7 @@ class Lehrveranstaltung extends BaseModel implements InputFilterAwareInterface{
      */
     public function getId()
     {
-       $this->id;
+       return $this->id;
     }
 
     /**
@@ -69,7 +70,7 @@ class Lehrveranstaltung extends BaseModel implements InputFilterAwareInterface{
      */
     public function getListLabel()
     {
-        // TODO: Implement getListLabel() method.
+        return  $this->semester . ": " . substr($this->titel,0,150);
     }
 
     /**

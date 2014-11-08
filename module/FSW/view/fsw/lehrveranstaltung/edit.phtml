@@ -1,0 +1,117 @@
+<?php
+
+
+$form = $this->form;
+
+$form->setAttribute('action', $this->url(
+    'lehrveranstaltung',
+    array(
+        'action' => 'edit',
+        'id'     => $this->id,
+    )
+));
+
+$form->prepare();
+
+$lehrveranstaltung = $form->get('lehrveranstaltung');
+
+
+$saveButtonLabel = "Speichern";
+$formType = 'horizontal';
+
+// Force Libadmin text domain (@todo cleaner way?)
+$this->formLabelTwb()->setTranslatorTextDomain('Libadmin');
+$this->formLabel()->setTranslatorTextDomain('Libadmin');
+$this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
+
+?>
+
+
+
+<?php echo  $this->formTwb()->openTag($form, $formType) ?>
+
+<fieldset class="edit_legend_title">
+
+    <legend><?php echo $this->escapeHtml($lehrveranstaltung->get('titel')->getValue()); ?></legend>
+
+</fieldset>
+
+<?php echo  $this->ztbFlashMessenger()->render() ?>
+
+    <div class="tabbable">
+        <ul class="nav nav-tabs formTabs">
+            <li class="active">
+                <a href="#lehrveranstaltungPane"><?php echo  $this->translate('Lehrveranstaltung Atrribute', 'Libadmin') ?></a>
+            </li>
+            <li><a href="#personenPane"><?php echo  $this->translate('Leiter Lehrveranstaltung', 'Libadmin') ?></a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="lehrveranstaltungPane">
+
+                <fieldset class="general">
+                    <legend>hier die Lehrveranstaltung</legend>
+
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <?php echo  $this->formRowTwb($lehrveranstaltung->get('id')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <?php echo  $this->formRowTwb($lehrveranstaltung->get('von_zeit')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <?php echo  $this->formRowTwb($lehrveranstaltung->get('bis_zeit')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <?php echo  $this->formRowTwb($lehrveranstaltung->get('tag')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <?php echo  $this->formRowTwb($lehrveranstaltung->get('semester')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid"s>
+                        <div class="span12">
+                            <?php echo  $this->formRowTwb($lehrveranstaltung->get('titel')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <?php echo  $this->formRowTwb($lehrveranstaltung->get('vvzlink')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <?php echo  $this->formRowTwb($lehrveranstaltung->get('olatlink')) ?>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </fieldset>
+
+
+            </div>
+            <div class="tab-pane" id="personenPane">
+
+                <fieldset>
+                    <legend>und hier die Personen</legend>
+                </fieldset>
+
+            </div>
+
+
+        </div>
+    </div>
+
+<?php echo  $this->form()->closeTag(); ?>

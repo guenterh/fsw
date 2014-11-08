@@ -9,16 +9,20 @@
 namespace FSW\Services\Facade;
 
 
-//use Libadmin\Model\BaseModel;
 use FSW\Model\BaseModel;
-use FSW\Model\Forschung;
-use FSW\Model\Person;
-use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
-use Zend\Db\Sql\Sql;
+use Zend\Db\Sql\Select;
 use Zend\Debug\Debug;
 
 class LehrveranstaltungFacade extends BaseFacade {
+
+
+
+    protected $searchFields = array(
+        'semester',
+        'titel',
+    );
+
 
 
     /**
@@ -32,6 +36,19 @@ class LehrveranstaltungFacade extends BaseFacade {
     {
         // TODO: Implement find() method.
     }
+
+
+    public function getAllLehrveranstaltungen() {
+
+        $lvTableGateway = $this->histSemDBService->getLehrveranstaltungenGateway();
+        $select = $lvTableGateway->getSql()->select()->order('semester desc');
+        return  $lvTableGateway->selectWith($select);
+
+
+
+    }
+
+
 
 
     public function insertLehrveranstaltungFromOldDB ()
@@ -107,17 +124,11 @@ class LehrveranstaltungFacade extends BaseFacade {
                     }
                 } else {
                     $this->lehrveranstaltungNotFound($arrayCopy);
-
-
                 }
-                //m.name like "%' . $name . '%" and m.name like "%' . $vorname . '%";';
-
 
             } else {
                 $this->lehrveranstaltungNotFound($arrayCopy);
             }
-
-
         }
     }
 
@@ -125,6 +136,42 @@ class LehrveranstaltungFacade extends BaseFacade {
     {
 
         Debug::dump($data, 'lehrveranstaltung nicht gefunden');
+
+    }
+
+    public function searchInEntities ($query, $limit = 15) {
+
+
+        $select = new Select();
+        $likeCondition = $this->getSearchFieldsLikeCondition($query);
+
+
+        $targetGateway = $this->histSemDBService->getLehrveranstaltungenGateway();
+
+        $select->from($targetGateway->getTable())
+            ->order("semester")
+            //->limit($limit)
+            ->where($likeCondition);
+
+
+        //$sql = new Sql($this->tableGateway->getAdapter(), $this->getTable());
+        //$test = $sql->getSqlStringForSqlObject($select);
+        //var_dump($sql->getSqlStringForSqlObject($select));
+
+        return $targetGateway->selectWith($select);
+
+    }
+
+    public function getLehrveranstaltung ($id) {
+
+        $lvGateway =  $this->histSemDBService->getLehrveranstaltungenGateway();
+
+        $result = $lvGateway->select(array(
+            'id' => $id
+        ));
+
+        return $result->current();
+
 
     }
 

@@ -42,6 +42,20 @@ return array(
                     ),
                 ),
             ),
+            'lehrveranstaltung' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/lehrveranstaltung[/][:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'FSW\Controller\Lehrveranstaltungen',
+                        'action'     => 'index'
+                    ),
+                ),
+            ),
             'personen' => array(
                 'type'    => 'segment',
                 'options' => array(
@@ -269,7 +283,6 @@ return array(
             'FSW\Controller\Forschung' => 'FSW\Controller\Factory::getForschungController',
             'FSW\Controller\PersonenAktivitaeten' => 'FSW\Controller\Factory::getPersonAktivitaetController',
             'FSW\Controller\Publications' => 'FSW\Controller\Factory::getPublicationsController',
-
             'FSW\Controller\Lehrveranstaltungen'    =>  'FSW\Controller\Factory::getLehrveranstaltungenController'
 
         )
@@ -293,10 +306,10 @@ return array(
         // The DefaultNavigationFactory we configured in (1) uses 'default' as the sitemap key
         'default' => array(
             // And finally, here is where we define our page hierarchy
-            'home' => array(
-                'label' => 'navigation_home',
-                'route' => 'home'
-            ),
+            //'home' => array(
+            //    'label' => 'navigation_home',
+            //    'route' => 'home'
+            //),
             'medien' => array(
                 'label' => 'navigation_medien',
                 'route' => 'medien'
@@ -316,7 +329,12 @@ return array(
             'person_aktivitaet' => array(
                 'label' => 'person_aktivitaet',
                 'route' => 'personenaktivitaet'
+            ),
+            'lehrveranstaltung' => array(
+                'label' => 'lehrveranstaltung',
+                'route' => 'lehrveranstaltung'
             )
+
 
 
         ),
