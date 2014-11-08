@@ -175,6 +175,16 @@ return array(
                             'action' => 'insertKolloquienFSW'
                         )
                     )
+                ),
+
+                'lehrveranstaltungen-insert' => array(
+                    'options'   =>  array(
+                        'route' =>  'lehrveranstaltungen',
+                        'defaults'  =>  array(
+                            'controller'    =>  'FSW\Controller\Lehrveranstaltungen',
+                            'action'    =>  'insertLehrveranstaltungenFromOldFSW'
+                        )
+                    )
                 )
 
 
@@ -221,6 +231,8 @@ return array(
 
             'ZoraDocTableGateway'          =>  'FSW\Services\Factory::getZoraDocTableGateway',
             'RollenTableGateway'          =>  'FSW\Services\Factory::getRollenTableGateway',
+            'LehrveranstaltungenTableGateway'   =>  'FSW\Services\Factory::getLehrveranstaltungenTableGateway',
+            'RelationPersonLehrveranstaltungeTableGateway'   =>  'FSW\Services\Factory::getRelationPersonLehrveranstaltungTableGateway',
             'ZoraAuthorTableGateway'          =>  'FSW\Services\Factory::getZoraAuthorTableGateway',
             'ZoraDocTypeTableGateway'          =>  'FSW\Services\Factory::getZoraDocTypeTableGateway',
             'CoverTableGateway'          =>  'FSW\Services\Factory::getCoverTableGateway',
@@ -234,6 +246,7 @@ return array(
         ),
         'invokables' => array(
             'KolloquienFacade' => 'FSW\Services\Facade\KolloquienFacade',
+            'LehrveranstaltungenFacade' =>  'FSW\Services\Facade\LehrveranstaltungFacade'
         ),
         'initializers' => array(
             'FSW\Services\Initializer\Initializer::initInstance',
@@ -255,7 +268,9 @@ return array(
             'FSW\Controller\Kolloquien' => 'FSW\Controller\Factory::getKolloquienController',
             'FSW\Controller\Forschung' => 'FSW\Controller\Factory::getForschungController',
             'FSW\Controller\PersonenAktivitaeten' => 'FSW\Controller\Factory::getPersonAktivitaetController',
-            'FSW\Controller\Publications' => 'FSW\Controller\Factory::getPublicationsController'
+            'FSW\Controller\Publications' => 'FSW\Controller\Factory::getPublicationsController',
+
+            'FSW\Controller\Lehrveranstaltungen'    =>  'FSW\Controller\Factory::getLehrveranstaltungenController'
 
         )
         //'factories' => array(

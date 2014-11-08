@@ -8,7 +8,9 @@
 
 namespace FSW\Services;
 
+use FSW\Model\Lehrveranstaltung;
 use FSW\Model\Medium;
+use FSW\Model\RelationPersonLehrveranstaltung;
 use FSW\Model\VeranstaltungKolloquium;
 use FSW\Model\VeranstaltungKolloquiumPerson;
 use FSW\Services\Facade\MedienFacade;
@@ -137,6 +139,26 @@ class Factory {
         $resultSetPrototype->setArrayObjectPrototype(new Rolle());
         return new TableGateway('Per_Rolle', $dbAdapter, null, $resultSetPrototype);
     }
+
+
+    public static function getLehrveranstaltungenTableGateway(ServiceManager $sm) {
+
+        $histSemDBService = $sm->get('HistSemDBService');
+        $dbAdapter = $histSemDBService->getAdapter();
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new Lehrveranstaltung());
+        return new TableGateway('fsw_lehrveranstaltung', $dbAdapter, null, $resultSetPrototype);
+    }
+
+    public static function getRelationPersonLehrveranstaltungTableGateway(ServiceManager $sm) {
+
+        $histSemDBService = $sm->get('HistSemDBService');
+        $dbAdapter = $histSemDBService->getAdapter();
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new RelationPersonLehrveranstaltung());
+        return new TableGateway('fsw_relation_personen_fsw_lehrveranstaltung', $dbAdapter, null, $resultSetPrototype);
+    }
+
 
 
 

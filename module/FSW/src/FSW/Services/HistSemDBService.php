@@ -53,6 +53,9 @@ class HistSemDBService implements ServiceManagerAwareInterface {
     protected $relationHSPersonFSWPersonTableGateway;
     protected $zoraAuthorTableGateway;
 
+    protected $lehrveranstaltungenGateway;
+    protected $relationPersonenLehrveranstaltung;
+
 
 
     protected $serviceManager;
@@ -113,6 +116,8 @@ class HistSemDBService implements ServiceManagerAwareInterface {
 
         return $this->fswPersonenExtendedGateway;
     }
+
+
 
 
     public function getZoraAuthorGateway() {
@@ -203,6 +208,27 @@ class HistSemDBService implements ServiceManagerAwareInterface {
         }
 
         return $this->rollenTableGateway;
+    }
+
+
+
+    public function getLehrveranstaltungenGateway() {
+
+        if (is_null($this->lehrveranstaltungenGateway)) {
+            $this->lehrveranstaltungenGateway = $this->serviceManager->get("LehrveranstaltungenTableGateway");
+        }
+
+        return $this->lehrveranstaltungenGateway;
+    }
+
+
+    public function getRelationPersonenLehrveranstaltungGateway() {
+
+        if (is_null($this->relationPersonenLehrveranstaltung)) {
+            $this->relationPersonenLehrveranstaltung = $this->serviceManager->get("RelationPersonLehrveranstaltungeTableGateway");
+        }
+
+        return $this->relationPersonenLehrveranstaltung;
     }
 
 

@@ -203,7 +203,7 @@ CREATE TABLE IF NOT EXISTS `fsw_zora_doctype` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `typOAI`
+-- Tabellenstruktur für Tabelle `fsw_relation_hspersonen_fsw_personen`
 --
 
 DROP TABLE IF EXISTS `fsw_relation_hspersonen_fsw_personen`;
@@ -214,6 +214,36 @@ CREATE TABLE IF NOT EXISTS `fsw_relation_hspersonen_fsw_personen` (
   `fper_rolle_roll_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `fsw_lehrveranstaltungen`
+--
+
+DROP TABLE IF EXISTS `fsw_lehrveranstaltung`;
+CREATE TABLE IF NOT EXISTS `fsw_lehrveranstaltung` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `von_zeit` int(4) DEFAULT NULL,
+  `bis_zeit` int(4) DEFAULT NULL,
+  `semester` int(5) NOT NULL,
+  `titel` text DEFAULT NULL,
+  `tag` VARCHAR(20) DEFAULT NULL,
+  `vvzlink` VARCHAR(1000) DEFAULT NULL,
+  `olatlink` VARCHAR(1000) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+
+
+DROP TABLE IF EXISTS `fsw_relation_personen_fsw_lehrveranstaltung`;
+CREATE TABLE IF NOT EXISTS `fsw_relation_personen_fsw_lehrveranstaltung` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `fper_personen_pers_id` bigint(20) NOT NULL,
+  `ffsw_lehrveranstaltungen_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+
 
 
 

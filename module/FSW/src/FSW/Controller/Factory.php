@@ -89,6 +89,20 @@ class Factory {
         return $uC;
     }
 
+    public static function getLehrveranstaltungenController(ServiceManager $sm) {
+
+        $uC = new \FSW\Controller\LehrveranstaltungController();
+        if ($uC instanceof FacadeAwareInterface)  {
+
+            $uC->setFacadeService($sm->getServiceLocator()->get('LehrveranstaltungenFacade'));
+
+        }
+        return $uC;
+
+
+
+    }
+
 
 
 

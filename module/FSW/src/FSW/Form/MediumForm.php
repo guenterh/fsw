@@ -56,7 +56,7 @@ class MediumForm extends Form {
         $selectarray = array();
         foreach ($personen as $key => $person) {
 
-            $selectarray[$key] = $person->getPers_vorname() . " " . $person->getPers_name();
+            $selectarray[$key] = $person->getPers_name()  . " " . $person->getPers_vorname();
         }
 
         $this->add(array(
