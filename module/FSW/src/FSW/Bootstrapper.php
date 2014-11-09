@@ -16,7 +16,10 @@ class Bootstrapper {
         'FSW\Controller\Kolloquien' => array('testValidKolloquium',
                                             'addSaveKolloquium',
                                             'deleteKolloquium',
-                                            'deleteVeranstaltung')
+                                            'deleteVeranstaltung'),
+        'FSW\Controller\Lehrveranstaltungen'    =>  array(
+                                            'deletePerson'
+                                        )
     );
 
 

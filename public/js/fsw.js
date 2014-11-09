@@ -7,8 +7,7 @@ var FSWAdmin = {
     onLoaded: function () {
 
         if (this.hasUrlPart('/medien/') ||
-            this.hasUrlPart('/forschung/') || this.hasUrlPart('/personenaktivitaet/') || this.hasUrlPart('/forschungAdmin/') ||
-            this.hasUrlPart('/lehrveranstaltung/')) {
+            this.hasUrlPart('/forschung/') || this.hasUrlPart('/personenaktivitaet/') || this.hasUrlPart('/forschungAdmin/')) {
             this.Allgemein.init();
         } else if (this.hasUrlPart('/personen/')) {
 
@@ -16,6 +15,9 @@ var FSWAdmin = {
         } else if (this.hasUrlPart('/kolloquien/')) {
 
             this.Kolloquien.init();
+        } else if (this.hasUrlPart('/lehrveranstaltung/')) {
+
+            this.Lehrveranstaltung.init();
         }
     },
 
@@ -58,6 +60,210 @@ var FSWAdmin = {
         onSearchListUpdated: function () {
 
         }
+
+    },
+
+    Lehrveranstaltung : {
+
+        init: function () {
+            //alert ('Personen.init()');
+            this.initSidebar();
+            this.initEditor();
+        },
+
+        initSidebar: function () {
+            //alert (this.constructor);
+            //alert('Personen.initSidebar');
+            FSWAdmin.Sidebar.init($.proxy(this.onSearchListUpdated, this), $.proxy(this.onContentUpdated, this));
+        },
+        initEditor: function () {
+            //alert ('Personen.initEditor()');
+            FSWAdmin.Editor.init($.proxy(this.onContentUpdated, this));
+
+            $('.updatePersonLVButton').click(function (event) {
+
+                event.preventDefault();
+
+
+                var currentIndex = $(event.target).attr("data-currentIndex");
+
+                var personenId = $('#lehrveranstaltung\\[personenLehrveranstaltung\\]\\['  + currentIndex  + '\\]\\[fper_personen_pers_id\\]').val();
+                var relationId = $('#lehrveranstaltung\\[personenLehrveranstaltung\\]\\['  + currentIndex  + '\\]\\[id\\]').val();
+                var veranstaltungId = $('#lehrveranstaltung\\[personenLehrveranstaltung\\]\\['  + currentIndex  + '\\]\\[ffsw_lehrveranstaltungen_id\\]').val();
+
+                $("<div id='fswDialogBox'>").dialog({
+                    open: function(){
+                        $(this).load('/lehrveranstaltung/editPerson',
+                            {
+                                fper_personen_pers_id: personenId,
+                                id: relationId,
+                                ffsw_lehrveranstaltungen_id: veranstaltungId,
+                                mode: 'show'
+                            });
+
+                        $('#fswDialogBox').css('background-color','#d9d9d9');
+                    },
+                    buttons: [
+                        {
+                            text: "Sichern",
+                            click: function() {
+
+                                //$(this).load('/kolloquien/editVeranstaltung/' + veranstaltungID, $('#Veranstaltung', this).serializeArray() );
+                                $(this).load('/lehrveranstaltung/editPerson',
+                                    $('#personenLehrveranstaltung', this).serializeArray()
+                                );
+
+                            }
+                        },
+                        {
+                            text: "Abbrechen",
+                            click: function() {
+                                $( this ).dialog( "close" );
+                            }
+                        }
+
+                    ],
+
+
+                    close: function (event, ui) {
+                        $(this).dialog('destroy').remove();
+                    },
+                    title: 'Attribute durchführende Person Lehrveranstaltung',
+                    width: '1000px',
+                    modal: true
+
+                }).dialog( "widget")
+                    .find( ".ui-dialog-titlebar-close" )
+                    .hide();
+
+
+            });
+
+            $('.deletePersonLVButton').click(function (event) {
+                event.preventDefault();
+
+                var currentIndex = $(event.target).attr("data-currentIndex");
+                var relationId = $('#lehrveranstaltung\\[personenLehrveranstaltung\\]\\['  + currentIndex  + '\\]\\[id\\]').val();
+
+
+                $('<div id="okEscDialog" title="Loeschen einer Person mit Bezug zu einer Lehrveranstaltung">' +
+                '<p>Wollen Sie die Person</p>' +
+                '<p>loeschen?</p>' +
+                '</div>')
+                    .dialog({
+                        buttons: [
+                            {
+                                text: "OK",
+                                click: function() {
+                                    $.ajax({
+                                        url: '/lehrveranstaltung/deletePerson/' + relationId,
+                                        dataType: 'json',
+                                        //async false ist wichtig da ansonsten success function als callback aufgerufen wird.
+                                        //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
+                                        async: false,
+                                        success: function(response) {
+                                            alert('Loeschen der Person erfolgreich, bitte die Lehrveranstaltung neu laden');
+                                        }
+                                    });
+                                    $( this ).dialog( "close" );
+
+                                }
+                            },
+                            {
+                                text: "Abbrechen",
+                                click: function() {
+                                    $( this ).dialog( "close" );
+                                }
+                            }
+
+                        ],
+                        open: function(){
+
+                            $('#okEscDialog').css('background-color','#d9d9d9');
+                        },
+                        close: function (event, ui) {
+                            $(this).dialog('destroy').remove();
+                        }
+
+                    }).dialog( "widget")
+                    .find( ".ui-dialog-titlebar-close" )
+                    .hide();
+
+
+            });
+
+
+            $('#addPersonLVButton').click(function (event) {
+
+                event.preventDefault();
+                var currentLV = $('#lehrveranstaltung\\[id\\]',  $('form#lehrveranstaltung')).val();
+
+
+                $("<div id='fswDialogBox'>").dialog({
+                    open: function(){
+                        $(this).load('/lehrveranstaltung/editPerson',
+                            {
+                                fper_personen_pers_id: 0,
+                                id: 0,
+                                ffsw_lehrveranstaltungen_id: currentLV
+
+                            });
+
+                        $('#fswDialogBox').css('background-color','#d9d9d9');
+                    },
+                    buttons: [
+                        {
+                            text: "Sichern",
+                            click: function() {
+
+                                //$(this).load('/kolloquien/editVeranstaltung/' + veranstaltungID, $('#Veranstaltung', this).serializeArray() );
+                                $(this).load('/lehrveranstaltung/editPerson',
+                                    $('#personenLehrveranstaltung', this).serializeArray()
+                                );
+
+                            }
+                        },
+                        {
+                            text: "Abbrechen",
+                            click: function() {
+                                $( this ).dialog( "close" );
+                            }
+                        }
+
+                    ],
+
+
+                    close: function (event, ui) {
+                        $(this).dialog('destroy').remove();
+                    },
+                    title: 'Attribute einer zusätzlichen Person fuer eine Lehrveranstaltung',
+                    width: '1000px',
+                    modal: true
+
+                }).dialog( "widget")
+                    .find( ".ui-dialog-titlebar-close" )
+                    .hide();
+
+
+
+
+            });
+
+
+
+
+        },
+        onContentUpdated: function () {
+            //alert ('Personen.onContentUpdated');
+            //FSWAdmin.PersonenUpdated = true;
+            this.initEditor();
+        },
+
+        onSearchListUpdated: function () {
+
+        }
+
+
 
     },
 

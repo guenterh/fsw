@@ -1,0 +1,38 @@
+
+<?php
+
+
+$form = $this->form;
+
+
+$form->prepare();
+
+
+
+?>
+<?php echo  $this->formTwb()->openTag($form, 'horizontal') ?>
+
+<fieldset>
+    <legend>Person</legend>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <?php echo  $this->formRowTwb($form->get('id')) ?>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <?php echo  $this->formRowTwb($form->get('ffsw_lehrveranstaltungen_id')) ?>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <?php echo  $this->formRowTwb($form->get('fper_personen_pers_id')) ?>
+        </div>
+    </div>
+
+
+</fieldset>
+
+<?php echo  $this->form()->closeTag(); ?>

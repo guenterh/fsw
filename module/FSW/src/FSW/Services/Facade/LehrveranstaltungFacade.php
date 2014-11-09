@@ -10,6 +10,7 @@ namespace FSW\Services\Facade;
 
 
 use FSW\Model\BaseModel;
+use FSW\Model\RelationPersonLehrveranstaltung;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Select;
 use Zend\Debug\Debug;
@@ -172,27 +173,85 @@ class LehrveranstaltungFacade extends BaseFacade {
         ));
 
         $lV=  $result->current();
-
         $resultPersonen = $relPersonLV->select(array(
 
-           'id' => $lV->getId()
+           'ffsw_lehrveranstaltungen_id' => $lV->getId()
         ));
 
         $personen = array();
-
         foreach ($resultPersonen as $person) {
-
             //$lV->addPerson($person);
             $personen[] = $person;
-
         }
         $lV->setPersonenLehrveranstaltung($personen);
 
-
         return $lV;
+    }
+
+    public function getRelationPersonLehrveranstaltung ($postData = array()) {
+
+        $relPersonLVGateway = $this->histSemDBService->getRelationPersonenLehrveranstaltungGateway();
+        $result = $relPersonLVGateway->select(array(
+            'id' => $postData['id']
+        ));
+        $relPerson=  $result->current();
+        return $relPerson;
+
+    }
+
+    public function getHSPersonenGateway () {
+
+        return $this->histSemDBService->getPersonenGateway();
+    }
+
+    public function updatePersonLehrveranstaltung ($postData = array()) {
+
+        $relPersonLVGateway = $this->histSemDBService->getRelationPersonenLehrveranstaltungGateway();
+        $relPersonLVGateway->update(array(
+                'fper_personen_pers_id' =>  $postData['fper_personen_pers_id'],
+                'ffsw_lehrveranstaltungen_id' =>  $postData['ffsw_lehrveranstaltungen_id'],
+            ),
+            array(
+                'id' =>  $postData['id']
+            ));
 
 
     }
 
+    public function getEmptyPersonLehrveranstaltung($postData = array()) {
+
+        $rPLV = new RelationPersonLehrveranstaltung();
+        $rPLV->setFfsw_lehrveranstaltungen_id($postData['ffsw_lehrveranstaltungen_id']);
+        $rPLV->setId(0);
+        $rPLV->setFper_personen_pers_id("");
+
+        return $rPLV;
+
+    }
+
+    public function insertNewPersonLehrveranstaltung ($postData = array()) {
+
+        $relPersonLVGateway = $this->histSemDBService->getRelationPersonenLehrveranstaltungGateway();
+        $relPersonLVGateway->insert(array(
+            'fper_personen_pers_id' => $postData['fper_personen_pers_id'],
+            'ffsw_lehrveranstaltungen_id'   =>  $postData['ffsw_lehrveranstaltungen_id']
+
+        ))  ;
+
+        $postData['id'] = $relPersonLVGateway->getLastInsertValue();
+
+        return $this->getRelationPersonLehrveranstaltung($postData);
+
+
+    }
+
+    public function deletePersonRelationLV($id) {
+        $relPersonLVGateway = $this->histSemDBService->getRelationPersonenLehrveranstaltungGateway();
+        $relPersonLVGateway->delete(array(
+           'id' => $id
+        ));
+
+
+    }
 
 }

@@ -45,7 +45,7 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
             <li class="active">
                 <a href="#lehrveranstaltungPane"><?php echo  $this->translate('Lehrveranstaltung Atrribute', 'Libadmin') ?></a>
             </li>
-            <li><a href="#personenPane"><?php echo  $this->translate('Leiter Lehrveranstaltung', 'Libadmin') ?></a></li>
+            <li><a href="#personenPane"><?php echo  $this->translate('durchfuehrende Personen', 'Libadmin') ?></a></li>
         </ul>
 
         <div class="tab-content">
@@ -105,11 +105,22 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
             </div>
             <div class="tab-pane" id="personenPane">
+                <fieldset>
+                    <div class="topButtons">
+                        <a href="#"  class="btn btn-medium" id="addPersonLVButton">Person hinzufuegen</a>
+                    </div>
+                </fieldset>
 
                 <fieldset>
                     <legend>und hier die Personen</legend>
-
+                    <?php $numberVeranstaltung = 0 ?>
                     <?php foreach ($personen as $person): ?>
+                        <?php if ($numberVeranstaltung != 0) : ?>
+                            <div class="row-fluid">
+                                <div>==========================================================================================</div>
+                            </div>
+                        <?php endif;  ?>
+
 
                         <div class="row-fluid">
                             <div class="span12">
@@ -128,6 +139,14 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
                             </div>
                         </div>
 
+                        <div class="row-fluid">
+                            <div class="topButtons">
+                                <a href="#"  class="btn btn-medium updatePersonLVButton" data-currentIndex="<?php echo $numberVeranstaltung; ?>">Person anpassen</a>
+                                <a href="#"  class="btn btn-medium deletePersonLVButton" data-currentIndex="<?php echo $numberVeranstaltung; ?>">Person entfernen</a>
+                           </div>
+                        </div>
+
+                        <?php $numberVeranstaltung++; ?>
 
                     <?php endforeach; ?>
 

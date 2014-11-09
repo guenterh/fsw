@@ -3,8 +3,16 @@
     width: 900px;
 }
 
-.fswTextAreaSmall {
+.fswTextAreaMiddle {
     width: 700px;
+}
+
+.fswTextAreaSmall {
+    width: 500px;
+}
+
+.fswTextAreaVerySmall {
+    width: 300px;
 }
 
 

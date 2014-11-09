@@ -80,7 +80,9 @@ class LehrveranstaltungPersonFieldset extends Fieldset implements InputFilterPro
             ),
             'attributes' => array(
                 'rows' => 1,
-                'class' => 'fswTextAreaSmall'
+                'class' => 'fswTextAreaVerySmall',
+                'readonly'  => 'readonly'
+
             )
         ));
 
@@ -92,7 +94,9 @@ class LehrveranstaltungPersonFieldset extends Fieldset implements InputFilterPro
             ),
             'attributes' => array(
                 'rows' => 1,
-                'class' => 'fswTextAreaSmall'
+                'class' => 'fswTextAreaVerySmall',
+                'readonly'  => 'readonly'
+
             )
         ));
 
@@ -104,14 +108,11 @@ class LehrveranstaltungPersonFieldset extends Fieldset implements InputFilterPro
             ),
             'attributes' => array(
                 'rows' => 1,
-                'class' => 'fswTextAreaSmall'
+                'class' => 'fswTextAreaVerySmall',
+                'readonly'  => 'readonly'
+
             )
         ));
-
-
-
-
-
 
     }
 

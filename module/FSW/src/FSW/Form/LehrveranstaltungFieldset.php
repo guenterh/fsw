@@ -150,7 +150,7 @@ class LehrveranstaltungFieldset extends Fieldset implements InputFilterProviderI
 
             'options' => array(
                 'label' => 'Person',
-                'count' => 1,
+                'count' => 10,
                 'should_create_template' => true,
                 'allow_add' => true,
                 'target_element' => array(
