@@ -29,6 +29,8 @@ class Lehrveranstaltung extends BaseModel implements InputFilterAwareInterface{
     public $vvzlink;
     public $olatlink;
 
+    public $personenLehrveranstaltung = null;
+
 
 
     /**
@@ -184,6 +186,36 @@ class Lehrveranstaltung extends BaseModel implements InputFilterAwareInterface{
     {
         $this->vvzlink = $vvzlink;
     }
+
+    /**
+     * @return null
+     */
+    public function getPersonenLehrveranstaltung()
+    {
+        return $this->personenLehrveranstaltung;
+    }
+
+    /**
+     * @param null $personenLehrveranstaltung
+     */
+    public function setPersonenLehrveranstaltung($personenLehrveranstaltung)
+    {
+        $this->personenLehrveranstaltung = $personenLehrveranstaltung;
+    }
+
+
+
+
+
+    /**
+     * @return array
+     */
+
+    public function addPerson($personenLehrveranstaltung)
+    {
+        $this->personenLehrveranstaltung[] = $personenLehrveranstaltung;
+    }
+
 
 
 

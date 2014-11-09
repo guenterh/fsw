@@ -208,6 +208,27 @@ return array(
         ),
     ),
 
+    /*
+     * doesn't work....
+    */
+
+    /*
+
+    'form_elements' => array(
+        'factories' => array(
+            'fswformlehrveranstaltungpersonfieldset' => function($sm) {
+                $serviceLocator = $sm->getServiceLocator();
+                $personLehrvG = $serviceLocator->get('HistSemDBService')->getRelationPersonenLehrveranstaltungGateway();
+                return  new \FSW\Form\LehrveranstaltungPersonFieldset('lehrveranstaltungPerson', $personLehrvG);
+            }
+        ),
+        'invokables' => array(
+            'FSW\Form\LehrveranstaltungForm' => 'FSW\Form\LehrveranstaltungForm'
+        )
+
+    ),
+    */
+
     'service_manager' => array(
         'allow_override' => true,
         'factories' => array(

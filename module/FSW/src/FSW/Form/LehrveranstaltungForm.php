@@ -27,6 +27,22 @@ class LehrveranstaltungForm extends Form {
         ));
 
         $this->add(array(
+            'type' => 'Zend\Form\Element\Collection',
+            'name' => 'personenLehrveranstaltung',
+            'options' => array(
+                'label' => 'Person der Lehrveranstaltung',
+                'target_element' => array(
+                    'type' => 'FSW\Form\LehrveranstaltungPersonFieldset'
+                    //'type' => 'fswformlehrveranstaltungpersonfieldset'
+
+                )
+            )
+        ));
+
+
+
+
+        $this->add(array(
             'name' => 'submit',
             'type' => 'Submit',
             'attributes' => array(

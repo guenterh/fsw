@@ -144,6 +144,22 @@ class LehrveranstaltungFieldset extends Fieldset implements InputFilterProviderI
 
         */
 
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Collection',
+            'name' => 'personenLehrveranstaltung',
+
+            'options' => array(
+                'label' => 'Person',
+                'count' => 1,
+                'should_create_template' => true,
+                'allow_add' => true,
+                'target_element' => array(
+                    'type' => 'FSW\Form\LehrveranstaltungPersonFieldset'
+                )
+            )
+        ));
+
+
     }
 
 

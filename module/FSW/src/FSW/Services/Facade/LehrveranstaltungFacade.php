@@ -165,12 +165,31 @@ class LehrveranstaltungFacade extends BaseFacade {
     public function getLehrveranstaltung ($id) {
 
         $lvGateway =  $this->histSemDBService->getLehrveranstaltungenGateway();
+        $relPersonLV = $this->histSemDBService->getRelationPersonenLehrveranstaltungGateway();
 
         $result = $lvGateway->select(array(
             'id' => $id
         ));
 
-        return $result->current();
+        $lV=  $result->current();
+
+        $resultPersonen = $relPersonLV->select(array(
+
+           'id' => $lV->getId()
+        ));
+
+        $personen = array();
+
+        foreach ($resultPersonen as $person) {
+
+            //$lV->addPerson($person);
+            $personen[] = $person;
+
+        }
+        $lV->setPersonenLehrveranstaltung($personen);
+
+
+        return $lV;
 
 
     }

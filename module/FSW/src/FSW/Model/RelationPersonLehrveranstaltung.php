@@ -9,6 +9,7 @@
 namespace FSW\Model;
 
 
+use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
@@ -39,7 +40,37 @@ class RelationPersonLehrveranstaltung extends BaseModel implements InputFilterAw
      */
     public function getInputFilter()
     {
-        // TODO: Implement getInputFilter() method.
+        if (!$this->inputFilter) {
+            $inputFilter = new InputFilter();
+
+            $inputFilter->add(array(
+                'name'     => 'id',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name'     => 'fper_personen_pers_id',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name'     => 'ffsw_lehrveranstaltungen_id',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            ));
+
+        }
+
+        return $this->inputFilter;
+
     }
 
     /**
@@ -53,6 +84,16 @@ class RelationPersonLehrveranstaltung extends BaseModel implements InputFilterAw
     }
 
     /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+
+
+    /**
      * Get list label key
      *
      * @return    String
@@ -61,6 +102,41 @@ class RelationPersonLehrveranstaltung extends BaseModel implements InputFilterAw
     {
         // TODO: Implement getListLabel() method.
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFfsw_lehrveranstaltungen_id()
+    {
+        return $this->ffsw_lehrveranstaltungen_id;
+    }
+
+    /**
+     * @param mixed $ffsw_lehrveranstaltungen_id
+     */
+    public function setFfsw_lehrveranstaltungen_id($ffsw_lehrveranstaltungen_id)
+    {
+        $this->ffsw_lehrveranstaltungen_id = $ffsw_lehrveranstaltungen_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFper_personen_pers_id()
+    {
+        return $this->fper_personen_pers_id;
+    }
+
+    /**
+     * @param mixed $fper_personen_pers_id
+     */
+    public function setFper_personen_pers_id($fper_personen_pers_id)
+    {
+        $this->fper_personen_pers_id = $fper_personen_pers_id;
+    }
+
+
+
 
 
 

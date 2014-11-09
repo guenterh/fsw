@@ -49,6 +49,8 @@ class LehrveranstaltungController extends BaseController {
             ));
         }
 
+        //$eM =  $this->getServiceLocator()->get('\Form\Element\Manager');
+        //$form = $eM->get('FSW\Form\LehrveranstaltungForm');
         $form  = new LehrveranstaltungForm('lehrveranstaltung');
         $form->bind($lehrveranstaltung);
 
