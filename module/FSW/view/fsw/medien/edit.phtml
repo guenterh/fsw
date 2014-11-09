@@ -36,6 +36,7 @@ $form->setAttribute('action',$this->url('medien',array('action' => 'edit', 'id' 
 
 
 <?php echo  $this->formTwb()->openTag($form, $formType) ?>
+    <fieldset>
     <div class="topButtons">
         <input type="submit" value="<?php echo  $this->escapeHtml($saveButtonLabel) ?>"
                class="submitButton btn btn-primary btn-medium" id="submitbutton" name="submit">
@@ -50,13 +51,18 @@ $form->setAttribute('action',$this->url('medien',array('action' => 'edit', 'id' 
             "Hier schliessen"
         </a>
     </div>
+    </fieldset>
 
-    <h1><?php echo $this->escapeHtml($title); ?></h1>
+    <fieldset class="edit_legend_title_medien">
+
+        <legend><?php echo $this->escapeHtml($form->get('gespraechstitel')->getValue()); ?></legend>
+
+    </fieldset>
+
 
 <?php echo  $this->ztbFlashMessenger()->render() ?>
 
     <fieldset class="general">
-        <legend><?php echo  $this->translate('Angaben zum Medium ','Libadmin') ?></legend>
         <div class="container-fluid">
         <div class="row-fluid">
 

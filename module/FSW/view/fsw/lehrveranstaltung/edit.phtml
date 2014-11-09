@@ -32,6 +32,23 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
 <?php echo  $this->formTwb()->openTag($form, $formType) ?>
 
+<fieldset>
+    <div class="topButtons">
+        <input type="submit" value="<?php echo  $this->escapeHtml($saveButtonLabel) ?>"
+               class="submitButton btn btn-primary btn-medium" id="submitbutton" name="submit">
+
+        <a href="<?php echo  $this->url('lehrveranstaltung', array('action' => 'delete','id'=> $lehrveranstaltung->get('id')->getValue())); ?>"
+           class="ajaxButton closeButton btn btn-medium" id="closebutton">
+            "Satz loeschen"
+
+
+            <a href="<?php echo  $this->url('lehrveranstaltung', array('action' => 'closeContent')); ?>"
+               class="ajaxButton closeButton btn btn-medium" id="closebutton">
+                "Hier schliessen"
+            </a>
+    </div>
+
+
 <fieldset class="edit_legend_title">
 
     <legend><?php echo $this->escapeHtml($lehrveranstaltung->get('titel')->getValue()); ?></legend>
