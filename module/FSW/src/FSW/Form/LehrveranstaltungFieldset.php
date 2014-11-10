@@ -15,7 +15,7 @@ use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 
-class LehrveranstaltungFieldset extends Fieldset implements InputFilterProviderInterface {
+class LehrveranstaltungFieldset extends Fieldset  {
 
 
     protected $inputFilter;
@@ -164,25 +164,6 @@ class LehrveranstaltungFieldset extends Fieldset implements InputFilterProviderI
 
 
 
-    /**
-     * Expected to return \Zend\ServiceManager\Config object or array to
-     * seed such an object.
-     *
-     * @return array|\Zend\ServiceManager\Config
-     */
-    public function getInputFilterSpecification()
-    {
-        return array(
-            'titel' => array(
-                'required' => true,
-            ),
-            'id' => array(
-                'required' => true,
-            ),
-
-
-        );
-    }
 
 
 }

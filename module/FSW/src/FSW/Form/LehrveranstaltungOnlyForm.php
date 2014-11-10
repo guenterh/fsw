@@ -11,7 +11,7 @@ namespace FSW\Form;
 
 use Zend\Form\Form;
 
-class LehrveranstaltungForm extends Form {
+class LehrveranstaltungOnlyForm extends Form {
 
 
     public function __construct($name = 'lehrveranstaltung')
@@ -26,20 +26,6 @@ class LehrveranstaltungForm extends Form {
                 'use_as_base_fieldset' => true
             )
         ));
-
-        $this->add(array(
-            'type' => 'Zend\Form\Element\Collection',
-            'name' => 'personenLehrveranstaltung',
-            'options' => array(
-                'label' => 'Person der Lehrveranstaltung',
-                'target_element' => array(
-                    'type' => 'FSW\Form\LehrveranstaltungPersonFieldset'
-                    //'type' => 'fswformlehrveranstaltungpersonfieldset'
-
-                )
-            )
-        ));
-
 
   }
 

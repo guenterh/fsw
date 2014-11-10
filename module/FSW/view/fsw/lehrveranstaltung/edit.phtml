@@ -3,17 +3,20 @@
 
 $form = $this->form;
 
-$form->setAttribute('action', $this->url(
-    'lehrveranstaltung',
-    array(
-        'action' => 'edit',
-        'id'     => $this->id,
-    )
-));
 
 $form->prepare();
 
 $lehrveranstaltung = $form->get('lehrveranstaltung');
+
+$form->setAttribute('action', $this->url(
+    'lehrveranstaltung',
+    array(
+        'action' => 'edit',
+        'id'     => $lehrveranstaltung->get('id')->getValue()
+    )
+));
+
+
 
 $personen = $lehrveranstaltung->get('personenLehrveranstaltung');
 
@@ -28,8 +31,6 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
 ?>
 
-
-
 <?php echo  $this->formTwb()->openTag($form, $formType) ?>
 
 <fieldset>
@@ -39,7 +40,7 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
         <a href="<?php echo  $this->url('lehrveranstaltung', array('action' => 'delete','id'=> $lehrveranstaltung->get('id')->getValue())); ?>"
            class="ajaxButton closeButton btn btn-medium" id="closebutton">
-            "Satz loeschen"
+            "Satz loeschen"</a>
 
 
             <a href="<?php echo  $this->url('lehrveranstaltung', array('action' => 'closeContent')); ?>"
@@ -47,6 +48,7 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
                 "Hier schliessen"
             </a>
     </div>
+</fieldset>
 
 
 <fieldset class="edit_legend_title">
@@ -67,6 +69,15 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
         <div class="tab-content">
             <div class="tab-pane active" id="lehrveranstaltungPane">
+
+                <fieldset>
+                    <div class="topButtons">
+                        <a href="#"  class="btn btn-medium" id="addLehrveranstaltungButton">neue Lehrveranstaltung</a>
+                        <a href="#"  class="btn btn-medium" id="updateLehrveranstaltungButton">aktualisiere Lehrveranstaltung</a>
+                        <a href="#"  class="btn btn-medium" id="deleteLehrveranstaltungButton">loesche Lehrveranstaltung</a>
+                    </div>
+                </fieldset>
+
 
                 <fieldset class="general">
                     <legend>hier die Lehrveranstaltung</legend>

@@ -249,6 +249,76 @@ var FSWAdmin = {
 
             });
 
+            $('#addLehrveranstaltungButton').click(function(event){
+
+                event.preventDefault();
+                console.log("in add Lehrveranstaltung")
+
+
+            });
+
+
+            $('#updateLehrveranstaltungButton').click(function(event){
+
+                event.preventDefault();
+                //console.log("in update Lehrveranstaltung")
+
+                var currentLVId = $('#lehrveranstaltung\\[id\\]',$('form#lehrveranstaltung')).val();
+
+                $("<div id='fswDialogBox'>").dialog({
+                    open: function(){
+                        $(this).load('/lehrveranstaltung/editLvModal/' + currentLVId);
+
+                        $('#fswDialogBox').css('background-color','#d9d9d9');
+                    },
+                    buttons: [
+                        {
+                            text: "Sichern",
+                            click: function() {
+
+                                //$(this).load('/kolloquien/editVeranstaltung/' + veranstaltungID, $('#Veranstaltung', this).serializeArray() );
+                                $(this).load('/lehrveranstaltung/editLvModal',
+                                    $('#lehrveranstaltung', this).serializeArray()
+                                );
+
+                            }
+                        },
+                        {
+                            text: "Abbrechen",
+                            click: function() {
+                                $( this ).dialog( "close" );
+                            }
+                        }
+
+                    ],
+
+
+                    close: function (event, ui) {
+                        $(this).dialog('destroy').remove();
+                    },
+                    title: 'Attribute durchführende Person Lehrveranstaltung',
+                    width: '1000px',
+                    modal: true
+
+                }).dialog( "widget")
+                    .find( ".ui-dialog-titlebar-close" )
+                    .hide();
+
+
+
+
+            });
+
+
+            $('#deleteLehrveranstaltungButton').click(function(event){
+
+                event.preventDefault();
+                console.log("in delete Lehrveranstaltung")
+
+
+
+
+            });
 
 
 

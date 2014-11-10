@@ -9,18 +9,14 @@
 namespace FSW\Model;
 
 
+use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
 class Lehrveranstaltung extends BaseModel implements InputFilterAwareInterface{
 
 
-
-
-
-
     public $id;
-
     public $von_zeit;
     public $bis_zeit;
     public $semester;
@@ -28,10 +24,9 @@ class Lehrveranstaltung extends BaseModel implements InputFilterAwareInterface{
     public $tag;
     public $vvzlink;
     public $olatlink;
-
     public $personenLehrveranstaltung = null;
 
-
+    protected $inputFilter;
 
     /**
      * Set input filter
@@ -44,16 +39,6 @@ class Lehrveranstaltung extends BaseModel implements InputFilterAwareInterface{
         // TODO: Implement setInputFilter() method.
     }
 
-    /**
-     * Retrieve input filter
-     *
-     * @return InputFilterInterface
-     */
-    public function getInputFilter()
-    {
-        //gebe ich heir nichts zurück erhält die Form beim Aufruf von prepare eine null message Exception
-        return array();
-    }
 
     /**
      * Get record ID
@@ -64,6 +49,16 @@ class Lehrveranstaltung extends BaseModel implements InputFilterAwareInterface{
     {
        return $this->id;
     }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+
 
     /**
      * Get list label key
@@ -217,6 +212,100 @@ class Lehrveranstaltung extends BaseModel implements InputFilterAwareInterface{
     }
 
 
+    public function getInputFilter()
+    {
+        if (!$this->inputFilter) {
+            $inputFilter = new InputFilter();
+
+            $inputFilter->add(array(
+                'name'     => 'id',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name'     => 'semester',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 20,
+                        ),
+                    ),
+                ),
+            ));
+
+
+            $inputFilter->add(array(
+                'name'     => 'titel',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 500,
+                        ),
+                    ),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name'     => 'vvzlink',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 500,
+                        ),
+                    ),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name'     => 'olatlink',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 500,
+                        ),
+                    ),
+                ),
+            ));
+
+
+
+
+            $this->inputFilter = $inputFilter;
+        }
+
+        return $this->inputFilter;
+    }
 
 
 

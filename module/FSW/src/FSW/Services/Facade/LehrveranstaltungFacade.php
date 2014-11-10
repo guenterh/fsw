@@ -10,6 +10,7 @@ namespace FSW\Services\Facade;
 
 
 use FSW\Model\BaseModel;
+use FSW\Model\Lehrveranstaltung;
 use FSW\Model\RelationPersonLehrveranstaltung;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Select;
@@ -226,6 +227,32 @@ class LehrveranstaltungFacade extends BaseFacade {
         $rPLV->setFper_personen_pers_id("");
 
         return $rPLV;
+
+    }
+
+    public function getEmptyLehrveranstaltung()  {
+
+        $lV = new Lehrveranstaltung();
+        $lV->setId(0);
+
+        return $lV;
+
+
+    }
+
+    public function getLehrveranstaltungOnly($id) {
+
+        $lvGateway =  $this->histSemDBService->getLehrveranstaltungenGateway();
+
+
+        $result = $lvGateway->select(array(
+            'id' => $id
+        ));
+
+        $lV=  $result->current();
+
+        return $lV;
+
 
     }
 

@@ -1,0 +1,61 @@
+<?php
+
+
+$form = $this->form;
+$form->prepare();
+$lehrveranstaltung = $form->get('lehrveranstaltung');
+$formType = 'horizontal';
+?>
+
+<?php echo  $this->formTwb()->openTag($form, $formType) ?>
+
+
+        <fieldset class="general">
+            <legend>hier die Lehrveranstaltung</legend>
+
+            <div class="row-fluid">
+                <div class="span12">
+                    <?php echo  $this->formRowTwb($lehrveranstaltung->get('id')) ?>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <?php echo  $this->formRowTwb($lehrveranstaltung->get('von_zeit')) ?>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <?php echo  $this->formRowTwb($lehrveranstaltung->get('bis_zeit')) ?>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <?php echo  $this->formRowTwb($lehrveranstaltung->get('tag')) ?>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <?php echo  $this->formRowTwb($lehrveranstaltung->get('semester')) ?>
+                </div>
+            </div>
+            <div class="row-fluid"s>
+                <div class="span12">
+                    <?php echo  $this->formRowTwb($lehrveranstaltung->get('titel')) ?>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <?php echo  $this->formRowTwb($lehrveranstaltung->get('vvzlink')) ?>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <?php echo  $this->formRowTwb($lehrveranstaltung->get('olatlink')) ?>
+                </div>
+            </div>
+
+        </fieldset>
+
+
+
+<?php echo  $this->form()->closeTag(); ?>

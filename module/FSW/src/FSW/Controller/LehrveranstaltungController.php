@@ -11,6 +11,7 @@ namespace FSW\Controller;
 
 use FSW\Form\ForschungForm;
 use FSW\Form\LehrveranstaltungForm;
+use FSW\Form\LehrveranstaltungOnlyForm;
 use FSW\Form\LehrveranstaltungPersonForm;
 use FSW\Model\PersonForschungUebersicht;
 
@@ -33,6 +34,55 @@ class LehrveranstaltungController extends BaseController {
 
     }
 
+    public function editLvModalAction () {
+
+        $id = (int) $this->params()->fromRoute('id', 0);
+        $form = null;
+        $request = $this->getRequest();
+        if ($id && $id > 0 && $request->isGet()) {
+            //in diesem Fall haben soll eine einzelne LV (ohne Personen) zum Update angezeigt werden
+
+            try {
+                $lehrveranstaltung = $this->facade->getLehrveranstaltungOnly($id);
+
+                $form  = new LehrveranstaltungOnlyForm('lehrveranstaltung');
+                $form->bind($lehrveranstaltung);
+
+            }
+            catch (\Exception $ex) {
+                return $this->redirect()->toRoute('lehrveranstaltung', array(
+                    'action' => 'index'
+                ));
+            }
+
+
+        } elseif ($id == 0 && $request->isPost()) {
+
+            $form = new LehrveranstaltungOnlyForm('lehrveranstaltung');
+            $form->setData($this->params()->fromPost());
+
+            if ($form->isValid()) {
+                //aktialiere Daten
+                $s = "";
+            }
+
+
+
+
+            //werden die Daten zum Update geschickt, ist die RouteId == 0
+            //da die ID als Teil der Postdaten mitgeschickt wird
+        }
+
+
+        return $this->getAjaxView(array(
+            'form' => $form,
+            'title' => $this->translate('lehrveranstaltung_edit', 'FSW'),
+        ));
+
+
+
+    }
+
     public function editAction()
     {
         $id = (int) $this->params()->fromRoute('id', 0);
@@ -42,37 +92,63 @@ class LehrveranstaltungController extends BaseController {
             ));
         }
 
-        try {
-            $lehrveranstaltung = $this->facade->getLehrveranstaltung($id);
-        }
-        catch (\Exception $ex) {
-            return $this->redirect()->toRoute('lehrveranstaltung', array(
-                'action' => 'index'
-            ));
-        }
-
-        //$eM =  $this->getServiceLocator()->get('\Form\Element\Manager');
-        //$form = $eM->get('FSW\Form\LehrveranstaltungForm');
-        $form  = new LehrveranstaltungForm('lehrveranstaltung');
-        $form->bind($lehrveranstaltung);
-
-        /*
         $request = $this->getRequest();
+        $form = null;
 
         if ($request->isPost()) {
 
+            //folgendes Problem:
+            //rufe ich hier valid auf, tritt folegdner Fall ein:
+            //- auch wenn die LV als valid erkannt wird (aufgrund der Definitionen im Modell)
+            //erhalte ich not valid, jedoch keine messages
+            //das Problem wird sein:
+            //ich habe die collection der Personen auf der Ebene der Form definiert.
+            //Modellmaessig gehoert sie jedoch in die Lehrverastaltung, das der Modelltyp Lehrveranstaltung
+            //auch ein array fuer Personen hat.
+            //bei der Pruefung kann der Mechanismus die Collection (auf der Ebene der Form) also nicht validieren
+            //da er auf keine daten zugreifen kann. Deswegen not valid jedoch ohne messages
+            //dies umzubauen möchte ich jetzt nicht machen. Ich arbeite jetzt mit Ajax um vornazukommen um den Preis
+            //Forms und snippets und damit code verdoppeln zu müssen.
+            //Wenn die Sache mal steht, kann ich in einer nächsten Version das ganze verschlanken und vereinfachen
 
-            $form->setInputFilter($medium->getInputFilter());
+            $form  = new LehrveranstaltungForm('lehrveranstaltung');
+
+            //$entity = $this->facade->getEmptyLehrveranstaltung();
+            //$f = $entity->getInputFilter();
+            //$f->setData($request->getPost()->toArray()['lehrveranstaltung']);
+            //if (!$f->isValid()) {
+            //    $m = $f->getMessages();
+            //}
+
+            //$form->setInputFilter($entity->getInputFilter());
+            //$form->setData($request->getPost()->toArray()['lehrveranstaltung']);
+            //$form->setData($request->getPost()->toArray()['lehrveranstaltung']);
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $this->facade->saveMedium($medium);
-
+                //todo: save!
+                $s = "";
                 // Redirect to list of albums
                 //return $this->redirect()->toRoute('medien');
             }
+        } else {
+
+            try {
+                $lehrveranstaltung = $this->facade->getLehrveranstaltung($id);
+
+                $form  = new LehrveranstaltungForm('lehrveranstaltung');
+                $form->bind($lehrveranstaltung);
+
+            }
+            catch (\Exception $ex) {
+                return $this->redirect()->toRoute('lehrveranstaltung', array(
+                    'action' => 'index'
+                ));
+            }
+
+
         }
-        */
+
 
         return $this->getAjaxView(array(
             'form' => $form,
