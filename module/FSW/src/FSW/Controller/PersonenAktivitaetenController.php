@@ -68,6 +68,7 @@ class PersonenAktivitaetenController extends BaseController{
 
         $params = compact('pers_id');
         $zoraDocs = $this->facade->getZoraDocs($params);
+        $person = $this->facade->getHSPerson($pers_id);
 
 
 
@@ -85,8 +86,9 @@ class PersonenAktivitaetenController extends BaseController{
 
 
         return $this->getAjaxView(array(
+            'person'    => $person,
             'form' => $form,
-            'title' => $this->translate('aktivitaeten_edit', 'FSW'),
+            'title' => $this->translate('Aktivitäten einer Person', 'FSW'),
         ));
 
 

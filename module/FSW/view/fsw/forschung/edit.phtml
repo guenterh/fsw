@@ -46,7 +46,15 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
         </a>
     </div>
 
-    <h1><?php echo $this->escapeHtml($title); ?></h1>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+
+
+    <h3>
+        <?php echo $this->escapeHtml($title) .
+            ': ' . $this->person->getPers_name() . ', ' . $this->person->getPers_vorname(); ?>
+
+    </h3>
 
 <?php echo $this->ztbFlashMessenger()->render() ?>
 

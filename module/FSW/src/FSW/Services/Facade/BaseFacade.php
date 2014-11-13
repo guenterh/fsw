@@ -432,6 +432,24 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface
     }
 
 
+    public function getHSPerson($persID) {
+
+
+
+        $persCore =  $this->histSemDBService->getPersonenGateway()->select(array('pers_id' => (int) $persID));
+
+        $persCoreType = $persCore->current();
+
+        if ($persCore->count() != 1)  {
+            throw new \Exception("Could not find any person with id:  $persID");
+        }
+
+        return $persCoreType;
+
+    }
+
+
+
 
 
 

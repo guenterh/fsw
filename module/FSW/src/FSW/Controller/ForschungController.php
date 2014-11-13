@@ -79,6 +79,9 @@ class ForschungController extends BaseController {
 
         $habil = $this->facade->getForschungen($params);
 
+        $person = $this->facade->getHSPerson($pers_id);
+
+
 
         //$forschungUebersicht =  new PersonForschungUebersicht();
 
@@ -103,8 +106,9 @@ class ForschungController extends BaseController {
 
 
         return $this->getAjaxView(array(
+            'person' => $person,
             'form' => $form,
-            'title' => $this->translate('forschung_edit', 'FSW'),
+            'title' => $this->translate('Lizz / Master / Diss / Habil', 'FSW'),
         ));
 
     }
