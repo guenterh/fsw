@@ -281,4 +281,57 @@ class LehrveranstaltungFacade extends BaseFacade {
 
     }
 
+    public function saveLehrveranstaltung($postData = array()) {
+        $lvGateway =  $this->histSemDBService->getLehrveranstaltungenGateway();
+
+        $lvGateway->update(
+            array(
+                'von_zeit'  => $postData['lehrveranstaltung']['von_zeit'],
+                'bis_zeit'  =>  $postData['lehrveranstaltung']['bis_zeit'],
+                'tag'  =>  $postData['lehrveranstaltung']['tag'],
+                'semester'  =>  $postData['lehrveranstaltung']['semester'],
+                'titel'  =>  $postData['lehrveranstaltung']['titel'],
+                'vvzlink'  =>  $postData['lehrveranstaltung']['vvzlink'],
+                'olatlink'  =>  $postData['lehrveranstaltung']['olatlink']
+            ),
+            array(
+                'id'    =>  $postData['lehrveranstaltung']['id']
+            )
+        );
+    }
+
+
+    public function insertLehrveranstaltung($postData = array()) {
+
+        $lvGateway =  $this->histSemDBService->getLehrveranstaltungenGateway();
+
+        $lvGateway->insert(
+            array(
+                'von_zeit'  => $postData['lehrveranstaltung']['von_zeit'],
+                'bis_zeit'  =>  $postData['lehrveranstaltung']['bis_zeit'],
+                'tag'  =>  $postData['lehrveranstaltung']['tag'],
+                'semester'  =>  $postData['lehrveranstaltung']['semester'],
+                'titel'  =>  $postData['lehrveranstaltung']['titel'],
+                'vvzlink'  =>  $postData['lehrveranstaltung']['vvzlink'],
+                'olatlink'  =>  $postData['lehrveranstaltung']['olatlink']
+            )
+        );
+
+        return $lvGateway->getLastInsertValue();
+
+
+    }
+
+    public function deleteLehrveranstaltung($id) {
+        $relPersonLVGateway = $this->histSemDBService->getLehrveranstaltungenGateway();
+        $relPersonLVGateway->delete(array(
+            'id' => $id
+        ));
+
+    }
+
+
+
+
+
 }

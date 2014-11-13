@@ -18,7 +18,8 @@ class Bootstrapper {
                                             'deleteKolloquium',
                                             'deleteVeranstaltung'),
         'FSW\Controller\Lehrveranstaltungen'    =>  array(
-                                            'deletePerson'
+                                            'deletePerson',
+                                            'deleteLehrveranstaltung'
                                         )
     );
 

@@ -45,32 +45,51 @@ class LehrveranstaltungController extends BaseController {
             try {
                 $lehrveranstaltung = $this->facade->getLehrveranstaltungOnly($id);
 
-                $form  = new LehrveranstaltungOnlyForm('lehrveranstaltung');
+                $form = new LehrveranstaltungOnlyForm('lehrveranstaltung');
                 $form->bind($lehrveranstaltung);
 
-            }
-            catch (\Exception $ex) {
+            } catch (\Exception $ex) {
                 return $this->redirect()->toRoute('lehrveranstaltung', array(
                     'action' => 'index'
                 ));
             }
 
+        } elseif ($id == 0 && $request->isGet()) {
+            // new Lehrveranstaltung fuer den insert als Form bereitstellen
+
+            $lv = $this->facade->getEmptyLehrveranstaltung();
+            $form = new LehrveranstaltungOnlyForm('lehrveranstaltung');
+            $form->bind($lv);
+
+
 
         } elseif ($id == 0 && $request->isPost()) {
+            //save new Lehrveranstaltung
+            $form = new LehrveranstaltungOnlyForm('lehrveranstaltung');
+            $form->setData($this->params()->fromPost());
+
+            if ($form->isValid()) {
+                $lastValue = $this->facade->insertLehrveranstaltung($request->getPost()->toArray());
+                $lehrveranstaltung = $this->facade->getLehrveranstaltungOnly($lastValue);
+                $form = new LehrveranstaltungOnlyForm('lehrveranstaltung');
+                $form->bind($lehrveranstaltung);
+
+            }
+
+
+
+        }elseif ($id > 0 && $request->isPost()) {
+
 
             $form = new LehrveranstaltungOnlyForm('lehrveranstaltung');
             $form->setData($this->params()->fromPost());
 
             if ($form->isValid()) {
-                //aktialiere Daten
-                $s = "";
+                $this->facade->saveLehrveranstaltung($request->getPost()->toArray());
+
             }
 
 
-
-
-            //werden die Daten zum Update geschickt, ist die RouteId == 0
-            //da die ID als Teil der Postdaten mitgeschickt wird
         }
 
 
@@ -126,10 +145,7 @@ class LehrveranstaltungController extends BaseController {
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                //todo: save!
-                $s = "";
-                // Redirect to list of albums
-                //return $this->redirect()->toRoute('medien');
+                //$this->facade->saveLehrveranstaltung($request->getPost());
             }
         } else {
 
@@ -258,7 +274,6 @@ class LehrveranstaltungController extends BaseController {
 
         $idRelationPersonLV = (int)$this->params()->fromRoute('id', 0);
 
-
         $this->facade->deletePersonRelationLV($idRelationPersonLV);
 
         $jsonResponse = array(
@@ -269,8 +284,24 @@ class LehrveranstaltungController extends BaseController {
         return new JsonModel(
             $jsonResponse
         );
-
-
     }
+
+    public function deleteLehrveranstaltungAction() {
+
+        $idLV = $this->params()->fromQuery('id', null);
+
+
+        $this->facade->deleteLehrveranstaltung($idLV);
+
+        $jsonResponse = array(
+            'status' => 'ok',
+        );
+
+
+        return new JsonModel(
+            $jsonResponse
+        );
+    }
+
 
 } 
