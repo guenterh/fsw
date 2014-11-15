@@ -120,23 +120,20 @@ class PersonenAktivitaetenController extends BaseController{
 
         $request = $this->getRequest();
         $modus = $this->params()->fromPost('modus', null);
+        $templateDaten = array();
         //
         if ($request->isPost() && is_null($modus)) {
 
-            $idKolloquium = $request->getPost()->toArray()['Kolloqium']['id'];
+            $postData = $this->params()->fromPost();
             $form  = new CoverlinkForm();
-            $test = $request->getPost()->toArray();
-            $form->setData($request->getPost());
+            $form->setData($postData);
             if ($form->isValid()) {
+                $this->facade->updateCoverlink($postData);
 
-                $this->facade->updateKolloquium($request->getPost()->toArray()['Kolloqium']);
-
-            }
+            } else
 
             $templateDaten = array(
-                'form' => $form,
-                'id'    =>  $idKolloquium,
-                'update' => true
+                'form' => $form
             );
 
 
@@ -157,8 +154,8 @@ class PersonenAktivitaetenController extends BaseController{
 
 
             $templateDaten = array(
-                'form' => $form,
-                'id'    =>  $oai_identifier,
+                'form' => $form
+                //'id'    =>  $oai_identifier,
             );
 
         }

@@ -42,12 +42,26 @@ class PersonAktivitaetenFacade extends PersonFacade {
             'oai_identifier' => $oaiIdenifier
         ));
 
-        if ($result->count() > 0) {
-            return $result->current();
-        }
+        return $result->current();
 
 
     }
 
+
+
+    public function updateCoverlink($postData) {
+        $coverOnlyGateway = $this->histSemDBService->getCoverOnlyTableGateway();
+
+        $coverOnlyGateway->update(array(
+                'coverlink' =>  $postData['coverlink'],
+                'oai_identifier'    =>  $postData['oai_identifier'],
+                'frontpage'  =>  $postData['frontpage']
+            ),
+        array(
+            'id'    => $postData['id']
+            )
+        );
+
+    }
 
 }

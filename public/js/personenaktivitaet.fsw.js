@@ -46,7 +46,10 @@ var  Personenaktivitaet = {
                         text: "Sichern",
                         click: function() {
 
-                            $(this).load('/personenaktivitaet/editCoverLink/' + oaiIdentifier );
+
+                            //ar idLink = $('#id', $('form#Coverlink')).val();
+
+                            $(this).load('/personenaktivitaet/editCoverLink', $('#Coverlink',this).serializeArray());
 
                         }
                     },
@@ -60,10 +63,12 @@ var  Personenaktivitaet = {
                 ],
 
 
+
+
                 close: function (event, ui) {
                     $(this).dialog('destroy').remove();
                 },
-                title: 'Attribute einer Veranstaltung',
+                title: 'Update Cover Zoradoc',
                 width: '1000px',
                 modal: true
 

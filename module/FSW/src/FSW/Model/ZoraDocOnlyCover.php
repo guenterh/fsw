@@ -73,7 +73,7 @@ class ZoraDocOnlyCover extends BaseModel implements InputFilterAwareInterface {
             $inputFilter = new InputFilter();
 
             $inputFilter->add(array(
-                'id'     => 'id',
+                'name'     => 'id',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'Int'),
