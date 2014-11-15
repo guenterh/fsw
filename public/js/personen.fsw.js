@@ -14,13 +14,66 @@ var Personen= {
         //alert (this.constructor);
         //alert('Personen.initSidebar');
         Sidebar.init($.proxy(this.onSearchListUpdated, this), $.proxy(this.onContentUpdated, this));
-    },
+        },
 
     initEditor: function () {
         //alert ('Personen.initEditor()');
         Editor.init($.proxy(this.onContentUpdated, this));
         CustomFunctions.initializeZoraAuthorActions();
         //this.initExtendedAttributes();
+
+        $('#updateProfilURLPersonExtended').click(function (event){
+            event.preventDefault();
+
+            //geht nicht - warum?
+            //alert($('div#persExtendedIdFSWGanzUnique',$('div#personExtended')).val());
+            //alert (persExtendedIdFSW);
+
+
+            $("<div id='fswDialogBox'>").dialog({
+                open: function(){
+                    $(this).load('/personen/editProfilURL/' + persExtendedIdFSW);
+
+                    $('#fswDialogBox').css('background-color','#d9d9d9');
+                },
+                buttons: [
+                    {
+                        text: "Sichern",
+                        click: function() {
+
+                            //$(this).load('/kolloquien/editVeranstaltung/' + veranstaltungID, $('#Veranstaltung', this).serializeArray() );
+                            $(this).load('/lehrveranstaltung/editLvModal/' + currentLVId ,
+                                $('#lehrveranstaltung', this).serializeArray()
+                            );
+
+                        }
+                    },
+                    {
+                        text: "Abbrechen",
+                        click: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    }
+
+                ],
+
+
+                close: function (event, ui) {
+                    $(this).dialog('destroy').remove();
+                },
+                title: 'Profil URL einer FSW Person',
+                width: '1000px',
+                modal: true
+
+            }).dialog( "widget")
+                .find( ".ui-dialog-titlebar-close" )
+                .hide();
+
+
+
+
+        })
+
 
     },
 

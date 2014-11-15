@@ -31,6 +31,7 @@ namespace FSW\Controller;
 
 use FSW\Form\PersonCoreFieldset;
 use FSW\Form\PersonForm;
+use FSW\Form\PersonFSWExtendedForm;
 use Zend\View\Model\ViewModel;
 
 
@@ -216,6 +217,31 @@ class PersonenController extends BaseController{
             'title' => $this->translate('Personenanzeige', 'FSW'),
         ));
 
+
+    }
+
+
+    public function editProfilURLAction() {
+
+        $request = $this->getRequest();
+
+        if ($request->isGet()) {
+
+            $idPersonExtended = $this->params()->fromRoute('id',0);
+
+            $personExtended = $this->facade->getExtendedFSWPersonAttributes($idPersonExtended);
+
+            $form = new PersonFSWExtendedForm();
+
+            $form->bind($personExtended);
+
+
+        }
+
+        return $this->getAjaxView(array(
+            'form' => $form
+            //'title' => $this->translate('Personenanzeige', 'FSW'),
+        ));
 
     }
 

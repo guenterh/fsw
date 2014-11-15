@@ -533,5 +533,16 @@ class PersonFacade extends BaseFacade {
     }
 
 
+    public function getExtendedFSWPersonAttributes($persIDExtended) {
+
+        $persExtendedGW =  $this->histSemDBService->getFSWPersonenExtendedGateway();
+        $result = $persExtendedGW->select(array(
+
+            'id'    =>  $persIDExtended
+        ));
+
+        return $result->current();
+
+    }
 
 }

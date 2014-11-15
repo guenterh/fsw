@@ -187,8 +187,7 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
                         <?php foreach ($personExtended as $singleExtended) :?>
 
-                            <?php $test = $singleExtended->get('id')->getValue(); ?>
-                            <div class="hidden" id="persExtendedIdFSW"></div>
+                            <div class="hidden" id="persExtendedIdFSWGanzUnique"><?php echo $singleExtended->get('id')->getValue(); ?></div>
 
                             <script type="text/javascript">
 
@@ -207,6 +206,16 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
                                     <?php echo  $this->formRowTwb($singleExtended->get('profilURL')) ?>
                                 </div>
                             </div>
+
+
+
+                            <div class="row-fluid">
+                                <div>
+                                    <a href="#"  id="updateProfilURLPersonExtended" >Profil URL anpassen</a>
+                                </div>
+                            </div>
+
+
 
                         <?php endforeach; ?>
                     <?php else: ?>

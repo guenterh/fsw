@@ -58,6 +58,18 @@ class PersonExtendedFieldset extends Fieldset implements InputFilterProviderInte
         ));
 
 
+        $this->add(array(
+            'name' => 'fullname',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'fullname'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
+
+
 
     }
 
