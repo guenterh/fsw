@@ -13,6 +13,8 @@ use FSW\Model\Medium;
 use FSW\Model\RelationPersonLehrveranstaltung;
 use FSW\Model\VeranstaltungKolloquium;
 use FSW\Model\VeranstaltungKolloquiumPerson;
+use FSW\Model\ZoraDocOnlyCover;
+use FSW\Model\ZoraDocWithCover;
 use FSW\Services\Facade\MedienFacade;
 use FSW\Services\Facade\PersonAktivitaetenFacade;
 use Zend\ServiceManager\ServiceManager;
@@ -101,6 +103,27 @@ class Factory {
         $resultSetPrototype->setArrayObjectPrototype(new ZoraDoc());
         return new TableGateway('fsw_zora_doc', $dbAdapter, null, $resultSetPrototype);
     }
+
+    public static function getZoraDocWithCoverTableGateway(ServiceManager $sm) {
+
+        $histSemDBService = $sm->get('HistSemDBService');
+        $dbAdapter = $histSemDBService->getAdapter();
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new ZoraDocWithCover());
+        return new TableGateway('fsw_zora_doc', $dbAdapter, null, $resultSetPrototype);
+    }
+
+
+    public static function getCoverOnlyTableGateway(ServiceManager $sm) {
+
+        $histSemDBService = $sm->get('HistSemDBService');
+        $dbAdapter = $histSemDBService->getAdapter();
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new ZoraDocOnlyCover());
+
+        return new TableGateway('fsw_cover', $dbAdapter, null, $resultSetPrototype);
+    }
+
 
     public static function getZoraAuthorTableGateway(ServiceManager $sm) {
 

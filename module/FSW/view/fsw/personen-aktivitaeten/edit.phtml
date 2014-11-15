@@ -122,7 +122,22 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
             <fieldset class="general">
                 <legend><?php echo  $this->translate('Liste der Zoraarbeiten ','Libadmin') ?></legend>
+                <?php $numberdocs = 0 ?>
                 <?php foreach ($zoradocs as $zoradoc) :?>
+
+
+                    <?php if ($numberdocs != 0) : ?>
+                        <div class="row-fluid">
+                            <div>==========================================================================================</div>
+                        </div>
+                    <?php endif;  ?>
+
+                    <div class="row-fluid">
+
+                        <div class="span5"><?php echo $this->formHidden($zoradoc->get('oai_identifier')); ?></div>
+                    </div>
+
+
                     <div class="row-fluid">
                         <div class="span6">
                             <?php echo  $this->formRowTwb($zoradoc->get('title')); ?>
@@ -136,6 +151,19 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
                             <a  target="_blank" href='<?php echo   'http://www.zora.uzh.ch/' .   $matches[1] ?>'>Link zu Zora</a>
                         </div>
                     </div>
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($zoradoc->get('coverlink')); ?>
+                        </div>
+                        <div class="span2" style="margin-left: 30px;">
+                            <a href="#"
+                               class="updateCoverLink" data-currentIndex="<?php echo $numberdocs; ?>">update Coverlink</a>
+                        </div>
+                    </div>
+
+                    <?php $numberdocs++ ?>
+
 
                 <?php endforeach; ?>
 

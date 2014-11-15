@@ -30,6 +30,7 @@
 namespace FSW\Controller;
 
 use FSW\Form\AktivitaetenForm;
+use FSW\Form\CoverlinkForm;
 use Zend\View\Model\ViewModel;
 use Zend\Stdlib\ArrayObject;
 
@@ -67,7 +68,9 @@ class PersonenAktivitaetenController extends BaseController{
         $medien = $this->facade->getMedien($pers_id);
 
         $params = compact('pers_id');
-        $zoraDocs = $this->facade->getZoraDocs($params);
+        //$zoraDocs = $this->facade->getZoraDocs($params);
+        $zoraDocs = $this->facade->getZoraDocsWithCover($params);
+
         $person = $this->facade->getHSPerson($pers_id);
 
 
@@ -111,6 +114,58 @@ class PersonenAktivitaetenController extends BaseController{
         );
 
         return $this->getAjaxView($data, 'fsw/global/search');
+    }
+
+    public function editCoverLinkAction() {
+
+        $request = $this->getRequest();
+        $modus = $this->params()->fromPost('modus', null);
+        //
+        if ($request->isPost() && is_null($modus)) {
+
+            $idKolloquium = $request->getPost()->toArray()['Kolloqium']['id'];
+            $form  = new CoverlinkForm();
+            $test = $request->getPost()->toArray();
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+
+                $this->facade->updateKolloquium($request->getPost()->toArray()['Kolloqium']);
+
+            }
+
+            $templateDaten = array(
+                'form' => $form,
+                'id'    =>  $idKolloquium,
+                'update' => true
+            );
+
+
+        } elseif ($request->isPost() && !is_null($modus) && $modus == 'show'){
+            //hier noch Pruefung einbauen
+            $oai_identifier = $this->params()->fromPost('oai_identifier', 0);
+            try {
+                $coverlinkEntity = $this->facade->getCoverlinkEntity($oai_identifier);
+
+                $form  = new CoverlinkForm();
+                $form->bind($coverlinkEntity);
+            }
+            catch (\Exception $ex) {
+                return $this->redirect()->toRoute('kolloquien', array(
+                    'action' => 'index'
+                ));
+            }
+
+
+            $templateDaten = array(
+                'form' => $form,
+                'id'    =>  $oai_identifier,
+            );
+
+        }
+        return $this->getAjaxView(
+            $templateDaten
+        );
+
     }
 
 

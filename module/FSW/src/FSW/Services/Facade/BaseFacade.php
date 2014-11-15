@@ -431,6 +431,47 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface
         return $zoradocs;
     }
 
+    public function getZoraDocsWithCover ($params = array()) {
+
+        $zoraDocTG = $this->histSemDBService->getZoraDocWithCoverGateway();
+        $select = $zoraDocTG->getSql()->select();
+
+        //$select->columns(array('title','oai_identifier'));
+        if (array_key_exists('pers_id', $params)) {
+
+            $select->join(array(
+                    'zora_author_relation' => 'fsw_relation_zora_author_zora_doc'),
+                'zora_author_relation.fid_zora_doc = fsw_zora_doc.id'   );
+
+
+            $select->join(array(
+                    'zora_author' => 'fsw_zora_author'),
+                'zora_author.id = zora_author_relation.fid_zora_author'   );
+
+            $select->join(array(
+                    'cover' => 'fsw_cover'),
+                'fsw_zora_doc.id = cover.id'   );
+
+            //$select->
+
+            $select->where->equalTo(
+                'zora_author.pers_id',$params['pers_id']);
+
+
+        }
+
+
+
+        $resultset = $zoraDocTG->selectWith($select);
+        $zoradocs = array();
+        foreach ($resultset as $arbeit) {
+            $zoradocs[] = $arbeit;
+        }
+
+        return $zoradocs;
+
+    }
+
 
     public function getHSPerson($persID) {
 

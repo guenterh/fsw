@@ -7,7 +7,7 @@ var FSWAdmin = {
     onLoaded: function () {
 
         if (this.hasUrlPart('/medien/') ||
-            this.hasUrlPart('/forschung/') || this.hasUrlPart('/personenaktivitaet/') || this.hasUrlPart('/forschungAdmin/')) {
+            this.hasUrlPart('/forschung/') ||  this.hasUrlPart('/forschungAdmin/')) {
             Allgemein.init();
         } else if (this.hasUrlPart('/personen/')) {
 
@@ -18,6 +18,10 @@ var FSWAdmin = {
         } else if (this.hasUrlPart('/lehrveranstaltung/')) {
 
             Lehrveranstaltung.init();
+        } else if (this.hasUrlPart('/personenaktivitaet/') ) {
+
+            Personenaktivitaet.init();
+
         }
     },
 

@@ -11,6 +11,7 @@ namespace FSW\Form;
 use FSW\Model\Medium;
 
 use FSW\Model\ZoraDoc;
+use FSW\Model\ZoraDocWithCover;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
@@ -22,7 +23,7 @@ class ZoraDocFieldset extends Fieldset implements InputFilterProviderInterface {
         parent::__construct('zoraDoc');
 
         $this->setHydrator(new ClassMethodsHydrator(false))
-            ->setObject(new ZoraDoc());
+            ->setObject(new ZoraDocWithCover());
 
         $this->add(array(
             'name' => 'id',
@@ -114,6 +115,16 @@ class ZoraDocFieldset extends Fieldset implements InputFilterProviderInterface {
             )
         ));
 
+        $this->add(array(
+            'name' => 'coverlink',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'coverlink'
+            ),
+            'attributes' => array(
+                'rows' => 1
+            )
+        ));
 
 
     }

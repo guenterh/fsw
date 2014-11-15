@@ -32,15 +32,22 @@ class PersonAktivitaetenFacade extends PersonFacade {
 
     }
 
-    /*
-    public function __construct()
-    {
 
-        parent::__construct(null,null,null);
+
+    public function getCoverlinkEntity($oaiIdenifier) {
+
+        $coverOnlyGateway = $this->histSemDBService->getCoverOnlyTableGateway();
+
+        $result = $coverOnlyGateway->select(array(
+            'oai_identifier' => $oaiIdenifier
+        ));
+
+        if ($result->count() > 0) {
+            return $result->current();
+        }
+
 
     }
-    */
-
 
 
 }

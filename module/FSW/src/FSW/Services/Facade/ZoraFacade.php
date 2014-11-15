@@ -373,17 +373,34 @@ EOD;
             $this->getAdapter()->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
         }
 
+
+
+        //todo: das nur verwenden beim initialen Laden
+        //muss fuer den normalen Betrieb noch angepasst werden
         if (! $this->isRecordInFSWCover($zR->getIdentifier())) {
 
-            $sqlTemplate = 'insert into fsw_cover (oai_identifier,frontpage)';
-            $sqlTemplate .= ' values (OAI_IDENTIFIER, FRONTPAGE)';
-            $sqlTemplate = preg_replace("/OAI_IDENTIFIER/",$this->qV($zR->getIdentifier()),$sqlTemplate );
-            $sqlTemplate = preg_replace("/FRONTPAGE/",$this->qV("nofrontpage"),$sqlTemplate );
+            $cover = $this->isRecordInFSWCoverOldDB($zR->getIdentifier());
+            if  (isset ($cover)) {
 
-            $this->getAdapter()->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
+                $sqlTemplate = 'insert into fsw_cover (oai_identifier,frontpage,coverlink)';
+                $sqlTemplate .= ' values (OAI_IDENTIFIER, FRONTPAGE, COVERLINK)';
+                $sqlTemplate = preg_replace("/OAI_IDENTIFIER/",$this->qV($zR->getIdentifier()),$sqlTemplate );
+                $sqlTemplate = preg_replace("/FRONTPAGE/",$this->qV("nofrontpage"),$sqlTemplate );
+                $sqlTemplate = preg_replace("/COVERLINK/",$this->qV($cover),$sqlTemplate );
+
+                $this->getAdapter()->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
+
+            } else {
+                $sqlTemplate = 'insert into fsw_cover (oai_identifier,frontpage)';
+                $sqlTemplate .= ' values (OAI_IDENTIFIER, FRONTPAGE)';
+                $sqlTemplate = preg_replace("/OAI_IDENTIFIER/",$this->qV($zR->getIdentifier()),$sqlTemplate );
+                $sqlTemplate = preg_replace("/FRONTPAGE/",$this->qV("nofrontpage"),$sqlTemplate );
+
+                $this->getAdapter()->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
+
+            }
 
         }
-
 
     }
 
@@ -409,6 +426,26 @@ EOD;
 
 
         return count($result) > 0 ? true : false;
+    }
+
+
+    private function isRecordInFSWCoverOldDB($oai_identifier) {
+
+
+        $sql = 'select * from fswcoverlink where identifier = ' . $this->qV ($oai_identifier) ;
+        $result =  $this->getOldAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+
+        if (count($result) > 0) {
+            $current =  $result->current();
+            return $current['coverlink'];
+
+        } else {
+            return null;
+        }
+
+
+
     }
 
     public function getMessages() {

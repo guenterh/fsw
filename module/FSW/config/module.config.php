@@ -265,6 +265,11 @@ return array(
             'ForschungTableGateway'          =>  'FSW\Services\Factory::getForschungTableGateway',
 
             'ZoraDocTableGateway'          =>  'FSW\Services\Factory::getZoraDocTableGateway',
+            'ZoraDocWithCoverTabeGateway'          =>  'FSW\Services\Factory::getZoraDocWithCoverTableGateway',
+            'CoverOnlyTableGateway'          =>  'FSW\Services\Factory::getCoverOnlyTableGateway',
+
+
+
             'RollenTableGateway'          =>  'FSW\Services\Factory::getRollenTableGateway',
             'LehrveranstaltungenTableGateway'   =>  'FSW\Services\Factory::getLehrveranstaltungenTableGateway',
             'RelationPersonLehrveranstaltungeTableGateway'   =>  'FSW\Services\Factory::getRelationPersonLehrveranstaltungTableGateway',
