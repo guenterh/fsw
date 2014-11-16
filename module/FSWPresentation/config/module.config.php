@@ -49,6 +49,9 @@ return array(
     ),
 
     'view_manager' => array(
+        'template_map' => array(
+            'presentation/layout' => __DIR__ . '/../view/fsw-presentation/layout/layout.phtml',
+        ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),

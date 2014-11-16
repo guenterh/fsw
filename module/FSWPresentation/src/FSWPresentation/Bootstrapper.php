@@ -7,6 +7,7 @@
  */
 
 namespace FSWPresentation;
+use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
 
@@ -50,6 +51,25 @@ class Bootstrapper {
                 $this->$method();
             }
         }
+
+
+
+        $app = $this->event->getApplication();
+        $em = $app->getEventManager();
+        $sm = $em->getSharedManager();
+        //wechsle das layout im Falle der Praesentation in Oberfläche
+        $sm->attach(__NAMESPACE__, MvcEvent::EVENT_DISPATCH, function($e) {
+            $controller = $e->getTarget();
+            $controller->layout()->setTemplate("presentation/layout");
+            //nicht noetig aufgrund der namespace Angabe nachgehen!
+            //$routeName = $e->getRouteMatch()->getMatchedRouteName();
+            //if (preg_match('{presentation/}',$routeName,$matches)) {}
+
+        });
+        $moduleRouteListener = new ModuleRouteListener();
+        $moduleRouteListener->attach($em);
+
+
 
 
     }
