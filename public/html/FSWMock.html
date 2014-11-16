@@ -2,10 +2,10 @@
 <html>
     <head profile="http://www.acme.com/profiles/core http://dublincore.org/documents/dcq-html/">
         <link href="http://purl.org/dc/elements/1.1/" rel="schema.DC" /><link href="http://purl.org/dc/terms/" rel="schema.DCTERMS" />
-        <link href="http://www.fsw.uzh.ch/uzh/authoring/images/uzh_shortcut_icon_57.png" rel="apple-touch-icon" sizes="57x57" />
-        <link href="http://www.fsw.uzh.ch/uzh/authoring/images/uzh_shortcut_icon_72.png" rel="apple-touch-icon" sizes="72x72" />
-        <link href="http://www.fsw.uzh.ch/uzh/authoring/images/uzh_shortcut_icon_114.png" rel="apple-touch-icon" sizes="114x114" />
-        <link href="http://www.fsw.uzh.ch/uzh/authoring/images/uzh_shortcut_icon_144.png" rel="apple-touch-icon" sizes="144x144" />
+        <link href="images/uzh_shortcut_icon_57.png" rel="apple-touch-icon" sizes="57x57" />
+        <link href="images/uzh_shortcut_icon_72.png" rel="apple-touch-icon" sizes="72x72" />
+        <link href="images/uzh_shortcut_icon_114.png" rel="apple-touch-icon" sizes="114x114" />
+        <link href="images/uzh_shortcut_icon_144.png" rel="apple-touch-icon" sizes="144x144" />
         <title>UZH - Forschungsstelle für Sozial- und Wirtschaftsgeschichte - Buchpublikationen der Forschungsstelle</title>
         <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
         <meta content="" name="keywords" /><meta content=" " name="description" />
@@ -19,12 +19,12 @@
         <meta content="Universität Zürich" name="DC:rights" />
         <link href="http://www.fsw.uzh.ch/uzh/authoring/css/uzh.css" rel="stylesheet" type="text/css" />
         <link href="http://www.fsw.uzh.ch/fsw/live/css/publication.css" rel="stylesheet" type="text/css" />
-        <script src="http://www.fsw.uzh.ch/fsw/live/jquery/jquery-1.4.1.min.js" type="text/javascript"><!----> </script>
-        <script src="http://localhost/fswjs/jquery.iframe-auto-height.plugin.js" type="text/javascript"><!----> </script>
-        <script src="http://www.fsw.uzh.ch/jquery/jquery.tablesorter.min.js" type="text/javascript"><!----> </script>
-        <script src="http://www.fsw.uzh.ch/jquery/jquery.metadata.js" type="text/javascript"><!----> </script>
-        <script src="http://www.fsw.uzh.ch/uzh/authoring/javascript/uni.js" type="text/javascript"><!----> </script>
-        <script src="http://www.fsw.uzh.ch/fsw/live/js/publication.js" type="text/javascript"><!----> </script>
+        <script src="js/jquery-1.4.1.min.js" type="text/javascript"><!----> </script>
+        <script src="js/jquery.iframe-auto-height.plugin.js" type="text/javascript"><!----> </script>
+        <script src="js/jquery.tablesorter.min.js" type="text/javascript"><!----> </script>
+        <script src="js/jquery.metadata.js" type="text/javascript"><!----> </script>
+        <script src="js/uni.js" type="text/javascript"><!----> </script>
+        <script src="js/publication.js" type="text/javascript"><!----> </script>
     </head>
     <body>
     <div class="bodywidth">
@@ -45,7 +45,7 @@
                     <div class="serviceform">
                         <a href="javascript:document.forms['searchbox'].submit();"
                            title="abschicken"><img alt="abschicken"
-                                                   src="/uzh/authoring/images/btn_search.png" />
+                                                   src="images/btn_search.png" />
                         </a>
                     </div>
                 </form><!---->
@@ -66,10 +66,10 @@
                 <a href="http://www.fsw.uzh.ch/sitemap.html">Sitemap</a>
                 <span id="views">
                     <a href="#" id="printView" onClick="javascript:openPrintWindow('buchpublikationen_de.print.html')" title="Druckansicht">
-                        <img alt="Druckansicht" height="10" src="/uzh/authoring/images/1.gif" width="10" />
+                        <img alt="Druckansicht" height="10" src="images/1.gif" width="10" />
                     </a> |
                     <a href="?fontsize=big" id="switchFontSize" title="Schrift grösser/kleiner">
-                        <img alt="Schrift grösser/kleiner" height="9" src="/uzh/authoring/images/1.gif" width="18" /></a> |
+                        <img alt="Schrift grösser/kleiner" height="9" src="images/1.gif" width="18" /></a> |
                     <a href="?version=simple" id="simpleView" title="Mobile-Ansicht">
                         <img alt="Mobile-Ansicht" height="10" src="http://www.fsw.uzh.ch/uzh/authoring/images/1.gif" width="13" />
                     </a>
@@ -176,14 +176,14 @@
                     <h1>Buchpublikationen der Forschungsstelle<!----></h1>
                     <div><h2><a class="namedanchor" name="1"><!----></a></h2>
                         <iframe class="autoHeight" frameborder="0" height="500px" scrolling="no"
-                                src="http://www.fsw.uzh.ch/static/getDocuments.php?conditions=buchpublikationen"
+                                src="http://localhost:30000/publications"
                                 width="450px">Ihr Browser unterstützt iframe leider nicht. <!---->
                         </iframe>
-                        <script language="javascript"><!--
+                        <script language="javascript">
                             $(document).ready(function()
                             {
                                 jQuery('iframe.autoHeight').iframeAutoHeight({heightOffset: 20});
-                            });-->
+                            });
                         </script>
                     </div>
                 </div>
