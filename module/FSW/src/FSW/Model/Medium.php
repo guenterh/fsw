@@ -66,6 +66,16 @@ class Medium extends BaseModel implements InputFilterAwareInterface {
                 ),
             ));
 
+
+            $inputFilter->add(array(
+                'name'     => 'medientyp',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            ));
+
+
             $inputFilter->add(array(
                 'name'     => 'icon',
                 'required' => true,

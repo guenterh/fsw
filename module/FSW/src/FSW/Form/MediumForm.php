@@ -113,6 +113,26 @@ class MediumForm extends Form {
 
         ));
 
+
+        $this->add(array(
+            'name' => 'medientyp',
+            'type' => 'select',
+            'options' => array(
+                'empty_option' => '- Kein Icon -',
+                'label' => 'Medientyp',
+                'value_options' => array(
+                    '1' => 'Radio',
+                    '2' => 'Fernsehen',
+                    '3' => 'Internet',
+                )
+            ),
+            'attributes' => array(
+                'class' => 'fswTextArea'
+            )
+
+        ));
+
+
         $this->add(array(
             'name' => 'sendetitel',
             'type' => 'textarea',
