@@ -22,13 +22,13 @@ class MedienController extends BaseController {
     public function showAction()
     {
 
-        $type = $this->params('type');
+        $medientypen =  $this->params()->fromQuery('medientyp',array());
 
 
         //$this->layout()->setTemplate("presentation/layout");
 
         return new ViewModel(array(
-            'zoraDocs' => $this->facade->getPublications($type)
+            'medien' => $this->facade->getMedienByTyp( $medientypen)
         ));
 
     }

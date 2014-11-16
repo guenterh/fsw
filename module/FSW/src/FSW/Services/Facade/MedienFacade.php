@@ -7,6 +7,7 @@
  */
 
 namespace FSW\Services\Facade;
+use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Select;
@@ -190,6 +191,102 @@ class MedienFacade extends BaseFacade {
 
 
 
+    }
+
+
+    public function getMedienByTyp($medientypen = array()) {
+
+
+        //SELECT `fsw_medien`.* FROM `fsw_medien` INNER JOIN `Per_Personen` AS `personen` ON `fsw_medien`.`mit_id_per_extended` = `personen`.`pers_id`
+        //WHERE `medientyp` IN () ORDER BY `datum` DESC
+
+        //so koennte man mappen und gleichzeitig quotens
+        //$test = array_map(function ($element){
+        //        return $this->qV($element);
+        //    }
+        //,$medientypen);
+
+        //$test1 =  implode(',',$medientypen);
+
+        $sql = 'SELECT m.* , p.pers_name, p.pers_vorname FROM `fsw_medien` as m, `Per_Personen` as p where m.mit_id_per_extended = p.pers_id ';
+        if (count($medientypen) > 0) {
+            $sql .= ' and medientyp in (' . implode(',',$medientypen) . ') ';
+
+        }
+        $sql .=  'order by datum DESC';
+        $result = $this->getAdapter()->query(   $sql, Adapter::QUERY_MODE_EXECUTE);
+
+        $medien = array();
+
+        foreach ($result as $row) {
+            $m = new Medium();
+
+            $m->setId($row['id']);
+            $m->setDatum($row['datum']);
+            $m->setGespraechstitel($row['gespraechstitel']);
+            $m->setSendetitel($row['sendetitel']);
+            $m->setMit_id_per_extended($row['mit_id_per_extended']);
+            $m->setSendetitel($row['sendetitel']);
+            $m->setIcon($row['icon']);
+            $m->setLink($row['link']);
+
+            $m->setBeteiligter($row['pers_vorname'] . ' ' . $row['pers_name']);
+            $medien[] = $m;
+        }
+
+        return $medien;
+
+
+
+        /*
+         * joins mit columns aus mehreren Tabellen plus Predicat in bekomme ich nicht in...
+        $targetGateway = $this->histSemDBService->getMedienGateway();
+
+        //$sql =  new Sql($this->getAdapter());
+        //$select = $sql->select();
+        $select	= new Select();
+        $select->columns(array('*'));
+        $select->from('fsw_medien');
+        $select->join(array('personen' => 'Per_Personen'),
+            'fsw_medien.mit_id_per_extended = personen.pers_id',
+            array());
+        $select->order("datum DESC")
+            ->where->in('medientyp', array(
+                $medientypen
+            ));
+
+        //$select->where(array('fsw_zora_author.id' => $authorId));
+
+        //$results = $this->histSemDBService->getZoraAuthorGateway()->selectWith($select);
+        //$result = $this->getAdapter()->query($sql->getSqlStringForSqlObject($select), Adapter::QUERY_MODE_EXECUTE);
+
+        $test = $targetGateway->selectWith($select);
+
+        return  $test;
+        //return  $results->current()->getPers_id();
+
+
+
+
+
+        $targetGateway = $this->histSemDBService->getMedienGateway();
+        $select = new Select();
+
+        if (count($medientypen) > 0) {
+
+            $select->from($targetGateway->getTable())
+                ->order("datum DESC")
+                ->where->in('medientyp', array(
+                    $medientypen
+                ));
+        } else {
+            $select->from($targetGateway->getTable())
+                ->order("datum DESC");
+
+        }
+
+        return  $targetGateway->selectWith($select);
+        */
     }
 
 

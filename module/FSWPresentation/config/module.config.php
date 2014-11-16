@@ -43,6 +43,7 @@ return array(
         ),
         'factories' => array(
             'FSWPresentation\Controller\Publications' => 'FSWPresentation\Controller\Factory::getPublicationsController',
+            'FSWPresentation\Controller\Medien' => 'FSWPresentation\Controller\Factory::getMedienController',
 
         )
 

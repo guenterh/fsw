@@ -25,6 +25,8 @@ class Medium extends BaseModel implements InputFilterAwareInterface {
     public $mit_id_per_extended;
     public $sendetitel;
 
+    private $beteiligter;
+
     protected $inputFilter;
 
 
@@ -257,6 +259,25 @@ class Medium extends BaseModel implements InputFilterAwareInterface {
     {
         return $this->sendetitel;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getBeteiligter()
+    {
+        return $this->beteiligter;
+    }
+
+    /**
+     * @param mixed $beteiligter
+     */
+    public function setBeteiligter($beteiligter)
+    {
+        $this->beteiligter = $beteiligter;
+    }
+
+
+
 
 
 
