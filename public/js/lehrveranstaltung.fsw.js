@@ -368,4 +368,4 @@ var  Lehrveranstaltung = {
 
 
 
-}
+};
