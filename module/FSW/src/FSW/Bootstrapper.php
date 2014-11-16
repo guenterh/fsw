@@ -11,6 +11,19 @@ use Zend\Console\Console, Zend\Mvc\MvcEvent, Zend\Mvc\Router\Http\RouteMatch;
 
 class Bootstrapper {
 
+    /*
+     * MVCEvent
+     * @var Zend\Mvc\MvcEvent
+     */
+    protected $event;
+
+
+    /*
+     * EventManager
+     * @var Zend\EventManager\EventManager
+     */
+    protected $events;
+
 
     private $jsonActions = array(
         'FSW\Controller\Kolloquien' => array('testValidKolloquium',
@@ -52,6 +65,7 @@ class Bootstrapper {
 
     public function initJson ()
     {
+
         $this->events->attach(
             'render', array($this, 'registerJSONStrategy')
         );
