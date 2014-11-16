@@ -6,11 +6,13 @@
  * Time: 20:22
  */
 
-namespace FSW\Services\Facade;
+namespace FSWPresentation\Services\Facade;
+
+
 use FSW\Model\ZoraRecord;
-use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
+use FSW\Services\Facade\BaseFacade;
 
 
 

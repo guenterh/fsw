@@ -71,21 +71,6 @@ return array(
                 ),
             ),
 
-            'publications' => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'    => '/publications[/][:action][/:type]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'type'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'FSW\Controller\Publications',
-                        'action'     => 'show',
-                        'type'      => 'all'
-                    ),
-                ),
-            ),
 
             'personenaktivitaet' => array(
                 'type'    => 'segment',
@@ -260,7 +245,6 @@ return array(
             'FSW\Services\Facade\PersonenFacade'    =>  'FSW\Services\Factory::getPersonFacade',
             'FSW\Services\Facade\PersonenAktivitaetFacade'    =>  'FSW\Services\Factory::getPersonAktivitaetFacade',
             'FSW\Services\Facade\MedienFacade'    =>  'FSW\Services\Factory::getMedienFacade',
-            'FSW\Services\Facade\PublicationsFacade'    =>  'FSW\Services\Factory::getPublicationsFacade',
 
             'ForschungTableGateway'          =>  'FSW\Services\Factory::getForschungTableGateway',
 
@@ -308,7 +292,7 @@ return array(
             'FSW\Controller\Kolloquien' => 'FSW\Controller\Factory::getKolloquienController',
             'FSW\Controller\Forschung' => 'FSW\Controller\Factory::getForschungController',
             'FSW\Controller\PersonenAktivitaeten' => 'FSW\Controller\Factory::getPersonAktivitaetController',
-            'FSW\Controller\Publications' => 'FSW\Controller\Factory::getPublicationsController',
+            //'FSW\Controller\Publications' => 'FSW\Controller\Factory::getPublicationsController',
             'FSW\Controller\Lehrveranstaltungen'    =>  'FSW\Controller\Factory::getLehrveranstaltungenController'
 
         )

@@ -6,6 +6,7 @@ return array(
     'modules' => array(
         'Application',
         'FSW',
+        'FSWPresentation',
         'DluTwBootstrap',
         'DluTwBootstrapDemo',
         'ZfcTwitterBootstrap',

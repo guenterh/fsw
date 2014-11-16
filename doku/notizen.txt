@@ -95,3 +95,13 @@ http://confluence.jetbrains.com/display/PhpStorm/Zero-configuration+Web+Applicat
 -> benutze das Phone handle
 http://stackoverflow.com/questions/17859173/phpstorm-how-i-debug-php-file-when-request-is-initiated-from-js
 http://stackoverflow.com/questions/17120513/phpstorm-debugger-not-stopping-at-breakpoints-keeps-waiting-for-xdebug-session
+
+
+
+**************************************
+
+Literatur ZF2
+http://proquest.tech.safaribooksonline.de/book/programming/php/9781849694841 (sieht nicht schlecht aus)
+
+https://leanpub.com/using-zend-framework-2/read
+(könnte man sich mal ansehen)

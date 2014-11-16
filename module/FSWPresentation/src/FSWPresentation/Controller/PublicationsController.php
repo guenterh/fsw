@@ -6,13 +6,10 @@
  * Time: 11:59 PM
  */
 
-namespace FSW\Controller;
+namespace FSWPresentation\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-
-use FSW\Form\MediumForm;
-use FSW\Model\Medium;
+use FSW\Controller\BaseController;
 
 
 

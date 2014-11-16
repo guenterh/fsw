@@ -317,20 +317,5 @@ class Factory {
 
     }
 
-    public static function getPublicationsFacade(ServiceManager $sm) {
-
-
-        $facade = new \FSW\Services\Facade\PublicationsFacade();
-        return $facade;
-
-
-    }
-
-
-
-
-
-
-
 
 } 
