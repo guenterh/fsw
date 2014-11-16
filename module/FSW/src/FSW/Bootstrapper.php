@@ -100,19 +100,23 @@ class Bootstrapper {
     public function registerJSONStrategy($e) {
 
 
+        if (!is_null($e->getRouteMatch())) {
 
-        $controller = $e->getRouteMatch()->getParam('controller');
-        $action = $e->getRouteMatch()->getParam('action');
+            $controller = $e->getRouteMatch()->getParam('controller');
+            $action = $e->getRouteMatch()->getParam('action');
 
-        //if (array_key_exists($controller, $this->jsonActions) && in_array($this->jsonActions, $action)) {
-        if (array_key_exists($controller, $this->jsonActions) && in_array($action, $this->jsonActions[$controller]) ) {
+            //if (array_key_exists($controller, $this->jsonActions) && in_array($this->jsonActions, $action)) {
+            if (array_key_exists($controller, $this->jsonActions) && in_array($action, $this->jsonActions[$controller]) ) {
 
-            $serviceManager = $e->getApplication()->getServiceManager();
-            $view = $serviceManager->get('Zend\View\View');
-            $jsonStrategy = $serviceManager->get('ViewJsonStrategy');
+                $serviceManager = $e->getApplication()->getServiceManager();
+                $view = $serviceManager->get('Zend\View\View');
+                $jsonStrategy = $serviceManager->get('ViewJsonStrategy');
 
-            $view->getEventManager()->attach($jsonStrategy,100);
+                $view->getEventManager()->attach($jsonStrategy,100);
+            }
+
         }
+
 
 
     }
