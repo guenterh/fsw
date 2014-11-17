@@ -495,4 +495,52 @@ class KolloquienFacade extends BaseFacade {
 
     }
 
+    public function getKolloquiumWithDependencies ($id) {
+
+        $idKolloquium = (int) $id;
+
+        $kolloquienTableGateway =  $this->histSemDBService->getKolloquienGateway();
+        $kollVeranstaltungGateway = $this->histSemDBService->getKolloquienVeranstaltungenGateway();
+        $personenVeranstaltungTableGateway =  $this->histSemDBService->getKolloquienVeranstaltungenPersonGateway();
+
+        if ($idKolloquium && $idKolloquium != 0) {
+            $resultset = $kolloquienTableGateway->select(array(
+                'id'    => $id
+            ));
+        } else {
+
+            $resultset = $kolloquienTableGateway->select();
+        }
+
+        $kolloquien = array();
+        foreach ($resultset as $kolloquium) {
+
+            $resultVeranstaltungen =  $kollVeranstaltungGateway->select(array(
+                'id_kolloquium' =>  $kolloquium->getId()
+            ));
+
+            foreach($resultVeranstaltungen as $veranstaltung) {
+
+                $resultPersonen =  $personenVeranstaltungTableGateway->select(array(
+                   'id_kolloquium_veranstaltung'    =>  $veranstaltung->getId()
+                ));
+
+                foreach ($resultPersonen as $person) {
+
+                    $veranstaltung->addVortragend($person);
+
+                }
+
+                $kolloquium->addVeranstaltung($veranstaltung);
+            }
+
+            $kolloquien[] = $kolloquium;
+
+        }
+
+        return $kolloquien;
+
+    }
+
+
 }

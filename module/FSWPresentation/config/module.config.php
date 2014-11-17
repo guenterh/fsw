@@ -44,9 +44,16 @@ return array(
         'factories' => array(
             'FSWPresentation\Controller\Publications' => 'FSWPresentation\Controller\Factory::getPublicationsController',
             'FSWPresentation\Controller\Medien' => 'FSWPresentation\Controller\Factory::getMedienController',
+            'FSWPresentation\Controller\Kolloquien' => 'FSWPresentation\Controller\Factory::getKolloquienController',
 
         )
 
+    ),
+
+    'view_helpers'  =>  array(
+        'invokables'    =>  array(
+            'date'  =>  'FSWPresentation\View\Helper\Date'
+        )
     ),
 
     'view_manager' => array(

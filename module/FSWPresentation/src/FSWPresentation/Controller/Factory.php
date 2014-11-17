@@ -41,5 +41,19 @@ class Factory {
     }
 
 
+    public static function getKolloquienController(ServiceManager $sm) {
+
+        $mC = new KolloquienController();
+
+        if ($mC instanceof FacadeAwareInterface) {
+
+            $mC->setFacadeService($sm->getServiceLocator()->get('KolloquienFacade'));
+
+        }
+
+        return $mC;
+
+    }
+
 
 }
