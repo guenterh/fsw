@@ -1,8 +1,11 @@
 <?php
 namespace FSW\Services\Facade;
 
+use FSW\Services\Config\PluginManager;
+use FSW\Services\FSWConfigAwareInterface;
 use FSW\Services\HistSemDBService;
 use FSW\Services\HistSemDBServiceAwareInterface;
+use Zend\Config\Config;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Predicate\PredicateSet;
 use Zend\Db\Sql\Select;
@@ -18,8 +21,8 @@ use FSW\Model\BaseModel;
  * [Description]
  *
  */
-abstract class BaseFacade implements HistSemDBServiceAwareInterface
-{
+abstract class BaseFacade implements HistSemDBServiceAwareInterface,
+                                        FSWConfigAwareInterface {
 
 	/**
 	 * @var    String[]    Fulltext search fields
@@ -37,6 +40,13 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface
     private $oldFSWadapater;
 
     protected $defaultTableGateway;
+
+
+    /*
+     * Fsw specific config
+     * @var FSW\Services\Config\PluginManager
+     */
+    protected $fswConfigPlugin;
 
 
 
@@ -210,6 +220,14 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface
 
     }
 
+    public function setFSWConfigService(PluginManager $fswConfigPlugin)
+    {
+        $this->fswConfigPlugin = $fswConfigPlugin;
+    }
+
+    protected function getFSWConfigLocator() {
+        return $this->fswConfigPlugin;
+    }
 
 
     protected function getAdapter() {

@@ -29,11 +29,11 @@ namespace FSW\Services\Initializer;
 use Zend\ServiceManager\ServiceManager;
 
 /**
- * VuFind Service Initializer
+ * FSW Service Initializer
  *
- * @category VuFind2
+ * @category FSW
  * @package  ServiceManager
- * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Guenter Hipler <hipler@iwerk.ch>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     http://vufind.org/wiki/vufind2:developer_manual Wiki
  */
@@ -51,6 +51,10 @@ class Initializer
     {
         if ($instance instanceof \FSW\Services\HistSemDBServiceAwareInterface) {
             $instance->setHistSemDBService($sm->get('HistSemDBService'));
+        }
+
+        if ($instance instanceof \FSW\Services\FSWConfigAwareInterface) {
+            $instance->setFSWConfigService($sm->get('FSW\Config'));
         }
         return $instance;
     }
