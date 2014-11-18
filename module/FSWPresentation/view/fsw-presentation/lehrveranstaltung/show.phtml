@@ -1,0 +1,38 @@
+
+
+<?php
+    $semesterArray = $this->lvWithDpendencies;
+?>
+
+
+<div class="tabs"> <!-- begin: <div class="tabs" -->
+
+    <ul>
+
+        <?php foreach($this->archivLabels as $key => $value): ?>
+            <li><a href='#tab-<?php echo $key; ?>'><?php echo $value ?></a></li>
+
+        <?php endforeach; ?>
+
+        <?php foreach($semesterArray as $semesterKey => $lehrVeranstaltungenImSemester): ?>
+
+            <div id='tab-<?php echo $semesterKey?>' class="tab">
+                <ul class="type1">
+                    <?php foreach($lehrVeranstaltungenImSemester as $lv): ?>
+                    <li class="marginTop ">
+                        <p class="noMarginBottom">
+                            <!-- hier jetzt die Personeninfos fuer die Leitung -->
+                            <?php echo $lv->getTitel(); ?>
+                        </p>
+                    </li>
+                    <?php endforeach; ?>
+                </ul>
+
+            </div>
+
+        <?php endforeach; ?>
+
+
+    </ul>
+
+</div>

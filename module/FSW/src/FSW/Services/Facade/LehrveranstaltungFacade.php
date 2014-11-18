@@ -12,6 +12,7 @@ namespace FSW\Services\Facade;
 use FSW\Model\BaseModel;
 use FSW\Model\Lehrveranstaltung;
 use FSW\Model\RelationPersonLehrveranstaltung;
+use FSW\Model\PersonenInfo;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Select;
 use Zend\Debug\Debug;
@@ -329,6 +330,62 @@ class LehrveranstaltungFacade extends BaseFacade {
         ));
 
     }
+
+
+    public function getLehrveranstaltungenWithDependencies($idLehrveranstaltung) {
+
+        $idLehrV = (int) $idLehrveranstaltung;
+        $lvGateway =  $this->histSemDBService->getLehrveranstaltungenGateway();
+
+        if ($idLehrV && $idLehrV != 0) {
+            $resultset = $lvGateway->select(array(
+                'id'    => $idLehrV
+            ));
+        } else {
+            $lvArchivDefinitionen = $this->getFSWConfigLocator()->get('config')->LehrveranstaltungArchiv;
+            $inValues = array_keys($lvArchivDefinitionen->toArray());
+
+            $select  = $lvGateway->getSql()->select();
+            $select->where->in('semester',$inValues);
+            $resultset =  $lvGateway->selectWith($select);
+
+
+        }
+
+        $lehrveranstaltungen= array();
+        if ($resultset) {
+
+
+            //$lvPersGateway = $this->histSemDBService->getKolloquienVeranstaltungenGateway();
+            $sqlTemplate = 'select p.pers_name as name, p.pers_vorname as vorname, pe.profilURL as url, p.pers_id as id from fsw_lehrveranstaltung l,';
+            $sqlTemplate .= ' fsw_relation_personen_fsw_lehrveranstaltung rpl, ';
+            $sqlTemplate .= 'Per_Personen p, fsw_personen_extended pe where l.id = rpl.ffsw_lehrveranstaltungen_id and ';
+            $sqlTemplate .= 'rpl.fper_personen_pers_id = p.pers_id and p.pers_id = pe.pers_id and l.id = LVID';
+
+            foreach ($resultset as $lv) {
+
+                $sql = preg_replace('/LVID/',$lv->getId(),$sqlTemplate );
+                $rPinfo =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+                foreach($rPinfo as $pinfo) {
+                    $pi = new PersonenInfo();
+
+                    $pi->setId($pinfo['id']);
+                    $pi->setNachName($pinfo['name']);
+                    $pi->setVorName($pinfo['vorname']);
+                    $pi->setProfilURL($pinfo['url']);
+                    $lv->addPersonenInfo($pi);
+                }
+
+                $lehrveranstaltungen[$lv->getSemester()][] = $lv;
+
+            }
+
+        }
+
+        return $lehrveranstaltungen;
+
+    }
+
 
 
 

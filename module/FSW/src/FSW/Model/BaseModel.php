@@ -1,6 +1,7 @@
 <?php
 namespace FSW\Model;
 
+use FSW\Model\PersonenInfo;
 use Zend\InputFilter\InputFilter;
 
 /**
@@ -14,6 +15,9 @@ abstract class BaseModel
 	 * @var InputFilter
 	 */
 	protected $inputFilter;
+
+
+    protected $personenInfo = array();
 
 
 
@@ -100,4 +104,30 @@ abstract class BaseModel
 	{
 		return get_class($this);
 	}
+
+    /**
+     * @return array
+     */
+    public function getPersonenInfo()
+    {
+        return $this->personenInfo;
+    }
+
+    /**
+     * @param array $personenInfo
+     */
+    public function setPersonenInfo($personenInfo)
+    {
+        $this->personenInfo = $personenInfo;
+    }
+
+    public function addPersonenInfo(PersonenInfo $personenInfo)
+    {
+        $this->personenInfo[] = $personenInfo;
+    }
+
+
+
+
+
 }

@@ -56,4 +56,21 @@ class Factory {
     }
 
 
+
+    public static function getLehrveranstaltungController(ServiceManager $sm) {
+
+        $mC = new LehrveranstaltungController();
+
+        if ($mC instanceof FacadeAwareInterface) {
+
+            $mC->setFacadeService($sm->getServiceLocator()->get('LehrveranstaltungenFacade'));
+
+        }
+
+        return $mC;
+
+    }
+
+
+
 }

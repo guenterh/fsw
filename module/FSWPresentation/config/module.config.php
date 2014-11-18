@@ -45,6 +45,7 @@ return array(
             'FSWPresentation\Controller\Publications' => 'FSWPresentation\Controller\Factory::getPublicationsController',
             'FSWPresentation\Controller\Medien' => 'FSWPresentation\Controller\Factory::getMedienController',
             'FSWPresentation\Controller\Kolloquien' => 'FSWPresentation\Controller\Factory::getKolloquienController',
+            'FSWPresentation\Controller\Lehrveranstaltung' => 'FSWPresentation\Controller\Factory::getLehrveranstaltungController',
 
         )
 
