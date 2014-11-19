@@ -5,7 +5,8 @@
 ?>
 
 
-<div class="tabs"> <!-- begin: <div class="tabs" -->
+
+<div id="tabs" >
 
     <ul>
 
@@ -14,65 +15,53 @@
 
         <?php endforeach; ?>
     </ul>
-<?php foreach($semesterArray as $semesterKey => $lehrVeranstaltungenImSemester): ?>
+    <?php foreach($semesterArray as $semesterKey => $lehrVeranstaltungenImSemester): ?>
 
-    <div id="tab-<?php echo $semesterKey?>" class="tab">
-        <ul class="type1">
-            <?php foreach($lehrVeranstaltungenImSemester as $lv): ?>
+        <div id="tab-<?php echo $semesterKey?>" class="tab">
+        <ul    class="type1">
+
+        <?php foreach($lehrVeranstaltungenImSemester as $lv): ?>
             <li class="marginTop ">
-                <p class="noMarginBottom">
-                    <!-- hier jetzt die Personeninfos fuer die Leitung -->
-
+                <div class="noMarginBottom">
                     <?php foreach ($lv->getPersonenInfo() as $pi): ?>
-                        <div>
-                            <?php if (!is_null($a = $pi->getProfilURL()) && strlen($pi->getProfilURL()) > 0): ?>
-                                <a href="<?php echo $pi->getProfilURL(); ?>">
-                                    <?php echo $pi->getNachName() . " " . $pi->getVorName(); ?>
-                                </a>
-                            <?php else: ?>
-                                <?php echo $pi->getNachName() . " " . $pi->getVorName(); ?>
-                            <?php endif; ?>
-
-                        </div>,&nbsp;
-                    <?php endforeach; ?>
-
-                    <?php echo $lv->getTag() . ',&nbsp;' . $lv->getVon_zeit() . ',&nbsp;' . $lv->getBis_zeit() . '</br' ?>
-
-
-                    <?php if (!is_null($lv->getVvzlink()) && strlen($lv->getVvzlink()) > 0): ?>
-                        <div>
-                            <a class="internal"   href="<?php echo $lv->getVvzlink(); ?>" target="_blank"><?php echo $lv->getTitel(); ?></a>
-                        </div>
+                <div>
+                    <?php if (!is_null($a = $pi->getProfilURL()) && strlen($pi->getProfilURL()) > 0): ?>
+                        <a href="<?php echo $pi->getProfilURL(); ?>">
+                            <?php echo $pi->getNachName() . " " . $pi->getVorName(); ?>
+                        </a>
                     <?php else: ?>
-                        <strong><?php echo $lv->getTitel();  ?></strong>
+                        <?php echo $pi->getNachName() . " " . $pi->getVorName(); ?>
                     <?php endif; ?>
 
-                </p>
+                </div>,&nbsp;
+                <?php endforeach; ?>
 
-                <?php if ((!is_null($lv->getBeschreibung()) && strlen($lv->getBeschreibung()) > 0)
-                            && (is_null($lv->getVvzlink()) || strlen($lv->getVvzlink() == 0) )): ?>
-                    <div>
-                        <a class="internal abstractCaption" href="#">mehr</a>
+                <?php echo $lv->getTag() . ',&nbsp;' . $lv->getVon_zeit() . ',&nbsp;' . $lv->getBis_zeit() . '</br' ?>
 
-                        <div class="abstractText">
-                            <?php echo $lv->getBeschreibung(); ?> &nbsp;
-                        </div>
-                    </div>
+                <?php if (!is_null($lv->getVvzlink()) && strlen($lv->getVvzlink()) > 0): ?>
 
+                    <p><a class="internal"   href="<?php echo $lv->getVvzlink(); ?>" target="_blank"><?php echo $lv->getTitel(); ?></a></p>
 
+                <?php else: ?>
+                    <strong><?php echo $lv->getTitel();  ?></strong>
                 <?php endif; ?>
+
+
+                </div>
 
 
 
             </li>
-            <?php endforeach; ?>
+
+        <?php endforeach;?>
         </ul>
 
-    </div>
+        </div>
 
-<?php endforeach; ?>
-
+    <?php endforeach; ?>
 
 
 
 </div>
+
+
