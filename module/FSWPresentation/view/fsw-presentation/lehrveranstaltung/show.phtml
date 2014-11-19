@@ -48,7 +48,21 @@
 
 
                 </div>
+                <?php if ((!is_null($lv->getBeschreibung()) && strlen($lv->getBeschreibung()) > 0)
+                    && (is_null($lv->getVvzlink()) || strlen($lv->getVvzlink() == 0) )): ?>
 
+
+                    <div>
+                        <a class="internal abstractCaption" href="#">mehr</a>
+
+                        <div class="abstractText">
+                            <?php echo $lv->getBeschreibung(); ?>
+                        </div>
+
+
+                    </div>
+
+                <?php endif; ?>
 
 
             </li>

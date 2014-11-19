@@ -14,19 +14,19 @@
         echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon',
                 'href' => $this->basePath() . '/images/favicon.ico'))
             ->prependStylesheet($this->basePath() . '/html/css/cmsIFrameFSW.css')
-            ->prependStylesheet($this->basePath() . '/html/css/jquery.ui.all.css')
+            ->prependStylesheet($this->basePath() . '/html/js1/jquery-ui/jquery-ui.css')
             ->prependStylesheet($this->basePath() . '/html/css/uzh.css');
 
         ?>
 
         <?php	// Scripts
         $this->headScript()
-            ->appendFile($this->basePath() . '/html/js/jquery-1.4.1.min.js')
-            ->appendFile($this->basePath() . '/html/js/jquery.ui.core.js')
-            ->appendFile($this->basePath() . '/html/js/jquery.ui.widget.js')
-            ->appendFile($this->basePath() . '/html/js/jquery.ui.tabs.js')
+            ->appendFile($this->basePath() . '/html/js1/jquery.js')
+            ->appendFile($this->basePath() . '/html/js1/jquery-ui/jquery-ui.js')
             ->appendFile($this->basePath() . '/html/js/fsw.js')
+
             ->appendFile($this->basePath() . '/html/js/fswUIinit.js');
+
 
         echo $this->headScript();
         ?>
@@ -35,10 +35,10 @@
 
     </head>
     <body>
-        <div class="bodywidthIFrame">
+
             <?php echo $this->content; ?>
 
-        </div>
+
 
     </body>
 </html>
