@@ -24,6 +24,7 @@ class Lehrveranstaltung extends BaseModel implements InputFilterAwareInterface{
     public $tag;
     public $vvzlink;
     public $olatlink;
+    public $beschreibung;
     public $personenLehrveranstaltung = null;
 
     protected $inputFilter;
@@ -181,6 +182,24 @@ class Lehrveranstaltung extends BaseModel implements InputFilterAwareInterface{
     {
         $this->vvzlink = $vvzlink;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getBeschreibung()
+    {
+        return $this->beschreibung;
+    }
+
+    /**
+     * @param mixed $beschreibung
+     */
+    public function setBeschreibung($beschreibung)
+    {
+        $this->beschreibung = $beschreibung;
+    }
+
+
 
     /**
      * @return null

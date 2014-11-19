@@ -127,6 +127,19 @@ class LehrveranstaltungFieldset extends Fieldset  {
             )
         ));
 
+        $this->add(array(
+            'name' => 'beschreibung',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'beschreibung'
+            ),
+            'attributes' => array(
+                'rows' => 20,
+                'class' => 'fswTextAreaMiddle'
+            )
+        ));
+
+
         /*
         $this->add(array(
             'type' => 'Zend\Form\Element\Collection',

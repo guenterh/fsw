@@ -232,6 +232,7 @@ CREATE TABLE IF NOT EXISTS `fsw_lehrveranstaltung` (
   `tag` VARCHAR(20) DEFAULT NULL,
   `vvzlink` VARCHAR(1000) DEFAULT NULL,
   `olatlink` VARCHAR(1000) DEFAULT NULL,
+  `beschreibung` longtext DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 

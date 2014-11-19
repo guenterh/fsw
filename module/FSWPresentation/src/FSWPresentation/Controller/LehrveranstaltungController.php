@@ -25,7 +25,7 @@ class LehrveranstaltungController extends BaseController {
 
         $id = $this->params()->fromRoute('id',0);
 
-
+        $this->layout('layout\layoutlehrveranstaltung');
 
         return new ViewModel(array(
             'lvWithDpendencies' => $this->facade->getLehrveranstaltungenWithDependencies($id),

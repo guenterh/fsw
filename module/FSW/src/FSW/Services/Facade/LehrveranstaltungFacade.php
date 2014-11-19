@@ -105,7 +105,8 @@ class LehrveranstaltungFacade extends BaseFacade {
                             'titel'     =>  $rowLV['titel'],
                             'tag'  =>  $rowLV['tag'],
                             'vvzlink'  =>  $rowLV['vvzlink'],
-                            'olatlink'  =>  $rowLV['olatlink']
+                            'olatlink'  =>  $rowLV['olatlink'],
+                            'beschreibung'  =>  $rowLV['txt']
 
 
                         ));
@@ -293,7 +294,8 @@ class LehrveranstaltungFacade extends BaseFacade {
                 'semester'  =>  $postData['lehrveranstaltung']['semester'],
                 'titel'  =>  $postData['lehrveranstaltung']['titel'],
                 'vvzlink'  =>  $postData['lehrveranstaltung']['vvzlink'],
-                'olatlink'  =>  $postData['lehrveranstaltung']['olatlink']
+                'olatlink'  =>  $postData['lehrveranstaltung']['olatlink'],
+                'beschreibung'  =>  $postData['lehrveranstaltung']['beschreibung']
             ),
             array(
                 'id'    =>  $postData['lehrveranstaltung']['id']
@@ -314,7 +316,8 @@ class LehrveranstaltungFacade extends BaseFacade {
                 'semester'  =>  $postData['lehrveranstaltung']['semester'],
                 'titel'  =>  $postData['lehrveranstaltung']['titel'],
                 'vvzlink'  =>  $postData['lehrveranstaltung']['vvzlink'],
-                'olatlink'  =>  $postData['lehrveranstaltung']['olatlink']
+                'olatlink'  =>  $postData['lehrveranstaltung']['olatlink'],
+                'beschreibung'  =>  $postData['lehrveranstaltung']['beschreibung']
             )
         );
 
