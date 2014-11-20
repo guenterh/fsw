@@ -1,0 +1,100 @@
+
+
+Datenbankstruktur
+1) benutze fsw_schema.sql in phpmyadmin
+
+
+
+
+
+Laden der initialen Daten:
+
+1) php public/index.php personen
+-> lädt auch fsw_medien (und zwar zwei Einträge mehr als wenn ich das script
+php public/index.php medien
+verwenden würde. Warum? Was ist der Unterschied?
+
+Fehlermeldung:
+PHP Notice:  Undefined index: APPLICATION_ENV in /usr/local/swissbib/fsw/public/index.php on line 21
+PHP Stack trace:
+PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
+
+
+Nur der Index?
+
+
+
+
+2) php public/index.php zora
+
+Fehlermedlungen:
+swissbib@ub-sbhp02:/usr/local/swissbib/fsw$ php public/index.php personen
+PHP Notice:  Undefined index: APPLICATION_ENV in /usr/local/swissbib/fsw/public/index.php on line 21
+PHP Stack trace:
+PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
+swissbib@ub-sbhp02:/usr/local/swissbib/fsw$ php public/index.php medien
+PHP Notice:  Undefined index: APPLICATION_ENV in /usr/local/swissbib/fsw/public/index.php on line 21
+PHP Stack trace:
+PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
+swissbib@ub-sbhp02:/usr/local/swissbib/fsw$ php public/index.php personen
+PHP Notice:  Undefined index: APPLICATION_ENV in /usr/local/swissbib/fsw/public/index.php on line 21
+PHP Stack trace:
+PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
+swissbib@ub-sbhp02:/usr/local/swissbib/fsw$ php public/index.php zora
+PHP Notice:  Undefined index: APPLICATION_ENV in /usr/local/swissbib/fsw/public/index.php on line 21
+PHP Stack trace:
+PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
+PHP Notice:  Undefined index: dc in /usr/local/swissbib/fsw/module/FSW/src/FSW/Model/ZoraRecord.php on line 99
+PHP Stack trace:
+PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
+PHP   2. Zend\Mvc\Application->run() /usr/local/swissbib/fsw/public/index.php:29
+PHP   3. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Application.php:309
+PHP   4. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP   5. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   6. Zend\Mvc\DispatchListener->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   7. Zend\Mvc\Controller\AbstractController->dispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/DispatchListener.php:114
+PHP   8. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractController.php:117
+PHP   9. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP  10. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  11. Zend\Mvc\Controller\AbstractActionController->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  12. FSW\Controller\HarvestController->oaiAction() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractActionController.php:83
+PHP  13. FSW\Services\OAI->launch() /usr/local/swissbib/fsw/module/FSW/src/FSW/Controller/HarvestController.php:79
+PHP  14. FSW\Services\OAI->getRecordsByDate() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:314
+PHP  15. FSW\Services\OAI->getRecords() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:837
+PHP  16. FSW\Services\OAI->processRecords() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:799
+PHP  17. FSW\Services\OAI->saveDeletedRecord() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:760
+PHP  18. FSW\Model\ZoraRecord->setRawOAIRecord() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:555
+PHP Notice:  Undefined index: dc in /usr/local/swissbib/fsw/module/FSW/src/FSW/Model/ZoraRecord.php on line 99
+PHP Stack trace:
+PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
+PHP   2. Zend\Mvc\Application->run() /usr/local/swissbib/fsw/public/index.php:29
+PHP   3. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Application.php:309
+PHP   4. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP   5. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   6. Zend\Mvc\DispatchListener->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   7. Zend\Mvc\Controller\AbstractController->dispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/DispatchListener.php:114
+PHP   8. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractController.php:117
+PHP   9. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP  10. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  11. Zend\Mvc\Controller\AbstractActionController->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  12. FSW\Controller\HarvestController->oaiAction() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractActionController.php:83
+PHP  13. FSW\Services\OAI->launch() /usr/local/swissbib/fsw/module/FSW/src/FSW/Controller/HarvestController.php:79
+PHP  14. FSW\Services\OAI->getRecordsByToken() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:319
+PHP  15. FSW\Services\OAI->getRecords() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:849
+PHP  16. FSW\Services\OAI->processRecords() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:799
+PHP  17. FSW\Services\OAI->saveDeletedRecord() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:760
+PHP  18. FSW\Model\ZoraRecord->setRawOAIRecord() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:555
+
+
+
+-> ich muss die Fehlermeldungen umleiten.
+
+
+3) php public/index.php kolloquien
+-> auch eine Reihe von Fehlermeldungen: loggen und anschauen!
+
+4) php public/index.php lehrveranstaltungen
+-> ich amche einen Dump fuer Meldungen - anschauen!
+
+
+

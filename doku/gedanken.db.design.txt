@@ -1,0 +1,41 @@
+
+
+fsw_relation_hs_personen_hsrolle_fsw_personen
+
+- Diese Tabelle bildet die Brücke zwiscchen dem HS und dem FSW content
+- Es malcht es möglich, dass eine Person mehrere Rollen, die durch HS Design definiert wird, einnehmen kann
+- Rollen werden weiter durch HS Design definiert (durch die Kombination meherer Attributen in Per_Rolle)
+
+Wir wollen im FSW Teil keine! Rollen definieren sondern ledigleich darauf verlinken. Was möglich ist, dass
+zusätzliche rollenbezogene Attrbute aufgenommen werden nicht jedoch eine Rolle definiert werden kann
+
+  - aller content von FSW Personen wird an die Verlinkungstabelle angehängt. Dadurch ist es prinzipiell möglich,
+  dass der content aufgeteilt wird (was ich aber nicht für sehr wahrscheinlich halte)
+
+  - mit der Definition meherer Rollen sollte die Personenpage automatisiert erstellt werden können
+
+
+
+  Was bald gemacht werden sollte (Manuela):
+  - FSW Personen in Per_Personen und Per_Rolle überarbeiten
+  -> sind alle Personen erfasst?
+  -> ist allen eine Rolle (Eintrag in Per_Rolle) zugeordnet (hier fehlt noch das abgemachte Feld)
+  -> ist das FSW flag (Person ist FSW Person) gesetzt? Bis jetzt leer. Die Verlinkugstabelle macht es ein wenig schwieriger, den
+  content automatisiert zu erstellen (fsw_personen_extended) da nun eine Rolle einbezogen werden muss
+
+  wenn ich den personenconetnt nicht so ohne weiteres erstellen kann (manuelle Arbeit), sollte man so bald wie möglich die Tabellen
+  nach histsem einstellen. Dafür sollte das design aber möglichst definitiv fertiggestellt sein
+
+
+
+
+
+
+
+  QArb_ArbeitenV2 (histsem)
+  dort gibt es ein Feld für Zora - Dokumente. Ist vom HS gedacht, dass hier Zoradokumente eingetragen werden.
+  Das wird das FSW nicht machen wollen
+  (mit Manuela besprechen)
+
+
+

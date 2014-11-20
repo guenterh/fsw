@@ -26,7 +26,7 @@
                     <?php foreach ($lv->getPersonenInfo() as $pi): ?>
                 <div>
                     <?php if (!is_null($a = $pi->getProfilURL()) && strlen($pi->getProfilURL()) > 0): ?>
-                        <a href="<?php echo $pi->getProfilURL(); ?>">
+                        <a class="displayParent" href="<?php echo $pi->getProfilURL(); ?>">
                             <?php echo $pi->getNachName() . " " . $pi->getVorName(); ?>
                         </a>
                     <?php else: ?>
