@@ -20,12 +20,12 @@ use Zend\Db\Adapter\Adapter;
 class ZoraFacade extends BaseFacade {
 
 
-    protected $tableGatewayZoraDoc;
-    protected $tableGatewayZoraAuthor;
-    protected $tableGatewayZoraDocType;
-    protected $tableGatewayCover;
+    //protected $tableGatewayZoraDoc;
+    //protected $tableGatewayZoraAuthor;
+    //protected $tableGatewayZoraDocType;
+    //protected $tableGatewayCover;
     protected $sm;
-    protected $adapter;
+    //protected $adapter;
     protected $messages = array();
 
 
@@ -34,18 +34,13 @@ class ZoraFacade extends BaseFacade {
      *
      * @param	 TableGateway	$tableGateway
      */
-    public function __construct(TableGateway $tableGatewayZoraDoc,
-                                TableGateway $tableGatewayZoraAuthor,
-                                TableGateway $tablegatewayZoraDocType,
-                                TableGateway $tablegatewayCover,
-                                ServiceManager $sm
-                                )
+    public function __construct(ServiceManager $sm)
     {
 
-        $this->tableGatewayCover = $tablegatewayCover;
-        $this->tableGatewayZoraAuthor = $tableGatewayZoraAuthor;
-        $this->tableGatewayZoraDoc = $tableGatewayZoraDoc;
-        $this->tableGatewayZoraDocType = $tablegatewayZoraDocType;
+        //$this->tableGatewayCover = $tablegatewayCover;
+        //$this->tableGatewayZoraAuthor = $tableGatewayZoraAuthor;
+        //$this->tableGatewayZoraDoc = $tableGatewayZoraDoc;
+        //$this->tableGatewayZoraDocType = $tablegatewayZoraDocType;
         $this->sm = $sm;
         //$this->adapter =  $this->histSemDBService->getAdapter();
 
@@ -66,6 +61,7 @@ class ZoraFacade extends BaseFacade {
     }
 
     public function getOAIClient($options = array()) {
+
 
         $oaiClient = $this->sm->get('oaiClient');
 
@@ -96,7 +92,8 @@ class ZoraFacade extends BaseFacade {
 
             if (strtoupper($zR->getRecordStatus()) === "DELETED") {
                 $this->deleteValuesFromZoraTables($zR->getIdentifier());
-                $this->messages[] = "<b>" . $zR->getIdentifier() . "</b>" . " was sent as deleted and was deleted in the database ";
+                $message = "<b>" . $zR->getIdentifier() . "</b>" . " was sent as deleted and was deleted in the database ";
+                $this->messages[] = $message;
                 return;
 
             }
@@ -108,23 +105,28 @@ class ZoraFacade extends BaseFacade {
                         $this->deleteValuesFromZoraTables($zR->getIdentifier());
 
                         $this->insertValuesIntoZoraTables($zR);
-                        $this->messages[] = "<b>" . $zR->getIdentifier() . "</b>" . " was <b>updated</b> because datestamp has changed";
+                        $message = "<b>" . $zR->getIdentifier() . "</b>" . " was <b>updated</b> because datestamp has changed";
+                        $this->messages[] = $message;
 
                     } else {
-                        $this->messages[] = "<b>" . $zR->getIdentifier() . "</b>" . " was not updated because datestamp hasn't changed";
+                        $message = "<b>" . $zR->getIdentifier() . "</b>" . " was not updated because datestamp hasn't changed";
+                        $this->messages[] = $message;
 
                     }
 
                 } else {
                     $this->insertValuesIntoZoraTables($zR);
-                    $this->messages[] = "<b>" . $zR->getIdentifier() . "</b>" . " was <b>inserted</b> because wasn't in database before";
+                    $message = "<b>" . $zR->getIdentifier() . "</b>" . " was <b>inserted</b> because wasn't in database before";
+                    $this->messages[] = $message;
 
                 }
             } else {
-                $this->messages[] = 'none of the persons (creators: ' . $zR->getAllCreators() . ' or contributors: '  . $zR->getAllContributors() . ' are in FSW DB -> nothing was done';
+                $message = 'none of the persons (creators: ' . $zR->getAllCreators() . ' or contributors: '  . $zR->getAllContributors() . ' are in FSW DB -> nothing was done';
+                $this->messages[] = $message;
             }
         } else {
-            $this->messages[] = 'send record wasn\'t an instance of ZoraRecord: ' . $args['oaiR'];
+            $message = 'sent record wasn\'t an instance of ZoraRecord: ' . $args['oaiR'];
+            $this->messages[] = $message;;
         }
 
     }

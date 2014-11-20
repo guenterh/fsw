@@ -70,6 +70,7 @@ class HarvestController extends BaseController
 
                 $oaiClient->setStartDate('1900-01-01');
                 $oaiClient->setEndDate('2050-12-31');
+                $oaiClient->setVerbose($oaiSection->verbose);
                 if ($oaiSection->usedSets) {
                     $sets = explode('###',$oaiSection->usedSets);
                     foreach($sets as $set) {
@@ -83,17 +84,15 @@ class HarvestController extends BaseController
                 }
 
 
-                //$oaiClient->launch();
+                foreach ($zoraFacade->getMessages() as $message) {
+                    file_put_contents($oaiSection->messagesFile,$message, FILE_APPEND );
+                }
+
 
             }
         }
-        //delete FROM `fsw_zora_doc`;
-        //delete FROM `fsw_zora_doctype`;
-        //delete FROM `fsw_relation_zora_author_zora_doc`;
-        //delete FROM `fsw_cover`;
 
-        $test = $zoraFacade->getMessages();
-
+        //todo: ich Manuela braucht wohl noch eine Webschnittstelle
         return new ViewModel(array('messages' => $zoraFacade->getMessages()));
 
         // All done.

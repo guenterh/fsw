@@ -388,7 +388,7 @@ class OAI implements EventManagerAwareInterface
      */
     protected function saveLastHarvestedDate($date)
     {
-        file_put_contents($this->lastHarvestFile, $date);
+        //file_put_contents($this->lastHarvestFile, $date);
     }
 
     /**
@@ -547,17 +547,17 @@ class OAI implements EventManagerAwareInterface
      *
      * @return void
      */
-    protected function saveDeletedRecord($id, $record,$status)
+    protected function saveDeletedRecord($id, $record,$status,$datum)
     {
 
         try {
             $zR = new ZoraRecord();
-            $zR->setRawOAIRecord($record,$id,$status,null);
+            $zR->setRawOAIDeletedRecord($record,$id,$status,$datum);
             $this->getEventManager()->trigger('processOAIItem',null,array('oaiR' => $zR));
 
         } catch (\Exception $ex) {
 
-            $test = "";
+            $this->write('Fehler in "saveDeleteRecord - \n' .  $ex->getMessage());
         }
 
 
@@ -757,7 +757,7 @@ class OAI implements EventManagerAwareInterface
             if (strtolower($attribs['status']) == 'deleted') {
                 $xml = $record->asXML();
 
-                $this->saveDeletedRecord($id,$xml,$status);
+                $this->saveDeletedRecord($id,$xml,$status,$record->header->datestamp);
             } else {
                 $this->saveRecord($id, $record,$status ,$record->header->datestamp);
                 $harvestedIds[] = $id;
@@ -903,7 +903,7 @@ class OAI implements EventManagerAwareInterface
         if (defined('VUFIND_PHPUNIT_RUNNING')) {
             return;
         }
-        //Console::write($str);
+        Console::write($str);
     }
 
     /**
@@ -919,7 +919,7 @@ class OAI implements EventManagerAwareInterface
         if (defined('VUFIND_PHPUNIT_RUNNING')) {
             return;
         }
-        //Console::writeLine($str);
+        Console::writeLine($str);
     }
 
     /**
@@ -953,4 +953,23 @@ class OAI implements EventManagerAwareInterface
         }
         return $this->eventManager;
     }
+
+    /**
+     * @return boolean
+     */
+    public function isVerbose()
+    {
+        return $this->verbose;
+    }
+
+    /**
+     * @param boolean $verbose
+     */
+    public function setVerbose($verbose)
+    {
+        $this->verbose = $verbose;
+    }
+
+
+
 }

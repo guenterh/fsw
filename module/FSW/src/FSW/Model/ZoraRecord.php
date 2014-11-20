@@ -68,6 +68,16 @@ class ZoraRecord  {
     //}
 
 
+    public function setRawOAIDeletedRecord($rawrecord, $id,$status,$datestamp) {
+
+        $this->setRecXML($rawrecord);
+        $this->setRecordStatus($status);
+        $this->setIdentifier($id);
+        $this->setDatestamp($datestamp);
+
+    }
+
+
     public function setRawOAIRecord ($rawrecord, $id,$status,$datestamp ) {
 
         //$this->rawXML = $rawrecord;
@@ -78,10 +88,12 @@ class ZoraRecord  {
         $namespaces = $sxml->getDocNamespaces(true);
 
 
-
+        /* ich pruefe dies beim Einfügen des Satzes in die Datenbank
+        könnte man wohl auch noch schöner machen. Refactring der Abhängigkeiten erforderlich
         if (! $this->testToInclude()) {
             throw new \Exception("now FSW record");
         }
+        */
 
         $this->setRecordStatus($status);
         $this->setIdentifier($id);
@@ -96,6 +108,8 @@ class ZoraRecord  {
         //foreach($dcElements  as $dcTag => $dcValue)
         //-> php bekommt ein Problem mit multiplen tags...
         //s. auch Hinweise zur Benutzung: http://www.sitepoint.com/parsing-xml-with-simplexml/
+
+
         foreach($sxml->children($namespaces['dc'])  as $dcTag => $dcValue)
         {
 
