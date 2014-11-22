@@ -59,6 +59,7 @@ var  Lehrveranstaltung = {
                         text: "Abbrechen",
                         click: function() {
                             $( this ).dialog( "close" );
+                            window.location = '/lehrveranstaltung/edit/' + veranstaltungId + '?completeView=true';
                         }
                     }
 
@@ -84,6 +85,10 @@ var  Lehrveranstaltung = {
 
             var currentIndex = $(event.target).attr("data-currentIndex");
             var relationId = $('#lehrveranstaltung\\[personenLehrveranstaltung\\]\\['  + currentIndex  + '\\]\\[id\\]').val();
+            //var currentLV = $('#lehrveranstaltung\\[id\\]',  $('form#lehrveranstaltung')).val();
+
+            var lvid = $('#lehrveranstaltung\\[id\\]').val();
+
 
 
             $('<div id="okEscDialog" title="Loeschen einer Person mit Bezug zu einer Lehrveranstaltung">' +
@@ -102,7 +107,9 @@ var  Lehrveranstaltung = {
                                     //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
                                     async: false,
                                     success: function(response) {
-                                        alert('Loeschen der Person erfolgreich, bitte die Lehrveranstaltung neu laden');
+                                       
+                                        window.location = '/lehrveranstaltung/edit/' + lvid + '?completeView=true';
+
                                     }
                                 });
                                 $( this ).dialog( "close" );
@@ -167,6 +174,8 @@ var  Lehrveranstaltung = {
                         text: "Abbrechen",
                         click: function() {
                             $( this ).dialog( "close" );
+                            window.location = '/lehrveranstaltung/edit/' + currentLV + '?completeView=true';
+
                         }
                     }
 
@@ -192,7 +201,7 @@ var  Lehrveranstaltung = {
         $('#addLehrveranstaltungButton').click(function(event){
 
             event.preventDefault();
-            console.log("in add Lehrveranstaltung")
+            //console.log("in add Lehrveranstaltung")
 
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
@@ -216,6 +225,8 @@ var  Lehrveranstaltung = {
                         text: "Abbrechen",
                         click: function() {
                             $( this ).dialog( "close" );
+                            window.location = '/lehrveranstaltung/';
+
                         }
                     }
 
@@ -266,6 +277,8 @@ var  Lehrveranstaltung = {
                         text: "Abbrechen",
                         click: function() {
                             $( this ).dialog( "close" );
+                            window.location = '/lehrveranstaltung/edit/' + currentLVId + '?completeView=true';
+
                         }
                     }
 
@@ -321,7 +334,8 @@ var  Lehrveranstaltung = {
                                         'id': currentLVId
                                     },
                                     success: function(response) {
-                                        alert('Loeschen der Lehrveranstaltung erfolgreich, bitte die Lehrveranstaltungen neu laden');
+                                        window.location = '/lehrveranstaltung/';
+
                                     }
                                 });
                                 $( this ).dialog( "close" );

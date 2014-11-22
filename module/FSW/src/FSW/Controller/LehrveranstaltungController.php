@@ -166,11 +166,25 @@ class LehrveranstaltungController extends BaseController {
         }
 
 
-        return $this->getAjaxView(array(
-            'form' => $form,
-            'title' => $this->translate('lehrveranstaltung_edit', 'FSW'),
-        ));
+        $isCompleteView = $this->params()->fromQuery('completeView',false);
+        if ($this->getRequest()->isGet() && $isCompleteView) {
+            $lehrveranstaltungen = $this->facade->getAllLehrveranstaltungen();
+            return new ViewModel(
+                array(
+                    'lehrveranstaltung' => $lehrveranstaltungen,
+                    'form' => $form,
+                    'title' => $this->translate('lehrveranstaltung_edit', 'FSW'),
+                    'complete' => true
+                )
+            );
+        } else {
+            return $this->getAjaxView(array(
+                'form' => $form,
+                'title' => $this->translate('lehrveranstaltung_edit', 'FSW'),
+                'complete' => false
+            ));
 
+        }
 
 
     }

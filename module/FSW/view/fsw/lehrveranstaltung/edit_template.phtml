@@ -1,0 +1,188 @@
+<?php
+
+
+$form = $this->form;
+
+
+$form->prepare();
+
+$lehrveranstaltung = $form->get('lehrveranstaltung');
+
+$form->setAttribute('action', $this->url(
+    'lehrveranstaltung',
+    array(
+        'action' => 'edit',
+        'id'     => $lehrveranstaltung->get('id')->getValue()
+    )
+));
+
+
+
+$personen = $lehrveranstaltung->get('personenLehrveranstaltung');
+
+
+$saveButtonLabel = "Speichern";
+$formType = 'horizontal';
+
+// Force Libadmin text domain (@todo cleaner way?)
+$this->formLabelTwb()->setTranslatorTextDomain('Libadmin');
+$this->formLabel()->setTranslatorTextDomain('Libadmin');
+$this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
+
+?>
+
+<?php echo  $this->formTwb()->openTag($form, $formType) ?>
+
+<fieldset>
+    <div class="topButtons">
+
+            <a href="<?php echo  $this->url('lehrveranstaltung', array('action' => 'closeContent')); ?>"
+               class="ajaxButton closeButton btn btn-medium" id="closebutton">
+                "Hier schliessen"
+            </a>
+    </div>
+</fieldset>
+
+
+<fieldset class="edit_legend_title">
+
+    <legend><?php echo $this->escapeHtml($lehrveranstaltung->get('titel')->getValue()); ?></legend>
+
+</fieldset>
+
+<?php echo  $this->ztbFlashMessenger()->render() ?>
+
+    <div class="tabbable">
+        <ul class="nav nav-tabs formTabs">
+            <li class="active">
+                <a href="#lehrveranstaltungPane"><?php echo  $this->translate('Lehrveranstaltung Atrribute', 'Libadmin') ?></a>
+            </li>
+            <li><a href="#personenPane"><?php echo  $this->translate('durchfuehrende Personen', 'Libadmin') ?></a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="lehrveranstaltungPane">
+
+                <fieldset>
+                    <div class="topButtons">
+                        <a href="#"  class="btn btn-medium" id="addLehrveranstaltungButton">neue Lehrveranstaltung</a>
+                        <a href="#"  class="btn btn-medium" id="updateLehrveranstaltungButton">aktualisiere Lehrveranstaltung</a>
+                        <a href="#"  class="btn btn-medium" id="deleteLehrveranstaltungButton">loesche Lehrveranstaltung</a>
+                    </div>
+                </fieldset>
+
+
+                <fieldset class="general">
+                    <legend>hier die Lehrveranstaltung</legend>
+
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <?php echo  $this->formRowTwb($lehrveranstaltung->get('id')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <?php echo  $this->formRowTwb($lehrveranstaltung->get('von_zeit')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <?php echo  $this->formRowTwb($lehrveranstaltung->get('bis_zeit')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <?php echo  $this->formRowTwb($lehrveranstaltung->get('tag')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <?php echo  $this->formRowTwb($lehrveranstaltung->get('semester')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid"s>
+                        <div class="span12">
+                            <?php echo  $this->formRowTwb($lehrveranstaltung->get('titel')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <?php echo  $this->formRowTwb($lehrveranstaltung->get('vvzlink')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <?php echo  $this->formRowTwb($lehrveranstaltung->get('olatlink')) ?>
+                        </div>
+                    </div>
+
+
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <?php echo  $this->formRowTwb($lehrveranstaltung->get('beschreibung')) ?>
+                        </div>
+                    </div>
+
+
+
+
+                </fieldset>
+
+
+            </div>
+            <div class="tab-pane" id="personenPane">
+                <fieldset>
+                    <div class="topButtons">
+                        <a href="#"  class="btn btn-medium" id="addPersonLVButton">Person hinzufuegen</a>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>und hier die Personen</legend>
+                    <?php $numberVeranstaltung = 0 ?>
+                    <?php foreach ($personen as $person): ?>
+                        <?php if ($numberVeranstaltung != 0) : ?>
+                            <div class="row-fluid">
+                                <div>==========================================================================================</div>
+                            </div>
+                        <?php endif;  ?>
+
+
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <?php echo  $this->formRowTwb($person->get('id')) ?>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <?php echo  $this->formRowTwb($person->get('ffsw_lehrveranstaltungen_id')) ?>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <?php echo  $this->formRowTwb($person->get('fper_personen_pers_id')) ?>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="topButtons">
+                                <a href="#"  class="btn btn-medium updatePersonLVButton" data-currentIndex="<?php echo $numberVeranstaltung; ?>">Person anpassen</a>
+                                <a href="#"  class="btn btn-medium deletePersonLVButton" data-currentIndex="<?php echo $numberVeranstaltung; ?>">Person entfernen</a>
+                           </div>
+                        </div>
+
+                        <?php $numberVeranstaltung++; ?>
+
+                    <?php endforeach; ?>
+
+
+                </fieldset>
+
+            </div>
+
+
+        </div>
+    </div>
+
+<?php echo  $this->form()->closeTag(); ?>
