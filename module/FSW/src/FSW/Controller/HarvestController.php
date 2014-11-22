@@ -85,7 +85,7 @@ class HarvestController extends BaseController
 
 
                 foreach ($zoraFacade->getMessages() as $message) {
-                    file_put_contents($oaiSection->messagesFile,$message, FILE_APPEND );
+                    file_put_contents($oaiSection->messagesFile,$message . "\n", FILE_APPEND );
                 }
 
 

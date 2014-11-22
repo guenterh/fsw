@@ -8,11 +8,11 @@ var Sidebar= {
 
     searchDelay: null,
 
-        listUpdate: null,
-        contentUpdate: null,
+    listUpdate: null,
+    contentUpdate: null,
 
 
-        init: function(listUpdatedHandler, contentLoadedHandler) {
+    init: function(listUpdatedHandler, contentLoadedHandler) {
         this.listUpdate		= listUpdatedHandler;
         this.contentUpdate	= contentLoadedHandler;
 
