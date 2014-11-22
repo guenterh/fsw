@@ -492,5 +492,35 @@ class KolloquienController extends BaseController {
 
     }
 
+    /**
+     * Search matching records
+     *
+     * @param	Integer		$limit        Search result limit
+     * @return	ViewModel
+     **/
+    public function searchAction($limit = 15)
+    {
+
+        $query = $this->params()->fromQuery('query', '');
+        $data = array(
+            'route' => 'kolloquien',
+            'listItems' => $this->facade->searchInEntities($query, 15)
+        );
+
+        return $this->getAjaxView($data, 'fsw/global/search');
+
+    }
+
+    protected function getEntityName () {
+        return 'Kolloquium';
+    }
+
+
+    protected function getEntityNames () {
+        return 'Kolloquien';
+    }
+
+
+
 
 } 

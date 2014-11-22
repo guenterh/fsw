@@ -13,6 +13,7 @@ use FSW\Model\VeranstaltungKolloquiumPerson;
 use Zend\Db\Adapter\Adapter;
 
 use FSW\Model\Kolloqium;
+use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Where;
 use Zend\Stdlib\ArrayObject;
 
@@ -21,8 +22,8 @@ class KolloquienFacade extends BaseFacade {
 
 
     protected $searchFields = array(
-        'gespraechstitel',
-        'sendetitel',
+        'titel',
+        'id_kolloquium',
     );
 
     public function getKolloquien() {
@@ -539,6 +540,28 @@ class KolloquienFacade extends BaseFacade {
         }
 
         return $kolloquien;
+
+    }
+    public function searchInEntities ($query, $limit = 15) {
+
+
+        $select = new Select();
+        $likeCondition = $this->getSearchFieldsLikeCondition($query);
+
+
+        $targetGateway = $this->histSemDBService->getKolloquienGateway();
+
+        $select->from($targetGateway->getTable())
+            ->order("id_kolloquium")
+            //->limit($limit)
+            ->where($likeCondition);
+
+
+        //$sql = new Sql($this->tableGateway->getAdapter(), $this->getTable());
+        //$test = $sql->getSqlStringForSqlObject($select);
+        //var_dump($sql->getSqlStringForSqlObject($select));
+
+        return $targetGateway->selectWith($select);
 
     }
 

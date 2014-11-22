@@ -45,6 +45,18 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
 <?php echo  $this->formTwb()->openTag($form, $formType) ?>
 
+
+    <fieldset>
+        <div class="topButtons">
+
+            <a href="<?php echo  $this->url('kolloquien', array('action' => 'closeContent')); ?>"
+               class="ajaxButton closeButton btn btn-medium" id="closebutton">
+                "Hier schliessen"
+            </a>
+        </div>
+    </fieldset>
+
+
 <fieldset class="edit_legend_title">
 
     <legend><?php echo $this->escapeHtml($kolloquium->get('titel')->getValue()); ?></legend>

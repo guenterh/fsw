@@ -268,6 +268,14 @@ class PersonenController extends BaseController{
 
     }
 
+    protected function getEntityName () {
+        return 'Person';
+    }
+
+
+    protected function getEntityNames () {
+        return 'Personen';
+    }
 
 
 }

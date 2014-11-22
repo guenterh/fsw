@@ -37,18 +37,17 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
 
 <?php echo  $this->formTwb()->openTag($form, $formType) ?>
-    <div class="topButtons">
-        <input type="submit" value="<?php echo  $this->escapeHtml($saveButtonLabel) ?>"
-               class="submitButton btn btn-primary btn-medium" id="submitbutton" name="submit">
-        <a href="<?php echo  $this->url('forschungAdmin', array('action' => 'index')); ?>"
-           class="ajaxButton closeButton btn btn-medium" id="closebutton">
-            "Hier schliessen"
-        </a>
-    </div>
 
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
 
+    <fieldset>
+        <div class="topButtons">
+
+            <a href="<?php echo  $this->url('personenaktivitaet', array('action' => 'closeContent')); ?>"
+               class="ajaxButton closeButton btn btn-medium" id="closebutton">
+                "Hier schliessen"
+            </a>
+        </div>
+    </fieldset>
 
     <h3>
         <?php echo $this->escapeHtml($title) .

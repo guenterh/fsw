@@ -317,5 +317,15 @@ class LehrveranstaltungController extends BaseController {
         );
     }
 
+    protected function getEntityName () {
+        return 'Lehrveranstaltung';
+    }
+
+
+    protected function getEntityNames () {
+        return 'Lehrveranstaltungen';
+    }
+
+
 
 } 

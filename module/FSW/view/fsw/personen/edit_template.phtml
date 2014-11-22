@@ -42,17 +42,15 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
 
 <?php echo  $this->formTwb()->openTag($form, $formType) ?>
+<fieldset>
     <div class="topButtons">
-        <input type="submit" value="<?php echo  $this->escapeHtml($saveButtonLabel) ?>"
-               class="submitButton btn btn-primary btn-medium" id="submitbutton" name="submit">
-        <a href="<?php echo  $this->url('personen', array('action' => 'edit','id' => $personCore->get('pers_id')->getValue())); ?>"
+
+        <a href="<?php echo  $this->url('personen', array('action' => 'closeContent')); ?>"
            class="ajaxButton closeButton btn btn-medium" id="closebutton">
-            "passiert hier etwas?"
+            "Hier schliessen"
         </a>
     </div>
-
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
+</fieldset>
 
 
 

@@ -1,23 +1,9 @@
-<div class="topButtons">
-	<a href="<?php echo $this->url($route, array('action' => 'add')); ?>"
-	   class="ajaxButton addButton btn btn-primary btn-medium" id="add-<?php echo strtolower($entityName) ?>">
-		<?php echo $this->translate('add_new_xxx', 'Libadmin') ?> <?php echo $entityName ?>
-	</a>
-</div>
 
 <fieldset class="edit_legend_title">
 
-    <legend><?php echo $entityNamePlural; ?></legend>
+    <legend>Editor für <?php echo $entityNamePlural; ?> (item aus der Liste auswählen)</legend>
 
 </fieldset>
 
 <?php echo $this->ztbFlashMessenger()->render() ?>
 
-<?php if (is_null($listItems) || $listItems->count() == 0): ?>
-	<?php
-	$baseLabel = $this->translate('home_no_records', 'Libadmin');
-	echo sprintf($baseLabel, $entityNamePlural);
-	?>
-<?php else: ?>
-	<p><?php echo $this->translate('home_select_record', 'Libadmin') ?></p>
-<?php endif ?>

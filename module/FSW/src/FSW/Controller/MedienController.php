@@ -262,6 +262,14 @@ class MedienController extends BaseController {
 
     }
 
+    protected function getEntityName () {
+        return 'Medium';
+    }
+
+
+    protected function getEntityNames () {
+        return 'Medien';
+    }
 
 
 

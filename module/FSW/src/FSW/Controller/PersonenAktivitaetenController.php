@@ -166,5 +166,13 @@ class PersonenAktivitaetenController extends BaseController{
     }
 
 
+    protected function getEntityName () {
+        return 'Personenaktivität';
+    }
+
+
+    protected function getEntityNames () {
+        return 'Personenaktivitäten';
+    }
 
 }

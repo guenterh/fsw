@@ -107,7 +107,7 @@ var  Lehrveranstaltung = {
                                     //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
                                     async: false,
                                     success: function(response) {
-                                       
+
                                         window.location = '/lehrveranstaltung/edit/' + lvid + '?completeView=true';
 
                                     }

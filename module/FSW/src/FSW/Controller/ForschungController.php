@@ -164,5 +164,15 @@ class ForschungController extends BaseController {
 
     }
 
+    protected function getEntityName () {
+        return 'Forschung';
+    }
+
+
+    protected function getEntityNames () {
+        return 'Forschungen';
+    }
+
+
 
 } 
