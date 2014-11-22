@@ -127,6 +127,11 @@ abstract class BaseModel
     }
 
 
+    public function markListItem() {
+        return false;
+    }
+
+
 
 
 

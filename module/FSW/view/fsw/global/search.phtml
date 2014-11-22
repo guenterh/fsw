@@ -6,7 +6,24 @@
  */
 ?>
 <?php foreach ($listItems as $listItem): ?>
-	<li><a href="<?php echo $this->url($route, array('action' => 'edit', 'id' => $listItem->getID())); ?>">
-			<?php echo $this->escapeHtml($listItem->getListLabel()) ?>
-		</a></li>
+
+    <?php if ($listItem->markListItem()): ?>
+
+        <li><a class="markItem" href="<?php echo $this->url($route, array('action' => 'edit', 'id' => $listItem->getID())); ?>">
+                <?php echo $this->escapeHtml($listItem->getListLabel()) ?>
+            </a>
+        </li>
+
+    <?php else: ?>
+
+        <li><a href="<?php echo $this->url($route, array('action' => 'edit', 'id' => $listItem->getID())); ?>">
+                <?php echo $this->escapeHtml($listItem->getListLabel()) ?>
+            </a>
+        </li>
+
+
+    <?php endif; ?>
+
+
+
 <?php endforeach; ?>

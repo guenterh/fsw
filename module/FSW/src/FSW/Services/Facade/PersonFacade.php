@@ -7,11 +7,12 @@
  */
 
 namespace FSW\Services\Facade;
+use FSW\Model\PersonenInList;
 use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Select;
-
+use Zend\Debug\Debug;
 
 
 class PersonFacade extends BaseFacade {
@@ -559,6 +560,99 @@ class PersonFacade extends BaseFacade {
 
 
 
+    }
+
+
+    public function getAllPersonen () {
+
+
+        $sql = "select P.*, Pext.id as pextid, Pext.fullname as pextFullName, Pext.profilURL as pextUrl ";
+        $sql .= " from Per_Personen P left join  fsw_personen_extended Pext on (P.pers_id = Pext.pers_id) ";
+        $sql .= " order by P.pers_name";
+
+        $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+        $personen = array();
+
+        foreach ($result as $row) {
+            $personen[] = $this->exchangeIntoPersonInList($row);
+        }
+
+        return $personen;
+
+
+        //$personenTableGateway = $this->histSemDBService->getPersonenGateway();
+        //$select = $personenTableGateway->getSql()->select()->order('Per_Personen.pers_name');
+        //$rowset =  $personenTableGateway->selectWith($select);
+
+        //return $rowset;
+
+    }
+
+    public function searchPersonen ($query, $limit = 15) {
+
+
+        $sql = "select P.*, Pext.id as pextid, Pext.fullname as pextFullName, Pext.profilURL as pextUrl ";
+        $sql .= " from Per_Personen P left join  fsw_personen_extended Pext on (P.pers_id = Pext.pers_id) ";
+        $sql .= " where P.pers_name like '%" . $query . "%' or P.pers_vorname like '%" . $query . "%'";
+        $sql .= " order by P.pers_name";
+
+        $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        $personen = array();
+
+        foreach ($result as $row) {
+            $personen[] = $this->exchangeIntoPersonInList($row);
+        }
+
+        return $personen;
+
+
+
+        //$personenTableGateway = $this->histSemDBService->getPersonenGateway();
+        //$select = $personenTableGateway->getSql()->select();
+        //$select->where->like('Per_Personen.pers_name','%' . $query . '%');
+        //$select->order('Per_Personen.pers_name');
+
+        //$rowset =  $personenTableGateway->selectWith($select);
+
+        //return $rowset;
+
+    }
+
+
+    private function exchangeIntoPersonInList ($row) {
+        $p = new PersonenInList();
+        $p->setFullname($row['pers_fullname']);
+        $p->setPers_anrede($row['pers_anrede']);
+        $p->setPers_changedate($row['pers_changedate']);
+        $p->setPers_changedby($row['pers_changedby']);
+        $p->setPers_changedip($row['pers_changedip']);
+        $p->setPers_email($row['pers_email']);
+        $p->setPers_fullname($row['pers_fullname']);
+        $p->setPers_id($row['pers_id']);
+        $p->setPers_land($row['pers_land']);
+        $p->setPers_midname($row['pers_midname']);
+
+        $p->setPers_name($row['pers_name']);
+        $p->setPers_oldid($row['pers_oldid']);
+        $p->setPers_ort($row['pers_ort']);
+        $p->setPers_ort($row['pers_ort']);
+        $p->setPers_plz($row['pers_plz']);
+        $p->setPers_sex($row['pers_sex']);
+        $p->setPers_strasse($row['pers_strasse']);
+        $p->setPers_tel_mobile($row['pers_tel_mobile']);
+        $p->setPers_tel_privat($row['pers_tel_privat']);
+        $p->setPers_titel($row['pers_titel']);
+        $p->setPers_titel_OLD($row['pers_titel_OLD']);
+        $p->setPers_uzhshortname($row['pers_uzhshortname']);
+        $p->setPers_verstorben($row['pers_verstorben']);
+        $p->setPers_vorname($row['pers_vorname']);
+        $p->setFullname($row['pextFullName']);
+        $p->setProfilURL($row['pextUrl']);
+
+        $p->setId_extended($row['pextid']);
+
+        return $p;
     }
 
 }

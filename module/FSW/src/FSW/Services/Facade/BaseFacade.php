@@ -316,8 +316,6 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface,
 
         return $rowset;
 
-
-
     }
 
 
@@ -332,8 +330,6 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface,
         $rowset =  $personenTableGateway->selectWith($select);
 
         return $rowset;
-
-
 
     }
 
