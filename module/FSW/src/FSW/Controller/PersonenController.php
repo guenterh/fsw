@@ -142,7 +142,7 @@ class PersonenController extends BaseController{
         */
 
         $isCompleteView = $this->params()->fromQuery('completeView',false);
-        if ($isCompleteView) {
+        if ($this->getRequest()->isGet() && $isCompleteView) {
             $personen = $this->facade->getAllPersonen();
             return new ViewModel(
                 array(

@@ -54,7 +54,6 @@ var Kolloquien = {
 
         });
 
-
         $(".addPersonenVeranstaltung").click(function(e) {
             e.preventDefault();
 
@@ -112,14 +111,12 @@ var Kolloquien = {
 
         });
 
-
-
-
         $(".deleteVeranstaltungButton").click(function(event){
 
             var currentIndex = $(event.target).attr("data-currentIndex");
             var currentId = $('#Kolloqium\\[veranstaltung\\]\\[' + currentIndex  + '\\]\\[id\\]').val();
             var currentTitel =  $('#Kolloqium\\[veranstaltung\\]\\[' + currentIndex  + '\\]\\[veranstaltung_titel\\]').val();
+            var id = $('#Kolloqium\\[id\\]').val();
 
             $('<div id="okEscDialog" title="Loeschen einer Veranstaltung">' +
             '<p>Wollen Sie die Veranstaltung mit dem Titel</p>' +
@@ -141,7 +138,7 @@ var Kolloquien = {
                                         'id': currentId
                                     },
                                     success: function(response) {
-                                        alert('Loeschen der Veranstaltung erfolgreich, bitte die Kolloquien neu laden');
+                                        window.location = '/kolloquien/edit/' + id + '?completeView=true';
                                     }
                                 });
                                 $( this ).dialog( "close" );
@@ -152,6 +149,7 @@ var Kolloquien = {
                             text: "Abbrechen",
                             click: function() {
                                 $( this ).dialog( "close" );
+
                             }
                         }
 
@@ -175,6 +173,7 @@ var Kolloquien = {
             var currentIndex = $(event.target).attr("data-currentIndex");
 
             var veranstaltungID = $('#Kolloqium\\[veranstaltung\\]\\[' + currentIndex  + '\\]\\[id\\]').val();
+            var id = $('#Kolloqium\\[id\\]').val();
 
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
@@ -195,6 +194,7 @@ var Kolloquien = {
                         text: "Abbrechen",
                         click: function() {
                             $( this ).dialog( "close" );
+                            window.location = '/kolloquien/edit/' + id + '?completeView=true';
                         }
                     }
 
@@ -216,6 +216,7 @@ var Kolloquien = {
         $('#addVeranstaltungButton').click(function(event) {
 
             event.preventDefault();
+            var id = $('#Kolloqium\\[id\\]').val();
 
 
             $("<div id='fswDialogBox'>").dialog({
@@ -251,6 +252,7 @@ var Kolloquien = {
                         text: "Abbrechen",
                         click: function() {
                             $( this ).dialog( "close" );
+                            window.location = '/kolloquien/edit/' + id + '?completeView=true';
                         }
                     }
 
@@ -334,8 +336,9 @@ var Kolloquien = {
                                     },
                                     success: function(response) {
 
-                                        alert ('Kolloquium erfolgreich gespeichert, bitte neu laden');
+
                                         $( myDialog ).dialog( "close" );
+                                        document.location = '/kolloquien/'
                                     }
                                 });
 
@@ -391,6 +394,7 @@ var Kolloquien = {
                         text: "Abbrechen",
                         click: function() {
                             $( this ).dialog( "close" );
+                            window.location = '/kolloquien/edit/' + id + '?completeView=true';
                         }
                     }
 
@@ -434,7 +438,7 @@ var Kolloquien = {
                                         'id': $('#Kolloqium\\[id\\]').val()
                                     },
                                     success: function(response) {
-                                        alert('Loeschen erfolgreich, bitte die Kolloquien neu laden');
+                                        window.location = '/kolloquien/';
                                     }
                                 });
                                 $( this ).dialog( "close" );

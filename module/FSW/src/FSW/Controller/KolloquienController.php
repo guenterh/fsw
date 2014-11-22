@@ -292,12 +292,27 @@ class KolloquienController extends BaseController {
         //$form->setAttribute('action', $this->makeUrl('institution', 'edit', $idInstitution));
 
 
+        $isCompleteView = $this->params()->fromQuery('completeView',false);
+        if ($this->getRequest()->isGet() && $isCompleteView) {
+            $kolloquien = $this->facade->getKolloquien();
+            return new ViewModel(
+                array(
+                    'kolloquien' => $kolloquien,
+                    'form' => $form,
+                    'complete' => true,
+                    'title' => $this->translate('kolloquien_edit', 'FSW'),
+                )
+            );
+        } else {
+            return $this->getAjaxView(array(
+                'form' => $form,
+                'title' => $this->translate('kolloquien_edit', 'FSW'),
+                'complete' => false
+            ));
+
+        }
 
 
-        return $this->getAjaxView(array(
-            'form' => $form,
-            'title' => $this->translate('kolloquien_edit', 'FSW'),
-        ));
 
 
     }
