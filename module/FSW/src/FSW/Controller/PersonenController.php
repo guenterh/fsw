@@ -141,10 +141,29 @@ class PersonenController extends BaseController{
         ));
         */
 
-        return $this->getAjaxView(array(
-            'form' => $coreFS,
-            'title' => $this->translate('Personenanzeige', 'FSW'),
-        ));
+        $isCompleteView = $this->params()->fromQuery('completeView',false);
+        if ($isCompleteView) {
+            $personen = $this->facade->getAllPersonen();
+            return new ViewModel(
+                array(
+                    'personen' => $personen,
+                    'form' => $coreFS,
+                    'title' => $this->translate('Personenanzeige', 'FSW'),
+                    'complete' => true
+                )
+            );
+        } else {
+            return $this->getAjaxView(array(
+                'form' => $coreFS,
+                'title' => $this->translate('Personenanzeige', 'FSW'),
+                'complete' => false
+            ));
+
+        }
+
+
+
+
 
 
     }

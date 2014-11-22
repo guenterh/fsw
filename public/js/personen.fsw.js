@@ -29,6 +29,10 @@ var Personen= {
             //alert($('div#persExtendedIdFSWGanzUnique',$('div#personExtended')).val());
             //alert (persExtendedIdFSW);
 
+            var pers_id = $('#PersonCore\\[personExtended\\]\\[0\\]\\[pers_id\\]').val();
+
+                //PersonCore[personExtended][0][pers_id]
+
 
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
@@ -52,6 +56,8 @@ var Personen= {
                         text: "AbbrechenEditProfilURL",
                         click: function() {
                             $( this ).dialog( "close" );
+                            window.location = '/personen/edit/' + pers_id + '?completeView=true';
+                            //$.get('/personen/edit/' + pers_id + '?completeView=true')
                         }
                     }
 

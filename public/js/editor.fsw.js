@@ -17,6 +17,9 @@ var Editor =  {
         //this.initButtons(this.testButton);
         this.initButtons(contentLoadedHandler);
 
+        //jump to top of page
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+
         //this.initExtendedAttributes();
 
         //CustomFunctions.initializeZoraAuthorActions();

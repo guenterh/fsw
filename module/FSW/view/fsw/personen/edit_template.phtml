@@ -1,0 +1,403 @@
+
+
+
+<?php
+
+$this->headTitle("Dies ist eine Person");
+
+
+$form = $this->form;
+
+/*
+$form->setAttribute('action', $this->url(
+    'personen',
+    array(
+        'action' => 'edit',
+        'id'     => $this->id,
+    )
+));
+*/
+
+$form->prepare();
+
+$personCore = $form->get('PersonCore');
+$personExtended = $personCore->get('personExtended');
+$zoraAuthors = $personCore->get('zoraAuthors');
+$personRollen = $personCore->get('personRollen');
+
+
+
+$saveButtonLabel = "Speichern";
+
+$formType = 'horizontal';
+
+// Force Libadmin text domain (@todo cleaner way?)
+$this->formLabelTwb()->setTranslatorTextDomain('Libadmin');
+$this->formLabel()->setTranslatorTextDomain('Libadmin');
+$this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
+
+?>
+
+
+
+
+<?php echo  $this->formTwb()->openTag($form, $formType) ?>
+    <div class="topButtons">
+        <input type="submit" value="<?php echo  $this->escapeHtml($saveButtonLabel) ?>"
+               class="submitButton btn btn-primary btn-medium" id="submitbutton" name="submit">
+        <a href="<?php echo  $this->url('personen', array('action' => 'edit','id' => $personCore->get('pers_id')->getValue())); ?>"
+           class="ajaxButton closeButton btn btn-medium" id="closebutton">
+            "passiert hier etwas?"
+        </a>
+    </div>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+
+
+
+<h3>
+
+   <?php echo $this->escapeHtml($title) .
+            ': ' . $this->escapeHtml($personCore->get('pers_name')->getValue() . ', ' . $personCore->get('pers_vorname')->getValue()); ?>
+
+</h3>
+
+
+
+
+<?php echo  $this->ztbFlashMessenger()->render() ?>
+
+    <div class="tabbable">
+        <ul class="nav nav-tabs formTabs">
+            <li class="active">
+                <a href="#personCore"><?php echo  $this->translate('personCore HS', 'Libadmin') ?></a>
+            </li>
+
+            <!-- wenn eine Person FSW extended Attribute besitzt auch Zora anzeigen, da diese Attribute evtl. noch erfasst werden muessen-->
+            <?php if($personExtended->getCount() > 0): ?>
+
+                <li><a href="#personExtended"><?php echo  $this->translate('personExtended FSW', 'Libadmin') ?></a></li>
+
+                <li><a href="#zoraAuthors"><?php echo  $this->translate('zoraNamen FSW', 'Libadmin') ?></a></li>
+            <?php endif; ?>
+
+            <li><a href="#personRollen"><?php echo  $this->translate('Rollen HistSem', 'Libadmin') ?></a></li>
+
+
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="personCore">
+
+                <fieldset>
+                    <legend>Namensbestandteile</legend>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($personCore->get('pers_anrede')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($personCore->get('pers_titel')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($personCore->get('pers_titel_OLD')) ?>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Namensattribute</legend>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($personCore->get('pers_name')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($personCore->get('pers_vorname')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($personCore->get('pers_midname')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($personCore->get('pers_uzhshortname')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($personCore->get('pers_fullname')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($personCore->get('pers_id')) ?>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Geschlecht</legend>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($personCore->get('pers_sex')) ?>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Adressattribute</legend>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($personCore->get('pers_strasse')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($personCore->get('pers_plz')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($personCore->get('pers_ort')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($personCore->get('pers_land')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($personCore->get('pers_tel_privat')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($personCore->get('pers_tel_mobile')) ?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($personCore->get('pers_email')) ?>
+                        </div>
+                    </div>
+                </fieldset>
+
+
+            </div>
+
+
+            <?php if($personExtended->getCount() > 0): ?>
+            <div class="tab-pane" id="personExtended">
+
+                <fieldset>
+                    <legend>extended attributes for FSW</legend>
+
+                    <?php if ($personExtended->getCount() > 0): ?>
+
+                        <?php foreach ($personExtended as $singleExtended) :?>
+
+                            <div class="hidden" id="persExtendedIdFSWGanzUnique"><?php echo $singleExtended->get('id')->getValue(); ?></div>
+
+                            <script type="text/javascript">
+
+                                var persExtendedIdFSW = <?php echo  $singleExtended->get('id')->getValue(); ?>;
+                                var persIdHS = <?php echo  $personCore->get('pers_id')->getValue(); ?>;
+
+                            </script>
+
+
+
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <?php echo  $this->formRowTwb($singleExtended->get('pers_id')) ?>
+                                </div>
+                            </div>
+
+                            <div class="row-fluid">
+                                <div class="span8">
+                                    <?php echo  $this->formRowTwb($singleExtended->get('profilURL')) ?>
+                                </div>
+                            </div>
+
+
+                            <div class="row-fluid">
+                                <div>
+                                    <a href="#"  id="updateProfilURLPersonExtended" >Profil URL anpassen</a>
+                                </div>
+                            </div>
+
+
+
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <input type="button" value="add extended parameters"
+                               class="submitButton btn btn-primary btn-medium" id="addextendedAttributes" name="addextended">
+
+                    <?php endif; ?>
+
+
+                </fieldset>
+
+            </div>
+
+
+
+
+            <div class="tab-pane" id="zoraAuthors">
+
+                <?php echo $this->render(
+                    'fsw/personen/edit-zora-author.phtml',
+                    array(
+                        'form' => $form,
+                        'formPrepared' => true
+                    )); ?>
+
+
+
+            </div>
+
+            <?php endif; ?>
+
+            <div class="tab-pane" id="personRollen">
+                <h2>Rollen der Person</h2>
+                <?php foreach ($personRollen as $rolle) :?>
+                <fieldset>
+                    <legend>eine Rolle</legend>
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <?php echo  $this->formRowTwb($rolle->get('roll_id')) ?>
+                            </div>
+                            <div class="span6">
+                                <?php echo  $this->formRowTwb($rolle->get('roll_pers_id')) ?>
+                            </div>
+                        </div>
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_abt_id')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_arbe_id')) ?>
+                        </div>
+                    </div>
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_skv_id')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_funk_id')) ?>
+                        </div>
+                    </div>
+
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_istangestellt')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_anstellung')) ?>
+                        </div>
+                    </div>
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_persnr')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_datestart')) ?>
+                        </div>
+                    </div>
+
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_dateend')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_anstellungprozent')) ?>
+                        </div>
+                    </div>
+
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_befristet')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_email')) ?>
+                        </div>
+                    </div>
+
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_telg')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_url')) ?>
+                        </div>
+                    </div>
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_hs_fsw')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_mund_pruf')) ?>
+                        </div>
+                    </div>
+
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_verteiler_skeinladung')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_verteiler_mittelbau')) ?>
+                        </div>
+                    </div>
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_verteiler_skprotokoll')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_verteiler_profs')) ?>
+                        </div>
+                    </div>
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_verteiler_koordag')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_verteiler_koordma')) ?>
+                        </div>
+                    </div>
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_verteiler_koordnz')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_changedate')) ?>
+                        </div>
+                    </div>
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_oldid')) ?>
+                        </div>
+                        <div class="span6">
+                            <?php echo  $this->formRowTwb($rolle->get('roll_fswfunktion')) ?>
+                        </div>
+                    </div>
+
+
+
+
+                </fieldset>
+                <?php endforeach; ?>
+
+            </div>
+
+        </div>
+    </div>
+
+<?php echo  $this->form()->closeTag(); ?>
+
+
