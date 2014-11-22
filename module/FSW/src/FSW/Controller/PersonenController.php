@@ -224,18 +224,22 @@ class PersonenController extends BaseController{
     public function editProfilURLAction() {
 
         $request = $this->getRequest();
+        $idPersonExtended = $this->params()->fromRoute('id',0);
 
-        if ($request->isGet()) {
-
-            $idPersonExtended = $this->params()->fromRoute('id',0);
-
+        if ($request->isGet() && $idPersonExtended > 0) {
             $personExtended = $this->facade->getExtendedFSWPersonAttributes($idPersonExtended);
+            $form = new PersonFSWExtendedForm();
+            $form->bind($personExtended);
+        } elseif ($request->isPost()) {
 
             $form = new PersonFSWExtendedForm();
 
-            $form->bind($personExtended);
+            $form->setData($this->params()->fromPost());
 
+            if ($form->isValid()) {
+                $this->facade->saveExtendedAttributes($request->getPost()->toArray());
 
+            }
         }
 
         return $this->getAjaxView(array(

@@ -1,6 +1,52 @@
 
 
-<div>hier muss noch etwas hinein!</div>
+<?php
+$form = $this->form;
+$form->prepare();
+
+$extAttrPersonFSW = $form->getBaseFieldset();
+
+
+
+?>
+
+?>
+<?php echo  $this->formTwb()->openTag($form, 'horizontal') ?>
+
+<fieldset>
+
+    <legend><?php echo isset($this->update) && $this->update === True && count($form->getMessages()) == 0 ? "update der erweiterten Personenattribue erfolgreich" : "erweiterte Personenattribute FSW"  ?></legend>
+
+    <fieldset>
+        <div class="row-fluid">
+            <div class="span6">
+                <?php echo  $this->formRowTwb($extAttrPersonFSW->get('id')) ?>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span6">
+                <?php echo  $this->formRowTwb($extAttrPersonFSW->get('pers_id')) ?>
+            </div>
+        </div>
+
+
+        <div class="row-fluid">
+            <div class="span10">
+                <?php echo  $this->formRowTwb($extAttrPersonFSW->get('profilURL')) ?>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span10">
+                <?php echo  $this->formRowTwb($extAttrPersonFSW->get('fullname')) ?>
+            </div>
+        </div>
+    </fieldset>
+
+
+</fieldset>
+
+<?php echo  $this->form()->closeTag(); ?>
+
 
 
 

@@ -42,14 +42,14 @@ var Personen= {
                         click: function() {
 
                             //$(this).load('/kolloquien/editVeranstaltung/' + veranstaltungID, $('#Veranstaltung', this).serializeArray() );
-                            $(this).load('/lehrveranstaltung/editLvModal/' + currentLVId ,
-                                $('#lehrveranstaltung', this).serializeArray()
+                            $(this).load('/personen/editProfilURL/' + persExtendedIdFSW ,
+                                $('#FSWPersonExtended', this).serializeArray()
                             );
 
                         }
                     },
                     {
-                        text: "Abbrechen",
+                        text: "AbbrechenEditProfilURL",
                         click: function() {
                             $( this ).dialog( "close" );
                         }

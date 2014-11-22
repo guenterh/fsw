@@ -22,8 +22,8 @@ class PersonFacade extends BaseFacade {
      * @param	 TableGateway	$tableGateway
      */
 
-    protected $tableGatewayPersExtended;
-    protected $tableGatewayZoraAuthor;
+    //protected $tableGatewayPersExtended;
+    //protected $tableGatewayZoraAuthor;
 
     protected $searchFields = array(
         'pers_name',
@@ -542,6 +542,22 @@ class PersonFacade extends BaseFacade {
         ));
 
         return $result->current();
+
+    }
+
+    public function saveExtendedAttributes($postData = array()) {
+
+        $persExtendedGW =  $this->histSemDBService->getFSWPersonenExtendedGateway();
+
+        //bei den extended Attributen will ich im Moment u einen Update der ProfilURL
+        $persExtendedGW->update(array(
+                'profilURL'   =>  $postData['PersonExtended']['profilURL']
+            ),
+            array(
+                'id' =>  $postData['PersonExtended']['id']
+            ));
+
+
 
     }
 

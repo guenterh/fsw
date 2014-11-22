@@ -13,7 +13,7 @@ use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 
-class PersonExtendedFieldset extends Fieldset implements InputFilterProviderInterface {
+class PersonExtendedFieldset extends Fieldset  {
 
     public function __construct() {
 
@@ -29,7 +29,8 @@ class PersonExtendedFieldset extends Fieldset implements InputFilterProviderInte
                 'label' => 'id'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -41,7 +42,8 @@ class PersonExtendedFieldset extends Fieldset implements InputFilterProviderInte
                 'label' => 'pers_id'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -53,7 +55,8 @@ class PersonExtendedFieldset extends Fieldset implements InputFilterProviderInte
                 'label' => 'profilURL'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 3,
+                'class' => 'fswTextAreaSmall'
             )
         ));
 
@@ -65,7 +68,8 @@ class PersonExtendedFieldset extends Fieldset implements InputFilterProviderInte
                 'label' => 'fullname'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -80,6 +84,7 @@ class PersonExtendedFieldset extends Fieldset implements InputFilterProviderInte
      *
      * @return array
      */
+    /*
     public function getInputFilterSpecification()
     {
         return array(
@@ -88,4 +93,5 @@ class PersonExtendedFieldset extends Fieldset implements InputFilterProviderInte
             )
         );
     }
+    */
 }

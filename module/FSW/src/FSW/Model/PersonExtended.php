@@ -68,6 +68,8 @@ class PersonExtended extends BaseModel implements InputFilterAwareInterface {
                 ),
             ));
 
+            $this->inputFilter = $inputFilter;
+
         }
 
         return $this->inputFilter;
