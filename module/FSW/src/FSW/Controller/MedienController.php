@@ -50,11 +50,11 @@ class MedienController extends BaseController {
 
             if ($form->isValid()) {
                 $medium->exchangeArray($form->getData());
-                $this->facade->saveMedium($medium);
+                $idUpdated =  $this->facade->saveMedium($medium);
 
                 // Redirect to list of albums
                 //return $this->forward()->toRoute('medien',array("action" => 'edit','id' => '52'));
-                return $this->forward()->dispatch('FSW\Controller\Medien', array('action' => 'show','id' => 52 ));
+                return $this->forward()->dispatch('FSW\Controller\Medien', array('action' => 'show','id' => $idUpdated ));
             }
 
 

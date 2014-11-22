@@ -1,10 +1,16 @@
-<?php
 
-echo $this->render('fsw/global/home-crud', array(
+<div class="topButtons">
+	<a href="<?php echo $this->url('medien', array('action' => 'add')); ?>"
+	   class="ajaxButton addButton btn btn-primary btn-medium" id="add-medien">
+		<?php echo $this->translate('neues Medium aufnehmen', 'Libadmin') ?>
+	</a>
+</div>
 
-    'entityName' => 'Medien',
-    'entityNamePlural' => 'Medien',
+<fieldset class="edit_legend_title">
 
-    'route' => 'medien',
-	'listItems' => $medien
-));
+    <legend>Medien</legend>
+
+</fieldset>
+
+<?php echo $this->ztbFlashMessenger()->render() ?>
+

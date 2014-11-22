@@ -1,7 +1,10 @@
+
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
 <?php
 
-$title = 'hier jetzt die neue Form';
-$this->headTitle($title);
 
 $form = $this->form;
 ?>
@@ -40,6 +43,12 @@ echo $this->form()->openTag($form,$formType); ?>
 
         <div class="span5"><?php echo $this->formRowTwb($form->get('mit_id_per_extended')); ?></div>
     </div>
+
+    <div class="row-fluid">
+
+        <div class="span12"><?php echo  $this->formRowTwb($form->get('medientyp')) ?></div>
+    </div>
+
     <div class="row-fluid">
 
         <div class="span5"><?php echo $this->formRowTwb($form->get('icon')); ?></div>

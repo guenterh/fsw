@@ -87,6 +87,7 @@ class MedienFacade extends BaseFacade {
     public function saveMedium(Medium $medium)
     {
 
+        $idToReturn = 0;
         $data = array(
             'mit_id_per_extended' => $medium->getMit_id_per_extended(),
 
@@ -99,15 +100,22 @@ class MedienFacade extends BaseFacade {
         );
 
         $id = (int)$medium->getId();
+        $gW = $this->histSemDBService->getMedienGateway();
         if ($id == 0) {
-            $this->histSemDBService->getMedienGateway()->insert($data);
+
+            $gW->insert($data);
+            $idToReturn = $gW->getLastInsertValue();
+
         } else {
             if ($this->getMedium($id)) {
                 $this->histSemDBService->getMedienGateway()->update($data, array('id' => $id));
+                $idToReturn = $id;
             } else {
                 throw new \Exception('Form id does not exist');
             }
         }
+
+        return $idToReturn;
     }
 
 
