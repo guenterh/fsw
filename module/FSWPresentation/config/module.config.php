@@ -46,6 +46,7 @@ return array(
             'FSWPresentation\Controller\Medien' => 'FSWPresentation\Controller\Factory::getMedienController',
             'FSWPresentation\Controller\Kolloquien' => 'FSWPresentation\Controller\Factory::getKolloquienController',
             'FSWPresentation\Controller\Lehrveranstaltung' => 'FSWPresentation\Controller\Factory::getLehrveranstaltungController',
+            'FSWPresentation\Controller\QArb' => 'FSWPresentation\Controller\Factory::getQArbController'
 
         )
 
@@ -73,6 +74,8 @@ return array(
         'allow_override' => true,
         'factories' => array(
             'FSWPresentation\Services\Facade\PublicationsFacade'    =>  'FSWPresentation\Services\Factory::getPublicationsFacade',
+            'FSWPresentation\Services\Facade\QArbFacade'    =>  'FSWPresentation\Services\Factory::getQArbFacade',
+
 
         )
 

@@ -98,6 +98,23 @@ class PersonenInfo {
         $this->vorName = $vorName;
     }
 
+    public function exchangeArray($data)
+    {
+        if (is_object($data)) {
+            $data = $data->getArrayCopy();
+        }
+
+        $this->initLocalVariables($data);
+    }
+
+    protected function initLocalVariables(array $data)
+    {
+        foreach ($data as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->$key = $value;
+            }
+        }
+    }
 
 
 

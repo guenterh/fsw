@@ -71,6 +71,19 @@ class Factory {
 
     }
 
+    public static function getQArbController(ServiceManager $sm) {
+
+        $qarbC = new QArbController();
+
+        if ($qarbC instanceof FacadeAwareInterface) {
+
+            $qarbC->setFacadeService($sm->getServiceLocator()->get('FSWPresentation\Services\Facade\QArbFacade'));
+
+        }
+
+        return $qarbC;
+    }
+
 
 
 }
