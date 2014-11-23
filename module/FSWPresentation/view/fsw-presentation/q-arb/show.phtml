@@ -1,2 +1,31 @@
 
-<h1>hello again</h1>
+
+<?php
+
+    $qArbeiten = $this->qArbeiten;
+    $all = $this->all;
+
+?>
+
+
+<ul class="type1">
+
+    <?php foreach($qArbeiten as $qArbeit): ?>
+    <li>
+        <!-- noch  zu machen: meherere Autoren-->
+        <?php if (count($qArbeit->getPersonenInfo()) == 1): ?>
+            <?php $pi = $qArbeit->getPersonenInfo()[0] ?>
+
+            <p class="noMarginBottom"><b><?php echo $pi->getVorName() . '&nbsp;'  . $pi->getNachName(); ?></b>
+                <br />
+
+                <?php echo $qArbeit->getQarbArbTitel(); ?> &nbsp; (Ref.: <?php echo $qArbeit->getPersVorname() . '&nbsp;' . $qArbeit->getPersName();?> )
+            </p>
+        <?php endif; ?>
+
+    </li>
+
+
+    <?php endforeach; ?>
+</ul>
+

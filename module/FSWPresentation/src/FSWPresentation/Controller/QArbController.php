@@ -26,7 +26,8 @@ class QArbController extends BaseController {
       //$this->layout()->setTemplate("presentation/layout");
 
         return new ViewModel(array(
-            'qArbeiten' => $this->facade->getQArbeiten($queryParams)
+            'qArbeiten' => $this->facade->getQArbeiten($queryParams),
+            'all' => array_key_exists('betreuer',$queryParams)
         ));
 
     }
