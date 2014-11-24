@@ -54,7 +54,8 @@ return array(
 
     'view_helpers'  =>  array(
         'invokables'    =>  array(
-            'date'  =>  'FSWPresentation\View\Helper\Date'
+            'date'  =>  'FSWPresentation\View\Helper\Date',
+            'sortSwitcher'  => 'FSWPresentation\View\Helper\SortSwitcher'
         )
     ),
 

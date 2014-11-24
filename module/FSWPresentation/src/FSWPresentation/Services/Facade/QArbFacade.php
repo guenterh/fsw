@@ -41,8 +41,13 @@ class QArbFacade extends BaseFacade {
         //$sql = 'select p.*, a.*,pext.profilURL from Per_Personen p, Per_Rolle r, Qarb_ArbeitenV2 a, fsw_personen_extended pext ';
         //$sql .= ' where p.pers_id = pext.pers_id and  p.pers_id = r.roll_pers_id and r.roll_id = a.qarb_arb_betreuer1_rollid';
 
+        //join auf Betreuer
+        //$sql = 'select p.*, a.*,pext.profilURL from Per_Personen p join Per_Rolle r on (p.pers_id = r.roll_pers_id) ';
+        //$sql .= ' join  Qarb_ArbeitenV2 a on (r.roll_id = a.qarb_arb_betreuer1_rollid)  left join fsw_personen_extended pext  ';
+        //$sql .= ' on (p.pers_id = pext.pers_id)';
+
         $sql = 'select p.*, a.*,pext.profilURL from Per_Personen p join Per_Rolle r on (p.pers_id = r.roll_pers_id) ';
-        $sql .= ' join  Qarb_ArbeitenV2 a on (r.roll_id = a.qarb_arb_betreuer1_rollid)  left join fsw_personen_extended pext  ';
+        $sql .= ' join  Qarb_ArbeitenV2 a on (r.roll_id = a.qarb_arb_autor_rollid)  left join fsw_personen_extended pext  ';
         $sql .= ' on (p.pers_id = pext.pers_id)';
 
 
@@ -58,18 +63,26 @@ class QArbFacade extends BaseFacade {
         //Beispiel: http://localhost:30000/presentation/qarb/show?betreuer[]=straumann&betreuer[]=goltermann&status[]=laufend&status[]=abgeschlossen&typ[]=diss&typ[]=habil
 
         $betreuerIDs = array();
+        $rollIds = array();
         $statiIDs = array();
         $typenStrings = array();
 
         if (array_key_exists('betreuer',$qParams) && is_array($qParams['betreuer'])) {
             foreach ($qParams['betreuer'] as $requestedBetreuer) {
                 if (array_key_exists($requestedBetreuer,$configBetreuer)) {
-                    $betreuerIDs[] = $configBetreuer[$requestedBetreuer];
+                    $rollIds = array_merge($rollIds,$this->rollIdsBetreuer($configBetreuer[$requestedBetreuer]));
                 }
             }
         } else {
             //gebe ich keine Betreuer an, werden alle konfigurierten und damit alle mit der FSW verbundenen Arbeiten selektiert
-            $betreuerIDs = array_values($configBetreuer);
+
+            //$betreuerIDs = array_values($configBetreuer);
+            foreach ($configBetreuer as $bpers_id) {
+                $rollIds = array_merge($rollIds,$this->rollIdsBetreuer($bpers_id));
+            }
+
+
+
         }
         if (array_key_exists('status',$qParams) && is_array($qParams['status'])) {
             foreach ($qParams['status'] as $requestedStatus) {
@@ -94,8 +107,12 @@ class QArbFacade extends BaseFacade {
         //}
 
         //mit left join
-        if (count($betreuerIDs) > 0) {
-            $sql .= ' where  p.pers_id in (' .   implode (',', $betreuerIDs)   .    ') ';
+        //if (count($betreuerIDs) > 0) {
+        //    $sql .= ' where  p.pers_id in (' .   implode (',', $betreuerIDs)   .    ') ';
+        //}
+
+        if (count($rollIds) > 0) {
+            $sql .= ' where  a.qarb_arb_betreuer1_rollid in (' .   implode (',', $rollIds)   .    ') ';
         }
 
         if (count($statiIDs) > 0) {
@@ -110,7 +127,8 @@ class QArbFacade extends BaseFacade {
                 }, $typenStrings))   .    ') ';
         }
 
-        $sql .= ' order by a.qarb_arb_abschlussjahr';
+        //$sql .= ' order by a.qarb_arb_abschlussjahr';
+        $sql .= ' order by p.pers_name';
 
 
 
@@ -123,23 +141,39 @@ class QArbFacade extends BaseFacade {
             $qa = new Qualitaetsarbeit();
             $qa->exchangeArray($row->getArrayCopy());
 
-            $t = $qa->getQarbArbAutorRollid();
-            if (!is_null($qa->getQarbArbAutorRollid()) && ((int)$qa->getQarbArbAutorRollid()) > 0) {
+            //da ich in der Abfrage den join nun über Autor1 lege, muss ich die Autoreninfos nicht mehr extra zusammensuchen
+            //if (!is_null($qa->getQarbArbAutorRollid()) && ((int)$qa->getQarbArbAutorRollid()) > 0) {
+            //    $pi = $this->getAutorenInfo($qa->getQarbArbAutorRollid());
+            //    if ($pi instanceof PersonenInfo) {
+            //        $qa->addPersonenInfo($pi);
+            //    }
+            //}
 
-                $pi = $this->getAutorenInfo($qa->getQarbArbAutorRollid());
-                if ($pi instanceof PersonenInfo) {
-                    $qa->addPersonenInfo($pi);
-                }
-
-            }
 
             if (!is_null($qa->getQarbArbAutor2Rollid()) && ((int)$qa->getQarbArbAutor2Rollid()) > 0) {
 
-                $pi = $this->getAutorenInfo($qa->getQarbArbAutor2Rollid());
+                $pi = $this->getPersonenInfoWithRollId($qa->getQarbArbAutor2Rollid());
                 if ($pi instanceof PersonenInfo) {
-                    $qa->addPersonenInfo($pi);
+                    $qa->setAutorInfo2($pi);
                 }
             }
+
+            //den ersten Betreuer sollte es aufgrund der Abfrage immer haben!
+            $pi = $this->getPersonenInfoWithRollId($qa->getQarbArbBetreuer1Rollid());
+            if ($pi instanceof PersonenInfo) {
+                $qa->addBetreuerInfo($pi);
+            }
+
+            if (!is_null($qa->getQarbArbBetreuer2Rollid()) && ((int)$qa->getQarbArbBetreuer2Rollid()) > 0) {
+
+                $pi = $this->getPersonenInfoWithRollId($qa->getQarbArbBetreuer2Rollid());
+                if ($pi instanceof PersonenInfo) {
+                    $qa->addBetreuerInfo($pi);
+                }
+            }
+
+
+
             $qualitaetsarbeiten[] = $qa;
         }
 
@@ -147,7 +181,7 @@ class QArbFacade extends BaseFacade {
     }
 
 
-    private function getAutorenInfo($id) {
+    private function getPersonenInfoWithRollId($id) {
 
         $info = null;
 
@@ -163,10 +197,7 @@ class QArbFacade extends BaseFacade {
             $info->exchangeArray($row->getArrayCopy());
 
         }
-
         return $info;
-
-
     }
 
 
@@ -184,6 +215,24 @@ class QArbFacade extends BaseFacade {
 
     public function fetchAll()
     {
+    }
+
+
+    private function rollIdsBetreuer ($persId) {
+
+        $rollIds = array();
+        $sql = 'select roll_id from Per_Rolle r join  Per_Personen p on (p.pers_id = r.roll_pers_id )';
+        $sql .= ' where p.pers_id = ' . $persId;
+
+        $result = $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+
+        foreach ($result as $row) {
+            $rollIds[] = $row['roll_id'];
+        }
+
+        return $rollIds;
+
     }
 
 

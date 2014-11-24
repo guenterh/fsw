@@ -4,8 +4,12 @@
 
     $qArbeiten = $this->qArbeiten;
     $all = $this->all;
+    $baseURL = $this->$baseURL;
+    $params = $this->params;
 
 ?>
+
+<?php $params = $this->sortSwitcher($params) ?>
 
 
 <ul class="type1">
@@ -13,15 +17,68 @@
     <?php foreach($qArbeiten as $qArbeit): ?>
     <li>
         <!-- noch  zu machen: meherere Autoren-->
-        <?php if (count($qArbeit->getPersonenInfo()) == 1): ?>
-            <?php $pi = $qArbeit->getPersonenInfo()[0] ?>
 
-            <p class="noMarginBottom"><b><?php echo $pi->getVorName() . '&nbsp;'  . $pi->getNachName(); ?></b>
+            <p class="noMarginBottom"><b>
+                    <?php if ($qArbeit->isSetProfilURL()): ?>
+
+                        <a href="<?php echo $qArbeit->getProfilURL();?>" target="_blank"><?php echo $qArbeit->getPersName() . '&nbsp;' . $qArbeit->getPersVorname();?></a>
+                     <?php else: ?>
+                        <?php echo $qArbeit->getPersName() . '&nbsp;' . $qArbeit->getPersVorname();?>
+                    <?php endif; ?>
+
+
+                </b>
                 <br />
 
-                <?php echo $qArbeit->getQarbArbTitel(); ?> &nbsp; (Ref.: <?php echo $qArbeit->getPersVorname() . '&nbsp;' . $qArbeit->getPersName();?> )
+                <?php echo $qArbeit->getQarbArbTitel(); ?>
+
+                <?php if ($all): ?>
+
+                    &nbsp; (Ref.:
+
+                    <?php if ($qArbeit->getBetreuer1Info()->isSetProfilURL()): ?>
+                        <a href="<?php echo $qArbeit->getBetreuer1Info()->getProfilURL();?>" target="_blank">
+
+                            <?php echo $qArbeit->getBetreuer1Info()->getNachName() . '&nbsp;' . $qArbeit->getBetreuer1Info()->getVorName();?>
+                        </a>
+                    <?php else: ?>
+                        <?php echo $qArbeit->getBetreuer1Info()->getNachName() . '&nbsp;' . $qArbeit->getBetreuer1Info()->getVorName();?>
+                    <?php endif; ?>
+
+                    )
+
+                    <?php if ($qArbeit->isSetBetreuer2Info()): ?>
+                        &nbsp; (Zweitref.:
+
+                        <?php if ($qArbeit->getBetreuer2Info()->isSetProfilURL()): ?>
+                            <a href="<?php echo $qArbeit->getBetreuer2Info()->getProfilURL();?>" target="_blank">
+
+                                <?php echo $qArbeit->getBetreuer2Info()->getNachName() . '&nbsp;' . $qArbeit->getBetreuer2Info()->getVorName();?>
+                            </a>
+                        <?php else: ?>
+                            <?php echo $qArbeit->getBetreuer2Info()->getNachName() . '&nbsp;' . $qArbeit->getBetreuer2Info()->getVorName();?>
+                        <?php endif; ?>
+
+                        )
+
+                    <?php endif; ?>
+
+                <?php endif; ?>
             </p>
+
+
+        <?php if ($qArbeit->isSetAbstract()): ?>
+            <div>
+                <a class="internal abstractCaption" href="#">mehr</a>
+                <br/>
+                <div class="abstractText">
+                    <?php echo $qArbeit->getQarbArbAbstract(); ?> &nbsp;
+                </div>
+            </div>
+
         <?php endif; ?>
+
+
 
     </li>
 

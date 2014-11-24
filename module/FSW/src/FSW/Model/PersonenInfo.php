@@ -71,8 +71,16 @@ class PersonenInfo {
      */
     public function getProfilURL()
     {
-        return $this->profilURL;
+        $url = preg_replace("/&?extern=true/","",$this->profilURL);
+        return $url;
+
     }
+
+    public function isSetProfilURL()
+    {
+        return !is_null($this->profilURL) && strlen($this->profilURL) > 0 ? true : false;
+    }
+
 
     /**
      * @param mixed $profilURL

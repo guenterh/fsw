@@ -24,10 +24,15 @@ class QArbController extends BaseController {
 
         $queryParams = $this->params()->fromQuery();
       //$this->layout()->setTemplate("presentation/layout");
+        //$this->layout('layout\layoutlehrveranstaltung');
+
+        //$test =  $this->url()->fromRoute('presentation/default',array('controller' => 'qarb','action' => 'show'));
 
         return new ViewModel(array(
             'qArbeiten' => $this->facade->getQArbeiten($queryParams),
-            'all' => array_key_exists('betreuer',$queryParams)
+            'all' => !array_key_exists('betreuer',$queryParams),
+            'baseURL'   => $this->url()->fromRoute('presentation/default',array('controller' => 'qarb','action' => 'show')),
+            'params'    => $queryParams
         ));
 
     }

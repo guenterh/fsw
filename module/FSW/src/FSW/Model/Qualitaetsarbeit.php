@@ -51,7 +51,9 @@ class Qualitaetsarbeit extends BaseModel {
     protected $profilURL;
 
 
+    protected $autorInfo2 = null;
 
+    protected $betreuerInfo = array();
 
 
 
@@ -132,8 +134,18 @@ class Qualitaetsarbeit extends BaseModel {
      */
     public function getProfilURL()
     {
-        return $this->profilURL;
+        $url = preg_replace("/&?extern=true/","",$this->profilURL);
+        return $url;
     }
+
+    /**
+     * @return mixed
+     */
+    public function isSetProfilURL()
+    {
+        return !is_null($this->profilURL) && strlen($this->profilURL) > 0 ? true : false;
+    }
+
 
     /**
      * @param mixed $profilURL
@@ -263,6 +275,12 @@ class Qualitaetsarbeit extends BaseModel {
         return $this->qarb_arb_abstract;
     }
 
+    public function isSetAbstract()
+    {
+        return !is_null($this->qarb_arb_abstract) && strlen($this->qarb_arb_abstract) > 0 ? true : false;
+    }
+
+
     /**
      * @param mixed $qarb_arb_abstract
      */
@@ -342,6 +360,14 @@ class Qualitaetsarbeit extends BaseModel {
     {
         return $this->qarb_arb_bemerkungen;
     }
+
+    public function isSetBemerkungen()
+    {
+        return !is_null($this->qarb_arb_bemerkungen) && strlen($this->qarb_arb_bemerkungen) > 0 ? true : false;
+    }
+
+
+
 
     /**
      * @param mixed $qarb_arb_bemerkungen
@@ -573,6 +599,57 @@ class Qualitaetsarbeit extends BaseModel {
     public function setQarbArbTyp($qarb_arb_typ)
     {
         $this->qarb_arb_typ = $qarb_arb_typ;
+    }
+
+    /**
+     * @return null
+     */
+    public function getAutorInfo2()
+    {
+        return $this->autorInfo2;
+    }
+
+    /**
+     * @param null $autorInfo2
+     */
+    public function setAutorInfo2(PersonenInfo $autorInfo2)
+    {
+        $this->autorInfo2 = $autorInfo2;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBetreuer1Info()
+    {
+        return is_array($this->betreuerInfo) && isset($this->betreuerInfo[0]) &&
+            $this->betreuerInfo[0] instanceof PersonenInfo ? $this->betreuerInfo[0] : null;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBetreuer2Info()
+    {
+        return is_array($this->betreuerInfo) && isset($this->betreuerInfo[1]) &&
+            $this->betreuerInfo[1] instanceof PersonenInfo ? $this->betreuerInfo[1] : null;
+    }
+
+    public function isSetBetreuer2Info()
+    {
+
+        return !is_null($this->getBetreuer2Info()) ? true : false;
+    }
+
+
+
+    /**
+     * @param array $betreuerInfo
+     */
+    public function addBetreuerInfo(PersonenInfo $betreuerInfo)
+    {
+        //Annahme: ich gehe davon aus, dass das erste item im Array immer Betreuer1 ist
+        $this->betreuerInfo[] = $betreuerInfo;
     }
 
 
