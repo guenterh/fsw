@@ -11,6 +11,19 @@
 
 <?php $params = $this->sortSwitcher($params) ?>
 
+<?php if (array_key_exists('sort', $params)): ?>
+
+    <?php if (strcmp($params['sort'],'name') == 0): ?>
+        <?php $sorttext = 'sort alphabetisch' ?>
+    <?php else: ?>
+        <?php $sorttext = 'sort Abschlussjahr' ?>
+    <?php endif; ?>
+
+
+    <a href="<?php echo $this->url('presentation/default', array('controller' => 'qarb','action' => 'show'), array('query' => $params)); ?>"><?php echo $sorttext; ?></a>
+
+
+<?php endif; ?>
 
 <ul class="type1">
 
@@ -31,6 +44,10 @@
                 <br />
 
                 <?php echo $qArbeit->getQarbArbTitel(); ?>
+
+                <?php if (array_key_exists('status',$params) && strcmp($params['status'],'abgeschlossen') == 0): ?>
+                    &nbsp; Abschluss: <?php echo $qArbeit->getQarbArbAbschlussjahr(); ?>
+                <?php endif; ?>
 
                 <?php if ($all): ?>
 

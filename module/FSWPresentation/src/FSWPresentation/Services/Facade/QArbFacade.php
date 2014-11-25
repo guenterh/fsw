@@ -37,6 +37,7 @@ class QArbFacade extends BaseFacade {
         $configBetreuer = $this->fswConfigPlugin->get('config')->QarbBetreuer->toArray();
         $configTypen = $this->fswConfigPlugin->get('config')->QarbTypen->toArray();
         $configStatus = $this->fswConfigPlugin->get('config')->QarbStatus->toArray();
+        $sortDefinitions = $this->fswConfigPlugin->get('config')->QarbSort->toArray();
 
         //$sql = 'select p.*, a.*,pext.profilURL from Per_Personen p, Per_Rolle r, Qarb_ArbeitenV2 a, fsw_personen_extended pext ';
         //$sql .= ' where p.pers_id = pext.pers_id and  p.pers_id = r.roll_pers_id and r.roll_id = a.qarb_arb_betreuer1_rollid';
@@ -127,8 +128,21 @@ class QArbFacade extends BaseFacade {
                 }, $typenStrings))   .    ') ';
         }
 
+
+
         //$sql .= ' order by a.qarb_arb_abschlussjahr';
-        $sql .= ' order by p.pers_name';
+        //$sql .= ' order by p.pers_name';
+        if (array_key_exists('sort',$qParams) && !is_array($qParams['sort'])) {
+            if (array_key_exists($qParams['sort'],$sortDefinitions)) {
+                $sql .= ' order by ' . $sortDefinitions[$qParams['sort']];
+            } else {
+                $sql .= ' order by p.pers_name';
+            }
+
+        } else {
+            $sql .= ' order by p.pers_name';
+
+        }
 
 
 
