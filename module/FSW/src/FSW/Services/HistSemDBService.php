@@ -58,6 +58,9 @@ class HistSemDBService implements ServiceManagerAwareInterface {
     protected $relationPersonenLehrveranstaltung;
     protected $zoraCoverLinkOnlyGateway;
 
+    protected $hsAbteilungGateway;
+    protected $hsFunktionGateway;
+
 
 
     protected $serviceManager;
@@ -117,6 +120,26 @@ class HistSemDBService implements ServiceManagerAwareInterface {
         }
 
         return $this->fswPersonenExtendedGateway;
+    }
+
+    public function getHSAbteilungGateway() {
+
+        if (is_null($this->hsAbteilungGateway) ) {
+
+            $this->hsAbteilungGateway = $this->serviceManager->get("HSAbteilungGateway");
+        }
+
+        return $this->hsAbteilungGateway;
+    }
+
+    public function getHSFunktionGateway() {
+
+        if (is_null($this->hsFunktionGateway) ) {
+
+            $this->hsFunktionGateway = $this->serviceManager->get("HSFunktionGateway");
+        }
+
+        return $this->hsFunktionGateway;
     }
 
 

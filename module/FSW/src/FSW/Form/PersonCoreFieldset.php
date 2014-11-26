@@ -19,7 +19,7 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
 
     protected $inputFilter;
 
-    public function __construct() {
+    public function __construct($personRollenFieldset = null) {
 
         parent::__construct('PersonCore');
 
@@ -263,19 +263,36 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
             )
         ));
 
-        $this->add(array(
-            'type' => 'Zend\Form\Element\Collection',
-            'name' => 'personRollen',
-            'options' => array(
-                'label' => 'Rollen der Person',
-                'count' => 1,
-                'should_create_template' => true,
-                'allow_add' => true,
-                'target_element' => array(
-                    'type' => 'FSW\Form\PersonRolleFieldset'
+
+        if (is_null($personRollenFieldset)) {
+            $this->add(array(
+                'type' => 'Zend\Form\Element\Collection',
+                'name' => 'personRollen',
+                'options' => array(
+                    'label' => 'Rollen der Person',
+                    'count' => 1,
+                    'should_create_template' => true,
+                    'allow_add' => true,
+                    'target_element' => array(
+                        'type' => 'FSW\Form\PersonRolleFieldset'
+                    )
                 )
-            )
-        ));
+            ));
+        } else {
+            $this->add(array(
+                'type' => 'Zend\Form\Element\Collection',
+                'name' => 'personRollen',
+                'options' => array(
+                    'label' => 'Rollen der Person',
+                    'count' => 1,
+                    'should_create_template' => true,
+                    'allow_add' => true,
+                    'target_element' => $personRollenFieldset
+                )
+            ));
+
+        }
+
 
 
     }

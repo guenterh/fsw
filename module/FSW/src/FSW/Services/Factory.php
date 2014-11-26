@@ -8,6 +8,7 @@
 
 namespace FSW\Services;
 
+use FSW\Model\Funktion;
 use FSW\Model\Lehrveranstaltung;
 use FSW\Model\Medium;
 use FSW\Model\RelationPersonLehrveranstaltung;
@@ -35,6 +36,7 @@ use FSW\Services\Facade\ForschungFacade;
 use FSW\Services\Facade\ZoraFacade;
 use FSW\Services\OAI;
 use FSW\Model\Kolloqium;
+use FSW\Model\Abteilung;
 
 
 
@@ -193,6 +195,25 @@ class Factory {
         $resultSetPrototype->setArrayObjectPrototype(new Person());
         return new TableGateway('Per_Personen', $dbAdapter, null, $resultSetPrototype);
     }
+
+    public static function getHSAbteilungTableGateway(ServiceManager $sm) {
+
+        $dbAdapter = $sm->get('HistSemDBService')->getAdapter();
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new Abteilung());
+        return new TableGateway('Per_Abteilung', $dbAdapter, null, $resultSetPrototype);
+
+    }
+
+    public static function getHSFunktionTableGateway(ServiceManager $sm) {
+
+        $dbAdapter = $sm->get('HistSemDBService')->getAdapter();
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new Funktion());
+        return new TableGateway('Per_Funktion', $dbAdapter, null, $resultSetPrototype);
+
+    }
+
 
     public static function getKolloquienTableGateway(ServiceManager $sm) {
 

@@ -248,6 +248,10 @@ return array(
 
             'ForschungTableGateway'          =>  'FSW\Services\Factory::getForschungTableGateway',
 
+            'HSAbteilungGateway'        =>  'FSW\Services\Factory::getHSAbteilungTableGateway',
+
+            'HSFunktionGateway'         =>  'FSW\Services\Factory::getHSFunktionTableGateway',
+
             'ZoraDocTableGateway'          =>  'FSW\Services\Factory::getZoraDocTableGateway',
             'ZoraDocWithCoverTabeGateway'          =>  'FSW\Services\Factory::getZoraDocWithCoverTableGateway',
             'CoverOnlyTableGateway'          =>  'FSW\Services\Factory::getCoverOnlyTableGateway',

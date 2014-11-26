@@ -31,7 +31,9 @@ namespace FSW\Controller;
 
 use FSW\Form\PersonCoreFieldset;
 use FSW\Form\PersonForm;
+use FSW\Form\PersonFormAllHS;
 use FSW\Form\PersonFSWExtendedForm;
+use Zend\Stdlib\ArrayObject;
 use Zend\View\Model\ViewModel;
 
 
@@ -87,8 +89,8 @@ class PersonenController extends BaseController{
 
     public function editAction()
     {
-        $id = (int) $this->params()->fromRoute('id', 0);
-        if (!$id) {
+        $pers_id = (int) $this->params()->fromRoute('id', 0);
+        if (!$pers_id) {
             return $this->redirect()->toRoute('personen', array(
                 'action' => 'add'
             ));
@@ -99,10 +101,29 @@ class PersonenController extends BaseController{
         try {
 
             //hole das Modell von der Facade
-            $person =  $this->facade->getPerson($id);
+            $person =  $this->facade->getPerson($pers_id);
 
-            $coreFS = new PersonForm('Person');
-            $coreFS->bind($person);
+
+            $forschungstypen = array('Lizentiatsarbeit','Masterarbeit','Dissertation','Habilitation');
+            $params = compact('pers_id','forschungstypen');
+
+            $forschungsarbeiten = $this->facade->getForschungen($params);
+
+            $bindObject = new ArrayObject();
+            $bindObject['forschungsarbeiten'] = $forschungsarbeiten;
+            $bindObject['PersonCore'] = $person;
+
+
+            $coreFieldset = $this->getServiceLocator()->get('FormElementManager')->get('PersonCoreFieldset');
+            $coreFieldset->setName('PersonCore');
+
+
+            $qaArbeiten = $this->getServiceLocator()->get('FormElementManager')->get('QualifikationsArbeitFieldset');
+
+
+            $coreFS = new PersonFormAllHS('Person',$coreFieldset,$qaArbeiten);
+
+            $coreFS->bind($bindObject);
 
             $request = $this->getRequest();
             if ($request->isPost()) {
@@ -130,7 +151,7 @@ class PersonenController extends BaseController{
             ));
         }
 
-        $coreFS->setAttribute('action', $this->makeUrl('personen', 'edit', $id));
+        $coreFS->setAttribute('action', $this->makeUrl('personen', 'edit', $pers_id));
 
 
         /*

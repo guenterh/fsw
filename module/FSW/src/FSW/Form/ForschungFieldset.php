@@ -19,7 +19,7 @@ use Zend\InputFilter\InputFilterProviderInterface;
 
 class ForschungFieldset extends Fieldset implements InputFilterProviderInterface{
 
-    public function __construct($name = 'forschung') {
+    public function __construct($name = 'forschung', $personRolleIDInfo = null) {
 
         parent::__construct($name);
 
@@ -71,10 +71,12 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
             'name' => 'qarb_arb_titel',
             'type' => 'textarea',
             'options' => array(
-                'label' => 'qarb_arb_titel'
+                'label' => 'Titel'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 2,
+                'class' => 'fswTextAreaMiddle'
+
             )
         ));
 
@@ -83,7 +85,7 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
             'name' => 'qarb_arb_typ',
             'type' => 'textarea',
             'options' => array(
-                'label' => 'qarb_arb_typ'
+                'label' => 'Typ'
             ),
             'attributes' => array(
                 'rows' => 1
@@ -93,22 +95,50 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
             'name' => 'qarb_arb_betreuer1',
             'type' => 'textarea',
             'options' => array(
-                'label' => 'qarb_arb_betreuer1'
+                'label' => 'Betreuer 1'
             ),
             'attributes' => array(
                 'rows' => 1
             )
         ));
-        $this->add(array(
-            'name' => 'qarb_arb_betreuer1_rollid',
-            'type' => 'textarea',
-            'options' => array(
-                'label' => 'qarb_arb_betreuer1_rollid'
-            ),
-            'attributes' => array(
-                'rows' => 1
-            )
-        ));
+
+
+        if (is_null($personRolleIDInfo)) {
+            $this->add(array(
+                'name' => 'qarb_arb_betreuer1_rollid',
+                'type' => 'textarea',
+                'options' => array(
+                    'label' => 'Betreuer 1'
+                ),
+                'attributes' => array(
+                    'rows' => 1
+                )
+            ));
+        } else {
+            $selectarray = array();
+            foreach ($personRolleIDInfo as $key => $prID) {
+
+                $selectarray[$key] = $prID->getNachName() . ' ' . $prID->getVorName();
+            }
+
+            $this->add(array(
+                'name' => 'qarb_arb_betreuer1_rollid',
+                'type' => 'select',
+                'options' => array(
+                    'empty_option' => '- kein Name zur Rolle -',
+                    'label' => 'Betreuer 1',
+                    'value_options' => $selectarray
+                ),
+                'attributes' => array(
+                    'rows' => 2,
+                    'class' => 'fswTextAreaSmall',
+                    'disabled'  => 'true'
+                )
+
+            ));
+
+        }
+
 
         $this->add(array(
             'name' => 'qarb_arb_betreuer2',

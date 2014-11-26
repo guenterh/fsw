@@ -8,6 +8,7 @@
 
 namespace FSW\Services\Facade;
 use FSW\Model\PersonenInList;
+use FSW\Model\PersonenRolleInfo;
 use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
@@ -653,6 +654,47 @@ class PersonFacade extends BaseFacade {
         $p->setId_extended($row['pextid']);
 
         return $p;
+    }
+
+    public function getAbteilungValues() {
+        $HSAbteilungGW =  $this->histSemDBService->getHSAbteilungGateway();
+
+        return $HSAbteilungGW->select();
+
+    }
+
+    public function getFuntionenValues() {
+
+        $HSFunktionenGW =  $this->histSemDBService->getHSFunktionGateway();
+
+        return $HSFunktionenGW->select();
+
+    }
+
+
+    public function getRollIdPersonenValues () {
+
+
+        //wenn ich mit extende verknüpfe
+        //$sql = 'SELECT p.pers_name as nachName, p.pers_vorname as vorName, p.pers_id as id, pext.profilURL, pext.id as extendedId, ';
+        //$sql .= ' r.roll_id as rolleId from Per_Personen p join fsw_personen_extended pext on (p.pers_id = pext.pers_id) ';
+        //$sql .= ' join Per_Rolle r on (p.pers_id = r.roll_pers_id)';
+
+        //Verknüpfung Person / Rolle
+        $sql = 'SELECT p.pers_name as nachName, p.pers_vorname as vorName, p.pers_id as id, r.roll_id as rolleId from ';
+        $sql .= ' Per_Personen p join Per_Rolle r on (p.pers_id = r.roll_pers_id)';
+
+
+        $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+        $personRolleInfos = array();
+        foreach ($result as $row) {
+            $prI = new PersonenRolleInfo();
+            $prI->exchangeArray($row->getArrayCopy());
+            $personRolleInfos[$prI->getRolleId()] = $prI;
+        }
+
+        return $personRolleInfos;
     }
 
 }

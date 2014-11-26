@@ -18,7 +18,7 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
 
 
 
-    public function __construct() {
+    public function __construct($abteilungen = null, $funktionen = null) {
 
         parent::__construct('PersonRolle');
 
@@ -49,16 +49,41 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
         ));
 
 
-        $this->add(array(
-            'name' => 'roll_abt_id',
-            'type' => 'textarea',
-            'options' => array(
-                'label' => 'roll_abt_id'
-            ),
-            'attributes' => array(
-                'rows' => 1
-            )
-        ));
+        if (is_null($abteilungen)) {
+            $this->add(array(
+                'name' => 'roll_abt_id',
+                'type' => 'textarea',
+                'options' => array(
+                    'label' => 'Abteilung'
+                ),
+                'attributes' => array(
+                    'rows' => 1
+                )
+            ));
+        } else {
+            $selectarray = array();
+            foreach ($abteilungen as $key => $abteilung) {
+
+                $selectarray[$key] = $abteilung->getAbt_name();
+            }
+
+            $this->add(array(
+                'name' => 'roll_abt_id',
+                'type' => 'select',
+                'options' => array(
+                    'empty_option' => '- Keine Abteilung -',
+                    'label' => 'Abteilung',
+                    'value_options' => $selectarray
+                ),
+                'attributes' => array(
+                    'rows' => 2,
+                    'class' => 'fswTextAreaVerySmall',
+                    'disabled'  => 'true'
+                )
+
+            ));
+
+        }
         $this->add(array(
             'name' => 'roll_arbe_id',
             'type' => 'textarea',
@@ -79,26 +104,67 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'rows' => 1
             )
         ));
-        $this->add(array(
-            'name' => 'roll_funk_id',
-            'type' => 'textarea',
-            'options' => array(
-                'label' => 'roll_funk_id'
-            ),
-            'attributes' => array(
-                'rows' => 1
-            )
-        ));
+
+        if (is_null($funktionen)) {
+
+            $this->add(array(
+                'name' => 'roll_funk_id',
+                'type' => 'textarea',
+                'options' => array(
+                    'label' => 'roll_funk_id'
+                ),
+                'attributes' => array(
+                    'rows' => 1
+                )
+            ));
+        } else {
+            $selectarray = array();
+            foreach ($funktionen as $key => $funktion) {
+
+                $selectarray[$key] = $funktion->getFunk_name();
+            }
+
+            $this->add(array(
+                'name' => 'roll_funk_id',
+                'type' => 'select',
+                'options' => array(
+                    'empty_option' => '- Keine Funktion -',
+                    'label' => 'Funktion',
+                    'value_options' => $selectarray
+                ),
+                'attributes' => array(
+                    'rows' => 2,
+                    'class' => 'fswTextAreaVerySmall',
+                    'disabled'  => 'true'
+                )
+
+            ));
+
+        }
+
+        $selectarray = array(
+            '0' =>  'nein',
+            '1 '    =>  'ja'
+        );
+
+
+
         $this->add(array(
             'name' => 'roll_istangestellt',
-            'type' => 'textarea',
+            'type' => 'select',
             'options' => array(
-                'label' => 'roll_istangestellt'
+                'empty_option' => '- Keine Angabe -',
+                'label' => 'ist angestellt?',
+                'value_options' => $selectarray
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 2,
+                'class' => 'fswTextAreaVerySmall',
+                'disabled'  => 'true'
             )
+
         ));
+
 
         $this->add(array(
             'name' => 'roll_anstellung',

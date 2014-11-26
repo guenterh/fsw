@@ -24,7 +24,8 @@ $personCore = $form->get('PersonCore');
 $personExtended = $personCore->get('personExtended');
 $zoraAuthors = $personCore->get('zoraAuthors');
 $personRollen = $personCore->get('personRollen');
-
+$forschungsarbeiten = $form->get('forschungsarbeiten');
+//getCount
 
 
 $saveButtonLabel = "Speichern";
@@ -81,6 +82,11 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
             <?php endif; ?>
 
             <li><a href="#personRollen"><?php echo  $this->translate('Rollen HistSem', 'Libadmin') ?></a></li>
+
+            <?php if ($forschungsarbeiten->getCount() > 0): ?>
+                <li><a href="#forschungsarbeiten"><?php echo  $this->translate('Qualifikationsarbeiten', 'Libadmin') ?></a></li>
+
+            <?php endif; ?>
 
 
         </ul>
@@ -183,6 +189,7 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
                 <fieldset>
                     <legend>extended attributes for FSW</legend>
 
+                    <!-- hier muss noch etwas gemacht werden - wie könnte ich eine Verknuepfung aufnehmen wenn ich das per hand machen moechte?? -->
                     <?php if ($personExtended->getCount() > 0): ?>
 
                         <?php foreach ($personExtended as $singleExtended) :?>
@@ -392,6 +399,46 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
                 <?php endforeach; ?>
 
             </div>
+
+            <?php if($forschungsarbeiten->getCount() > 0): ?>
+                <div class="tab-pane" id="forschungsarbeiten">
+
+                    <?php foreach ($forschungsarbeiten as $forschung) :?>
+
+
+                        <fieldset class="general">
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <?php echo  $this->formRowTwb($forschung->get('qarb_arb_id')); ?>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <?php echo  $this->formRowTwb($forschung->get('qarb_arb_typ')); ?>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span10">
+                                    <?php echo  $this->formRowTwb($forschung->get('qarb_arb_titel')); ?>
+                                </div>
+                            </div>
+
+                            <div class="row-fluid">
+                                <div class="span10">
+                                    <?php echo  $this->formRowTwb($forschung->get('qarb_arb_betreuer1_rollid')); ?>
+                                </div>
+                            </div>
+
+
+                        </fieldset>
+                    <?php endforeach; ?>
+
+
+                </div>
+            <?php endif; ?>
+
+
+
 
         </div>
     </div>

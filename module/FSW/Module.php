@@ -9,12 +9,13 @@
 namespace FSW;
 
 use FSW\Services\HistSemDBServiceAwareInterface;
+use Zend\ModuleManager\Feature\FormElementProviderInterface;
 use Zend\Mvc\MvcEvent;
 
 
 
 
-class Module {
+class Module implements FormElementProviderInterface {
 
     public function onBootstrap(MvcEvent $e)
     {
@@ -99,5 +100,26 @@ class Module {
             ),
         );
     }
+
+    /**
+     * Expected to return \Zend\ServiceManager\Config object or array to
+     * seed such an object.
+     *
+     * @return array|\Zend\ServiceManager\Config
+     */
+    public function getFormElementConfig()
+    {
+        $test = "";
+
+        return array(
+            'factories' => array(
+                'PersonCoreFieldset'   =>  'FSW\Form\Factory::getPersonCoreFieldset',
+                'PersonRolleFieldset'   =>  'FSW\Form\Factory::getPersonRolleFieldset',
+                'QualifikationsArbeitFieldset'   =>  'FSW\Form\Factory::getQualifikationsarbeitFieldset'
+
+            )
+        );
+    }
+
 
 }
