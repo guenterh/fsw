@@ -33,7 +33,7 @@ class Factory {
         $facade = $sm->getServiceLocator()->get('FSW\Services\Facade\PersonenFacade');
 
         $abteilungen =  $facade->getAbteilungValues();
-        $funktionen = $facade->getFuntionenValues();
+        $funktionen = $facade->getFunktionenValues();
         $rf = new PersonRolleFieldset($abteilungen,$funktionen);
         $rf->setName('rolle');
         return $rf;

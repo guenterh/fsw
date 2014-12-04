@@ -27,74 +27,621 @@ Nur der Index?
 
 2) php public/index.php zora
 
-Fehlermedlungen:
-swissbib@ub-sbhp02:/usr/local/swissbib/fsw$ php public/index.php personen
-PHP Notice:  Undefined index: APPLICATION_ENV in /usr/local/swissbib/fsw/public/index.php on line 21
-PHP Stack trace:
-PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
-swissbib@ub-sbhp02:/usr/local/swissbib/fsw$ php public/index.php medien
-PHP Notice:  Undefined index: APPLICATION_ENV in /usr/local/swissbib/fsw/public/index.php on line 21
-PHP Stack trace:
-PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
-swissbib@ub-sbhp02:/usr/local/swissbib/fsw$ php public/index.php personen
-PHP Notice:  Undefined index: APPLICATION_ENV in /usr/local/swissbib/fsw/public/index.php on line 21
-PHP Stack trace:
-PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
-swissbib@ub-sbhp02:/usr/local/swissbib/fsw$ php public/index.php zora
-PHP Notice:  Undefined index: APPLICATION_ENV in /usr/local/swissbib/fsw/public/index.php on line 21
-PHP Stack trace:
-PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
-PHP Notice:  Undefined index: dc in /usr/local/swissbib/fsw/module/FSW/src/FSW/Model/ZoraRecord.php on line 99
-PHP Stack trace:
-PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
-PHP   2. Zend\Mvc\Application->run() /usr/local/swissbib/fsw/public/index.php:29
-PHP   3. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Application.php:309
-PHP   4. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
-PHP   5. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
-PHP   6. Zend\Mvc\DispatchListener->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
-PHP   7. Zend\Mvc\Controller\AbstractController->dispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/DispatchListener.php:114
-PHP   8. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractController.php:117
-PHP   9. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
-PHP  10. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
-PHP  11. Zend\Mvc\Controller\AbstractActionController->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
-PHP  12. FSW\Controller\HarvestController->oaiAction() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractActionController.php:83
-PHP  13. FSW\Services\OAI->launch() /usr/local/swissbib/fsw/module/FSW/src/FSW/Controller/HarvestController.php:79
-PHP  14. FSW\Services\OAI->getRecordsByDate() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:314
-PHP  15. FSW\Services\OAI->getRecords() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:837
-PHP  16. FSW\Services\OAI->processRecords() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:799
-PHP  17. FSW\Services\OAI->saveDeletedRecord() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:760
-PHP  18. FSW\Model\ZoraRecord->setRawOAIRecord() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:555
-PHP Notice:  Undefined index: dc in /usr/local/swissbib/fsw/module/FSW/src/FSW/Model/ZoraRecord.php on line 99
-PHP Stack trace:
-PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
-PHP   2. Zend\Mvc\Application->run() /usr/local/swissbib/fsw/public/index.php:29
-PHP   3. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Application.php:309
-PHP   4. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
-PHP   5. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
-PHP   6. Zend\Mvc\DispatchListener->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
-PHP   7. Zend\Mvc\Controller\AbstractController->dispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/DispatchListener.php:114
-PHP   8. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractController.php:117
-PHP   9. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
-PHP  10. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
-PHP  11. Zend\Mvc\Controller\AbstractActionController->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
-PHP  12. FSW\Controller\HarvestController->oaiAction() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractActionController.php:83
-PHP  13. FSW\Services\OAI->launch() /usr/local/swissbib/fsw/module/FSW/src/FSW/Controller/HarvestController.php:79
-PHP  14. FSW\Services\OAI->getRecordsByToken() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:319
-PHP  15. FSW\Services\OAI->getRecords() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:849
-PHP  16. FSW\Services\OAI->processRecords() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:799
-PHP  17. FSW\Services\OAI->saveDeletedRecord() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:760
-PHP  18. FSW\Model\ZoraRecord->setRawOAIRecord() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/OAI.php:555
-
-
-
--> ich muss die Fehlermeldungen umleiten.
-
 
 3) php public/index.php kolloquien
--> auch eine Reihe von Fehlermeldungen: loggen und anschauen!
+Fehlermeldungen (Import ging trotzdem sehr schnell)
+swissbib@ub-sbhp02:/usr/local/swissbib/fsw$ php public/index.php kolloquien
+PHP Warning:  Missing argument 1 for FSW\Services\Facade\KolloquienFacade::insertKolloquienFromXMLFile(), called in /usr/local/swissbib/fsw/module/FSW/src/FSW/Controller/KolloquienController.php on line 325 and defined in /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/Facade/KolloquienFacade.php on line 215
+PHP Stack trace:
+PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
+PHP   2. Zend\Mvc\Application->run() /usr/local/swissbib/fsw/public/index.php:29
+PHP   3. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Application.php:309
+PHP   4. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP   5. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   6. Zend\Mvc\DispatchListener->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   7. Zend\Mvc\Controller\AbstractController->dispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/DispatchListener.php:114
+PHP   8. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractController.php:117
+PHP   9. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP  10. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  11. Zend\Mvc\Controller\AbstractActionController->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  12. FSW\Controller\KolloquienController->insertKolloquienFSWAction() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractActionController.php:83
+PHP  13. FSW\Services\Facade\KolloquienFacade->insertKolloquienFromXMLFile() /usr/local/swissbib/fsw/module/FSW/src/FSW/Controller/KolloquienController.php:325
+PHP Warning:  Missing argument 1 for Zend\Db\TableGateway\AbstractTableGateway::delete(), called in /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/Facade/KolloquienFacade.php on line 223 and defined in /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Db/TableGateway/AbstractTableGateway.php on line 365
+PHP Stack trace:
+PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
+PHP   2. Zend\Mvc\Application->run() /usr/local/swissbib/fsw/public/index.php:29
+PHP   3. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Application.php:309
+PHP   4. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP   5. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   6. Zend\Mvc\DispatchListener->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   7. Zend\Mvc\Controller\AbstractController->dispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/DispatchListener.php:114
+PHP   8. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractController.php:117
+PHP   9. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP  10. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  11. Zend\Mvc\Controller\AbstractActionController->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  12. FSW\Controller\KolloquienController->insertKolloquienFSWAction() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractActionController.php:83
+PHP  13. FSW\Services\Facade\KolloquienFacade->insertKolloquienFromXMLFile() /usr/local/swissbib/fsw/module/FSW/src/FSW/Controller/KolloquienController.php:325
+PHP  14. Zend\Db\TableGateway\AbstractTableGateway->delete() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/Facade/KolloquienFacade.php:223
+PHP Notice:  Undefined variable: where in /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Db/TableGateway/AbstractTableGateway.php on line 371
+PHP Stack trace:
+PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
+PHP   2. Zend\Mvc\Application->run() /usr/local/swissbib/fsw/public/index.php:29
+PHP   3. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Application.php:309
+PHP   4. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP   5. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   6. Zend\Mvc\DispatchListener->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   7. Zend\Mvc\Controller\AbstractController->dispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/DispatchListener.php:114
+PHP   8. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractController.php:117
+PHP   9. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP  10. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  11. Zend\Mvc\Controller\AbstractActionController->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  12. FSW\Controller\KolloquienController->insertKolloquienFSWAction() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractActionController.php:83
+PHP  13. FSW\Services\Facade\KolloquienFacade->insertKolloquienFromXMLFile() /usr/local/swissbib/fsw/module/FSW/src/FSW/Controller/KolloquienController.php:325
+PHP  14. Zend\Db\TableGateway\AbstractTableGateway->delete() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/Facade/KolloquienFacade.php:223
+PHP Notice:  Undefined variable: where in /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Db/TableGateway/AbstractTableGateway.php on line 374
+PHP Stack trace:
+PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
+PHP   2. Zend\Mvc\Application->run() /usr/local/swissbib/fsw/public/index.php:29
+PHP   3. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Application.php:309
+PHP   4. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP   5. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   6. Zend\Mvc\DispatchListener->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   7. Zend\Mvc\Controller\AbstractController->dispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/DispatchListener.php:114
+PHP   8. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractController.php:117
+PHP   9. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP  10. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  11. Zend\Mvc\Controller\AbstractActionController->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  12. FSW\Controller\KolloquienController->insertKolloquienFSWAction() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractActionController.php:83
+PHP  13. FSW\Services\Facade\KolloquienFacade->insertKolloquienFromXMLFile() /usr/local/swissbib/fsw/module/FSW/src/FSW/Controller/KolloquienController.php:325
+PHP  14. Zend\Db\TableGateway\AbstractTableGateway->delete() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/Facade/KolloquienFacade.php:223
+PHP Warning:  Missing argument 1 for Zend\Db\TableGateway\AbstractTableGateway::delete(), called in /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/Facade/KolloquienFacade.php on line 224 and defined in /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Db/TableGateway/AbstractTableGateway.php on line 365
+PHP Stack trace:
+PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
+PHP   2. Zend\Mvc\Application->run() /usr/local/swissbib/fsw/public/index.php:29
+PHP   3. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Application.php:309
+PHP   4. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP   5. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   6. Zend\Mvc\DispatchListener->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   7. Zend\Mvc\Controller\AbstractController->dispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/DispatchListener.php:114
+PHP   8. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractController.php:117
+PHP   9. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP  10. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  11. Zend\Mvc\Controller\AbstractActionController->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  12. FSW\Controller\KolloquienController->insertKolloquienFSWAction() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractActionController.php:83
+PHP  13. FSW\Services\Facade\KolloquienFacade->insertKolloquienFromXMLFile() /usr/local/swissbib/fsw/module/FSW/src/FSW/Controller/KolloquienController.php:325
+PHP  14. Zend\Db\TableGateway\AbstractTableGateway->delete() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/Facade/KolloquienFacade.php:224
+PHP Notice:  Undefined variable: where in /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Db/TableGateway/AbstractTableGateway.php on line 371
+PHP Stack trace:
+PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
+PHP   2. Zend\Mvc\Application->run() /usr/local/swissbib/fsw/public/index.php:29
+PHP   3. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Application.php:309
+PHP   4. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP   5. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   6. Zend\Mvc\DispatchListener->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   7. Zend\Mvc\Controller\AbstractController->dispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/DispatchListener.php:114
+PHP   8. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractController.php:117
+PHP   9. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP  10. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  11. Zend\Mvc\Controller\AbstractActionController->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  12. FSW\Controller\KolloquienController->insertKolloquienFSWAction() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractActionController.php:83
+PHP  13. FSW\Services\Facade\KolloquienFacade->insertKolloquienFromXMLFile() /usr/local/swissbib/fsw/module/FSW/src/FSW/Controller/KolloquienController.php:325
+PHP  14. Zend\Db\TableGateway\AbstractTableGateway->delete() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/Facade/KolloquienFacade.php:224
+PHP Notice:  Undefined variable: where in /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Db/TableGateway/AbstractTableGateway.php on line 374
+PHP Stack trace:
+PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
+PHP   2. Zend\Mvc\Application->run() /usr/local/swissbib/fsw/public/index.php:29
+PHP   3. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Application.php:309
+PHP   4. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP   5. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   6. Zend\Mvc\DispatchListener->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   7. Zend\Mvc\Controller\AbstractController->dispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/DispatchListener.php:114
+PHP   8. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractController.php:117
+PHP   9. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP  10. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  11. Zend\Mvc\Controller\AbstractActionController->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  12. FSW\Controller\KolloquienController->insertKolloquienFSWAction() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractActionController.php:83
+PHP  13. FSW\Services\Facade\KolloquienFacade->insertKolloquienFromXMLFile() /usr/local/swissbib/fsw/module/FSW/src/FSW/Controller/KolloquienController.php:325
+PHP  14. Zend\Db\TableGateway\AbstractTableGateway->delete() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/Facade/KolloquienFacade.php:224
+PHP Warning:  Missing argument 1 for Zend\Db\TableGateway\AbstractTableGateway::delete(), called in /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/Facade/KolloquienFacade.php on line 225 and defined in /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Db/TableGateway/AbstractTableGateway.php on line 365
+PHP Stack trace:
+PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
+PHP   2. Zend\Mvc\Application->run() /usr/local/swissbib/fsw/public/index.php:29
+PHP   3. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Application.php:309
+PHP   4. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP   5. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   6. Zend\Mvc\DispatchListener->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   7. Zend\Mvc\Controller\AbstractController->dispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/DispatchListener.php:114
+PHP   8. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractController.php:117
+PHP   9. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP  10. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  11. Zend\Mvc\Controller\AbstractActionController->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  12. FSW\Controller\KolloquienController->insertKolloquienFSWAction() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractActionController.php:83
+PHP  13. FSW\Services\Facade\KolloquienFacade->insertKolloquienFromXMLFile() /usr/local/swissbib/fsw/module/FSW/src/FSW/Controller/KolloquienController.php:325
+PHP  14. Zend\Db\TableGateway\AbstractTableGateway->delete() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/Facade/KolloquienFacade.php:225
+PHP Notice:  Undefined variable: where in /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Db/TableGateway/AbstractTableGateway.php on line 371
+PHP Stack trace:
+PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
+PHP   2. Zend\Mvc\Application->run() /usr/local/swissbib/fsw/public/index.php:29
+PHP   3. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Application.php:309
+PHP   4. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP   5. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   6. Zend\Mvc\DispatchListener->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   7. Zend\Mvc\Controller\AbstractController->dispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/DispatchListener.php:114
+PHP   8. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractController.php:117
+PHP   9. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP  10. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  11. Zend\Mvc\Controller\AbstractActionController->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  12. FSW\Controller\KolloquienController->insertKolloquienFSWAction() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractActionController.php:83
+PHP  13. FSW\Services\Facade\KolloquienFacade->insertKolloquienFromXMLFile() /usr/local/swissbib/fsw/module/FSW/src/FSW/Controller/KolloquienController.php:325
+PHP  14. Zend\Db\TableGateway\AbstractTableGateway->delete() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/Facade/KolloquienFacade.php:225
+PHP Notice:  Undefined variable: where in /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Db/TableGateway/AbstractTableGateway.php on line 374
+PHP Stack trace:
+PHP   1. {main}() /usr/local/swissbib/fsw/public/index.php:0
+PHP   2. Zend\Mvc\Application->run() /usr/local/swissbib/fsw/public/index.php:29
+PHP   3. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Application.php:309
+PHP   4. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP   5. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   6. Zend\Mvc\DispatchListener->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP   7. Zend\Mvc\Controller\AbstractController->dispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/DispatchListener.php:114
+PHP   8. Zend\EventManager\EventManager->trigger() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractController.php:117
+PHP   9. Zend\EventManager\EventManager->triggerListeners() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:207
+PHP  10. call_user_func:{/usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468}() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  11. Zend\Mvc\Controller\AbstractActionController->onDispatch() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php:468
+PHP  12. FSW\Controller\KolloquienController->insertKolloquienFSWAction() /usr/local/swissbib/fsw/vendor/zendframework/zendframework/library/Zend/Mvc/Controller/AbstractActionController.php:83
+PHP  13. FSW\Services\Facade\KolloquienFacade->insertKolloquienFromXMLFile() /usr/local/swissbib/fsw/module/FSW/src/FSW/Controller/KolloquienController.php:325
+PHP  14. Zend\Db\TableGateway\AbstractTableGateway->delete() /usr/local/swissbib/fsw/module/FSW/src/FSW/Services/Facade/KolloquienFacade.php:225
+swissbib@ub-sbhp02:/usr/local/swissbib/fsw$
+
+
+
+
 
 4) php public/index.php lehrveranstaltungen
--> ich amche einen Dump fuer Meldungen - anschauen!
+Fehlermeldungen wie:
+
+lehrveranstaltung nicht gefunden
+array(28) {
+  'start' =>
+  string(7) "11.4.06"
+  'ver_id' =>
+  string(3) "165"
+  'tag' =>
+  string(2) "Di"
+  'von_zeit' =>
+  string(4) "1415"
+  'bis_zeit' =>
+  string(4) "1600"
+  'semester' =>
+  string(5) "20061"
+  'ort' =>
+  string(10) "ZUI-AA-003"
+  'leitung' =>
+  string(21) "Bänziger, Peter-Paul"
+  'email' =>
+  string(31) "peter-paul.baenziger [a] sal.ch"
+  'ass' =>
+  string(0) ""
+  'assmail' =>
+  string(0) ""
+  'tut' =>
+  string(34) "Julia Stegmann, Tobias Scheidegger"
+  'tutmail' =>
+  string(61) "julia.stegmann [a] web.de / t.scheidegger [a] access.unizh.ch"
+  'titel' =>
+  string(112) "Einführung in das Studium der Geschichte, Proseminar I (Neuzeit): Geschichte der Sexualität im 20. Jahrhundert"
+  'txt' =>
+  string(1104) "Auch wenn die Menschen schon immer miteinander ins Bett gingen: Sexualität ist eine Erfindung der Moderne. Ausgehend von der These Michel Foucaults, dass nicht die Repression, sondern die Produktion von Sexualität durch gesellschaftliche Diskurse das moderne Verhältnis zum Körper bestimmt, möchte Proseminar - neben einer allgemeinen Einführung in die Geschichtswissenschaft - eine erste Annäherung an dieses weitläufige und spannende Forschungsgebiet unternehmen. Anhand einiger zentraler Texte und Bei"...
+  'link' =>
+  string(1) "Y"
+  'mit_id' =>
+  string(3) "206"
+  'plattbild' =>
+  string(0) ""
+  'platt_user' =>
+  string(0) ""
+  'platt_pass' =>
+  string(0) ""
+  'platt_schutz' =>
+  string(0) ""
+  'vertxt' =>
+  string(319) "Der Besuch des zusätzlich angebotenen Tutorates (im Anschluss an die Sitzung, von 16-18h) ist obligatorisch.
+
+Infos zu Anforderungen und Prüfungen finden sich in der Wegleitung des HS:
+
+<a href="http://www.hist.unizh.ch/wegleitung/Wegleitung.html" target="_blank">www.hist.unizh.ch/wegleitung/Wegleitung.html</a> "
+  'litfile' =>
+  string(0) ""
+  'merkfile' =>
+  string(0) ""
+  'quelfile' =>
+  string(0) ""
+  'mitmit_id' =>
+  string(1) "0"
+  'olatlink' =>
+  NULL
+  'vvzlink' =>
+  NULL
+}
+
+
+lehrveranstaltung nicht gefunden
+array(28) {
+  'start' =>
+  string(0) ""
+  'ver_id' =>
+  string(3) "163"
+  'tag' =>
+  string(2) "Mi"
+  'von_zeit' =>
+  string(4) "1415"
+  'bis_zeit' =>
+  string(4) "1600"
+  'semester' =>
+  string(5) "20061"
+  'ort' =>
+  string(0) ""
+  'leitung' =>
+  string(19) "Dr. Margrit Müller"
+  'email' =>
+  string(0) ""
+  'ass' =>
+  string(22) "Claudia Bischof-Biotti"
+  'assmail' =>
+  string(27) "bischof-biotti@fsw.unizh.ch"
+  'tut' =>
+  string(0) ""
+  'tutmail' =>
+  string(0) ""
+  'titel' =>
+  string(55) "Einführung in die Volkswirtschaft für HistorikerInnen"
+  'txt' =>
+  string(0) ""
+  'link' =>
+  string(1) "N"
+  'mit_id' =>
+  string(3) "204"
+  'plattbild' =>
+  string(0) ""
+  'platt_user' =>
+  string(0) ""
+  'platt_pass' =>
+  string(0) ""
+  'platt_schutz' =>
+  string(0) ""
+  'vertxt' =>
+  string(0) ""
+  'litfile' =>
+  string(0) ""
+  'merkfile' =>
+  string(0) ""
+  'quelfile' =>
+  string(0) ""
+  'mitmit_id' =>
+  string(1) "0"
+  'olatlink' =>
+  NULL
+  'vvzlink' =>
+  NULL
+}
+
+
+lehrveranstaltung nicht gefunden
+array(28) {
+  'start' =>
+  string(0) ""
+  'ver_id' =>
+  string(3) "160"
+  'tag' =>
+  string(2) "Di"
+  'von_zeit' =>
+  string(4) "1415"
+  'bis_zeit' =>
+  string(4) "1600"
+  'semester' =>
+  string(5) "20052"
+  'ort' =>
+  string(0) ""
+  'leitung' =>
+  string(19) "Dr. Margrit Müller"
+  'email' =>
+  string(16) "marmu@hist.unizh"
+  'ass' =>
+  string(22) "Claudia Bischof-Biotti"
+  'assmail' =>
+  string(27) "bischof-biotti@fsw.unizh.ch"
+  'tut' =>
+  string(0) ""
+  'tutmail' =>
+  string(0) ""
+  'titel' =>
+  string(47) "Wirtschaftshistorisches Seminar: Globalisierung"
+  'txt' =>
+  string(0) ""
+  'link' =>
+  string(1) "N"
+  'mit_id' =>
+  string(3) "204"
+  'plattbild' =>
+  string(0) ""
+  'platt_user' =>
+  string(0) ""
+  'platt_pass' =>
+  string(0) ""
+  'platt_schutz' =>
+  string(0) ""
+  'vertxt' =>
+  string(0) ""
+  'litfile' =>
+  string(0) ""
+  'merkfile' =>
+  string(0) ""
+  'quelfile' =>
+  string(0) ""
+  'mitmit_id' =>
+  string(1) "0"
+  'olatlink' =>
+  NULL
+  'vvzlink' =>
+  NULL
+}
+
+
+lehrveranstaltung nicht gefunden
+array(28) {
+  'start' =>
+  string(8) "27.10 05"
+  'ver_id' =>
+  string(3) "153"
+  'tag' =>
+  string(2) "Do"
+  'von_zeit' =>
+  string(4) "1200"
+  'bis_zeit' =>
+  string(4) "1400"
+  'semester' =>
+  string(5) "20052"
+  'ort' =>
+  string(0) ""
+  'leitung' =>
+  string(13) "Soiland, Tove"
+  'email' =>
+  string(23) "tove.soiland@bluewin.ch"
+  'ass' =>
+  string(0) ""
+  'assmail' =>
+  string(0) ""
+  'tut' =>
+  string(0) ""
+  'tutmail' =>
+  string(0) ""
+  'titel' =>
+  string(68) "Proseminar: Poststrukturalistische Ansätze in der Geschichtstheorie"
+  'txt' =>
+  string(1858) "In der deutschsprachigen Geschichtswissenschaft gewinnen Ansätzen des französischen Poststrukturalismus zunehmend an Bedeutung. Was versteckt sich hinter so geheimnisvollen, mit unter auch verführerischen Begriffen wie ‚Genealogie’, ‚Diskursanalyse’ oder ‚Gouvernementalität’? Sind Geschlechter gar ein ‚Diskurseffekt’? Das Proseminar will im Sinne einer Einführung anhand wichtiger Primärtexte den Begründern und VertreterInnen dieser französischen Denktradition (M. Foucault, J. Donzelo"...
+  'link' =>
+  string(1) "Y"
+  'mit_id' =>
+  string(3) "216"
+  'plattbild' =>
+  string(0) ""
+  'platt_user' =>
+  string(0) ""
+  'platt_pass' =>
+  string(0) ""
+  'platt_schutz' =>
+  string(0) ""
+  'vertxt' =>
+  string(0) ""
+  'litfile' =>
+  string(0) ""
+  'merkfile' =>
+  string(0) ""
+  'quelfile' =>
+  string(0) ""
+  'mitmit_id' =>
+  string(1) "0"
+  'olatlink' =>
+  NULL
+  'vvzlink' =>
+  NULL
+}
+
+
+lehrveranstaltung nicht gefunden
+array(28) {
+  'start' =>
+  string(0) ""
+  'ver_id' =>
+  string(3) "161"
+  'tag' =>
+  string(2) "Mi"
+  'von_zeit' =>
+  string(4) "1415"
+  'bis_zeit' =>
+  string(4) "1600"
+  'semester' =>
+  string(5) "20051"
+  'ort' =>
+  string(0) ""
+  'leitung' =>
+  string(19) "Dr. Margrit Müller"
+  'email' =>
+  string(19) "marmu@hist.unizh.ch"
+  'ass' =>
+  string(22) "Claudia Bischof-Biotti"
+  'assmail' =>
+  string(26) "bischo-biotti@fsw.unizh.ch"
+  'tut' =>
+  string(0) ""
+  'tutmail' =>
+  string(0) ""
+  'titel' =>
+  string(55) "Einführung in die Volkswirtschaft für HistorikerInnen"
+  'txt' =>
+  string(81) "<a href="http://www.olat.unizh.ch" target="_blank">http://www.olat.unizh.ch</a> x"
+  'link' =>
+  string(1) "N"
+  'mit_id' =>
+  string(3) "204"
+  'plattbild' =>
+  string(0) ""
+  'platt_user' =>
+  string(0) ""
+  'platt_pass' =>
+  string(0) ""
+  'platt_schutz' =>
+  string(0) ""
+  'vertxt' =>
+  string(0) ""
+  'litfile' =>
+  string(0) ""
+  'merkfile' =>
+  string(0) ""
+  'quelfile' =>
+  string(0) ""
+  'mitmit_id' =>
+  string(1) "0"
+  'olatlink' =>
+  NULL
+  'vvzlink' =>
+  NULL
+}
+
+
+lehrveranstaltung nicht gefunden
+array(28) {
+  'start' =>
+  string(0) ""
+  'ver_id' =>
+  string(3) "162"
+  'tag' =>
+  string(2) "Di"
+  'von_zeit' =>
+  string(4) "1415"
+  'bis_zeit' =>
+  string(4) "1600"
+  'semester' =>
+  string(5) "20032"
+  'ort' =>
+  string(0) ""
+  'leitung' =>
+  string(19) "Dr. Margrit Müller"
+  'email' =>
+  string(0) ""
+  'ass' =>
+  string(22) "Claudia Bischof-Biotti"
+  'assmail' =>
+  string(27) "bischof-biotti@fsw.unizh.ch"
+  'tut' =>
+  string(0) ""
+  'tutmail' =>
+  string(0) ""
+  'titel' =>
+  string(47) "Wirtschaftshistorisches Seminar: Globalisierung"
+  'txt' =>
+  string(0) ""
+  'link' =>
+  string(1) "N"
+  'mit_id' =>
+  string(3) "204"
+  'plattbild' =>
+  string(0) ""
+  'platt_user' =>
+  string(0) ""
+  'platt_pass' =>
+  string(0) ""
+  'platt_schutz' =>
+  string(0) ""
+  'vertxt' =>
+  string(0) ""
+  'litfile' =>
+  string(0) ""
+  'merkfile' =>
+  string(0) ""
+  'quelfile' =>
+  string(0) ""
+  'mitmit_id' =>
+  string(1) "0"
+  'olatlink' =>
+  NULL
+  'vvzlink' =>
+  NULL
+}
+
+
+lehrveranstaltung nicht gefunden
+array(28) {
+  'start' =>
+  string(0) ""
+  'ver_id' =>
+  string(2) "78"
+  'tag' =>
+  string(2) "Fr"
+  'von_zeit' =>
+  string(4) "1200"
+  'bis_zeit' =>
+  string(4) "1400"
+  'semester' =>
+  string(5) "20031"
+  'ort' =>
+  string(22) "Z 103 im Hauptgebäude"
+  'leitung' =>
+  string(15) "Ischer, Philipp"
+  'email' =>
+  string(26) "philipp.ischer@freesurf.ch"
+  'ass' =>
+  string(0) ""
+  'assmail' =>
+  string(0) ""
+  'tut' =>
+  string(0) ""
+  'tutmail' =>
+  string(0) ""
+  'titel' =>
+  string(48) "Wechselwirkungen zwischen Wirtschaft und Technik"
+  'txt' =>
+  string(0) ""
+  'link' =>
+  string(1) "Y"
+  'mit_id' =>
+  string(2) "52"
+  'plattbild' =>
+  string(0) ""
+  'platt_user' =>
+  string(0) ""
+  'platt_pass' =>
+  string(0) ""
+  'platt_schutz' =>
+  string(0) ""
+  'vertxt' =>
+  string(3063) "Wechselwirkungen zwischen Wirtschaft und Technik
+Philipp Ischer, Proseminar SS 2003, Fr 10-12.
+Programm
+	Datum	Inhalt der Sitzung
+1	11.4.03	-Allgemeine Informationen.
+-Führung in der Bibliothek des HS
+-Wie referiert man.
+2	18.4.03	Fällt aus. Karfreitag
+3	25.4.03	-Sellin, Volker: Einführung in die Geschichtswissenschaft, Göttingen 2002, S. 69-82.
+- Hobsbawm (S. 25-77).
+- Zusammenfassen und Exzerpieren (Grundlagenpapier)
+-Fragestellung und Disposition
+4	2.5.03	- Sellin, Volker: Einführung in "...
+  'litfile' =>
+  string(0) ""
+  'merkfile' =>
+  string(0) ""
+  'quelfile' =>
+  string(0) ""
+  'mitmit_id' =>
+  string(1) "0"
+  'olatlink' =>
+  NULL
+  'vvzlink' =>
+  NULL
+}
+
+
 
 
 

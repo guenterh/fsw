@@ -1,7 +1,19 @@
 
 <fieldset class="edit_legend_title">
 
-    <legend>Editor für <?php echo $entityNamePlural; ?> (item aus der Liste auswählen)</legend>
+    <?php
+
+        if (isset($hs_fsw)) {
+            $pHs_Fsw = $hs_fsw;
+        } else {
+            $pHs_Fsw = "";
+        }
+
+
+    ?>
+
+
+    <legend>Editor für <?php echo $entityNamePlural . $pHs_Fsw; ?> (item aus der Liste auswählen)</legend>
 
 </fieldset>
 

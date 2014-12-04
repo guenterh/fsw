@@ -7,6 +7,8 @@
  */
 
 namespace FSW\Services\Facade;
+use FSW\Model\Abteilung;
+use FSW\Model\Funktion;
 use FSW\Model\PersonenInList;
 use FSW\Model\PersonenRolleInfo;
 use Zend\Db\Sql\Sql;
@@ -659,15 +661,30 @@ class PersonFacade extends BaseFacade {
     public function getAbteilungValues() {
         $HSAbteilungGW =  $this->histSemDBService->getHSAbteilungGateway();
 
-        return $HSAbteilungGW->select();
+        $result =  $HSAbteilungGW->select();
 
+        $abteilungen = array();
+        foreach ($result as $abteilung) {
+
+            $abteilungen[$abteilung->getId()] = $abteilung;
+        }
+
+        return $abteilungen;
     }
 
-    public function getFuntionenValues() {
+    public function getFunktionenValues() {
 
         $HSFunktionenGW =  $this->histSemDBService->getHSFunktionGateway();
 
-        return $HSFunktionenGW->select();
+        $result =  $HSFunktionenGW->select();
+        $funktionen = array();
+        foreach ($result as $funktion) {
+
+            $funktionen[$funktion->getId()] = $funktion;
+
+        }
+
+        return $funktionen;
 
     }
 
