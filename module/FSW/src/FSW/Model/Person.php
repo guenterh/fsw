@@ -77,7 +77,7 @@ class Person extends BaseModel implements InputFilterAwareInterface {
     }
 
     public function getListLabel() {
-        return $this->pers_vorname . ' ' . $this->pers_name;    }
+        return $this->pers_name . ' ' . $this->pers_vorname;    }
 
 
     public function getInputFilter()
