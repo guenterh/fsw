@@ -307,7 +307,10 @@ return array(
     ),
     'view_helpers'    => array(
         'factories' => array(
-            'Veranstaltungen' => 'FSW\View\Helper\Factories\VeranstaltungenHelperFactory'
+            'Veranstaltungen'   => 'FSW\View\Helper\Factory::getVeranstaltungsHelper',
+            //'Veranstaltungen' => 'FSW\View\Helper\Factories\VeranstaltungenHelperFactory',
+            'UrlToHSForms'  => 'FSW\View\Helper\Factory::getHsFormsUrlHelper'
+
         )
     ),
 

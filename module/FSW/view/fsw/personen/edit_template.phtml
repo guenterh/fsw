@@ -94,6 +94,24 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
         <div class="tab-content">
             <div class="tab-pane active" id="personCore">
 
+
+                <?php
+                    $personURL = $this->UrlToHSForms()->getPersonEdit($personCore->get('pers_id')->getValue());
+                    $person_name = $personCore->get('pers_vorname')->getValue() . " " . $personCore->get('pers_name')->getValue();
+                ?>
+
+                <div class="row-fluid">
+                    <div>
+                        <a href="<?php echo $personURL; ?>"  target="_blank" ><?php echo $person_name?> im HS Formular editieren</a>
+                    </div>
+                </div>
+
+                <div class="row-fluid linkMitAbstandBottom">
+                    <div>
+                        <a href="<?php echo $this->UrlToHSForms()->getPersonNew(); ?>"  target="_blank" >neue Person im HS Formular erfassen</a>
+                    </div>
+                </div>
+
                 <fieldset>
                     <legend>Namensbestandteile</legend>
                     <div class="row-fluid">
@@ -257,11 +275,30 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
             <?php endif; ?>
 
             <div class="tab-pane" id="personRollen">
+
+                <div class="row-fluid linkMitAbstandBottom">
+                    <div>
+                        <a href="<?php echo $this->UrlToHSForms()->getRollNew(); ?>"  target="_blank" >Neue Rolle im HS Formular erfassen</a>
+                    </div>
+                </div>
+
+
                 <h2>Rollen der Person</h2>
                 <?php foreach ($personRollen as $rolle) :?>
                 <fieldset>
                     <legend>eine Rolle</legend>
-                        <div class="row-fluid">
+                    <?php
+                        $rollURL = $this->UrlToHSForms()->getRollEdit($rolle->get('roll_id')->getValue());
+                    ?>
+
+                    <div class="row-fluid">
+                        <div>
+                            <a href="<?php echo $rollURL; ?>"  target="_blank" >Rolle in HS Formular editieren</a>
+                        </div>
+                    </div>
+
+
+                    <div class="row-fluid">
                             <div class="span6">
                                 <?php echo  $this->formRowTwb($rolle->get('roll_id')) ?>
                             </div>
@@ -403,8 +440,26 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
             <?php if($forschungsarbeiten->getCount() > 0): ?>
                 <div class="tab-pane" id="forschungsarbeiten">
 
+                    <?php
+                    $personURL = $this->UrlToHSForms()->getPersonEdit($personCore->get('pers_id')->getValue());
+                    $person_name = $personCore->get('pers_vorname')->getValue() . " " . $personCore->get('pers_name')->getValue();
+                    ?>
+
+                    <div class="row-fluid linkMitAbstandBottom">
+                        <div>
+                            <a href="<?php echo $this->UrlToHSForms()->getQarbeitNew(); ?>"  target="_blank" >neue Qualifikationsarbeit in HS Formular erfassen</a>
+                        </div>
+                    </div>
+
+
+
                     <?php foreach ($forschungsarbeiten as $forschung) :?>
 
+                        <div class="row-fluid">
+                            <div>
+                                <a href="<?php echo $this->UrlToHSForms()->getQarbeitEdit($forschung->get('qarb_arb_id')->getValue()); ?>"  target="_blank" >Qualifikationsarebeit in HS Formular editieren</a>
+                            </div>
+                        </div>
 
                         <fieldset class="general">
                             <div class="row-fluid">
