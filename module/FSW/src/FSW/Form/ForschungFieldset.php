@@ -197,10 +197,11 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
             'name' => 'qarb_arb_abstract',
             'type' => 'textarea',
             'options' => array(
-                'label' => 'qarb_arb_abstract'
+                'label' => 'Abstract'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 8,
+                'class' => 'fswTextAreaMiddle'
             )
         ));
         $this->add(array(
