@@ -25,6 +25,7 @@ $personExtended = $personCore->get('personExtended');
 $zoraAuthors = $personCore->get('zoraAuthors');
 $personRollen = $personCore->get('personRollen');
 $forschungsarbeiten = $form->get('forschungsarbeiten');
+$relationPersonRolleFSWExtended = $form->get('BeziehungPersonRolle');
 //getCount
 
 
@@ -88,6 +89,10 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
             <?php endif; ?>
 
+            <?php if ($relationPersonRolleFSWExtended->getCount() > 0): ?>
+                <li><a href="#beziehungPersonRolleFSWExtended"><?php echo  $this->translate('Person / Rolle / FSW Ext', 'Libadmin') ?></a></li>
+
+            <?php endif; ?>
 
         </ul>
 
@@ -497,6 +502,100 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
                 </div>
             <?php endif; ?>
 
+            <?php if($relationPersonRolleFSWExtended->getCount() > 0): ?>
+                <div class="tab-pane" id="beziehungPersonRolleFSWExtended">
+
+                    <?php $number = 0; ?>
+                    <?php foreach ($relationPersonRolleFSWExtended as $relRollePerson):
+                        $number++;
+                        ?>
+
+                        <fieldset class="general">
+                            <?php if (strcmp($relRollePerson->get('roll_hs_fsw')->getValue(),'fsw') != 0  ): ?>
+                                <?php
+                                    $optionsArray = array('class'  => 'relRolleNotOk')
+                                ?>
+                                <div class="row-fluid linkMitAbstandBottom">
+                                    <div>
+                                        <a href="#"   >Loeschen der Verknüpfung zu einer Rolle ohne FSW Flag</a>
+                                    </div>
+                                </div>
+
+                                <?php if($relationPersonRolleFSWExtended->getCount() > 0): ?>
+
+                                    <div class="row-fluid span6" >
+                                        <div class="relRolleNotOk span6 linkMitAbstandBottom">
+                                            <p>
+                                                Achtung: da es sich um die einzig noch bestehende Verknüpfung handelt,
+                                                wird beim Loeschen dieser Verknüpfung auch der FSW content gelöscht,
+                                                der über diese Verknüpfung mit der Person in der HS Personentabelle in Verbindung steht:
+                                                Medien, Zora etc.
+                                            </p>
+                                            <?php $rollURLBeziehung = $this->UrlToHSForms()->getRollEdit($relRollePerson->get('fper_rolle_roll_id')->getValue());?>
+                                            <p>
+                                                Alternative ist das <a href="<?php echo $rollURLBeziehung;?>" target="_blank"> Setzen des FSW flags</a> in der Rollentabelle
+                                                damit die Person wieder als zur FSW gehörig
+                                                gekennzeichnet wird
+                                            </p>
+
+                                        </div>
+                                    </div>
+
+                                <?php endif; ?>
+                            <?php else:
+                                    $optionsArray = array('class'  => 'relRolleOk')
+
+                                ?>
+
+
+                            <?php endif; ?>
+
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <?php echo  $number; ?>. Verknüpfung: HS Personentabelle / HS Rolle / FSW Person Extended
+                                </div>
+                            </div>
+
+
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <?php echo  $this->formRowTwb($relRollePerson->get('id'),null,$optionsArray); ?>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <?php echo  $this->formRowTwb($relRollePerson->get('fper_personen_pers_id'),null,$optionsArray); ?>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span10">
+                                    <?php echo  $this->formRowTwb($relRollePerson->get('fpersonen_extended_id'),null, $optionsArray); ?>
+                                </div>
+                            </div>
+
+                            <div class="row-fluid">
+                                <div class="span10">
+                                    <?php echo  $this->formRowTwb($relRollePerson->get('fper_rolle_roll_id'),null, $optionsArray); ?>
+                                </div>
+                            </div>
+
+                            <div class="row-fluid">
+                                <div class="span10">
+                                    <?php echo  $this->formRowTwb($relRollePerson->get('roll_hs_fsw'),null, $optionsArray); ?>
+                                </div>
+                            </div>
+
+                            <div class="row-fluid linkMitAbstandBottom">
+                                <div class="span10">
+                                    <?php echo  $this->formRowTwb($relRollePerson->get('roll_abt_id'),null, $optionsArray); ?>
+                                </div>
+                            </div>
+                        </fieldset>
+                    <?php endforeach; ?>
+
+
+                </div>
+            <?php endif; ?>
 
 
 

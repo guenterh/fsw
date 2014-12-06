@@ -115,7 +115,8 @@ class Module implements FormElementProviderInterface {
             'factories' => array(
                 'PersonCoreFieldset'   =>  'FSW\Form\Factory::getPersonCoreFieldset',
                 'PersonRolleFieldset'   =>  'FSW\Form\Factory::getPersonRolleFieldset',
-                'QualifikationsArbeitFieldset'   =>  'FSW\Form\Factory::getQualifikationsarbeitFieldset'
+                'QualifikationsArbeitFieldset'   =>  'FSW\Form\Factory::getQualifikationsarbeitFieldset',
+                'PersonRolleExtendedRelationFieldset'   =>  'FSW\Form\Factory::getRelationPRFFieldset'
 
             )
         );

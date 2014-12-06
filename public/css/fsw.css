@@ -41,3 +41,11 @@
 .linkMitAbstandBottom {
     margin-bottom: 20px;
 }
+
+.relRolleNotOk {
+    background-color: #ff6666;
+}
+
+.relRolleOk {
+    background-color: #009933;
+}

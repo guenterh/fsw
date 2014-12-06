@@ -15,7 +15,7 @@ use Zend\Form\Fieldset;
 class PersonFormAllHS extends Form {
 
 
-    public function __construct($name = 'person',$coreFieldset, $forschungFieldset)
+    public function __construct($name = 'person',$coreFieldset, $forschungFieldset, $personRolleFSWExtendedFieldset)
     {
         // we want to ignore the name passed
         parent::__construct($name);
@@ -44,6 +44,17 @@ class PersonFormAllHS extends Form {
             )
         );
 
+        $this->add(array(
+                'type' => 'Zend\Form\Element\Collection',
+                'name' => 'BeziehungPersonRolle',
+                'options' => array(
+                    'label' => 'Relation Person Rolle FSW Extended',
+                    'should_create_template' => true,
+                    'allow_add' => true,
+                    'target_element' =>  $personRolleFSWExtendedFieldset
+                )
+            )
+        );
 
 
 

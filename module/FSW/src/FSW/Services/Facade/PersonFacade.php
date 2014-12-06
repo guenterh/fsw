@@ -11,6 +11,7 @@ use FSW\Model\Abteilung;
 use FSW\Model\Funktion;
 use FSW\Model\PersonenInList;
 use FSW\Model\PersonenRolleInfo;
+use FSW\Model\RelationHSFSWPersonExtended;
 use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
@@ -205,6 +206,8 @@ class PersonFacade extends BaseFacade {
         $tableRollenGateway = $this->histSemDBService->getRollenGateway();
         //suche nach Rollen mit link zu FSW
         $rollenSelect = $tableRollenGateway->getSql()->select();
+
+        //ich suche nach Rollen, die mit der aktuelen PersonenID verknüpft sind und das "FSW Flag gesetzt haben"
         $rollenSelect->where (array('roll_pers_id' => $personType->getID(),
                         'roll_hs_fsw' => 'fsw'));
         $rollen = $tableRollenGateway->selectWith($rollenSelect);
@@ -213,13 +216,19 @@ class PersonFacade extends BaseFacade {
             $rollenIds[] = $rolle->getID();
         }
 
+        //habe ich solche Rollen mit FSW flag gefunden?
         if (count($rollenIds) > 0) {
+
+            //nun prüfe ich, ob ich zu den Rollen mit FSW flag Einträge in den Tabellen fsw_personen:extended und
+            //fsw_realtion_hsPersonen_fsw_personen bestehen
+            //ich benutze dazu Per_Personen.pers_id (diese ist sowohl in Per_Rolle als auch fsw_personen_extended
             $tablePersonenFswExtendedGateway = $this->histSemDBService->getFSWPersonenExtendedGateway();
             $extendedResult = $tablePersonenFswExtendedGateway->select(array('pers_id' => (int)$personType->getID()));
             //$extendedResult = $tablePersonenFswExtendedGateway->select(array('pers_id' => (int)$persID));
 
             if ($extendedResult->count() == 0) {
-
+                //ich habe noch keinen Eintrag in fsw_personen:extended, also  müssen sowohl dort als auch der
+                //Verknüpfungsttabelle Einträge gesetzt werden.
                 $tablePersonenFswExtendedGateway->insert(array('pers_id' => (int)(int)$personType->getID(),
                           'fullname' => $this->qV($personType->getPers_name() . ', ' . $personType->getPers_vorname())));
 
@@ -237,13 +246,14 @@ class PersonFacade extends BaseFacade {
                 }
 
             } else {
-
+                //in fsw_personen_extended ist ein Eintrag vorhanden (da es vom Design nur einen einzigen geben kann,
+                //beziehe ich mich auf current
                 $tExtendedPerson = $extendedResult->current();
 
                 foreach ($rollenIds as $rID) {
                     $tableRelationHSFSWPersonen = $this->histSemDBService->getRelationHSFSWPersonGateway();
                     $tRolleCurrent = $tableRelationHSFSWPersonen->select(array('fper_rolle_roll_id' => (int)$rID));
-
+                    //trage Verknüpfungen zu einen Rolle mit FSW flag ein, wenn sie noch nicht vorhanden sind
                     if ($tRolleCurrent->count() == 0) {
                         $tableRelationHSFSWPersonen->insert(array(
                             'fpersonen_extended_id' =>  (int)$tExtendedPerson->getID(),
@@ -256,6 +266,11 @@ class PersonFacade extends BaseFacade {
                 }
 
                 //gibt es noch RollenIDs in der Relationentabelle, die nicht mehr in Per_Rolle eingetragen sind?
+                //Ich kann dies hier automatisch machen, da ja alle anderen Beziehungen zu Rollen mit FSW flags erhalten bleiben
+                //Es kann hier nicht vorkommen, dass wir sämtliche Beziehungen zu einem Eintrag in der Tabelle fsw_personen_extended loeschen
+                //Es kann immer noch der Fall vorkommen, dass alle Rollen in Per_Rolle kein fsw_flag mehr haben aber immer noch Beziehungen vorhanden sind
+                //dies muss im Dialog angezeigt werden un der Benutzer muss dann explizit angeben, dass die Beziehung und aller comtent dahinter (potentiell
+                //Medien, Zora und andere geloescht werden
                 $tableRelationHSFSWPersonen = $this->histSemDBService->getRelationHSFSWPersonGateway();
 
                 $rS = $tableRelationHSFSWPersonen->select(array(
@@ -288,6 +303,33 @@ class PersonFacade extends BaseFacade {
         }
 
 
+
+    }
+
+    public function getBeziehunhenPersonRolleExtended($params = array()) {
+
+        $beziehungen = array();
+        if (isset($params['pers_id'])) {
+            $sql = "select rel.fpersonen_extended_id, rel.fper_personen_pers_id, rel.fper_rolle_roll_id, ";
+            $sql .= " rel.id, r.roll_abt_id, r.roll_hs_fsw from fsw_relation_hspersonen_fsw_personen rel join ";
+            $sql .= " Per_Rolle r on (r.roll_id = rel.fper_rolle_roll_id) where ";
+            $sql .= " rel.fper_personen_pers_id = " . $params['pers_id'];
+
+            $result = $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+
+            foreach ($result as $row) {
+
+                $beziehung = new RelationHSFSWPersonExtended();
+                $beziehung->exchangeArray($row->getArrayCopy());
+
+                $beziehungen[$beziehung->getId()] = $beziehung;
+
+
+            }
+        }
+
+        return $beziehungen;
 
     }
 

@@ -108,20 +108,26 @@ class PersonenController extends BaseController{
             $params = compact('pers_id','forschungstypen');
 
             $forschungsarbeiten = $this->facade->getForschungen($params);
+            $relPersonRollenPersonExtend = $this->facade->getBeziehunhenPersonRolleExtended($params);
 
             $bindObject = new ArrayObject();
             $bindObject['forschungsarbeiten'] = $forschungsarbeiten;
             $bindObject['PersonCore'] = $person;
+            $bindObject['BeziehungPersonRolle'] = $relPersonRollenPersonExtend;
 
 
             $coreFieldset = $this->getServiceLocator()->get('FormElementManager')->get('PersonCoreFieldset');
             $coreFieldset->setName('PersonCore');
 
 
+            $personRelationRolleFSWExtendedFieldset = $this->getServiceLocator()->get('FormElementManager')->get('PersonRolleExtendedRelationFieldset');
+
+
+
             $qaArbeiten = $this->getServiceLocator()->get('FormElementManager')->get('QualifikationsArbeitFieldset');
 
 
-            $coreFS = new PersonFormAllHS('Person',$coreFieldset,$qaArbeiten);
+            $coreFS = new PersonFormAllHS('Person',$coreFieldset,$qaArbeiten,$personRelationRolleFSWExtendedFieldset);
 
             $coreFS->bind($bindObject);
 

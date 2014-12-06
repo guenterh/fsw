@@ -50,5 +50,17 @@ class Factory {
 
     }
 
+    public static function getRelationPRFFieldset(ServiceManager $sm) {
+
+        //$facade = $sm->getServiceLocator()->get('FSW\Services\Facade\PersonenFacade');
+
+        //$arollPersonInfo =  $facade->getRollIdPersonenValues();
+        $rf = new BeziehungenPersonRolleFieldset();
+
+        return $rf;
+
+    }
+
+
 
 }
