@@ -113,7 +113,22 @@ class PersonenController extends BaseController{
             $bindObject = new ArrayObject();
             $bindObject['forschungsarbeiten'] = $forschungsarbeiten;
             $bindObject['PersonCore'] = $person;
+
+            //letztes könnte eigentlich in die FSW Abfrage
             $bindObject['BeziehungPersonRolle'] = $relPersonRollenPersonExtend;
+
+            if ($this->facade->isFSWPerson($pers_id)) {
+
+                $params = compact('pers_id');
+                //$zoraDocs = $this->facade->getZoraDocs($params);
+                $zoraDocs = $this->facade->getZoraDocsWithCover($params);
+
+                //binde die Objekte
+
+            } else {
+
+                //binde leere Arrays
+            }
 
 
             $coreFieldset = $this->getServiceLocator()->get('FormElementManager')->get('PersonCoreFieldset');

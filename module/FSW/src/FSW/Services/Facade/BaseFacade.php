@@ -503,6 +503,19 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface,
 
     }
 
+    public function isFSWPerson($persId) {
+
+        $relHSFswGW = $this->histSemDBService->getRelationHSFSWPersonGateway();
+
+        return $relHSFswGW->select(
+            array(
+                'fper_personen_pers_id' => $persId
+            )
+        )->count() > 0;
+
+
+    }
+
 
 
 
