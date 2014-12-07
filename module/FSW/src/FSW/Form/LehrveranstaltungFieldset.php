@@ -134,10 +134,41 @@ class LehrveranstaltungFieldset extends Fieldset  {
                 'label' => 'beschreibung'
             ),
             'attributes' => array(
-                'rows' => 20,
+                'rows' => 5,
                 'class' => 'fswTextAreaMiddle'
             )
         ));
+
+
+        $selectarray = array(
+            0   => 'keine Angabe',
+            1   =>  'Vorlesungen',
+            2   =>  'Seminare BA',
+            3   =>  'Seminare MA',
+            4   =>  'Methoden und Theorieseminar',
+            5   =>  'Fremdanbieter',
+            6   =>  'Kolloquien BA',
+            7   =>  'Kolloquien MA',
+            8   =>  'Master-/DoktoranInnenkolloquien',
+            9   =>  'Doktoratsstufe'
+
+        );
+
+        $this->add(array(
+            'name' => 'lvtyp',
+            'type' => 'select',
+            'options' => array(
+                //'empty_option' => '- nicht definiert -',
+                'label' => 'lvtyp',
+                'value_options' => $selectarray
+            ),
+            'attributes' => array(
+                'rows' => 2,
+                'class' => 'fswTextAreaSmall'
+            )
+
+        ));
+
 
 
         /*

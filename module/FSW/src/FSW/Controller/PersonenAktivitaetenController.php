@@ -43,7 +43,7 @@ class PersonenAktivitaetenController extends BaseController{
     public function indexAction() {
 
 
-        $personen = $this->facade->getFSWPersonen();
+            $personen = $this->facade->getFSWPersonen();
         return new ViewModel(array('personen' => $personen));
 
     }

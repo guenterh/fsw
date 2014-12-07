@@ -756,4 +756,143 @@ class PersonFacade extends BaseFacade {
         return $personRolleInfos;
     }
 
+    public function loescheBeziehungPersonRolleFSWContent($relationId) {
+
+
+        $relationGW =  $this->histSemDBService->getRelationHSFSWPersonGateway();
+        $relationToDelete = $relationGW->select(array('id' => $relationId))->current();
+
+        if ($relationToDelete) {
+            $fpersonen_extended_id =  $relationToDelete->getFpersonen_extended_id();
+
+            if ($relationGW->select(array("fpersonen_extended_id" => $fpersonen_extended_id))->count() > 1) {
+                //sollte kaum vorkommen, da diese bereits automatisch passiert
+                $relationGW->delete(array( 'id'  =>  $relationId));
+
+            }else {
+                //loesche den kompletten Content
+                //$idPersonenFSWExtended = $relationToDelete->getFpersonen_extended_id();
+
+                //loesche mit der Person verknüpfe Medien
+                $medienGateway = $this->histSemDBService->getMedienGateway();
+                $medienGateway->delete(array(
+                    'mit_id_per_extended'   => $fpersonen_extended_id
+                ));
+
+
+                //ist die Person mit einer Kolloquiumsveranstaltung verknüpft, dann entferne sie
+                $personVeranstaltungKolloquiumGW = $this->histSemDBService->getKolloquienVeranstaltungenPersonGateway();
+                $personVeranstaltungKolloquiumGW->delete(
+                    array(
+                        'id_personen_extended'  =>  $fpersonen_extended_id
+                    )
+                );
+
+                $zoraAuthorGW = $this->histSemDBService->getZoraAuthorGateway();
+
+                $resultZoraAuthors = $zoraAuthorGW->select (
+                    array('fid_personen'    =>  $fpersonen_extended_id)
+                );
+
+
+                $zoraAuthorsIds = array();
+                foreach ($resultZoraAuthors as $zoraAuthor) {
+                    $zaID = $zoraAuthor->getId();
+                    $zoraAuthorsIds[] = $zoraAuthor->getId();
+
+                    $sql = "select zdoctype.id from fsw_zora_doctype zdoctype join fsw_zora_doc zdoc on ";
+                    $sql .= " (zdoctype.oai_identifier = zdoc.oai_identifier) join fsw_relation_zora_author_zora_doc relAuthorDoc on ";
+                    $sql .= " (zdoc.id = relAuthorDoc.fid_zora_doc) join fsw_zora_author zA on ( relAuthorDoc.fid_zora_author = zA.id ) ";
+                    $sql .= " where zA.id = " . $zaID;
+
+                    //$sql = "select zdoctype.id from fsw_zora_doctype zdoctype, fsw_zora_doc zdoc, ";
+                    //$sql .= " fsw_relation_zora_author_zora_doc relAuthorDoc, fsw_zora_author zA ";
+                    //$sql .= " where zdoctype.oai_identifier = zdoc.oai_identifier and  zdoc.id = relAuthorDoc.fid_zora_doc and ";
+                    //$sql .= " relAuthorDoc.fid_zora_author = zA.id ";
+                    //$sql .= " and zA.id = " . $zaID;
+
+
+
+                    $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+                    foreach ($result as $row) {
+                        //todo: GW für zoradoctype
+                        $tId = $row['zdoctype.id'];
+                        $sql = "delete from fsw_zora_doctype where id = " .  $this->qV ($tId);
+                        $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+                    }
+
+                    $sql = "select cover.id from fsw_cover cover join fsw_zora_doc zdoc on ";
+                    $sql .= " (cover.oai_identifier = zdoc.oai_identifier) join fsw_relation_zora_author_zora_doc relAuthorDoc on ";
+                    $sql .= " (zdoc.id = relAuthorDoc.fid_zora_doc) join fsw_zora_author zA on ( relAuthorDoc.fid_zora_author = zA.id ) ";
+                    $sql .= " where zA.id = " . $zaID;
+
+                    $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+                    foreach ($result as $row) {
+                        //todo: GW für zoradoctype
+                        $tId = $row['cover.id'];
+                        $sql = "delete from fsw_cover where id = " .  $this->qV ($tId);
+                        $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+                    }
+
+
+                    $sql = "select zdoc.id from  fsw_zora_doc zdoc join fsw_relation_zora_author_zora_doc relAuthorDoc on ";
+                    $sql .= " (zdoc.id = relAuthorDoc.fid_zora_doc) join fsw_zora_author zA on ( relAuthorDoc.fid_zora_author = zA.id ) ";
+                    $sql .= " where zA.id = " . $zaID;
+
+                    $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+                    foreach ($result as $row) {
+                        //todo: GW für zoradoctype
+                        $tId = $row['zdoc.id'];
+                        $sql = "delete from fsw_zora_doc where id = " .  $this->qV ($tId);
+                        $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+                    }
+
+
+                    $sql = "select relAuthorDoc.id from  fsw_relation_zora_author_zora_doc relAuthorDoc join  fsw_zora_author zA ";
+                    $sql .= "  on ( relAuthorDoc.fid_zora_author = zA.id ) where zA.id = " . $zaID;
+
+                    $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+                    foreach ($result as $row) {
+                        //todo: GW für zoradoctype
+                        $tId = $row['relAuthorDoc.id'];
+                        $sql = "delete from fsw_relation_zora_author_zora_doc where id = " .  $this->qV ($tId);
+                        $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+                    }
+
+                }
+
+                foreach ($zoraAuthorsIds as $tzID) {
+
+                    $sql = "delete from fsw_zora_author where id = " .  $this->qV ($tzID);
+                    $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+                }
+
+
+                //fuer die Tabellen, in denen content zu loeschen ist, s. Datenbankschema
+
+
+                $gwPersExtended = $this->histSemDBService->getFSWPersonenExtendedGateway();
+
+                $gwPersExtended->delete(array(
+                   'id' =>  $fpersonen_extended_id
+                ));
+
+                $relationGW->delete(array( 'id'  =>  $relationId));
+                //das war's
+
+
+
+            }
+
+
+        }
+
+
+    }
+
 }

@@ -18,6 +18,13 @@ var Kolloquien = {
 
     initEditor: function () {
         //alert ('Personen.initEditor()');
+
+        $(document).ready(function () {
+            /* assuming that text input datePicker would have id='datePicker' */
+            $( ".datePicker").datepicker({ dateFormat: 'yy-mm-dd' });
+
+        });
+
         Editor.init($.proxy(this.onContentUpdated, this));
 
         $(".showPersonenVeranstaltung").click(function(e) {
@@ -177,7 +184,10 @@ var Kolloquien = {
 
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
-                    $(this).load('/kolloquien/editVeranstaltung/' + veranstaltungID );
+                    $(this).load('/kolloquien/editVeranstaltung/' + veranstaltungID, function () {
+                            $( ".datePicker").datepicker({dateFormat: 'yy-mm-dd'});
+                        }
+                    );
 
                     $('#fswDialogBox').css('background-color','#d9d9d9');
                 },
@@ -186,7 +196,7 @@ var Kolloquien = {
                         text: "Sichern",
                         click: function() {
 
-                            $(this).load('/kolloquien/editVeranstaltung/' + veranstaltungID, $('#Veranstaltung', this).serializeArray() );
+                            $(this).load('/kolloquien/editVeranstaltung/' + veranstaltungID, $('#Veranstaltung', this).serializeArray());
 
                         }
                     },
@@ -218,14 +228,16 @@ var Kolloquien = {
             event.preventDefault();
             var id = $('#Kolloqium\\[id\\]').val();
 
-
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
 
                     var id_kolloquium = $('#Kolloqium\\[id\\]').val();
 
 
-                    $(this).load('/kolloquien/addVeranstaltung?id_kolloquium=' + id_kolloquium );
+                    $(this).load('/kolloquien/addVeranstaltung?id_kolloquium=' + id_kolloquium, function () {
+
+                        $( ".datePicker").datepicker({dateFormat: 'yy-mm-dd'});
+                    } );
 
                     $('#fswDialogBox').css('background-color','#d9d9d9');
                 },

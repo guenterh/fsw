@@ -155,6 +155,8 @@ CREATE TABLE IF NOT EXISTS `fsw_zora_author` (
   `pers_id` bigint(20) DEFAULT NULL,
   `zora_name` varchar(500)  NOT NULL,
   `zora_name_customized` varchar(500)  DEFAULT NULL,
+  `datum_von` date Default NULL,
+  `datum_bis` date Default NULL,
   PRIMARY KEY (`id`),
   KEY `fid_personen` (`fid_personen`),
   KEY `zora_name` (`zora_name`)
@@ -233,6 +235,8 @@ CREATE TABLE IF NOT EXISTS `fsw_lehrveranstaltung` (
   `vvzlink` VARCHAR(1000) DEFAULT NULL,
   `olatlink` VARCHAR(1000) DEFAULT NULL,
   `beschreibung` longtext DEFAULT NULL,
+  `lvtyp` int(4) DEFAULT 0,
+
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 

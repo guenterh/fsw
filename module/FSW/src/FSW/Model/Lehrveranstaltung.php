@@ -26,6 +26,7 @@ class Lehrveranstaltung extends BaseModel implements InputFilterAwareInterface{
     public $olatlink;
     public $beschreibung;
     public $personenLehrveranstaltung = null;
+    public $lvtyp;
 
     protected $inputFilter;
 
@@ -217,6 +218,24 @@ class Lehrveranstaltung extends BaseModel implements InputFilterAwareInterface{
         $this->personenLehrveranstaltung = $personenLehrveranstaltung;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getLvtyp()
+    {
+        return $this->lvtyp;
+    }
+
+    /**
+     * @param mixed $lvtyp
+     */
+    public function setLvtyp($lvtyp)
+    {
+        $this->lvtyp = $lvtyp;
+    }
+
+
+
 
 
 
@@ -299,23 +318,27 @@ class Lehrveranstaltung extends BaseModel implements InputFilterAwareInterface{
                 ),
             ));
 
+            /*
             $inputFilter->add(array(
                 'name'     => 'olatlink',
-                'required' => true,
+                //'required' => true,
                 'filters'  => array(
                     array('name' => 'StringTrim'),
                 ),
+
                 'validators' => array(
                     array(
                         'name'    => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min'      => 1,
+                            'min'      => 0,
                             'max'      => 500,
                         ),
                     ),
                 ),
+
             ));
+            */
 
 
 

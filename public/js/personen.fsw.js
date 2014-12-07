@@ -78,8 +78,20 @@ var Personen= {
 
 
 
-        })
+        });
 
+        $('#LoeschenBeziehungPersonRolleExtended').click(function (event){
+            event.preventDefault();
+
+            var relation_id = $(this).attr("data-currentRole");
+            $.post('/personen/deleteBeziehungPersonRolle',
+                {
+                    relationID: relation_id
+                }
+
+            );
+
+        })
 
     },
 

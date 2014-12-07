@@ -53,12 +53,13 @@ class VeranstaltungenFieldset extends Fieldset implements InputFilterProviderInt
 
         $this->add(array(
             'name' => 'datum',
-            'type' => 'textarea',
+            'type' => 'text',
             'options' => array(
                 'label' => 'datum'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'class' => 'datePicker'
             )
         ));
 

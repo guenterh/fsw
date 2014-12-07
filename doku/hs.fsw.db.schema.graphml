@@ -84,15 +84,17 @@
     <node id="n2">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="129.0" width="182.0" x="1171.0519187358914" y="49.0"/>
+          <y:Geometry height="148.0" width="182.0" x="1171.0519187358914" y="40.42212189616248"/>
           <y:Fill color="#E8EEF7" color2="#99CC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="101.763671875" x="40.1181640625" y="4.0">fsw_zora_author</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="87.8125" modelName="custom" textColor="#000000" visible="true" width="152.412109375" x="2.0" y="29.96875">  id
+          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="115.75" modelName="custom" textColor="#000000" visible="true" width="152.412109375" x="2.0" y="29.96875">  id
   fid_personen
   pers_id
   zora_name
   zora_name_customized
+  datum_von
+  datum_bis
   PRIMARY KEY (`id`)
 <y:LabelModel>
               <y:ErdAttributesNodeLabelModel/>
@@ -422,14 +424,15 @@ _fsw_personen</y:NodeLabel>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="31.9375" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="87.923828125" x="14.5380859375" y="4.0">fsw_lehrveran
 staltung</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="115.75" modelName="custom" textColor="#000000" visible="true" width="67.609375" x="2.0" y="43.9375">  id
+          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="129.71875" modelName="custom" textColor="#000000" visible="true" width="67.609375" x="2.0" y="43.9375">  id
   von_zeit
   bis_zeit
   semester
   titel
   tag
   vvzlink
-  olatlink<y:LabelModel>
+  olatlink
+  lvtyp<y:LabelModel>
               <y:ErdAttributesNodeLabelModel/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -499,8 +502,8 @@ veranstaltung_person</y:NodeLabel>
     <edge id="e0" source="n2" target="n1">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="4.0" sy="-4.0" tx="0.0" ty="0.0">
-            <y:Point x="745.4040632054174" y="109.5"/>
+          <y:Path sx="4.0" sy="-4.589147286821706" tx="0.0" ty="0.0">
+            <y:Point x="745.4040632054174" y="109.83297460934078"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="crows_foot_one_mandatory" target="crows_foot_one"/>
@@ -632,7 +635,6 @@ qarb_arb_betreuer1_rollid
       </data>
     </edge>
     <edge id="e12" source="n0" target="n14">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="-101.5" tx="0.0" ty="0.0"/>
@@ -643,7 +645,6 @@ qarb_arb_betreuer1_rollid
       </data>
     </edge>
     <edge id="e13" source="n13" target="n14">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="-14.898876404494388" tx="0.0" ty="10.601123595505618"/>
@@ -654,7 +655,6 @@ qarb_arb_betreuer1_rollid
       </data>
     </edge>
     <edge id="e14" source="n15" target="n8">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="-12.426072234763069" ty="0.0"/>
@@ -665,7 +665,6 @@ qarb_arb_betreuer1_rollid
       </data>
     </edge>
     <edge id="e15" source="n15" target="n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-88.78696388261847" sy="0.0" tx="0.0" ty="0.0">

@@ -305,4 +305,18 @@ class PersonenController extends BaseController{
     }
 
 
+    public function deleteBeziehungPersonRolleAction() {
+
+
+        $relationId = $this->params()->fromPost("relationID", 0);
+
+        if ((int)$relationId  > 0) {
+            $this->facade->loescheBeziehungPersonRolleFSWContent($relationId);
+
+        }
+
+
+    }
+
+
 }
