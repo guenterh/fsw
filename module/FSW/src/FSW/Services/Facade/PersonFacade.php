@@ -11,6 +11,7 @@ use FSW\Model\Abteilung;
 use FSW\Model\Funktion;
 use FSW\Model\PersonenInList;
 use FSW\Model\PersonenRolleInfo;
+use FSW\Model\PersonZoraAuthor;
 use FSW\Model\RelationHSFSWPersonExtended;
 use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGateway;
@@ -943,6 +944,32 @@ class PersonFacade extends BaseFacade {
                 'id'    => $postData['id']
             )
         );
+
+    }
+
+
+    public function getEmptyZoraAuthor() {
+
+        $zA = new PersonZoraAuthor();
+        $zA->setId(0);
+        return $zA;
+
+
+    }
+
+
+    public function insertZoraAuthor (array $params = array() ) {
+
+
+        unset($params['id']);
+        $zsGW = $this->histSemDBService->getZoraAuthorGateway();
+        $success = $zsGW->insert($params);
+        if ($success) {
+            return $zsGW->getLastInsertValue();
+        } else {
+            return false;
+        }
+
 
     }
 

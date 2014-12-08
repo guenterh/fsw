@@ -232,49 +232,42 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
                 <fieldset>
                     <legend>extended attributes for FSW</legend>
 
-                    <!-- hier muss noch etwas gemacht werden - wie könnte ich eine Verknuepfung aufnehmen wenn ich das per hand machen moechte?? -->
-                    <?php if ($personExtended->getCount() > 0): ?>
 
-                        <?php foreach ($personExtended as $singleExtended) :?>
+                    <?php foreach ($personExtended as $singleExtended) :?>
 
-                            <div class="hidden" id="persExtendedIdFSWGanzUnique"><?php echo $singleExtended->get('id')->getValue(); ?></div>
+                        <div class="hidden" id="persExtendedIdFSWGanzUnique"><?php echo $singleExtended->get('id')->getValue(); ?></div>
 
-                            <script type="text/javascript">
+                        <script type="text/javascript">
 
-                                var persExtendedIdFSW = <?php echo  $singleExtended->get('id')->getValue(); ?>;
-                                var persIdHS = <?php echo  $personCore->get('pers_id')->getValue(); ?>;
+                            var persExtendedIdFSW = <?php echo  $singleExtended->get('id')->getValue(); ?>;
+                            var persIdHS = <?php echo  $personCore->get('pers_id')->getValue(); ?>;
 
-                            </script>
+                        </script>
 
 
 
-                            <div class="row-fluid">
-                                <div class="span6">
-                                    <?php echo  $this->formRowTwb($singleExtended->get('pers_id')) ?>
-                                </div>
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <?php echo  $this->formRowTwb($singleExtended->get('pers_id')) ?>
                             </div>
+                        </div>
 
-                            <div class="row-fluid">
-                                <div class="span8">
-                                    <?php echo  $this->formRowTwb($singleExtended->get('profilURL')) ?>
-                                </div>
+                        <div class="row-fluid">
+                            <div class="span8">
+                                <?php echo  $this->formRowTwb($singleExtended->get('profilURL')) ?>
                             </div>
+                        </div>
 
 
-                            <div class="row-fluid">
-                                <div>
-                                    <a href="#"  id="updateProfilURLPersonExtended" >Profil URL anpassen</a>
-                                </div>
+                        <div class="row-fluid">
+                            <div>
+                                <a href="#"  id="updateProfilURLPersonExtended" >Profil URL anpassen</a>
                             </div>
+                        </div>
 
 
 
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <input type="button" value="add extended parameters"
-                               class="submitButton btn btn-primary btn-medium" id="addextendedAttributes" name="addextended">
-
-                    <?php endif; ?>
+                    <?php endforeach; ?>
 
 
                 </fieldset>

@@ -1,0 +1,62 @@
+
+<?php
+
+
+$form = $this->form;
+$zoraAuthor = $form->get("PersonZora");
+
+$form->prepare();
+
+
+
+?>
+<?php echo  $this->formTwb()->openTag($form, 'horizontal') ?>
+
+<fieldset>
+    <legend>Attribute Zora Author</legend>
+
+    <div class="row-fluid">
+        <div class="span6">
+            <?php echo  $this->formRowTwb($zoraAuthor->get('id')) ?>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span6">
+            <?php echo  $this->formRowTwb($zoraAuthor->get('fid_personen')) ?>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span6">
+            <?php echo  $this->formRowTwb($zoraAuthor->get('pers_id')) ?>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span6">
+            <?php echo  $this->formRowTwb($zoraAuthor->get('zora_name')) ?>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span6">
+            <?php echo  $this->formRowTwb($zoraAuthor->get('zora_name_customized')) ?>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span6">
+            <?php echo  $this->formRowTwb($zoraAuthor->get('datum_von')) ?>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span6">
+            <?php echo  $this->formRowTwb($zoraAuthor->get('datum_bis')) ?>
+        </div>
+    </div>
+
+
+
+</fieldset>
+
+<?php echo  $this->form()->closeTag(); ?>

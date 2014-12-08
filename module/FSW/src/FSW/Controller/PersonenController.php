@@ -34,6 +34,8 @@ use FSW\Form\PersonCoreFieldset;
 use FSW\Form\PersonForm;
 use FSW\Form\PersonFormAllHS;
 use FSW\Form\PersonFSWExtendedForm;
+use FSW\Form\PersonZoraFieldset;
+use FSW\Form\ZoraAuthorForm;
 use Zend\Stdlib\ArrayObject;
 use Zend\View\Model\ViewModel;
 
@@ -293,6 +295,69 @@ class PersonenController extends BaseController{
             'title' => $this->translate('Personenanzeige', 'FSW'),
         ));
 
+
+    }
+
+
+    public function addZoraAuthorAction() {
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+
+
+            $zoraFieldSet = new PersonZoraFieldset(false);
+            $zoraFieldSet->setUseAsBaseFieldset(true);
+
+            $form  = new ZoraAuthorForm("ZoraAuthor", $zoraFieldSet);
+
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+
+                $lastInsertedValue = $this->facade->insertZoraAuthor($request->getPost()->toArray()['PersonZora']);
+                if ($lastInsertedValue) {
+                    $form->getBaseFieldset()->get('id')->setValue($lastInsertedValue);
+                } else {
+                    $form->getBaseFieldset()->get('id')->setValue(0);
+                    //something went wrong (how to handle this??
+                }
+
+
+            } else {
+                $form->getBaseFieldset()->get('id')->setValue(0);
+            }
+
+            $templateDaten = array(
+                'form' => $form,
+                'update' => false
+            );
+
+
+        } else {
+            //hier noch Pruefung einbauen
+
+            $personExtendedId = $this->params()->fromRoute('id',0);
+
+            $zoraAuthor = $this->facade->getEmptyZoraAuthor();
+            $zoraAuthor->setFid_personen($personExtendedId);
+
+            $zoraFieldSet = new PersonZoraFieldset(false);
+            $zoraFieldSet->setUseAsBaseFieldset(true);
+
+            $form  = new ZoraAuthorForm("ZoraAuthor", $zoraFieldSet);
+
+            $form->bind($zoraAuthor);
+
+            $templateDaten = array(
+                'form' => $form,
+                'update' => false
+            );
+
+        }
+
+
+        return $this->getAjaxView(
+            $templateDaten
+        );
 
     }
 

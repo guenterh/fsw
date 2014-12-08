@@ -78,6 +78,62 @@ var Personen= {
 
         });
 
+        $('#addAdditionalZoraAuthor').click(function (event) {
+
+            event.preventDefault();
+            //persExtendedIdFSW
+            var pers_id = $('#PersonCore\\[personExtended\\]\\[0\\]\\[pers_id\\]').val();
+
+            $("<div id='fswDialogBox'>").dialog({
+                open: function(){
+                    $(this).load('/personen/addZoraAuthor/' + persExtendedIdFSW, function () {
+
+                            $( ".datePicker").datepicker({dateFormat: 'yy-mm-dd'});
+                        }
+                    ) ;
+
+                    $('#fswDialogBox').css('background-color','#d9d9d9');
+                },
+                buttons: [
+                    {
+                        text: "Sichern",
+                        click: function() {
+
+                            $(this).load('/personen/addZoraAuthor',
+                                $('#ZoraAuthor', this).serializeArray()
+                            );
+
+                        }
+                    },
+                    {
+                        text: "Abbrechen",
+                        click: function() {
+                            $( this ).dialog( "close" );
+                            window.location = '/personen/edit/' + pers_id + '?completeView=true';
+
+                        }
+                    }
+
+                ],
+
+
+                close: function (event, ui) {
+                    $(this).dialog('destroy').remove();
+                },
+                title: 'Erfassen Beziehung als ZoraAutor',
+                width: '1000px',
+                modal: true
+
+            }).dialog( "widget")
+                .find( ".ui-dialog-titlebar-close" )
+                .hide();
+
+
+
+
+        });
+
+
 
 
 
@@ -162,52 +218,6 @@ var Personen= {
 
     onSearchListUpdated: function () {
 
-    },
-
-    initExtendedAttributes: function () {
-        $('#addextendedAttributes').click(function (e) {
-
-            var myTemplate = function () {
-                /*
-                 <fieldset>
-                 <legend>extended attributes for FSW</legend>
-                 <div class="row-fluid">
-                 <div class="span6">
-                 <div id="cgroup-PersonCore[personExtended][0][pers_id]" class="control-group">
-                 <label id="label-PersonCore[personExtended][0][pers_id]" class="control-label" for="PersonCore[personExtended][0][pers_id]">pers_id</label>
-                 <div id="controls-PersonCore[personExtended][0][pers_id]" class="controls">
-                 <textarea id="PersonCore[personExtended][0][pers_id]" rows="1" name="PersonCore[personExtended][0][pers_id]"></textarea>
-                 </div>
-                 </div>
-                 </div>
-
-                 <div class="span6">
-                 <div id="cgroup-PersonCore[personExtended][0][profilURL]" class="control-group">
-                 <label id="label-PersonCore[personExtended][0][profilURL]" class="control-label" for="PersonCore[personExtended][0][profilURL]">profilURL</label>
-                 <div id="controls-PersonCore[personExtended][0][profilURL]" class="controls">
-                 <textarea id="PersonCore[personExtended][0][profilURL]" rows="1" name="PersonCore[personExtended][0][profilURL]"></textarea>
-                 </div>
-                 </div>
-                 </div>
-                 </div>
-
-                 </fieldset>
-                 */
-            };
-
-
-            $("#personExtended").empty().append(FSWAdmin.Editor.heredoc(myTemplate));
-            $('#PersonCore\\[personExtended\\]\\[0\\]\\[pers_id\\]').val($('#PersonCore\\[pers_id\\]').val());
-
-
-        });
-
-        //$('.zoraAuthorDeleteButton').click(function (e) {
-        //    CustomFunctions.zoraAuthorDelete(e);
-        //});
-
-
     }
-
 
 };

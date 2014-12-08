@@ -22,6 +22,8 @@ class PersonZoraAuthor extends BaseModel implements InputFilterAwareInterface {
     public $zora_name_customized;
     public $pers_id;
     public $fid_personen;
+    public $datum_von;
+    public $datum_bis;
 
 
     /**
@@ -46,7 +48,7 @@ class PersonZoraAuthor extends BaseModel implements InputFilterAwareInterface {
             $inputFilter = new InputFilter();
 
             $inputFilter->add(array(
-                'name'     => 'pers_id',
+                'name'     => 'id',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'Int'),
@@ -54,7 +56,7 @@ class PersonZoraAuthor extends BaseModel implements InputFilterAwareInterface {
             ));
 
             $inputFilter->add(array(
-                'name'     => 'profilURL',
+                'name'     => 'zora_name',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'StringTrim'),
@@ -62,12 +64,14 @@ class PersonZoraAuthor extends BaseModel implements InputFilterAwareInterface {
             ));
 
             $inputFilter->add(array(
-                'name'     => 'fullname',
+                'name'     => 'fid_personen',
                 'required' => true,
                 'filters'  => array(
-                    array('name' => 'StringTrim'),
+                    array('name' => 'Int'),
                 ),
             ));
+
+            $this->inputFilter = $inputFilter;
 
         }
 
@@ -165,4 +169,38 @@ class PersonZoraAuthor extends BaseModel implements InputFilterAwareInterface {
     {
         return $this->zora_name;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDatum_bis()
+    {
+        return $this->datum_bis;
+    }
+
+    /**
+     * @param mixed $datum_bis
+     */
+    public function setDatum_bis($datum_bis)
+    {
+        $this->datum_bis = $datum_bis;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDatum_von()
+    {
+        return $this->datum_von;
+    }
+
+    /**
+     * @param mixed $datum_von
+     */
+    public function setDatum_von($datum_von)
+    {
+        $this->datum_von = $datum_von;
+    }
+
+
 }
