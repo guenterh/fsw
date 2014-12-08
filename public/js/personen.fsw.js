@@ -19,8 +19,67 @@ var Personen= {
     initEditor: function () {
         //alert ('Personen.initEditor()');
         Editor.init($.proxy(this.onContentUpdated, this));
-        CustomFunctions.initializeZoraAuthorActions();
+        //CustomFunctions.initializeZoraAuthorActions();
         //this.initExtendedAttributes();
+
+        $('.updateCoverLink').click(function(event){
+
+            event.preventDefault();
+
+            //var oaiIdentifier = $(event.target).attr("data-currentOaiIdentfier");
+            var oaiIdentifier = $(this).attr("data-currentOaiIdentfier");
+            var pers_id = $('#PersonCore\\[personExtended\\]\\[0\\]\\[pers_id\\]').val();
+
+
+            $("<div id='fswDialogBox'>").dialog({
+                open: function(){
+                    $(this).load('/personen/editCoverLink',
+                        {
+                            oai_identifier: oaiIdentifier,
+                            modus: 'show'
+                        }
+                    );
+
+                    $('#fswDialogBox').css('background-color','#d9d9d9');
+                },
+                buttons: [
+                    {
+                        text: "Sichern",
+                        click: function() {
+
+
+                            $(this).load('/personen/editCoverLink', $('#Coverlink',this).serializeArray());
+
+                        }
+                    },
+                    {
+                        text: "Abbrechen",
+                        click: function() {
+                            $( this ).dialog( "close" );
+                            window.location = '/personen/edit/' + pers_id + '?completeView=true';
+                        }
+                    }
+
+                ],
+
+
+
+
+                close: function (event, ui) {
+                    $(this).dialog('destroy').remove();
+                },
+                title: 'Update Cover Zoradoc',
+                width: '1000px',
+                modal: true
+
+            }).dialog( "widget")
+                .find( ".ui-dialog-titlebar-close" )
+                .hide();
+
+        });
+
+
+
 
         $('#updateProfilURLPersonExtended').click(function (event){
             event.preventDefault();

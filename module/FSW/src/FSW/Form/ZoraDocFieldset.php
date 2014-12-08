@@ -44,7 +44,9 @@ class ZoraDocFieldset extends Fieldset implements InputFilterProviderInterface {
                 'label' => 'title'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 2 ,
+                'class' => 'fswTextAreaSmall',
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -78,7 +80,9 @@ class ZoraDocFieldset extends Fieldset implements InputFilterProviderInterface {
                 'label' => 'oaiidentifier'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1 ,
+                'class' => 'fswTextAreaSmall',
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -122,7 +126,9 @@ class ZoraDocFieldset extends Fieldset implements InputFilterProviderInterface {
                 'label' => 'coverlink'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 2 ,
+                'class' => 'fswTextAreaSmall',
+                'readonly'  => 'readonly'
             )
         ));
 

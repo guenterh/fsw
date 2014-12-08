@@ -30,7 +30,8 @@ class MedienDisplayFieldset extends Fieldset implements InputFilterProviderInter
                 'label' => 'id'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1 ,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -42,9 +43,46 @@ class MedienDisplayFieldset extends Fieldset implements InputFilterProviderInter
                 'label' => 'gespraechstitel'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 2 ,
+                'class' => 'fswTextAreaSmall',
+                'readonly'  => 'readonly'
             )
         ));
+
+
+        $this->add(array(
+            'name' => 'medientyp',
+            'type' => 'select',
+            'options' => array(
+                'empty_option' => '- Kein Icon -',
+                'label' => 'Medientyp',
+                'value_options' => array(
+                    '1' => 'Radio',
+                    '2' => 'Fernsehen',
+                    '3' => 'Internet',
+                )
+            ),
+            'attributes' => array(
+                'class' => 'fswTextAreaSmall',
+                'disabled'  => 'true'
+            )
+
+        ));
+
+        $this->add(array(
+            'name' => 'link',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'link'
+            ),
+            'attributes' => array(
+                'rows' => 2,
+                'class' => 'fswTextArea'
+            )
+        ));
+
+
+
 
 
 

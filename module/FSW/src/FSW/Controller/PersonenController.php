@@ -29,6 +29,7 @@
 
 namespace FSW\Controller;
 
+use FSW\Form\CoverlinkForm;
 use FSW\Form\PersonCoreFieldset;
 use FSW\Form\PersonForm;
 use FSW\Form\PersonFormAllHS;
@@ -108,26 +109,36 @@ class PersonenController extends BaseController{
             $params = compact('pers_id','forschungstypen');
 
             $forschungsarbeiten = $this->facade->getForschungen($params);
-            $relPersonRollenPersonExtend = $this->facade->getBeziehunhenPersonRolleExtended($params);
 
             $bindObject = new ArrayObject();
             $bindObject['forschungsarbeiten'] = $forschungsarbeiten;
             $bindObject['PersonCore'] = $person;
 
             //letztes könnte eigentlich in die FSW Abfrage
-            $bindObject['BeziehungPersonRolle'] = $relPersonRollenPersonExtend;
 
-            if ($this->facade->isFSWPerson($pers_id)) {
+            $isFswPerson = $this->facade->isFSWPerson($pers_id);
+            if ($isFswPerson) {
 
                 $params = compact('pers_id');
                 //$zoraDocs = $this->facade->getZoraDocs($params);
                 $zoraDocs = $this->facade->getZoraDocsWithCover($params);
+                $relPersonRollenPersonExtend = $this->facade->getBeziehunhenPersonRolleExtended($params);
+
+                $medien = $this->facade->getMedien($pers_id);
+
+                $bindObject['BeziehungPersonRolle'] = $relPersonRollenPersonExtend;
+
+                $bindObject['medien'] = $medien;
+                $bindObject['zoradocs'] = $zoraDocs;
 
                 //binde die Objekte
 
             } else {
 
-                //binde leere Arrays
+                $bindObject['BeziehungPersonRolle'] = array();
+
+                $bindObject['medien'] = array();
+                $bindObject['zoradocs'] = array();
             }
 
 
@@ -191,14 +202,18 @@ class PersonenController extends BaseController{
                     'personen' => $personen,
                     'form' => $coreFS,
                     'title' => $this->translate('Personenanzeige', 'FSW'),
-                    'complete' => true
+                    'complete' => true,
+                    'isFswPerson' => $isFswPerson
+
                 )
             );
         } else {
             return $this->getAjaxView(array(
                 'form' => $coreFS,
                 'title' => $this->translate('Personenanzeige', 'FSW'),
-                'complete' => false
+                'complete' => false,
+                'isFswPerson' => $isFswPerson
+
             ));
 
         }
@@ -332,6 +347,56 @@ class PersonenController extends BaseController{
 
 
     }
+
+    public function editCoverLinkAction() {
+
+        $request = $this->getRequest();
+        $modus = $this->params()->fromPost('modus', null);
+        $templateDaten = array();
+        //
+        if ($request->isPost() && is_null($modus)) {
+
+            $postData = $this->params()->fromPost();
+            $form  = new CoverlinkForm();
+            $form->setData($postData);
+            if ($form->isValid()) {
+                $this->facade->updateCoverlink($postData);
+
+            } else
+
+                $templateDaten = array(
+                    'form' => $form
+                );
+
+
+        } elseif ($request->isPost() && !is_null($modus) && $modus == 'show'){
+            //hier noch Pruefung einbauen
+            $oai_identifier = $this->params()->fromPost('oai_identifier', 0);
+            try {
+                $coverlinkEntity = $this->facade->getCoverlinkEntity($oai_identifier);
+
+                $form  = new CoverlinkForm();
+                $form->bind($coverlinkEntity);
+            }
+            catch (\Exception $ex) {
+                return $this->redirect()->toRoute('kolloquien', array(
+                    'action' => 'index'
+                ));
+            }
+
+
+            $templateDaten = array(
+                'form' => $form
+                //'id'    =>  $oai_identifier,
+            );
+
+        }
+        return $this->getAjaxView(
+            $templateDaten
+        );
+
+    }
+
 
 
 }

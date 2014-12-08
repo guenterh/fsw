@@ -339,14 +339,6 @@ return array(
                 'label' => 'navigation_personen',
                 'route' => 'personen'
             ),
-            'master_lizz_diss' => array(
-                'label' => 'master_lizz_diss',
-                'route' => 'forschungAdmin'
-            ),
-            'person_aktivitaet' => array(
-                'label' => 'person_aktivitaet',
-                'route' => 'personenaktivitaet'
-            ),
             'lehrveranstaltung' => array(
                 'label' => 'lehrveranstaltung',
                 'route' => 'lehrveranstaltung'
