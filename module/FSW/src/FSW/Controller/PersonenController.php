@@ -37,6 +37,7 @@ use FSW\Form\PersonFSWExtendedForm;
 use FSW\Form\PersonZoraFieldset;
 use FSW\Form\ZoraAuthorForm;
 use Zend\Stdlib\ArrayObject;
+use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
 
@@ -235,69 +236,6 @@ class PersonenController extends BaseController{
     }
 
 
-    public function editZoraAuthorAction() {
-
-        $modus =  $this->params()->fromPost('mode');
-        $personId = null;
-
-
-        switch ($modus) {
-
-            case 'addAuthor':
-                $persExtendedIdFSW =   $this->params()->fromPost('persExtendedIdFSW');
-                $personId =            $this->params()->fromPost('persIdHS');
-                $zoraAuthorName =      $this->params()->fromPost('zoraAuthorName');
-                $zoraAuthorNameCustomized =   $this->params()->fromPost('zoraAuthorNameCustomized');
-                if (isset($personId) && isset($persExtendedIdFSW)) {
-                    $this->facade->addZoraAuthor($persExtendedIdFSW,
-                                                    $personId,
-                                                    $zoraAuthorName,
-                                                    $zoraAuthorNameCustomized);
-                }
-
-                break;
-            case 'delAuthor':
-
-                $zoraAuthorId = $this->params()->fromPost('zoraAutorId');
-                if (isset($zoraAuthorId)) {
-                    $personId =  $this->facade->getPersonFromZoraAuthorId($zoraAuthorId);
-                    $this->facade->deleteZoraAuthor($zoraAuthorId);
-                }
-                break;
-
-            case 'updAuthor';
-                $zoraAuthorID =    $this->params()->fromPost('idZoraAuthor');
-                $zoraAuthorName =      $this->params()->fromPost('zoraName');
-                $zoraAuthorNameCustomized =   $this->params()->fromPost('zoraNameCustomized');
-                $personId =  $this->facade->getPersonFromZoraAuthorId($zoraAuthorID);
-
-                if (isset($zoraAuthorID) &&  $zoraAuthorID) {
-                    $this->facade->updateZoraAuthor($zoraAuthorID,
-                        $zoraAuthorName,
-                        $zoraAuthorNameCustomized);
-                }
-
-                //still todo
-                break;
-
-        }
-
-
-        $person =  $this->facade->getPerson($personId);
-
-        $coreFS = new PersonForm('Person');
-        $coreFS->bind($person);
-
-        $coreFS->setAttribute('action', $this->makeUrl('personen', 'edit', $personId));
-
-        return $this->getAjaxView(array(
-            'form' => $coreFS,
-            'title' => $this->translate('Personenanzeige', 'FSW'),
-        ));
-
-
-    }
-
 
     public function addZoraAuthorAction() {
 
@@ -312,14 +250,20 @@ class PersonenController extends BaseController{
 
             $form->setData($request->getPost());
             if ($form->isValid()) {
+                $paramsArray = $request->getPost()->toArray()['PersonZora'];
 
-                $lastInsertedValue = $this->facade->insertZoraAuthor($request->getPost()->toArray()['PersonZora']);
-                if ($lastInsertedValue) {
-                    $form->getBaseFieldset()->get('id')->setValue($lastInsertedValue);
-                } else {
-                    $form->getBaseFieldset()->get('id')->setValue(0);
-                    //something went wrong (how to handle this??
+                //nur bei 0 ein insert (ansonsten kann es sich um einen doppelten click handeln
+                if ((int)$paramsArray['id'] == 0) {
+
+                    $lastInsertedValue = $this->facade->insertZoraAuthor($request->getPost()->toArray()['PersonZora']);
+                    if ($lastInsertedValue) {
+                        $form->getBaseFieldset()->get('id')->setValue($lastInsertedValue);
+                    } else {
+                        $form->getBaseFieldset()->get('id')->setValue(0);
+                        //something went wrong (how to handle this??
+                    }
                 }
+
 
 
             } else {
@@ -361,6 +305,71 @@ class PersonenController extends BaseController{
 
     }
 
+    public function editZoraAuthorAction() {
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+
+
+            $zoraFieldSet = new PersonZoraFieldset(false);
+            $zoraFieldSet->setUseAsBaseFieldset(true);
+
+            $form  = new ZoraAuthorForm("ZoraAuthor", $zoraFieldSet);
+
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+
+                $lastInsertedValue = $this->facade->updateZoraAuthor($request->getPost()->toArray()['PersonZora']);
+                if ($lastInsertedValue) {
+                    $form->getBaseFieldset()->get('id')->setValue($lastInsertedValue);
+                } else {
+                    $form->getBaseFieldset()->get('id')->setValue(0);
+                    //something went wrong (how to handle this??
+                }
+
+
+            } else {
+                $form->getBaseFieldset()->get('id')->setValue(0);
+            }
+
+            $templateDaten = array(
+                'form' => $form,
+                'update' => false
+            );
+
+
+        } else {
+            //hier noch Pruefung einbauen
+
+            $zoraAuthorId = $this->params()->fromRoute('id',0);
+            $templateDaten = array();
+            if ($zoraAuthorId) {
+
+                $zoraAuthor = $this->facade->getZoraAuthor($zoraAuthorId);
+
+                $zoraFieldSet = new PersonZoraFieldset(false);
+                $zoraFieldSet->setUseAsBaseFieldset(true);
+
+                $form  = new ZoraAuthorForm("ZoraAuthor", $zoraFieldSet);
+
+                $form->bind($zoraAuthor);
+
+                $templateDaten = array(
+                    'form' => $form,
+                    'update' => false
+                );
+
+            }
+
+
+        }
+
+
+        return $this->getAjaxView(
+            $templateDaten,"fsw/personen/add-zora-author"
+        );
+
+    }
 
     public function editProfilURLAction() {
 
@@ -459,6 +468,26 @@ class PersonenController extends BaseController{
         return $this->getAjaxView(
             $templateDaten
         );
+
+    }
+
+    public function deleteZoraAuthorAction () {
+
+        $zoraAuthorId = $this->params()->fromQuery('id');
+        if (isset($zoraAuthorId)) {
+            $this->facade->deleteZoraAuthor($zoraAuthorId);
+            $jsonResponse = array(
+                'status' => 'ok',
+            );
+
+
+            return new JsonModel(
+                $jsonResponse
+            );
+
+        }
+
+
 
     }
 

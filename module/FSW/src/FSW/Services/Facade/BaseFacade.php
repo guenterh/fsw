@@ -1,6 +1,7 @@
 <?php
 namespace FSW\Services\Facade;
 
+use FSW\Model\ZoraDocWithCover;
 use FSW\Services\Config\PluginManager;
 use FSW\Services\FSWConfigAwareInterface;
 use FSW\Services\HistSemDBService;
@@ -412,6 +413,8 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface,
         //Dissertation
         //SELECT * FROM `Qarb_ArbeitenV2` WHERE `qarb_arb_typ` not in ('Lizentiatsarbeit', 'Dissertation', 'Masterarbeit', 'Habilitation') ORDER BY `qarb_arb_autorid`
 
+        //s.. getZoraDocsWith Cover
+
         $zoraDocTG = $this->histSemDBService->getZoraDocGateway();
         $select = $zoraDocTG->getSql()->select();
 
@@ -453,6 +456,13 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface,
         //$select->columns(array('title','oai_identifier'));
         if (array_key_exists('pers_id', $params)) {
 
+            //liefert doppelte Treffer und ich kann kein distinct auf die ZF2 Objekte anwenden
+            //bzw. ich weiss nicht wie ich die columns in select auf einzelne Spalten in ZF2 Syntax beschränken kann
+
+            $sql = "SELECT distinct doc.*, cover.coverlink FROM fsw_zora_doc as doc INNER JOIN fsw_relation_zora_author_zora_doc AS rel ";
+            $sql .= " ON (rel.fid_zora_doc = doc.id) INNER JOIN fsw_zora_author AS za ON (za.id = rel.fid_zora_author) INNER JOIN fsw_cover AS cover ";
+            $sql .= " ON (doc.id = cover.id) WHERE za.pers_id = " . $this->qV($params['pers_id']);
+
             $select->join(array(
                     'zora_author_relation' => 'fsw_relation_zora_author_zora_doc'),
                 'zora_author_relation.fid_zora_doc = fsw_zora_doc.id'   );
@@ -467,9 +477,32 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface,
                 'fsw_zora_doc.id = cover.id'   );
 
             //$select->
+            //$select->columns(array('fsw_zora_doc' => 'title'));
 
             $select->where->equalTo(
                 'zora_author.pers_id',$params['pers_id']);
+
+
+            $test = $select->getSqlString();
+            //SELECT "fsw_zora_doc".*, "zora_author_relation".*, "zora_author".*, "cover".* FROM "fsw_zora_doc" INNER JOIN "fsw_relation_zora_author_zora_doc" AS "zora_author_relation" ON "zora_author_relation"."fid_zora_doc" = "fsw_zora_doc"."id" INNER JOIN "fsw_zora_author" AS "zora_author" ON "zora_author"."id" = "zora_author_relation"."fid_zora_author" INNER JOIN "fsw_cover" AS "cover" ON "fsw_zora_doc"."id" = "cover"."id" WHERE "zora_author"."pers_id" = '101'
+            $result = $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+
+            $beziehungen = array();
+            foreach ($result as $row) {
+
+                $beziehung = new ZoraDocWithCover();
+                $beziehung->exchangeArray($row->getArrayCopy());
+
+                $beziehungen[$beziehung->getId()] = $beziehung;
+
+
+            }
+
+            return $beziehungen;
+
+
+
 
 
         }

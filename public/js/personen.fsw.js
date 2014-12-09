@@ -134,6 +134,117 @@ var Personen= {
         });
 
 
+        $(".zoraAuthorDeleteButton").click(function(e) {
+            e.preventDefault();
+
+            var currentId =  $(this).attr('data-id-zoraauthor');
+            var pers_id = $('#PersonCore\\[personExtended\\]\\[0\\]\\[pers_id\\]').val();
+
+
+            $('<div id="okEscDialog" title="Loeschen einer Beziehung ZoraAuthir Dokumente"><p>' +
+            'Wollen Sie die Beziehung eines Zoraautoren loeschen? (alle mit dem Autor verknüpfte Dokumente werden ebenfalls gelöscht' +
+            '</p></div>')
+                .dialog({
+                    buttons: [
+                        {
+                            text: "OK",
+                            click: function() {
+
+                                $.ajax({
+                                    url: '/personen/deleteZoraAuthor',
+                                    dataType: 'json',
+                                    //async false ist wichtig da ansonsten success function als callback aufgerufen wird.
+                                    //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
+                                    async: false,
+                                    data: {
+                                        'id': currentId
+                                    },
+                                    success: function(response) {
+                                        $('#okEscDialog').append($('<div class="fswmessage">erfolgreich gelöscht!</div>'));
+
+                                    }
+                                });
+                                //$( this ).dialog( "close" );
+                            }
+                        },
+                        {
+                            text: "Abbrechen",
+                            click: function() {
+                                $( this ).dialog( "close" );
+                                window.location = '/personen/edit/' + pers_id + '?completeView=true';
+                            }
+                        }
+
+                    ],
+                    open: function(){
+
+                        $('#okEscDialog').css('background-color','#d9d9d9');
+                    },
+                    close: function (event, ui) {
+                        $(this).dialog('destroy').remove();
+                    }
+
+                }).dialog( "widget")
+                .find( ".ui-dialog-titlebar-close" )
+                .hide();
+        });
+
+
+        $('.zoraAuthorUpdateButton').click(function (event) {
+
+            event.preventDefault();
+
+            var currentId =  $(this).attr('data-id-zoraauthor');
+            var pers_id = $('#PersonCore\\[personExtended\\]\\[0\\]\\[pers_id\\]').val();
+
+            $("<div id='fswDialogBox'>").dialog({
+                open: function(){
+                    $(this).load('/personen/editZoraAuthor/' + currentId, function () {
+
+                            $( ".datePicker").datepicker({dateFormat: 'yy-mm-dd'});
+                        }
+                    ) ;
+
+                    $('#fswDialogBox').css('background-color','#d9d9d9');
+                },
+                buttons: [
+                    {
+                        text: "Sichern",
+                        click: function() {
+
+                            $(this).load('/personen/editZoraAuthor',
+                                $('#ZoraAuthor', this).serializeArray()
+                            );
+
+                        }
+                    },
+                    {
+                        text: "Abbrechen",
+                        click: function() {
+                            $( this ).dialog( "close" );
+                            window.location = '/personen/edit/' + pers_id + '?completeView=true';
+
+                        }
+                    }
+
+                ],
+
+
+                close: function (event, ui) {
+                    $(this).dialog('destroy').remove();
+                },
+                title: 'Editieren der Beziehung als ZoraAutor',
+                width: '1000px',
+                modal: true
+
+            }).dialog( "widget")
+                .find( ".ui-dialog-titlebar-close" )
+                .hide();
+
+
+
+
+        });
 
 
 

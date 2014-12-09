@@ -88,6 +88,8 @@ class PersonFacade extends BaseFacade {
 
         //todo: pruefe ob für die Id nicht bereits Verbindungen vorhanden sind, wenn ja, Mitteilung und kein delete!
 
+        $this->deleteZoraDokumenteRelatedToAuthor($authorId);
+
         $results = $this->histSemDBService->getZoraAuthorGateway()->delete(array('id' => $authorId));
     }
 
@@ -110,23 +112,19 @@ class PersonFacade extends BaseFacade {
 
 
 
-    public function updateZoraAuthor ($zoraAuthorId,
-                                      $zoraAuthorName,
-                                      $zoraAuthorNameCustomized) {
+    public function updateZoraAuthor ($params) {
 
-        $daten = array('id' => $zoraAuthorId,
-            'zora_name' => $zoraAuthorName,
-            'zora_name_customized' => $zoraAuthorNameCustomized);
+        if (isset($params['id'])) {
+            $id = $params['id'];
+            unset($params['id']);
+            $results = $this->histSemDBService->getZoraAuthorGateway()->update(
+                $params,
+                array('id' => $id)
 
-        $results = $this->histSemDBService->getZoraAuthorGateway()->update(
+            );
 
-            array(
-            'zora_name' => $zoraAuthorName,
-            'zora_name_customized' => $zoraAuthorNameCustomized),
-            array('id' => $zoraAuthorId)
+        }
 
-        );
-        $test = "";
 
     }
 
@@ -176,6 +174,13 @@ class PersonFacade extends BaseFacade {
 
                 $zoraAuthorNames = array();
                 foreach ($persExtendedZoraAuthorNames as  $zoraAuthor) {
+                    $sql = "SELECT count(distinct doc.id) as number FROM fsw_zora_doc as doc INNER JOIN fsw_relation_zora_author_zora_doc AS rel ON ";
+                    $sql .= " (rel.fid_zora_doc = doc.id) INNER JOIN fsw_zora_author AS za ON (za.id = rel.fid_zora_author) WHERE za.id = " . $this->qV($zoraAuthor->getId());
+
+                    $result = $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+                    $zoraAuthor->setNumberzoradocs($result->current()['number']);
+
+
                     $zoraAuthorNames[$zoraAuthor->getId()] = $zoraAuthor;
                 }
 
@@ -419,11 +424,14 @@ class PersonFacade extends BaseFacade {
                 foreach ($resultZoraName as $zN) {
                     $z = $zN->getArrayCopy();
 
-                    $sql = "insert into fsw_zora_author (fid_personen,pers_id,zora_name,zora_name_customized) ";
+                    $sql = "insert into fsw_zora_author (fid_personen,pers_id,zora_name,datum_von, datum_bis, zora_name_customized) ";
                     $sql = $sql .  "values (" . $this->qV($genIdPersonenExtended) . ',';
                     $sql = $sql .  $this->qV($r['pers_id']) . ',';
                     $sql = $sql .  $this->qV($z['zoraName']) . ',';
+                    $sql = $sql .  $this->qV('0000-00-00') . ',';
+                    $sql = $sql .  $this->qV('0000-00-00') . ',';
                     $sql = $sql .  $this->qV($z['zoraNameCustomized']) . ' )';
+
 
                     $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
@@ -801,68 +809,9 @@ class PersonFacade extends BaseFacade {
                     $zaID = $zoraAuthor->getId();
                     $zoraAuthorsIds[] = $zoraAuthor->getId();
 
-                    $sql = "select zdoctype.id from fsw_zora_doctype zdoctype join fsw_zora_doc zdoc on ";
-                    $sql .= " (zdoctype.oai_identifier = zdoc.oai_identifier) join fsw_relation_zora_author_zora_doc relAuthorDoc on ";
-                    $sql .= " (zdoc.id = relAuthorDoc.fid_zora_doc) join fsw_zora_author zA on ( relAuthorDoc.fid_zora_author = zA.id ) ";
-                    $sql .= " where zA.id = " . $zaID;
 
-                    //$sql = "select zdoctype.id from fsw_zora_doctype zdoctype, fsw_zora_doc zdoc, ";
-                    //$sql .= " fsw_relation_zora_author_zora_doc relAuthorDoc, fsw_zora_author zA ";
-                    //$sql .= " where zdoctype.oai_identifier = zdoc.oai_identifier and  zdoc.id = relAuthorDoc.fid_zora_doc and ";
-                    //$sql .= " relAuthorDoc.fid_zora_author = zA.id ";
-                    //$sql .= " and zA.id = " . $zaID;
+                    $this->deleteZoraDokumenteRelatedToAuthor($zaID);
 
-
-
-                    $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
-
-                    foreach ($result as $row) {
-                        //todo: GW für zoradoctype
-                        $tId = $row['zdoctype.id'];
-                        $sql = "delete from fsw_zora_doctype where id = " .  $this->qV ($tId);
-                        $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
-                    }
-
-                    $sql = "select cover.id from fsw_cover cover join fsw_zora_doc zdoc on ";
-                    $sql .= " (cover.oai_identifier = zdoc.oai_identifier) join fsw_relation_zora_author_zora_doc relAuthorDoc on ";
-                    $sql .= " (zdoc.id = relAuthorDoc.fid_zora_doc) join fsw_zora_author zA on ( relAuthorDoc.fid_zora_author = zA.id ) ";
-                    $sql .= " where zA.id = " . $zaID;
-
-                    $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
-
-                    foreach ($result as $row) {
-                        //todo: GW für zoradoctype
-                        $tId = $row['cover.id'];
-                        $sql = "delete from fsw_cover where id = " .  $this->qV ($tId);
-                        $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
-                    }
-
-
-                    $sql = "select zdoc.id from  fsw_zora_doc zdoc join fsw_relation_zora_author_zora_doc relAuthorDoc on ";
-                    $sql .= " (zdoc.id = relAuthorDoc.fid_zora_doc) join fsw_zora_author zA on ( relAuthorDoc.fid_zora_author = zA.id ) ";
-                    $sql .= " where zA.id = " . $zaID;
-
-                    $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
-
-                    foreach ($result as $row) {
-                        //todo: GW für zoradoctype
-                        $tId = $row['zdoc.id'];
-                        $sql = "delete from fsw_zora_doc where id = " .  $this->qV ($tId);
-                        $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
-                    }
-
-
-                    $sql = "select relAuthorDoc.id from  fsw_relation_zora_author_zora_doc relAuthorDoc join  fsw_zora_author zA ";
-                    $sql .= "  on ( relAuthorDoc.fid_zora_author = zA.id ) where zA.id = " . $zaID;
-
-                    $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
-
-                    foreach ($result as $row) {
-                        //todo: GW für zoradoctype
-                        $tId = $row['relAuthorDoc.id'];
-                        $sql = "delete from fsw_relation_zora_author_zora_doc where id = " .  $this->qV ($tId);
-                        $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
-                    }
 
                 }
 
@@ -957,11 +906,34 @@ class PersonFacade extends BaseFacade {
 
     }
 
+    public function getZoraAuthor ($zAId) {
+        $author = null;
+        $zAGW = $this->histSemDBService->getZoraAuthorGateway();
+        $result = $zAGW->select(array(
+            'id'    => $zAId
+        ));
+        $author = $result->current();
+
+        return $author;
+
+    }
+
 
     public function insertZoraAuthor (array $params = array() ) {
 
 
         unset($params['id']);
+        if ($params['pers_id'] == "" || strcmp($params['pers_id'],'0')) {
+            $extPersGW = $this->histSemDBService->getFSWPersonenExtendedGateway();
+            $result = $extPersGW->select(array(
+               'id' =>  $params['fid_personen']
+            ));
+            $current = $result->current();
+            if ($current) {
+                $params['pers_id'] = $current->getPers_id();
+            }
+        }
+
         $zsGW = $this->histSemDBService->getZoraAuthorGateway();
         $success = $zsGW->insert($params);
         if ($success) {
@@ -970,6 +942,74 @@ class PersonFacade extends BaseFacade {
             return false;
         }
 
+
+    }
+
+
+    private function deleteZoraDokumenteRelatedToAuthor($zaID) {
+
+        $sql = "select zdoctype.id from fsw_zora_doctype zdoctype join fsw_zora_doc zdoc on ";
+        $sql .= " (zdoctype.oai_identifier = zdoc.oai_identifier) join fsw_relation_zora_author_zora_doc relAuthorDoc on ";
+        $sql .= " (zdoc.id = relAuthorDoc.fid_zora_doc) join fsw_zora_author zA on ( relAuthorDoc.fid_zora_author = zA.id ) ";
+        $sql .= " where zA.id = " . $zaID;
+
+        //$sql = "select zdoctype.id from fsw_zora_doctype zdoctype, fsw_zora_doc zdoc, ";
+        //$sql .= " fsw_relation_zora_author_zora_doc relAuthorDoc, fsw_zora_author zA ";
+        //$sql .= " where zdoctype.oai_identifier = zdoc.oai_identifier and  zdoc.id = relAuthorDoc.fid_zora_doc and ";
+        //$sql .= " relAuthorDoc.fid_zora_author = zA.id ";
+        //$sql .= " and zA.id = " . $zaID;
+
+
+
+        $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+        foreach ($result as $row) {
+            //todo: GW für zoradoctype
+            $tId = $row['zdoctype.id'];
+            $sql = "delete from fsw_zora_doctype where id = " .  $this->qV ($tId);
+            $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        }
+
+        $sql = "select cover.id from fsw_cover cover join fsw_zora_doc zdoc on ";
+        $sql .= " (cover.oai_identifier = zdoc.oai_identifier) join fsw_relation_zora_author_zora_doc relAuthorDoc on ";
+        $sql .= " (zdoc.id = relAuthorDoc.fid_zora_doc) join fsw_zora_author zA on ( relAuthorDoc.fid_zora_author = zA.id ) ";
+        $sql .= " where zA.id = " . $zaID;
+
+        $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+        foreach ($result as $row) {
+            //todo: GW für zoradoctype
+            $tId = $row['cover.id'];
+            $sql = "delete from fsw_cover where id = " .  $this->qV ($tId);
+            $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        }
+
+
+        $sql = "select zdoc.id from  fsw_zora_doc zdoc join fsw_relation_zora_author_zora_doc relAuthorDoc on ";
+        $sql .= " (zdoc.id = relAuthorDoc.fid_zora_doc) join fsw_zora_author zA on ( relAuthorDoc.fid_zora_author = zA.id ) ";
+        $sql .= " where zA.id = " . $zaID;
+
+        $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+        foreach ($result as $row) {
+            //todo: GW für zoradoctype
+            $tId = $row['zdoc.id'];
+            $sql = "delete from fsw_zora_doc where id = " .  $this->qV ($tId);
+            $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        }
+
+
+        $sql = "select relAuthorDoc.id from  fsw_relation_zora_author_zora_doc relAuthorDoc join  fsw_zora_author zA ";
+        $sql .= "  on ( relAuthorDoc.fid_zora_author = zA.id ) where zA.id = " . $zaID;
+
+        $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+        foreach ($result as $row) {
+            //todo: GW für zoradoctype
+            $tId = $row['relAuthorDoc.id'];
+            $sql = "delete from fsw_relation_zora_author_zora_doc where id = " .  $this->qV ($tId);
+            $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        }
 
     }
 

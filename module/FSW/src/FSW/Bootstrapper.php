@@ -33,6 +33,10 @@ class Bootstrapper {
         'FSW\Controller\Lehrveranstaltungen'    =>  array(
                                             'deletePerson',
                                             'deleteLehrveranstaltung'
+
+                                        ),
+        'FSW\Controller\Personen'    =>  array(
+                                            'deleteZoraAuthor'
                                         )
     );
 

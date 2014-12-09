@@ -24,6 +24,7 @@ class PersonZoraAuthor extends BaseModel implements InputFilterAwareInterface {
     public $fid_personen;
     public $datum_von;
     public $datum_bis;
+    public $numberzoradocs;
 
 
     /**
@@ -201,6 +202,24 @@ class PersonZoraAuthor extends BaseModel implements InputFilterAwareInterface {
     {
         $this->datum_von = $datum_von;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getNumberzoradocs()
+    {
+        return $this->numberzoradocs;
+    }
+
+    /**
+     * @param mixed $numberzoradocs
+     */
+    public function setNumberzoradocs($numberzoradocs)
+    {
+        $this->numberzoradocs = $numberzoradocs;
+    }
+
+
 
 
 }
