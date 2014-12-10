@@ -35,7 +35,7 @@ var Kolloquien = {
             //$("<iframe scrolling='yes' class='fswDialogBox' width='1000' height='1000'  src='/kolloquien/editPersonenVeranstaltung/15'  >").dialog({
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
-                    $(this).load('/kolloquien/editPersonenVeranstaltung/' + veranstaltungID );
+                    $(this).load('/static/zf2/public/index.php/kolloquien/editPersonenVeranstaltung/' + veranstaltungID );
 
                     $('#fswDialogBox').css('background-color','#d9d9d9');
                 },
@@ -71,7 +71,7 @@ var Kolloquien = {
 
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
-                    $(this).load('/kolloquien/addPersonVeranstaltung/' + veranstaltungID );
+                    $(this).load('/static/zf2/public/index.php/kolloquien/addPersonVeranstaltung/' + veranstaltungID );
 
                     $('#fswDialogBox').css('background-color','#d9d9d9');
                 },
@@ -82,7 +82,7 @@ var Kolloquien = {
 
                             if ($('#vortragend\\[id\\]',this).val() == 0) {
 
-                                $(this).load('/kolloquien/addPersonVeranstaltung', $('#Vortragend', this).serializeArray());
+                                $(this).load('/static/zf2/public/index.php/kolloquien/addPersonVeranstaltung', $('#Vortragend', this).serializeArray());
                             } else {
                                 alert ('kein doppeltes Einfuegen')
                             }
@@ -136,7 +136,7 @@ var Kolloquien = {
                             text: "OK",
                             click: function() {
                                 $.ajax({
-                                    url: '/kolloquien/deleteVeranstaltung',
+                                    url: '/static/zf2/public/index.php/kolloquien/deleteVeranstaltung',
                                     dataType: 'json',
                                     //async false ist wichtig da ansonsten success function als callback aufgerufen wird.
                                     //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
@@ -145,7 +145,7 @@ var Kolloquien = {
                                         'id': currentId
                                     },
                                     success: function(response) {
-                                        window.location = '/kolloquien/edit/' + id + '?completeView=true';
+                                        window.location = '/static/zf2/public/index.php/kolloquien/edit/' + id + '?completeView=true';
                                     }
                                 });
                                 $( this ).dialog( "close" );
@@ -184,7 +184,7 @@ var Kolloquien = {
 
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
-                    $(this).load('/kolloquien/editVeranstaltung/' + veranstaltungID, function () {
+                    $(this).load('/static/zf2/public/index.php/kolloquien/editVeranstaltung/' + veranstaltungID, function () {
                             $( ".datePicker").datepicker({dateFormat: 'yy-mm-dd'});
                         }
                     );
@@ -196,7 +196,7 @@ var Kolloquien = {
                         text: "Sichern",
                         click: function() {
 
-                            $(this).load('/kolloquien/editVeranstaltung/' + veranstaltungID, $('#Veranstaltung', this).serializeArray());
+                            $(this).load('/static/zf2/public/index.php/kolloquien/editVeranstaltung/' + veranstaltungID, $('#Veranstaltung', this).serializeArray());
 
                         }
                     },
@@ -204,7 +204,7 @@ var Kolloquien = {
                         text: "Abbrechen",
                         click: function() {
                             $( this ).dialog( "close" );
-                            window.location = '/kolloquien/edit/' + id + '?completeView=true';
+                            window.location = '/static/zf2/public/index.php/kolloquien/edit/' + id + '?completeView=true';
                         }
                     }
 
@@ -234,7 +234,7 @@ var Kolloquien = {
                     var id_kolloquium = $('#Kolloqium\\[id\\]').val();
 
 
-                    $(this).load('/kolloquien/addVeranstaltung?id_kolloquium=' + id_kolloquium, function () {
+                    $(this).load('/static/zf2/public/index.php/kolloquien/addVeranstaltung?id_kolloquium=' + id_kolloquium, function () {
 
                         $( ".datePicker").datepicker({dateFormat: 'yy-mm-dd'});
                     } );
@@ -248,7 +248,7 @@ var Kolloquien = {
 
                             if ($('#Veranstaltungen\\[id\\]',this).val() == 0) {
 
-                                $(this).load('/kolloquien/addVeranstaltung', $('#Veranstaltung', this).serializeArray());
+                                $(this).load('/static/zf2/public/index.php/kolloquien/addVeranstaltung', $('#Veranstaltung', this).serializeArray());
                             } else {
                                 alert ('kein doppeltes Einfuegen')
                             }
@@ -264,7 +264,7 @@ var Kolloquien = {
                         text: "Abbrechen",
                         click: function() {
                             $( this ).dialog( "close" );
-                            window.location = '/kolloquien/edit/' + id + '?completeView=true';
+                            window.location = '/static/zf2/public/index.php/kolloquien/edit/' + id + '?completeView=true';
                         }
                     }
 
@@ -293,7 +293,7 @@ var Kolloquien = {
             //$("<iframe scrolling='yes' class='fswDialogBox' width='1000' height='1000'  src='/kolloquien/editPersonenVeranstaltung/15'  >").dialog({
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
-                    $(this).load('/kolloquien/addKolloquium' );
+                    $(this).load('/static/zf2/public/index.php/kolloquien/addKolloquium' );
 
                     $('#fswDialogBox').css('background-color','#d9d9d9');
                 },
@@ -311,7 +311,7 @@ var Kolloquien = {
                             var tempId_kolloquium = $('textarea#Kolloqium\\[id_kolloquium\\]',myDialog).val();
 
                             $.ajax({
-                                url: '/kolloquien/testValidKolloquium',
+                                url: '/static/zf2/public/index.php/kolloquien/testValidKolloquium',
                                 dataType: 'json',
                                 //async false ist wichtig da ansonsten success function als callback aufgerufen wird.
                                 //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
@@ -335,7 +335,7 @@ var Kolloquien = {
                             if (returnValue) {
 
                                 $.ajax({
-                                    url: '/kolloquien/addSaveKolloquium',
+                                    url: '/static/zf2/public/index.php/kolloquien/addSaveKolloquium',
                                     dataType: 'json',
                                     //async false ist wichtig da ansonsten success function als callback aufgerufen wird.
                                     //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
@@ -389,7 +389,7 @@ var Kolloquien = {
 
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
-                    $(this).load('/kolloquien/editKolloquiumAttr/' + id );
+                    $(this).load('/static/zf2/public/index.php/kolloquien/editKolloquiumAttr/' + id );
 
                     $('#fswDialogBox').css('background-color','#d9d9d9');
                 },
@@ -398,7 +398,7 @@ var Kolloquien = {
                         text: "Sichern",
                         click: function() {
 
-                            $(this).load('/kolloquien/editKolloquiumAttr/' + id, $('#Kolloquium', this).serializeArray() );
+                            $(this).load('/static/zf2/public/index.php/kolloquien/editKolloquiumAttr/' + id, $('#Kolloquium', this).serializeArray() );
 
                         }
                     },
@@ -406,7 +406,7 @@ var Kolloquien = {
                         text: "Abbrechen",
                         click: function() {
                             $( this ).dialog( "close" );
-                            window.location = '/kolloquien/edit/' + id + '?completeView=true';
+                            window.location = '/static/zf2/public/index.php/kolloquien/edit/' + id + '?completeView=true';
                         }
                     }
 
@@ -441,7 +441,7 @@ var Kolloquien = {
                             click: function() {
 
                                 $.ajax({
-                                    url: '/kolloquien/deleteKolloquium',
+                                    url: '/static/zf2/public/index.php/kolloquien/deleteKolloquium',
                                     dataType: 'json',
                                     //async false ist wichtig da ansonsten success function als callback aufgerufen wird.
                                     //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
@@ -450,7 +450,7 @@ var Kolloquien = {
                                         'id': $('#Kolloqium\\[id\\]').val()
                                     },
                                     success: function(response) {
-                                        window.location = '/kolloquien/';
+                                        window.location = '/static/zf2/public/index.php/kolloquien/';
                                     }
                                 });
                                 $( this ).dialog( "close" );

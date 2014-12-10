@@ -20,7 +20,7 @@ var CustomFunctions = {
         //console.log(idZoraAuthorNumber);
 
 
-        $.post('/personen/editZoraAuthor',{
+        $.post('/static/zf2/public/index.php/personen/editZoraAuthor',{
 
                 mode : 'delAuthor',
                 zoraAutorId : idZoraAuthorNumber
@@ -114,7 +114,7 @@ var CustomFunctions = {
          );
          */
 
-        $.post('/personen/editZoraAuthor', {
+        $.post('/static/zf2/public/index.php/personen/editZoraAuthor', {
 
                 'mode': 'addAuthor',
                 'persExtendedIdFSW': window.persExtendedIdFSW,
@@ -182,7 +182,7 @@ var CustomFunctions = {
 
 
 
-        $.post('/personen/editZoraAuthor',
+        $.post('/static/zf2/public/index.php/personen/editZoraAuthor',
             zoraAttributes ,
             function (response, type, xhr) {
 

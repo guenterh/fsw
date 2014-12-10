@@ -26,16 +26,16 @@
             <img src="<?php echo  $doc->getCoverLink()?>" />
         </div>
         <p>
-     <? else: ?>
+     <?php else: ?>
 
             <li>
         <p>
 
-    <? endif; ?>
+    <?php endif; ?>
 
         <?php echo  $doc->getSource() ?>
 
-    <? if ( $doc->getRelationExtern() != null && (strpos($doc->getRelationExtern(),"e-collection") == true) ||
+    <?php if ( $doc->getRelationExtern() != null && (strpos($doc->getRelationExtern(),"e-collection") == true) ||
             strpos($doc->getRelationExtern(),"lir") == true ||
             strpos($doc->getRelationExtern(),"hls") == true ||
             strpos($doc->getRelationExtern(),"ssoar") == true ||
@@ -60,92 +60,92 @@
             -->
 
 
-            <? if ($doc->getRelationExtern() != null) : ?>
+            <?php if ($doc->getRelationExtern() != null) : ?>
             &nbsp;
             <a class="uzh" href="<?php echo $doc->getRelationExtern()?>" target="_blank">Volltext</a>
-            <? endif; ?>
+            <?php endif; ?>
 
 
-            <? if ($doc->getSwissbibISBN() != null) : ?>
+            <?php if ($doc->getSwissbibISBN() != null) : ?>
             &nbsp;
             <a class="uzh" href="<?php echo  $doc->getSwissbibISBN()?>" target="_blank">swissbib</a>
-            <? endif; ?>
+            <?php endif; ?>
 
-            <? if ($doc->getRelationZora() != null) : ?>
+            <?php if ($doc->getRelationZora() != null) : ?>
             &nbsp;
             <a class="uzh" href="<?php echo  $doc->getRelationZora()?>" target="_blank">Zora</a>
-            <? endif; ?>
+            <?php endif; ?>
 
 
 
 
 
 
-        <? elseif (strpos(strtolower($doc->getFormat()),"pdf") == true) : ?>
+        <?php elseif (strpos(strtolower($doc->getFormat()),"pdf") == true) : ?>
 
 
             <!-- Fall 2-- ein PDF vorhanden, dies kann jedoch zugangsbeschränkt sein -->
 
-            <? if ($doc->getRelationExtern() != null): ?>
+            <?php if ($doc->getRelationExtern() != null): ?>
             &nbsp;
             <a class="uzh" href="<?php echo  $doc->getRelationExtern()?>" target="_blank">Verlagsinfo</a>
-            <? endif; ?>
+            <?php endif; ?>
 
 
-            <? if ($doc->getSwissbibISBN() != null): ?>
+            <?php if ($doc->getSwissbibISBN() != null): ?>
             &nbsp;
             <a class="uzh" href="<?php echo  $doc->getSwissbibISBN() ?>" target="_blank">swissbib</a>
-            <? endif; ?>
+            <?php endif; ?>
 
-            <? if ($doc->getRelationZora() != null): ?>
+            <?php if ($doc->getRelationZora() != null): ?>
             &nbsp;
             <a class="uzh" href="<?php echo  $doc->getRelationZora()?>" target="_blank">Volltext (evt. mit Zugangsbeschränkung)</a>
-            <? endif; ?>
+            <?php endif; ?>
 
 
-            <? else: ?>
+            <?php else: ?>
 
 
             <!-- Fall 3: kein PDF im Zora ich knn jedoch Verlagsinfo haben -->
 
-            <? if ($doc->getRelationExtern() != null): ?>
+            <?php if ($doc->getRelationExtern() != null): ?>
             &nbsp;
             <a class="uzh" href="<?php echo $doc->getRelationExtern()?>" target="_blank">Verlagsinfo</a>
-            <? endif; ?>
+            <?php endif; ?>
 
 
-            <? if ($doc->getSwissbibISBN() != null): ?>
+            <?php if ($doc->getSwissbibISBN() != null): ?>
             &nbsp;
             <a class="uzh" href="<?php echo  $doc->getSwissbibISBN()?>" target="_blank">swissbib</a>
-            <? endif; ?>
+            <?php endif; ?>
 
-            <? if ($doc->getRelationZora() != null): ?>
+            <?php if ($doc->getRelationZora() != null): ?>
             &nbsp;
             <a class="uzh" href="<?php echo  $doc->getRelationZora()?>" target="_blank">Zora</a>
-            <? endif; ?>
+            <?php endif; ?>
 
-            <? endif; ?>
+            <?php endif; ?>
 
 
             <!--Abschluss der Struktur - entweder mit oder ohne Bild  -->
 
 
 
-            <? if ($doc->getCoverLink() != null):?>
+            <?php if ($doc->getCoverLink() != null):?>
         </p>
     </div>
-    <? else: ?>
+    <?php else: ?>
 
     </p>
     </li>
 
 
-    <? endif; ?>
+    <?php endif; ?>
 
 
 
 
-    <? endforeach; ?>
+    <?php endforeach; ?>
 
 
 </ul>

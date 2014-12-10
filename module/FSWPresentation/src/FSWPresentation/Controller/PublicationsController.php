@@ -13,7 +13,7 @@ use FSW\Controller\BaseController;
 
 
 
-class MedienController extends BaseController {
+class PublicationsController extends BaseController {
 
 
     protected $mediumTable;

@@ -32,7 +32,7 @@ var  Personenaktivitaet = {
 
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
-                    $(this).load('/personenaktivitaet/editCoverLink',
+                    $(this).load('/static/zf2/public/index.php/personenaktivitaet/editCoverLink',
                         {
                             oai_identifier: oaiIdentifier,
                             modus: 'show'
@@ -49,7 +49,7 @@ var  Personenaktivitaet = {
 
                             //ar idLink = $('#id', $('form#Coverlink')).val();
 
-                            $(this).load('/personenaktivitaet/editCoverLink', $('#Coverlink',this).serializeArray());
+                            $(this).load('/static/zf2/public/index.php/personenaktivitaet/editCoverLink', $('#Coverlink',this).serializeArray());
 
                         }
                     },

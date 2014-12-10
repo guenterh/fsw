@@ -33,7 +33,7 @@ var  Lehrveranstaltung = {
 
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
-                    $(this).load('/lehrveranstaltung/editPerson',
+                    $(this).load('/static/zf2/public/index.php/lehrveranstaltung/editPerson',
                         {
                             fper_personen_pers_id: personenId,
                             id: relationId,
@@ -49,7 +49,7 @@ var  Lehrveranstaltung = {
                         click: function() {
 
                             //$(this).load('/kolloquien/editVeranstaltung/' + veranstaltungID, $('#Veranstaltung', this).serializeArray() );
-                            $(this).load('/lehrveranstaltung/editPerson',
+                            $(this).load('/static/zf2/public/index.php/lehrveranstaltung/editPerson',
                                 $('#personenLehrveranstaltung', this).serializeArray()
                             );
 
@@ -59,7 +59,7 @@ var  Lehrveranstaltung = {
                         text: "Abbrechen",
                         click: function() {
                             $( this ).dialog( "close" );
-                            window.location = '/lehrveranstaltung/edit/' + veranstaltungId + '?completeView=true';
+                            window.location = '/static/zf2/public/index.php/lehrveranstaltung/edit/' + veranstaltungId + '?completeView=true';
                         }
                     }
 
@@ -101,14 +101,14 @@ var  Lehrveranstaltung = {
                             text: "OK",
                             click: function() {
                                 $.ajax({
-                                    url: '/lehrveranstaltung/deletePerson/' + relationId,
+                                    url: '/static/zf2/public/index.php/lehrveranstaltung/deletePerson/' + relationId,
                                     dataType: 'json',
                                     //async false ist wichtig da ansonsten success function als callback aufgerufen wird.
                                     //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
                                     async: false,
                                     success: function(response) {
 
-                                        window.location = '/lehrveranstaltung/edit/' + lvid + '?completeView=true';
+                                        window.location = '/static/zf2/public/index.php/lehrveranstaltung/edit/' + lvid + '?completeView=true';
 
                                     }
                                 });
@@ -148,7 +148,7 @@ var  Lehrveranstaltung = {
 
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
-                    $(this).load('/lehrveranstaltung/editPerson',
+                    $(this).load('/static/zf2/public/index.php/lehrveranstaltung/editPerson',
                         {
                             fper_personen_pers_id: 0,
                             id: 0,
@@ -164,7 +164,7 @@ var  Lehrveranstaltung = {
                         click: function() {
 
                             //$(this).load('/kolloquien/editVeranstaltung/' + veranstaltungID, $('#Veranstaltung', this).serializeArray() );
-                            $(this).load('/lehrveranstaltung/editPerson',
+                            $(this).load('/static/zf2/public/index.php/lehrveranstaltung/editPerson',
                                 $('#personenLehrveranstaltung', this).serializeArray()
                             );
 
@@ -174,7 +174,7 @@ var  Lehrveranstaltung = {
                         text: "Abbrechen",
                         click: function() {
                             $( this ).dialog( "close" );
-                            window.location = '/lehrveranstaltung/edit/' + currentLV + '?completeView=true';
+                            window.location = '/static/zf2/public/index.php/lehrveranstaltung/edit/' + currentLV + '?completeView=true';
 
                         }
                     }
@@ -205,7 +205,7 @@ var  Lehrveranstaltung = {
 
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
-                    $(this).load('/lehrveranstaltung/editLvModal' );
+                    $(this).load('/static/zf2/public/index.php/lehrveranstaltung/editLvModal' );
 
                     $('#fswDialogBox').css('background-color','#d9d9d9');
                 },
@@ -215,7 +215,7 @@ var  Lehrveranstaltung = {
                         click: function() {
 
                             //$(this).load('/kolloquien/editVeranstaltung/' + veranstaltungID, $('#Veranstaltung', this).serializeArray() );
-                            $(this).load('/lehrveranstaltung/editLvModal',
+                            $(this).load('/static/zf2/public/index.php/lehrveranstaltung/editLvModal',
                                 $('#lehrveranstaltung', this).serializeArray()
                             );
 
@@ -225,7 +225,7 @@ var  Lehrveranstaltung = {
                         text: "Abbrechen",
                         click: function() {
                             $( this ).dialog( "close" );
-                            window.location = '/lehrveranstaltung/';
+                            window.location = '/static/zf2/public/index.php/lehrveranstaltung/';
 
                         }
                     }
@@ -257,7 +257,7 @@ var  Lehrveranstaltung = {
 
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
-                    $(this).load('/lehrveranstaltung/editLvModal/' + currentLVId);
+                    $(this).load('/static/zf2/public/index.php/lehrveranstaltung/editLvModal/' + currentLVId);
 
                     $('#fswDialogBox').css('background-color','#d9d9d9');
                 },
@@ -267,7 +267,7 @@ var  Lehrveranstaltung = {
                         click: function() {
 
                             //$(this).load('/kolloquien/editVeranstaltung/' + veranstaltungID, $('#Veranstaltung', this).serializeArray() );
-                            $(this).load('/lehrveranstaltung/editLvModal/' + currentLVId ,
+                            $(this).load('/static/zf2/public/index.php/lehrveranstaltung/editLvModal/' + currentLVId ,
                                 $('#lehrveranstaltung', this).serializeArray()
                             );
 
@@ -277,7 +277,7 @@ var  Lehrveranstaltung = {
                         text: "Abbrechen",
                         click: function() {
                             $( this ).dialog( "close" );
-                            window.location = '/lehrveranstaltung/edit/' + currentLVId + '?completeView=true';
+                            window.location = '/static/zf2/public/index.php/lehrveranstaltung/edit/' + currentLVId + '?completeView=true';
 
                         }
                     }
@@ -325,7 +325,7 @@ var  Lehrveranstaltung = {
 
                                 //alert ('in ok');
                                 $.ajax({
-                                    url: '/lehrveranstaltung/deleteLehrveranstaltung',
+                                    url: '/static/zf2/public/index.php/lehrveranstaltung/deleteLehrveranstaltung',
                                     dataType: 'json',
                                     //async false ist wichtig da ansonsten success function als callback aufgerufen wird.
                                     //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
@@ -334,7 +334,7 @@ var  Lehrveranstaltung = {
                                         'id': currentLVId
                                     },
                                     success: function(response) {
-                                        window.location = '/lehrveranstaltung/';
+                                        window.location = '/static/zf2/public/index.php/lehrveranstaltung/';
 
                                     }
                                 });

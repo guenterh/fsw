@@ -33,7 +33,7 @@ var Personen= {
 
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
-                    $(this).load('/personen/editCoverLink',
+                    $(this).load('/static/zf2/public/index.php/personen/editCoverLink',
                         {
                             oai_identifier: oaiIdentifier,
                             modus: 'show'
@@ -48,7 +48,7 @@ var Personen= {
                         click: function() {
 
 
-                            $(this).load('/personen/editCoverLink', $('#Coverlink',this).serializeArray());
+                            $(this).load('/static/zf2/public/index.php/personen/editCoverLink', $('#Coverlink',this).serializeArray());
 
                         }
                     },
@@ -56,7 +56,7 @@ var Personen= {
                         text: "Abbrechen",
                         click: function() {
                             $( this ).dialog( "close" );
-                            window.location = '/personen/edit/' + pers_id + '?completeView=true';
+                            window.location = '/static/zf2/public/index.php/personen/edit/' + pers_id + '?completeView=true';
                         }
                     }
 
@@ -86,7 +86,7 @@ var Personen= {
 
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
-                    $(this).load('/personen/addZoraAuthor/' + persExtendedIdFSW, function () {
+                    $(this).load('/static/zf2/public/index.php/personen/addZoraAuthor/' + persExtendedIdFSW, function () {
 
                             $( ".datePicker").datepicker({dateFormat: 'yy-mm-dd'});
                         }
@@ -99,7 +99,7 @@ var Personen= {
                         text: "Sichern",
                         click: function() {
 
-                            $(this).load('/personen/addZoraAuthor',
+                            $(this).load('/static/zf2/public/index.php/personen/addZoraAuthor',
                                 $('#ZoraAuthor', this).serializeArray()
                             );
 
@@ -109,7 +109,7 @@ var Personen= {
                         text: "Abbrechen",
                         click: function() {
                             $( this ).dialog( "close" );
-                            window.location = '/personen/edit/' + pers_id + '?completeView=true';
+                            window.location = '/static/zf2/public/index.php/personen/edit/' + pers_id + '?completeView=true';
 
                         }
                     }
@@ -151,7 +151,7 @@ var Personen= {
                             click: function() {
 
                                 $.ajax({
-                                    url: '/personen/deleteZoraAuthor',
+                                    url: '/static/zf2/public/index.php/personen/deleteZoraAuthor',
                                     dataType: 'json',
                                     //async false ist wichtig da ansonsten success function als callback aufgerufen wird.
                                     //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
@@ -171,7 +171,7 @@ var Personen= {
                             text: "Abbrechen",
                             click: function() {
                                 $( this ).dialog( "close" );
-                                window.location = '/personen/edit/' + pers_id + '?completeView=true';
+                                window.location = '/static/zf2/public/index.php/personen/edit/' + pers_id + '?completeView=true';
                             }
                         }
 
@@ -199,7 +199,7 @@ var Personen= {
 
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
-                    $(this).load('/personen/editZoraAuthor/' + currentId, function () {
+                    $(this).load('/static/zf2/public/index.php/personen/editZoraAuthor/' + currentId, function () {
 
                             $( ".datePicker").datepicker({dateFormat: 'yy-mm-dd'});
                         }
@@ -212,7 +212,7 @@ var Personen= {
                         text: "Sichern",
                         click: function() {
 
-                            $(this).load('/personen/editZoraAuthor',
+                            $(this).load('/static/zf2/public/index.php/personen/editZoraAuthor',
                                 $('#ZoraAuthor', this).serializeArray()
                             );
 
@@ -222,7 +222,7 @@ var Personen= {
                         text: "Abbrechen",
                         click: function() {
                             $( this ).dialog( "close" );
-                            window.location = '/personen/edit/' + pers_id + '?completeView=true';
+                            window.location = '/static/zf2/public/index.php/personen/edit/' + pers_id + '?completeView=true';
 
                         }
                     }
@@ -262,7 +262,7 @@ var Personen= {
 
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
-                    $(this).load('/personen/editProfilURL/' + persExtendedIdFSW);
+                    $(this).load('/static/zf2/public/index.php/personen/editProfilURL/' + persExtendedIdFSW);
 
                     $('#fswDialogBox').css('background-color','#d9d9d9');
                 },
@@ -272,7 +272,7 @@ var Personen= {
                         click: function() {
 
                             //$(this).load('/kolloquien/editVeranstaltung/' + veranstaltungID, $('#Veranstaltung', this).serializeArray() );
-                            $(this).load('/personen/editProfilURL/' + persExtendedIdFSW ,
+                            $(this).load('/static/zf2/public/index.php/personen/editProfilURL/' + persExtendedIdFSW ,
                                 $('#FSWPersonExtended', this).serializeArray()
                             );
 
@@ -282,7 +282,7 @@ var Personen= {
                         text: "AbbrechenEditProfilURL",
                         click: function() {
                             $( this ).dialog( "close" );
-                            window.location = '/personen/edit/' + pers_id + '?completeView=true';
+                            window.location = '/static/zf2/public/index.php/personen/edit/' + pers_id + '?completeView=true';
                             //$.get('/personen/edit/' + pers_id + '?completeView=true')
                         }
                     }
@@ -310,7 +310,7 @@ var Personen= {
             event.preventDefault();
 
             var relation_id = $(this).attr("data-currentRole");
-            $.post('/personen/deleteBeziehungPersonRolle',
+            $.post('/static/zf2/public/index.php/personen/deleteBeziehungPersonRolle',
                 {
                     relationID: relation_id
                 }
