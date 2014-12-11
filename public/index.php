@@ -13,9 +13,11 @@ if (php_sapi_name() === 'cli-server' && is_file(__DIR__ . parse_url($_SERVER['RE
 // Setup autoloading
 require 'init_autoloader.php';
 
-ini_set('short_open_tag', '1');
+//ini_set('short_open_tag', '1');
 
 define("APP_PATH",dirname(__DIR__));
+
+//ini_set('display_errors', 'On');
 
 
 if (isset($_SERVER['APPLICATION_ENV']) &&  $_SERVER['APPLICATION_ENV'] == 'development') {

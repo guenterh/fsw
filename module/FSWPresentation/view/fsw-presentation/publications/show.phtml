@@ -20,7 +20,7 @@
     beachte: dei Ende tags der Struktur sind am Ende und müssen wieder durch entsprechende Abfragen ermittelt werden
     -->
 
-    <? if ($doc->getCoverLink() != null): ?>
+    <?php if ($doc->getCoverLink() != null): ?>
     <div class="objectContainer">
         <div class="objectFloat left" style="width:70px;">
             <img src="<?php echo  $doc->getCoverLink()?>" />
