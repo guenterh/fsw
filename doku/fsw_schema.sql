@@ -250,8 +250,33 @@ CREATE TABLE IF NOT EXISTS `fsw_relation_personen_fsw_lehrveranstaltung` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 
+-- --------------------------------------------------------
 
 
+
+
+DROP TABLE IF EXISTS `fsw_session`;
+CREATE TABLE `fsw_session` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `session_id` varchar(128) DEFAULT NULL,
+  `data` text,
+  `last_used` int(12) NOT NULL DEFAULT '0',
+  `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `session_id` (`session_id`),
+  KEY `last_used` (`last_used`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+
+
+
+
+DROP TABLE IF EXISTS `fsw_users`;
+CREATE TABLE IF NOT EXISTS `fsw_users` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) DEFAULT NULL,
+  `pass` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

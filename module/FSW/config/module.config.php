@@ -125,7 +125,19 @@ return array(
                     ),
                 ),
 
+            ),
+            'authentication' => array(
+                'type'  =>  'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/authenticate',
+                    'defaults' => array(
+                        'controller' => 'FSW\Controller\Authentication',
+                        'action'     => 'process',
+                    ),
+                ),
+
             )
+
 
 
 
@@ -265,7 +277,15 @@ return array(
             'ZoraDocTypeTableGateway'          =>  'FSW\Services\Factory::getZoraDocTypeTableGateway',
             'CoverTableGateway'          =>  'FSW\Services\Factory::getCoverTableGateway',
             'FSW\Services\Facade\ZoraFacade'    =>  'FSW\Services\Factory::getZoraFacade',
+            //'AuthenticationFacade'    =>  'FSW\Services\Factory::getAuthenticationFacade',
             'oaiClient'                     =>      'FSW\Services\Factory::getOAIClient',
+            'FSW\SessionPluginManager' => 'FSW\Services\Factory::getSessionPluginManager',
+            'FSW\DbTablePluginManager' => 'FSW\Services\Factory::getDbTablePluginManager',
+            'FSW\AuthManager' => 'FSW\Auth\Factory::getManager',
+            'FSW\AuthPluginManager' => 'FSW\Services\Factory::getAuthPluginManager',
+
+
+
 
 
 
@@ -274,7 +294,9 @@ return array(
         ),
         'invokables' => array(
             'KolloquienFacade' => 'FSW\Services\Facade\KolloquienFacade',
-            'LehrveranstaltungenFacade' =>  'FSW\Services\Facade\LehrveranstaltungFacade'
+            'LehrveranstaltungenFacade' =>  'FSW\Services\Facade\LehrveranstaltungFacade',
+            'FSW\SessionManager' => 'Zend\Session\SessionManager',
+
         ),
         'initializers' => array(
             'FSW\Services\Initializer\Initializer::initInstance',
@@ -297,7 +319,8 @@ return array(
             'FSW\Controller\Forschung' => 'FSW\Controller\Factory::getForschungController',
             'FSW\Controller\PersonenAktivitaeten' => 'FSW\Controller\Factory::getPersonAktivitaetController',
             //'FSW\Controller\Publications' => 'FSW\Controller\Factory::getPublicationsController',
-            'FSW\Controller\Lehrveranstaltungen'    =>  'FSW\Controller\Factory::getLehrveranstaltungenController'
+            'FSW\Controller\Lehrveranstaltungen'    =>  'FSW\Controller\Factory::getLehrveranstaltungenController',
+            'FSW\Controller\Authentication' => 'FSW\Controller\Factory::getAuthenticationController'
 
         )
         //'factories' => array(
@@ -353,6 +376,31 @@ return array(
         'config_reader' => array(
             'abstract_factories' => array('FSW\Services\Config\PluginFactory'),
         ),
+        // This section contains service manager configurations for all VuFind
+        // pluggable components:
+        'plugin_managers' => array(
+            'auth' => array(
+                'abstract_factories' => array('FSW\Auth\PluginFactory'),
+                'invokables' => array(
+                    'database' => 'FSW\Auth\Database',
+                ),
+            ),
+                'db_table' => array(
+                'abstract_factories' => array('FSW\Db\Table\PluginFactory'),
+                'invokables' => array(
+                    'fsw_session' => 'FSW\Db\Table\Session',
+                    'fsw_user' => 'FSW\Db\Table\User',
+                ),
+            ),
+            'session' => array(
+                'abstract_factories' => array('FSW\Session\PluginFactory'),
+                'invokables' => array(
+                    'database' => 'FSW\Session\Database'
+                    //'file' => 'VuFind\Session\File',
+                )
+            )
+
+        )
 
 
     )

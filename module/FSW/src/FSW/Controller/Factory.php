@@ -8,6 +8,7 @@
 
 namespace FSW\Controller;
 
+use FSW\Controller\AuthenticationController;
 use FSW\Services\Facade\FacadeAwareInterface;
 use Zend\ServiceManager\ServiceManager;
 
@@ -102,6 +103,22 @@ class Factory {
 
 
     }
+
+    public static function getAuthenticationController(ServiceManager $sm) {
+
+        $uC = new AuthenticationController();
+        if ($uC instanceof FacadeAwareInterface)  {
+
+            $uC->setFacadeService($sm->getServiceLocator()->get('AuthenticationFacade'));
+
+        }
+        return $uC;
+
+
+
+    }
+
+
 
 
 

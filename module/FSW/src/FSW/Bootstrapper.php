@@ -24,6 +24,8 @@ class Bootstrapper {
      */
     protected $events;
 
+    protected $config;
+
 
     private $jsonActions = array(
         'FSW\Controller\Kolloquien' => array('testValidKolloquium',
@@ -45,6 +47,8 @@ class Bootstrapper {
     {
         $this->event = $event;
         $this->events = $event->getApplication()->getEventManager();
+
+
     }
 
 
@@ -67,15 +71,6 @@ class Bootstrapper {
     }
 
 
-    public function initJson ()
-    {
-
-        $this->events->attach(
-            'render', array($this, 'registerJSONStrategy')
-        );
-
-    }
-
 
     /**
      * Set up configuration manager.
@@ -93,11 +88,22 @@ class Bootstrapper {
             'FSW\Config', new \FSW\Services\Config\PluginManager($cfg)
         );
 
+        $this->config = $serviceManager->get('FSW\Config')->get('config');
         // Use the manager to load the configuration used in subsequent init methods:
         //$this->config = $serviceManager->get('VuFind\Config')->get('config');
     }
 
 
+
+
+    public function initJson ()
+    {
+
+        $this->events->attach(
+            'render', array($this, 'registerJSONStrategy')
+        );
+
+    }
 
 
 
@@ -124,6 +130,47 @@ class Bootstrapper {
 
 
     }
+
+    protected function initSession()
+    {
+        // Don't bother with session in CLI mode (it just causes error messages):
+        if (Console::isConsole()) {
+            return;
+        }
+
+        // Get session configuration:
+        if (!isset($this->config->Session->type)) {
+            throw new \Exception('Cannot initialize session; configuration missing');
+        }
+
+        // Set up the session handler by retrieving all the pieces from the service
+        // manager and injecting appropriate dependencies:
+        $serviceManager = $this->event->getApplication()->getServiceManager();
+        $sessionManager = $serviceManager->get('FSW\SessionManager');
+        $sessionPluginManager = $serviceManager->get('FSW\SessionPluginManager');
+        $sessionHandler = $sessionPluginManager->get($this->config->Session->type);
+        $sessionHandler->setConfig($this->config->Session);
+        $sessionManager->setSaveHandler($sessionHandler);
+
+        // Start up the session:
+        $sessionManager->start();
+
+        // According to the PHP manual, session_write_close should always be
+        // registered as a shutdown function when using an object as a session
+        // handler: http://us.php.net/manual/en/function.session-set-save-handler.php
+        register_shutdown_function(
+            function () use ($sessionManager) {
+                // If storage is immutable, the session is already closed:
+                if (!$sessionManager->getStorage()->isImmutable()) {
+                    $sessionManager->writeClose();
+                }
+            }
+        );
+
+        // Make sure account credentials haven't expired:
+        $serviceManager->get('FSW\AuthManager')->checkForExpiredCredentials();
+    }
+
 
 
 

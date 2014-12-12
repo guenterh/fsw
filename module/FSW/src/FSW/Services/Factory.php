@@ -45,14 +45,34 @@ use FSW\Model\Abteilung;
 class Factory {
 
 
+
+    /**
+     * Generic plugin manager factory (support method).
+     *
+     * @param ServiceManager $sm Service manager.
+     * @param string         $ns VuFind namespace containing plugin manager
+     *
+     * @return object
+     */
+    public static function getGenericPluginManager(ServiceManager $sm, $ns)
+    {
+        $className = 'FSW\\' . $ns . '\PluginManager';
+        $configKey = strtolower(str_replace('\\', '_', $ns));
+        $config = $sm->get('Config');
+        return new $className(
+            new \Zend\ServiceManager\Config(
+                $config['fsw']['plugin_managers'][$configKey]
+            )
+        );
+    }
+
+
+
+
     public static function getPersonFacade(ServiceManager $sm) {
-
-
         //aktuell würd ein invokable ausreichen. (Früher habe ich in dieser factory noch spezielle TableGateways erstellt)
         //vielleicht brauchen wir sie noch
         return new PersonFacade();
-
-
 
     }
 
@@ -267,6 +287,8 @@ class Factory {
         return new TableGateway('fsw_personen_extended', $dbAdapter, null, $resultSetPrototype);
     }
 
+
+
     public static function getPersonZoraAuthorTableGateway(ServiceManager $sm) {
 
         $dbAdapter = $sm->get('HistSemDBService')->getAdapter();
@@ -337,6 +359,47 @@ class Factory {
 
 
     }
+
+
+    /**
+     * Construct the Session Plugin Manager.
+     *
+     * @param ServiceManager $sm Service manager.
+     *
+     * @return \FSW\Session\PluginManager
+     */
+    public static function getSessionPluginManager(ServiceManager $sm)
+    {
+        return static::getGenericPluginManager($sm, 'Session');
+    }
+
+    /**
+     * Construct the Db\Table Plugin Manager.
+     *
+     * @param ServiceManager $sm Service manager.
+     *
+     * @return \FSW\Db\Table\PluginManager
+     */
+    public static function getDbTablePluginManager(ServiceManager $sm)
+    {
+        return static::getGenericPluginManager($sm, 'Db\Table');
+    }
+
+    /**
+     * Construct the Auth Plugin Manager.
+     *
+     * @param ServiceManager $sm Service manager.
+     *
+     * @return \FSW\Auth\PluginManager
+     */
+    public static function getAuthPluginManager(ServiceManager $sm)
+    {
+        return static::getGenericPluginManager($sm, 'Auth');
+    }
+
+
+
+
 
 
 } 
