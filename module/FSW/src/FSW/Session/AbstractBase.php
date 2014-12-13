@@ -119,8 +119,8 @@ abstract class AbstractBase implements SaveHandlerInterface,
      */
     public function destroy($sess_id)
     {
-        $table = $this->getTable('Search');
-        $table->destroySession($sess_id);
+        //$table = $this->getTable('Search');
+        //$table->destroySession($sess_id);
     }
 
     /**

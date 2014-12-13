@@ -26,10 +26,13 @@
  * @link     http://vufind.org/wiki/vufind2:building_a_controller Wiki
  */
 namespace FSW\Controller;
+use FSW\Form\LoginForm;
+use FSW\Model\User;
 use FSW\Services\OAI;
 use Zend\Console\Console;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use FSW\Exception\Auth as AuthException;
 
 /**
  * This controller handles various command-line tools
@@ -40,19 +43,105 @@ use Zend\View\Model\ViewModel;
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     http://vufind.org/wiki/vufind2:building_a_controller Wiki
  */
-class LoginController extends BaseController
-{
-    /**
-     * Harvest OAI-PMH records.
-     *
-     * @return \Zend\Console\Response
-     */
+
+
+
+class LoginController extends BaseController {
     public function loginAction()
     {
 
-        $test = "";
+        if ($this->getRequest()->isGet()) {
+
+            $form = new LoginForm();
+            $user = new User();
+            $user->setId(0);
+            $form->bind($user);
+
+        } else {
+
+            //run validate and save
+            $form = new LoginForm();
+            $form->setData($this->getRequest()->getPost());
+
+            if ($form->isValid()) {
+                //$this->getMediumTable()->saveMedium($medium);
+                try {
+                    $this->getAuthManager()->login($this->getRequest());
+                    $url = $this->followup()->retrieve('url');
+                    if (empty($url) || strlen($url) == 0) {
+                        $config = $this->fswConfig->get('config');
+                        $url = $config->Site->afterLoginRoute;
+                    }
+                    return $this->redirect()->toUrl($url);
 
 
+                } catch (AuthException   $e) {
+                    $this->processAuthenticationException($e);
+                }
+            } else {
+                $test =  $form->getMessages();
+                $eins = "";
+            }
+
+
+        }
+
+
+        return new ViewModel(array(
+            'form' => $form
+        ));
+
+
+    }
+
+    public function logoutAction() {
+
+        $config = $this->fswConfig->get('config');
+
+        $url = $this->followup()->retrieve('url');
+        if (empty($url) || strlen($url) == 0) {
+
+        }
+        if (isset($config->Site->logOutRoute)) {
+
+            //$logoutTarget = $this->getServerUrl($config->Site->logOutRoute);
+            $logoutTarget = $config->Site->logOutRoute;
+        } else {
+            $logoutTarget = $this->getRequest()->getServer()->get('HTTP_REFERER');
+            if (empty($logoutTarget)) {
+                $logoutTarget = $this->getServerUrl('home');
+            }
+
+            // If there is an auth_method parameter in the query, we should strip
+            // it out. Otherwise, the user may get stuck in an infinite loop of
+            // logging out and getting logged back in when using environment-based
+            // authentication methods like Shibboleth.
+            $logoutTarget = preg_replace(
+                '/([?&])auth_method=[^&]*&?/', '$1', $logoutTarget
+            );
+            $logoutTarget = rtrim($logoutTarget, '?');
+        }
+
+        return $this->redirect()
+            ->toUrl($this->getAuthManager()->logout($logoutTarget));
+
+
+    }
+
+
+    protected function processAuthenticationException(AuthException $e)
+    {
+        $msg = $e->getMessage();
+        // If a Shibboleth-style login has failed and the user just logged
+        // out, we need to override the error message with a more relevant
+        // one:
+        if ($msg == 'authentication_error_admin'
+            && $this->getAuthManager()->userHasLoggedOut()
+            //&& $this->getSessionInitiator()
+        ) {
+            $msg = 'authentication_error_loggedout';
+        }
+        $this->flashMessenger()->setNamespace('error')->addMessage($msg);
     }
 
 

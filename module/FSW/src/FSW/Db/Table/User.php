@@ -26,6 +26,7 @@
  * @link     http://vufind.org   Main Site
  */
 namespace FSW\Db\Table;
+use FSW\Db\Table\Gateway as FSWGateway;
 
 /**
  * Table Definition for user
@@ -36,14 +37,14 @@ namespace FSW\Db\Table;
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     http://vufind.org   Main Site
  */
-class User extends Gateway
+class User extends FSWGateway
 {
     /**
      * Constructor
      */
     public function __construct()
     {
-        parent::__construct('fsw_user', 'FSW\Db\Row\User');
+        parent::__construct('fsw_users', 'FSW\Db\Row\User');
     }
 
     /**

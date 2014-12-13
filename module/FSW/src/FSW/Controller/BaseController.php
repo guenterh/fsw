@@ -234,6 +234,15 @@ abstract class BaseController extends AbstractActionController
         if ($restricted) {
             $account = $this->getAuthManager();
             if ($account->isLoggedIn() == false) {
+                // If we got this far, we want to store the referer:
+                $referer = $this->getRequest()->getServer()->get('HTTP_REFERER');
+                if (empty($referer)) {
+                    $referer = "/static/zf2/public/index.php/personen/";
+                }
+
+
+                $this->followup()->store(array(), $referer);
+
                 return $this->forceLogin('melde Dich an',array(),false);
             }
 

@@ -127,9 +127,10 @@ return array(
 
             ),
             'backendlogin' => array(
-                'type'  =>  'Zend\Mvc\Router\Http\Literal',
+                'type'  =>  'segment',
                 'options' => array(
-                    'route'    => '/login',
+                    //'route'    => '/medien[/][:action][/:id]',
+                    'route'    => '/login[/][:action]',
                     'defaults' => array(
                         'controller' => 'FSW\Controller\Login',
                         'action'     => 'login',
@@ -141,6 +142,10 @@ return array(
                 'type'  =>  'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
                     'route'    => '/authenticate',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+
                     'defaults' => array(
                         'controller' => 'FSW\Controller\Authentication',
                         'action'     => 'process',
@@ -389,17 +394,12 @@ return array(
                 'label' => 'lehrveranstaltung',
                 'route' => 'lehrveranstaltung'
             )
-        ),
-        'test' => array(
-            // And finally, here is where we define our page hierarchy
-            //'home' => array(
-            //    'label' => 'navigation_home',
-            //    'route' => 'home'
-            //),
-            'medien' => array(
-                'label' => 'navigation_medien',
-                'route' => 'medien'
-            ),
+        ,
+            'logout' => array(
+                'label' => 'logout',
+                'route' => 'backendlogin',
+                'params'     => array('action' => 'logout')
+            )
         ),
 
     ),

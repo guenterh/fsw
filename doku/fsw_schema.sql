@@ -271,13 +271,22 @@ CREATE TABLE `fsw_session` (
 
 
 DROP TABLE IF EXISTS `fsw_users`;
-CREATE TABLE IF NOT EXISTS `fsw_users` (
+CREATE TABLE `fsw_users` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) DEFAULT NULL,
-  `pass` varchar(32) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `username` varchar(50) NOT NULL DEFAULT '',
+  `password` varchar(32) NOT NULL DEFAULT '',
+  `pass_hash` varchar(60) DEFAULT NULL,
+  `firstname` varchar(50) NOT NULL DEFAULT '',
+  `lastname` varchar(50) NOT NULL DEFAULT '',
+  `email` varchar(250) NOT NULL DEFAULT '',
+  `cat_username` varchar(50) DEFAULT NULL,
+  `cat_password` varchar(50) DEFAULT NULL,
+  `cat_pass_enc` varchar(110) DEFAULT NULL,
+  `college` varchar(100) NOT NULL DEFAULT '',
+  `major` varchar(100) NOT NULL DEFAULT '',
+  `home_library` varchar(100) NOT NULL DEFAULT '',
+  `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `verify_hash` varchar(42) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -1,2 +1,68 @@
 
-<div>melde Dich an</div>
+<?php
+
+$formType = 'horizontal';
+
+$form = $this->form;
+$form->prepare();
+$form->setAttribute('action',$this->url('backendlogin',array('action' => 'login')));
+echo  $this->formTwb()->openTag($form, $formType);
+?>
+
+<?php echo  $this->ztbFlashMessenger()->render() ?>
+
+<fieldset class="general">
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <div class="span12"><?php echo  $this->formRowTwb($form->get('id')) ?></div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <div class="span12"><?php echo  $this->formRowTwb($form->get('username')) ?></div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <div class="span12"><?php echo  $this->formRowTwb($form->get('password')) ?></div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <div class="span12"><?php echo  $this->formRowTwb($form->get('email')) ?></div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <div class="span12"><?php echo  $this->formRowTwb($form->get('firstname')) ?></div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <div class="span12"><?php echo  $this->formRowTwb($form->get('lastname')) ?></div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <div class="span12"><?php echo  $this->formRowTwb($form->get('submit')) ?></div>
+        </div>
+    </div>
+</fieldset>
+
+
+<?php echo  $this->form()->closeTag(); ?>
