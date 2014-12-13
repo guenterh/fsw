@@ -212,7 +212,7 @@ class KolloquienFacade extends BaseFacade {
         }
     }
 
-    public function insertKolloquienFromXMLFile ($url) {
+    public function insertKolloquienFromXMLFile () {
 
 
 
@@ -220,13 +220,15 @@ class KolloquienFacade extends BaseFacade {
         $kollVeranstaltungGateway = $this->histSemDBService->getKolloquienVeranstaltungenGateway();
         $kollVeranstaltungPersonGateway = $this->histSemDBService->getKolloquienVeranstaltungenPersonGateway();
 
-        $kollGateway->delete();
-        $kollVeranstaltungGateway->delete();
-        $kollVeranstaltungPersonGateway->delete();
+        $w = new Where();
 
+        $kollGateway->delete($w);
+        $kollVeranstaltungGateway->delete($w);
+        $kollVeranstaltungPersonGateway->delete($w);
 
+        $urlXMLFile = $this->fswConfigPlugin->get('config')->Kolloquien->oldXMLFile;
 
-        $content = file_get_contents("http://www.fsw.uzh.ch/static/classes/kolloquien/kolloquien.xml");
+        $content = file_get_contents($urlXMLFile);
 
         try {
             $sxml = new \SimpleXMLElement($content);

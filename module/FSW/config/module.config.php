@@ -322,12 +322,6 @@ return array(
 
 
     'controllers' => array(
-        'invokables' => array(
-
-            'FSW\Controller\Harvest' => 'FSW\Controller\HarvestController',
-
-
-        ),
         'factories' => array(
             'FSW\Controller\Personen' => 'FSW\Controller\Factory::getPersonenController',
             'FSW\Controller\Medien' => 'FSW\Controller\Factory::getMedienController',
@@ -337,7 +331,8 @@ return array(
             //'FSW\Controller\Publications' => 'FSW\Controller\Factory::getPublicationsController',
             'FSW\Controller\Lehrveranstaltungen'    =>  'FSW\Controller\Factory::getLehrveranstaltungenController',
             'FSW\Controller\Authentication' => 'FSW\Controller\Factory::getAuthenticationController',
-            'FSW\Controller\Login'  =>  'FSW\Controller\Factory::getBackendLoginController'
+            'FSW\Controller\Login'  =>  'FSW\Controller\Factory::getBackendLoginController',
+            'FSW\Controller\Harvest' => 'FSW\Controller\Factory::getHarvesterController',
 
         )
         //'factories' => array(
