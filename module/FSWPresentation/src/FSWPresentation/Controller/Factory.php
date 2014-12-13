@@ -9,10 +9,21 @@
 namespace FSWPresentation\Controller;
 
 use FSW\Services\Facade\FacadeAwareInterface;
+use FSW\Services\FSWConfigAwareInterface;
 use Zend\ServiceManager\ServiceManager;
 
 class Factory {
 
+    private static function checkConfigAwareInterface($object, ServiceManager $sm) {
+
+        if ($object instanceof FSWConfigAwareInterface)  {
+
+            $object->setFSWConfigService($sm->getServiceLocator()->get('FSW\Config'));
+
+        }
+        return $object;
+
+    }
 
 
     public static function getPublicationsController(ServiceManager $sm) {
@@ -23,7 +34,7 @@ class Factory {
             $pC->setFacadeService($sm->getServiceLocator()->get('FSWPresentation\Services\Facade\PublicationsFacade'));
 
         }
-        return $pC;
+        return static::checkConfigAwareInterface($pC, $sm);
 
     }
 
@@ -37,7 +48,7 @@ class Factory {
 
         }
 
-        return $mC;
+        return static::checkConfigAwareInterface($mC, $sm);
     }
 
 
@@ -51,7 +62,7 @@ class Factory {
 
         }
 
-        return $mC;
+        return static::checkConfigAwareInterface($mC, $sm);
 
     }
 
@@ -67,7 +78,7 @@ class Factory {
 
         }
 
-        return $mC;
+        return static::checkConfigAwareInterface($mC, $sm);
 
     }
 
@@ -81,7 +92,7 @@ class Factory {
 
         }
 
-        return $qarbC;
+        return static::checkConfigAwareInterface($qarbC, $sm);
     }
 
 

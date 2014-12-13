@@ -2,6 +2,7 @@
 namespace FSW\Controller;
 
 
+use FSW\Services\Config\PluginManager;
 use FSW\Services\Facade\BaseFacade;
 use FSW\Services\Facade\FacadeAwareInterface;
 use Zend\Db\ResultSet\ResultSetInterface;
@@ -10,13 +11,18 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Http\Response;
 
+use Zend\Mvc\Exception;
+use Zend\Mvc\MvcEvent;
+
+
 
 
 /**
  * [Description]
  *
  */
-abstract class BaseController extends AbstractActionController implements FacadeAwareInterface
+abstract class BaseController extends AbstractActionController
+                                implements FacadeAwareInterface, \FSW\Services\FSWConfigAwareInterface
 {
 
 	/**
@@ -27,6 +33,7 @@ abstract class BaseController extends AbstractActionController implements Facade
     protected  $histSemDBService;
 
     protected $facade;
+    protected $fswConfig;
 
 
 
@@ -167,7 +174,6 @@ abstract class BaseController extends AbstractActionController implements Facade
         }
         $params = array_merge($params, $additionalParams);
 
-        $test = $this->url()->fromRoute($route, $params);
 
         return $this->url()->fromRoute($route, $params);
     }
@@ -194,7 +200,118 @@ abstract class BaseController extends AbstractActionController implements Facade
 
     }
 
+    public function onDispatch(MvcEvent $e)
+    {
+        $routeMatch = $e->getRouteMatch();
+        if (!$routeMatch) {
+            /**
+             * @todo Determine requirements for when route match is missing.
+             *       Potentially allow pulling directly from request metadata?
+             */
+            throw new Exception\DomainException('Missing route matches; unsure how to retrieve action');
+        }
 
+        $action = $routeMatch->getParam('action', 'not-found');
+        $method = static::getMethodFromAction($action);
+
+        if (!method_exists($this, $method)) {
+            $method = 'notFoundAction';
+        }
+
+
+
+        $currentController = get_class($this);
+        $config = $this->fswConfig->get('config');
+        $restrictedController = $config->LimitedController->restricted->toArray();
+
+        $restricted = false;
+        array_map(function($value) use ($currentController,&$restricted ){
+            if (strcmp($value,$currentController) == 0) {
+                $restricted = true;
+            }
+        } , $restrictedController);
+
+        if ($restricted) {
+            $account = $this->getAuthManager();
+            if ($account->isLoggedIn() == false) {
+                return $this->forceLogin('melde Dich an',array(),false);
+            }
+
+
+        }
+
+
+        $actionResponse = $this->$method();
+
+        $e->setResult($actionResponse);
+
+        return $actionResponse;
+    }
+
+    public function forwardTo($controller, $action, $params = array())
+    {
+        // Inject action into the RouteMatch parameters
+        $params['action'] = $action;
+
+        // Dispatch the requested controller/action:
+        return $this->forward()->dispatch($controller, $params);
+    }
+
+    public function setFSWConfigService(PluginManager $fswConfigPlugin) {
+
+        $this->fswConfig = $fswConfigPlugin;
+
+    }
+
+    protected function getAuthManager()
+    {
+        return $this->getServiceLocator()->get('FSW\AuthManager');
+    }
+
+    protected function forceLogin($msg = null, $extras = array(), $forward = true)
+    {
+        // Set default message if necessary.
+        if (is_null($msg)) {
+            $msg = 'You must be logged in first';
+        }
+
+        // Store the current URL as a login followup action unless we are in a
+        // lightbox (since lightboxes use a different followup mechanism).
+        $this->followup()->store($extras);
+        if (!empty($msg)) {
+            $this->flashMessenger()->setNamespace('error')->addMessage($msg);
+        }
+
+        // Set a flag indicating that we are forcing login:
+        $this->getRequest()->getPost()->set('forcingLogin', true);
+
+        if ($forward) {
+            return $this->forwardTo('Login', 'login');
+        }
+        return $this->redirect()->toRoute('backendlogin');
+    }
+
+
+    /**
+     * Get the full URL to one of VuFind's routes.
+     *
+     * @param bool|string $route Boolean true for current URL, otherwise name of
+     * route to render as URL
+     *
+     * @return string
+     */
+    public function getServerUrl($route = true)
+    {
+        $serverHelper = $this->getViewRenderer()->plugin('serverurl');
+        return $serverHelper(
+            $route === true ? true : $this->url()->fromRoute($route)
+        );
+    }
+
+    protected function getViewRenderer()
+    {
+        return $this->getServiceLocator()->get('viewmanager')->getRenderer();
+    }
 
 
 }

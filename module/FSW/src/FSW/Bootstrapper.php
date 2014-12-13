@@ -7,6 +7,7 @@
  */
 
 namespace FSW;
+use FSW\Controller\LoginController;
 use Zend\Console\Console, Zend\Mvc\MvcEvent, Zend\Mvc\Router\Http\RouteMatch;
 
 class Bootstrapper {
@@ -66,6 +67,17 @@ class Bootstrapper {
                 $this->$method();
             }
         }
+        $app = $this->event->getApplication();
+        $em = $app->getEventManager();
+        $sm = $em->getSharedManager();
+        //wechsle das layout im Falle der Praesentation in Oberfläche
+        $sm->attach(__NAMESPACE__, MvcEvent::EVENT_DISPATCH, function($e) {
+            $controller = $e->getTarget();
+            if ($controller instanceof LoginController    ) {
+                $controller->layout()->setTemplate("login/layout");
+            }
+
+        });
 
 
     }

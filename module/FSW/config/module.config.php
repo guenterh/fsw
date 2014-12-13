@@ -126,6 +126,17 @@ return array(
                 ),
 
             ),
+            'backendlogin' => array(
+                'type'  =>  'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/login',
+                    'defaults' => array(
+                        'controller' => 'FSW\Controller\Login',
+                        'action'     => 'login',
+                    ),
+                ),
+
+            ),
             'authentication' => array(
                 'type'  =>  'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
@@ -308,7 +319,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
 
-            'FSW\Controller\Harvest' => 'FSW\Controller\HarvestController'
+            'FSW\Controller\Harvest' => 'FSW\Controller\HarvestController',
 
 
         ),
@@ -320,7 +331,8 @@ return array(
             'FSW\Controller\PersonenAktivitaeten' => 'FSW\Controller\Factory::getPersonAktivitaetController',
             //'FSW\Controller\Publications' => 'FSW\Controller\Factory::getPublicationsController',
             'FSW\Controller\Lehrveranstaltungen'    =>  'FSW\Controller\Factory::getLehrveranstaltungenController',
-            'FSW\Controller\Authentication' => 'FSW\Controller\Factory::getAuthenticationController'
+            'FSW\Controller\Authentication' => 'FSW\Controller\Factory::getAuthenticationController',
+            'FSW\Controller\Login'  =>  'FSW\Controller\Factory::getBackendLoginController'
 
         )
         //'factories' => array(
@@ -328,6 +340,12 @@ return array(
         //)
 
     ),
+    'controller_plugins' => array(
+        'invokables' => array(
+            'followup' => 'FSW\Controller\Plugin\Followup',
+        )
+    ),
+
     'view_helpers'    => array(
         'factories' => array(
             'Veranstaltungen'   => 'FSW\View\Helper\Factory::getVeranstaltungsHelper',
@@ -341,6 +359,11 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
+        'template_map' => array(
+            'login/layout' => __DIR__ . '/../view/fsw/layout/loginlayout.phtml',
+
+        ),
+
     ),
     'navigation' => array(
         // The DefaultNavigationFactory we configured in (1) uses 'default' as the sitemap key
@@ -366,10 +389,19 @@ return array(
                 'label' => 'lehrveranstaltung',
                 'route' => 'lehrveranstaltung'
             )
-
-
-
         ),
+        'test' => array(
+            // And finally, here is where we define our page hierarchy
+            //'home' => array(
+            //    'label' => 'navigation_home',
+            //    'route' => 'home'
+            //),
+            'medien' => array(
+                'label' => 'navigation_medien',
+                'route' => 'medien'
+            ),
+        ),
+
     ),
     'fsw'       =>  array(
 

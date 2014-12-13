@@ -10,9 +10,23 @@ namespace FSW\Controller;
 
 use FSW\Controller\AuthenticationController;
 use FSW\Services\Facade\FacadeAwareInterface;
+use FSW\Services\FSWConfigAwareInterface;
 use Zend\ServiceManager\ServiceManager;
 
 class Factory {
+
+
+
+    private static function checkConfigAwareInterface($object, ServiceManager $sm) {
+
+        if ($object instanceof FSWConfigAwareInterface)  {
+
+            $object->setFSWConfigService($sm->getServiceLocator()->get('FSW\Config'));
+
+        }
+        return $object;
+
+    }
 
 
     public static function getPersonenController(ServiceManager $sm) {
@@ -24,7 +38,7 @@ class Factory {
             $pC->setFacadeService($sm->getServiceLocator()->get('FSW\Services\Facade\PersonenFacade'));
 
         }
-        return $pC;
+        return static::checkConfigAwareInterface($pC, $sm);
     }
 
     public static function getPublicationsController(ServiceManager $sm) {
@@ -35,7 +49,7 @@ class Factory {
             $pC->setFacadeService($sm->getServiceLocator()->get('FSW\Services\Facade\PublicationsFacade'));
 
         }
-        return $pC;
+        return static::checkConfigAwareInterface($pC, $sm);
 
     }
 
@@ -49,7 +63,7 @@ class Factory {
             $uC->setFacadeService($sm->getServiceLocator()->get('FSW\Services\Facade\MedienFacade'));
 
         }
-        return $uC;
+        return static::checkConfigAwareInterface($uC, $sm);
     }
 
 
@@ -63,7 +77,7 @@ class Factory {
             $uC->setFacadeService($sm->getServiceLocator()->get('KolloquienFacade'));
 
         }
-        return $uC;
+        return static::checkConfigAwareInterface($uC, $sm);
     }
 
     public static function getForschungController(ServiceManager $sm) {
@@ -75,7 +89,7 @@ class Factory {
             $uC->setFacadeService($sm->getServiceLocator()->get('FSW\Services\Facade\ForschungFacade'));
 
         }
-        return $uC;
+        return static::checkConfigAwareInterface($uC, $sm);
     }
 
     public static function getPersonAktivitaetController(ServiceManager $sm) {
@@ -87,7 +101,7 @@ class Factory {
             $uC->setFacadeService($sm->getServiceLocator()->get('FSW\Services\Facade\PersonenAktivitaetFacade'));
 
         }
-        return $uC;
+        return static::checkConfigAwareInterface($uC, $sm);
     }
 
     public static function getLehrveranstaltungenController(ServiceManager $sm) {
@@ -98,23 +112,19 @@ class Factory {
             $uC->setFacadeService($sm->getServiceLocator()->get('LehrveranstaltungenFacade'));
 
         }
-        return $uC;
-
-
+        return static::checkConfigAwareInterface($uC, $sm);
 
     }
 
-    public static function getAuthenticationController(ServiceManager $sm) {
+    public static function getBackendLoginController(ServiceManager $sm) {
 
-        $uC = new AuthenticationController();
-        if ($uC instanceof FacadeAwareInterface)  {
+        $uC = new \FSW\Controller\LoginController();
+        //if ($uC instanceof FacadeAwareInterface)  {
 
-            $uC->setFacadeService($sm->getServiceLocator()->get('AuthenticationFacade'));
+        //    $uC->setFacadeService($sm->getServiceLocator()->get('LehrveranstaltungenFacade'));
 
-        }
-        return $uC;
-
-
+        //}
+        return static::checkConfigAwareInterface($uC, $sm);
 
     }
 
