@@ -9,6 +9,7 @@
 
 namespace Application;
 
+use Application\Controller\IndexController;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
@@ -19,6 +20,17 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
+        $sm = $eventManager->getSharedManager();
+        //wechsle das layout im Falle der Praesentation in Oberfläche
+        $sm->attach(__NAMESPACE__, MvcEvent::EVENT_DISPATCH, function($e) {
+            $controller = $e->getTarget();
+            if ($controller instanceof IndexController    ) {
+                $controller->layout()->setTemplate("startpage/layout");
+            }
+
+        });
+
     }
 
     public function getConfig()
@@ -36,4 +48,6 @@ class Module
             ),
         );
     }
+
+
 }

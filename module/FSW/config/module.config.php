@@ -367,6 +367,7 @@ return array(
         'template_map' => array(
             'login/layout' => __DIR__ . '/../view/fsw/layout/loginlayout.phtml',
 
+
         ),
 
     ),

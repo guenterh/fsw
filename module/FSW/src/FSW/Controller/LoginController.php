@@ -98,10 +98,6 @@ class LoginController extends BaseController {
 
         $config = $this->fswConfig->get('config');
 
-        $url = $this->followup()->retrieve('url');
-        if (empty($url) || strlen($url) == 0) {
-
-        }
         if (isset($config->Site->logOutRoute)) {
 
             //$logoutTarget = $this->getServerUrl($config->Site->logOutRoute);

@@ -102,6 +102,14 @@ class User extends BaseModel implements InputFilterAwareInterface {
                 ),
             ));
 
+            $inputFilter->add(array(
+                'name'     => 'password',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+            ));
 
 
             $this->inputFilter = $inputFilter;

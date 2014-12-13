@@ -1,0 +1,92 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('Forschungsstelle für Sozial- und Wirtschaftsgeschichte:  Backend')->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+
+        <?php	// Styles
+        echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
+            ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.css')
+//				->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
+            ->prependStylesheet($this->basePath() . '/css/style.css')
+            ->prependStylesheet($this->basePath() . '/css/dlu-tw-bootstrap.css')
+            ->prependStylesheet($this->basePath() . '/css/bootstrap.css')
+//				->prependStylesheet($this->basePath() . '/css/jquery-ui.css')
+            ->appendStylesheet($this->basePath() . '/css/jquery.loadmask.css')
+            ->appendStylesheet($this->basePath() . '/css/fsw.css')
+
+        //				->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
+        ?>
+
+        <?php	// Scripts
+        $this->headScript()
+            ->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/js/bootstrap.js')
+//				->prependFile($this->basePath() . '/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/js/jquery.js')
+//				->prependFile($this->basePath() . '/js/jquery.min.js');
+            ->appendFile($this->basePath() . '/js/jquery-ui.js')
+            ->appendFile($this->basePath() . '/js/jquery.form.js')
+            ->appendFile($this->basePath() . '/js/jquery.loadmask.js')
+            ->appendFile($this->basePath() . '/js/jquery.tinysort.js')
+            ->appendFile($this->basePath() . '/js/editor.fsw.js')
+            ->appendFile($this->basePath() . '/js/sidebar.fsw.js')
+            ->appendFile($this->basePath() . '/js/allgemein.fsw.js')
+            ->appendFile($this->basePath() . '/js/lehrveranstaltung.fsw.js')
+            ->appendFile($this->basePath() . '/js/personen.fsw.js')
+            //->appendFile($this->basePath() . '/js/personenaktivitaet.fsw.js')
+            ->appendFile($this->basePath() . '/js/kolloquien.fsw.js')
+
+
+            //->appendFile($this->basePath() . '/js/fsw.custom.functions.js')
+            ->appendFile($this->basePath() . '/js/fsw.js');
+
+        echo $this->headScript();
+        ?>
+
+        <!-- Le styles -->
+
+        
+
+    </head>
+    <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a class="brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('app_title', 'Libadmin')?></a>
+                <div class="nav-collapse collapse">
+                    <?php
+                    /** @var \Zend\View\Helper\Navigation\Menu $mainNav  */
+                    $mainNav	= $this->navigation('Navigation')->menu();
+                    $mainNav->setTranslatorTextDomain('Libadmin');
+                    $mainNav->setUlClass('nav');
+                    echo $mainNav;
+                    ?>
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+    </div>
+        <div class="container">
+
+
+            <div id="debugLog">
+
+
+            </div>
+
+            <?php echo $this->content; ?>
+            <hr>
+            <footer>
+                <p>&copy; 2005 - <?php echo date('Y') ?> by FSW </p>
+            </footer>
+        </div> <!-- /container -->
+        <?php echo $this->inlineScript() ?>
+    </body>
+</html>
