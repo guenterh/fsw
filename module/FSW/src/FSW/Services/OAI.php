@@ -748,6 +748,21 @@ class OAI implements EventManagerAwareInterface
             // Get the ID of the current record:
             $id = $this->extractID($record);
 
+            /*
+            kann man hier noch ein beeseres loggig machen?
+            $this->writeLine('Processing record; ' . $id);
+
+            $searchedIDS = array('oai:www.zora.uzh.ch:19857');
+
+            foreach ($searchedIDS as $tID) {
+
+                if (strcmp($id,$tID) == 0) {
+                    $stopit = "";
+                }
+            }
+            */
+
+
             // Save the current record, either as a deleted or as a regular file:
             $attribs = $record->header->attributes();
 

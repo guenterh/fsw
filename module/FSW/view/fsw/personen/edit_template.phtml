@@ -480,6 +480,12 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
                         </div>
 
                         <fieldset class="general">
+
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <?php echo  $this->formRowTwb($forschung->get('qarb_arb_id')); ?>
+                                </div>
+                            </div>
                             <div class="row-fluid">
                                 <div class="span6">
                                     <?php echo  $this->formRowTwb($forschung->get('qarb_arb_autor_rollid')); ?>
