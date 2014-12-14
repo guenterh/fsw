@@ -377,11 +377,15 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface,
         //Dissertation
         //SELECT * FROM `Qarb_ArbeitenV2` WHERE `qarb_arb_typ` not in ('Lizentiatsarbeit', 'Dissertation', 'Masterarbeit', 'Habilitation') ORDER BY `qarb_arb_autorid`
 
+
+        //Wir können uns hier nicht auf das Feld qarb_arb_autorid beziehen, da dieses im Erfassen des dafür vorgesehen HS Formulars nicht gesetzt wird.
+        //vgl.: https://github.com/guenterh/fsw/issues/18
+        // deswegen muss ich mit der übergebenen pers_id zuerst die Rollen der Person suchen und dann die Arbeiten, die mit diesen RollenIds in Verbindung stehen
         $forschungenTG = $this->histSemDBService->getForschungenGateway();
         $select = $forschungenTG->getSql()->select();
         if (array_key_exists('pers_id', $params)) {
-            $select->where->equalTo(
-                'qarb_arb_autorid',$params['pers_id']);
+            $select->where->in('qarb_arb_autor_rollid',$this->getRollIdsFuerPersId($params['pers_id']));
+                //'qarb_arb_autor_rollid',$params['pers_id']);
         }
         if (array_key_exists('forschungstypen', $params) && is_array($params['forschungstypen'])) {
 
@@ -402,6 +406,27 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface,
         }
 
         return $forschungen;
+    }
+
+
+    protected function getRollIdsFuerPersId($pers_id) {
+
+
+        $rollenGW = $this->histSemDBService->getRollenGateway();
+        $rollen = $rollenGW->select(array(
+                'roll_pers_id' => (int)$pers_id
+        ));
+
+        $rollenIds = array();
+
+        foreach ($rollen as $rolle) {
+
+            $rollenIds[] = $rolle->getId();
+        }
+
+        return $rollenIds;
+
+
     }
 
 
