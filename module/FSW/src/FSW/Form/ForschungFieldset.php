@@ -60,7 +60,7 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
             'name' => 'qarb_arb_autor_rollid',
             'type' => 'textarea',
             'options' => array(
-                'label' => 'qarb_arb_autor_rollid'
+                'label' => 'autor rollid    '
             ),
             'attributes' => array(
                 'rows' => 1
