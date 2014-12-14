@@ -34,9 +34,9 @@
             <p class="noMarginBottom"><b>
                     <?php if ($qArbeit->isSetProfilURL()): ?>
 
-                        <a href="<?php echo $qArbeit->getProfilURL();?>" target="_blank"><?php echo $qArbeit->getPersName() . '&nbsp;' . $qArbeit->getPersVorname();?></a>
+                        <a href="<?php echo $qArbeit->getProfilURL();?>" target="_blank"><?php echo $qArbeit->getPersName() . ',&nbsp;' . $qArbeit->getPersVorname();?></a>
                      <?php else: ?>
-                        <?php echo $qArbeit->getPersName() . '&nbsp;' . $qArbeit->getPersVorname();?>
+                        <?php echo $qArbeit->getPersName() . ',&nbsp;' . $qArbeit->getPersVorname();?>
                     <?php endif; ?>
 
 
