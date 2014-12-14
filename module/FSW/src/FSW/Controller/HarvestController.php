@@ -69,7 +69,7 @@ class HarvestController extends BaseController
                 //$oaiClient->setEndDate($this->params()->fromQuery('until','2050-12-31'));
 
                 $oaiClient->setStartDate('1900-01-01');
-                $oaiClient->setEndDate('2050-12-31');
+                //$oaiClient->setEndDate('2050-12-31');
                 $oaiClient->setVerbose($oaiSection->verbose);
                 if ($oaiSection->usedSets) {
                     $sets = explode('###',$oaiSection->usedSets);

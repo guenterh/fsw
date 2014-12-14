@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `fsw_kolloquium` (
   `id_kolloquium` bigint(20) NOT NULL,
   `titel` varchar(65000) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `fsw_kolloquium_veranstaltung` (
   `veranstaltung_titel` varchar(65000) NOT NULL,
   `beschreibung` longtext DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `fsw_kolloquium_veranstaltung_person` (
   `personeninformation` varchar(2000) DEFAULT NULL,
 
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `fsw_medien` (
   `datum` date DEFAULT NULL,
   `medientyp` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 -- --------------------------------------------------------
@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `fsw_cover` (
   `coverlink` varchar(1000)  DEFAULT NULL,
   `frontpage` enum('frontpage','nofrontpage')  NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `fsw_zora_doc` (
   `author` varchar(255)  DEFAULT NULL,
   `xmlrecord` text  NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 
@@ -144,7 +144,7 @@ CREATE TABLE `fsw_personen_extended` (
   `fullname` varchar(500) DEFAULT NULL,
 
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 
@@ -160,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `fsw_zora_author` (
   PRIMARY KEY (`id`),
   KEY `fid_personen` (`fid_personen`),
   KEY `zora_name` (`zora_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 
@@ -180,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `fsw_relation_zora_author_zora_doc` (
   KEY `zorarolle` (`zora_rolle`),
   KEY `fid_personen` (`fid_zora_author`),
   KEY `fid_zora_doc` (`fid_zora_doc`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `fsw_zora_doctype` (
   PRIMARY KEY (`id`),
   KEY `oaiidentier` (`oai_identifier`,`oai_recordtyp`),
   KEY `typform` (`typform`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 
 
@@ -215,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `fsw_relation_hspersonen_fsw_personen` (
   `fpersonen_extended_id` bigint(20) NOT NULL,
   `fper_rolle_roll_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 
 -- --------------------------------------------------------
@@ -238,7 +238,7 @@ CREATE TABLE IF NOT EXISTS `fsw_lehrveranstaltung` (
   `lvtyp` int(4) DEFAULT 0,
 
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 
 DROP TABLE IF EXISTS `fsw_relation_personen_fsw_lehrveranstaltung`;
@@ -247,7 +247,7 @@ CREATE TABLE IF NOT EXISTS `fsw_relation_personen_fsw_lehrveranstaltung` (
   `fper_personen_pers_id` bigint(20) NOT NULL,
   `ffsw_lehrveranstaltungen_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 
 -- --------------------------------------------------------
@@ -265,7 +265,7 @@ CREATE TABLE `fsw_session` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `session_id` (`session_id`),
   KEY `last_used` (`last_used`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 
 
@@ -289,4 +289,4 @@ CREATE TABLE `fsw_users` (
   `verify_hash` varchar(42) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;

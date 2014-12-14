@@ -101,6 +101,7 @@ class ZoraFacade extends BaseFacade {
             if ($this->isOneAuthorFSWRelated($zR)) {
 
                 if ($this->isRecordInDB($zR->getIdentifier())) {
+
                     if ($this->isRecordInDBandUpdated($zR->getIdentifier(),$zR->getDatestamp())) {
                         $this->deleteValuesFromZoraTables($zR->getIdentifier());
 
@@ -115,13 +116,13 @@ class ZoraFacade extends BaseFacade {
                     }
 
                 } else {
-                    $this->insertValuesIntoZoraTables($zR);
+                    $this->insertValuesIntoZoraTables($zR, 'new inserted');
                     $message = "<b>" . $zR->getIdentifier() . "</b>" . " was <b>inserted</b> because wasn't in database before";
                     $this->messages[] = $message;
 
                 }
             } else {
-                $message = 'none of the persons (creators: ' . $zR->getAllCreators() . ' or contributors: '  . $zR->getAllContributors() . ' are in FSW DB -> nothing was done';
+                $message = $zR->getIdentifier() . ': none of the persons (creators: ' . $zR->getAllCreators() . ' or contributors: '  . $zR->getAllContributors() . ' are in FSW DB -> nothing was done';
                 $this->messages[] = $message;
             }
         } else {
@@ -208,7 +209,7 @@ EOD;
             }
         }
 
-        if (is_null($isZoraAuthor)) {
+        if (! $isZoraAuthor) {
             foreach ($object->getContributor() as $contributor) {
                 $sql = 'SELECT * from fsw_zora_author where zora_name = ' . $this->qV($contributor);
                 $result = $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
@@ -297,7 +298,7 @@ EOD;
 
 
 
-    private function insertValuesIntoZoraTables($zR) {
+    private function insertValuesIntoZoraTables($zR, $recordStatus = 'updated') {
 
 
 
@@ -308,7 +309,7 @@ EOD;
         $sqlTemplate = preg_replace('/DATESTAMP/',$this->qV($zR->getDatestamp()),$sqlTemplate );
         $sqlTemplate = preg_replace('/YEAR/',$this->qV($zR->getDate()),$sqlTemplate );
         $sqlTemplate = preg_replace('/TITLE/',$this->qV($zR->getTitle()),$sqlTemplate );
-        $sqlTemplate = preg_replace('/STATUS/',$this->qV($zR->getRecordStatus()),$sqlTemplate );
+        $sqlTemplate = preg_replace('/STATUS/',$this->qV($recordStatus),$sqlTemplate );
         $sqlTemplate = preg_replace('/XMLFRAGMENT/', $this->qV($zR->getRecXML()),$sqlTemplate );
 
         $this->getAdapter()->query($sqlTemplate,Adapter::QUERY_MODE_EXECUTE);
