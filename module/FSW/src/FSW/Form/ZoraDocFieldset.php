@@ -115,7 +115,9 @@ class ZoraDocFieldset extends Fieldset implements InputFilterProviderInterface {
                 'label' => 'year'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'class' => 'fswTextAreaSmall',
+                'readonly'  => 'readonly'
             )
         ));
 

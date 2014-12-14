@@ -486,7 +486,9 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface,
 
             $sql = "SELECT distinct doc.*, cover.coverlink FROM fsw_zora_doc as doc INNER JOIN fsw_relation_zora_author_zora_doc AS rel ";
             $sql .= " ON (rel.fid_zora_doc = doc.id) INNER JOIN fsw_zora_author AS za ON (za.id = rel.fid_zora_author) INNER JOIN fsw_cover AS cover ";
-            $sql .= " ON (doc.id = cover.id) WHERE za.pers_id = " . $this->qV($params['pers_id']);
+            $sql .= " ON (doc.id = cover.id) WHERE za.pers_id = " . $this->qV($params['pers_id']) .  ' order by doc.year DESC';
+            
+
 
             $select->join(array(
                     'zora_author_relation' => 'fsw_relation_zora_author_zora_doc'),
@@ -506,6 +508,7 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface,
 
             $select->where->equalTo(
                 'zora_author.pers_id',$params['pers_id']);
+            $select->order('doc.year DESC');
 
 
             $test = $select->getSqlString();
