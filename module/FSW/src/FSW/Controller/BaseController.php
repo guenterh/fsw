@@ -5,6 +5,7 @@ namespace FSW\Controller;
 use FSW\Services\Config\PluginManager;
 use FSW\Services\Facade\BaseFacade;
 use FSW\Services\Facade\FacadeAwareInterface;
+use Zend\Console\Request as ConsoleRequest;
 use Zend\Db\ResultSet\ResultSetInterface;
 
 use Zend\Mvc\Controller\AbstractActionController;
@@ -235,6 +236,10 @@ abstract class BaseController extends AbstractActionController
             $account = $this->getAuthManager();
             if ($account->isLoggedIn() == false) {
                 // If we got this far, we want to store the referer:
+                if ($this->getRequest() instanceof ConsoleRequest) {
+                    //we don't support restricted console operations!
+                    throw new \Exception("restricted console operations are not supported!");
+                }
                 $referer = $this->getRequest()->getServer()->get('HTTP_REFERER');
                 if (empty($referer)) {
                     $referer = "/static/zf2/public/index.php/personen/";

@@ -59,7 +59,7 @@ class Factory
         $pm = $sm->get('FSW\AuthPluginManager');
 
         // Build the object:
-        return new Manager($config, $userTable, $sessionManager, $pm, $catalog);
+        return new Manager($config, $userTable, $sessionManager, $pm);
     }
 
     /**

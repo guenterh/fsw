@@ -26,9 +26,6 @@
  * @link     http://vufind.org/wiki/vufind2:building_a_controller Wiki
  */
 namespace FSW\Controller;
-use FSW\Form\HarvestForm;
-use FSW\Form\HarvestFormEntities;
-use FSW\Form\HarvestFormFromUntil;
 use FSW\Services\OAI;
 use Zend\Console\Console;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -43,32 +40,14 @@ use Zend\View\Model\ViewModel;
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     http://vufind.org/wiki/vufind2:building_a_controller Wiki
  */
-class HarvestController extends BaseController
+class ConsolenharvestController extends BaseController
 {
-
-
-    public function indexAction () {
-
-        $fromUntilForm = new HarvestFormFromUntil();
-        $entitiesForm = new HarvestFormEntities();
-
-
-        return new ViewModel(
-            array(
-                'formFromUntil'  => $fromUntilForm,
-                'formEntities'  =>  $entitiesForm
-            )
-        );
-
-    }
-
-
     /**
      * Harvest OAI-PMH records.
      *
      * @return \Zend\Console\Response
      */
-    public function oaiAction()
+    public function oaiconsoleAction()
     {
 
 
@@ -159,65 +138,6 @@ class HarvestController extends BaseController
     protected function getSuccessResponse()
     {
         return $this->getResponse()->setErrorLevel(0);
-    }
-
-    public function harvestFromUntilAction () {
-
-        $fromUntilForm = new HarvestFormFromUntil();
-        $entitiesForm = new HarvestFormEntities();
-
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $data = $this->params()->fromPost();
-
-            $fromUntilForm->setData($data);
-            if ($fromUntilForm->isValid()) {
-
-                $test = 'ok';
-                //start Harvesting
-            }
-
-        }
-
-
-        $viewModel = new ViewModel(
-            array(
-                'formFromUntil'  => $fromUntilForm,
-                'formEntities'  =>  $entitiesForm
-            )
-        );
-        return $viewModel;
-
-
-    }
-
-    public function harvestEntitiesAction () {
-
-        $fromUntilForm = new HarvestFormFromUntil();
-        $entitiesForm = new HarvestFormEntities();
-
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $data = $this->params()->fromPost();
-
-            $entitiesForm->setData($data);
-            if ($entitiesForm->isValid()) {
-
-                $test = 'ok';
-                //start Harvesting
-            }
-
-        }
-
-
-        $viewModel = new ViewModel(
-            array(
-                'formFromUntil'  => $fromUntilForm,
-                'formEntities'  =>  $entitiesForm
-            )
-        );
-        return $viewModel;
-
     }
 
 

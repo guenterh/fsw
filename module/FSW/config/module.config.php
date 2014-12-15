@@ -116,12 +116,16 @@ return array(
                 ),
             ),
             'harvest' => array(
-                'type'  =>  'Zend\Mvc\Router\Http\Literal',
+                'type'  =>  'segment',
                 'options' => array(
-                    'route'    => '/harvest',
+                    'route'    => '/harvest[/][:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
                     'defaults' => array(
                         'controller' => 'FSW\Controller\Harvest',
-                        'action'     => 'oai',
+                        'action'    =>  'index'
+
                     ),
                 ),
 
@@ -178,10 +182,10 @@ return array(
                 ),
                 'zoradoc-insert' => array(
                     'options' => array(
-                        'route' => 'zora',
+                        'route' => 'zoraconsole',
                         'defaults' => array(
-                            'controller' => 'FSW\Controller\Harvest',
-                            'action' => 'oai'
+                            'controller' => 'FSW\Controller\Consolenharvest',
+                            'action' => 'oaiconsole'
                         )
                     )
                 ),
@@ -333,6 +337,7 @@ return array(
             'FSW\Controller\Authentication' => 'FSW\Controller\Factory::getAuthenticationController',
             'FSW\Controller\Login'  =>  'FSW\Controller\Factory::getBackendLoginController',
             'FSW\Controller\Harvest' => 'FSW\Controller\Factory::getHarvesterController',
+            'FSW\Controller\Consolenharvest' => 'FSW\Controller\Factory::getHarvesterConsoleController',
 
         )
         //'factories' => array(
@@ -375,24 +380,28 @@ return array(
             //    'route' => 'home'
             //),
             'medien' => array(
-                'label' => 'navigation_medien',
+                'label' => 'Medien',
                 'route' => 'medien'
             ),
             'kolloquien' => array(
-                'label' => 'navigation_kolloquien',
+                'label' => 'Kolloquien',
                 'route' => 'kolloquien'
             ),
             'personen' => array(
-                'label' => 'navigation_personen',
+                'label' => 'Personen',
                 'route' => 'personen'
             ),
             'lehrveranstaltung' => array(
-                'label' => 'lehrveranstaltung',
+                'label' => 'Lehrveranstaltungen',
                 'route' => 'lehrveranstaltung'
-            )
-        ,
+            ),
+            'zoraharvest' => array(
+                'label' => 'Zora Harvesting',
+                'route' => 'harvest'
+            ),
+
             'logout' => array(
-                'label' => 'logout',
+                'label' => 'Logout',
                 'route' => 'backendlogin',
                 'params'     => array('action' => 'logout')
             )

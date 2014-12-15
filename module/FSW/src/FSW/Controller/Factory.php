@@ -141,6 +141,17 @@ class Factory {
     }
 
 
+    public static function getHarvesterConsoleController(ServiceManager $sm) {
+
+        $uC = new \FSW\Controller\ConsolenharvestController();
+        //if ($uC instanceof FacadeAwareInterface)  {
+
+        //    $uC->setFacadeService($sm->getServiceLocator()->get('LehrveranstaltungenFacade'));
+
+        //}
+        return static::checkConfigAwareInterface($uC, $sm);
+
+    }
 
 
 
