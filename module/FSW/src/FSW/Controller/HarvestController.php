@@ -26,7 +26,7 @@
  * @link     http://vufind.org/wiki/vufind2:building_a_controller Wiki
  */
 namespace FSW\Controller;
-use FSW\Form\HarvestForm;
+
 use FSW\Form\HarvestFormEntities;
 use FSW\Form\HarvestFormFromUntil;
 use FSW\Services\OAI;
@@ -46,6 +46,11 @@ use Zend\View\Model\ViewModel;
 class HarvestController extends BaseController
 {
 
+    /*
+     * @var \FSW\Services\OAI
+     *
+     */
+    protected $oaiClient;
 
     public function indexAction () {
 
@@ -63,109 +68,62 @@ class HarvestController extends BaseController
     }
 
 
-    /**
-     * Harvest OAI-PMH records.
-     *
-     * @return \Zend\Console\Response
-     */
-    public function oaiAction()
-    {
 
 
-        $oaiConfig = $this->getServiceLocator()->get('FSW\Config')->get('oai');
-
-        $zoraFacade = null;
-        foreach ($oaiConfig as $sectionName => $oaiSection) {
-
-            if (isset($oaiSection->active) && $oaiSection->active && $sectionName == 'Zora') {
-
-                $zoraFacade = $this->getServiceLocator()->get('FSW\Services\Facade\ZoraFacade');
-                //$zoraFacade->processOAIItem();
-                //$zoraFacade->insertIntoFSWExtended();
-                $oaiClient = $zoraFacade->getOAIClient();
-
-                //missing set config, do something
-                //todo: Abfrage, on ich einen Consolerequest habe, in diesem Fall existiert fromQuery nicht
-                //$oaiClient->setStartDate($this->params()->fromQuery('from','1900-01-01'));
-                //$oaiClient->setEndDate($this->params()->fromQuery('until','2050-12-31'));
-
-                $oaiClient->setStartDate('1900-01-01');
-                //$oaiClient->setEndDate('2050-12-31');
-                $oaiClient->setVerbose($oaiSection->verbose);
-                if ($oaiSection->usedSets) {
-                    $sets = explode('###',$oaiSection->usedSets);
-                    foreach($sets as $set) {
-
-                        $oaiClient->setConfig('target', array('set' => $set,
-                                                'url' => $oaiSection->url));
-                        $oaiClient->launch();
-                    }
-                } else {
-                    $oaiClient->launch();
-                }
+    protected function startHarvestingListRecords($configName,\Zend\Config\Config $config, $params) {
 
 
-                foreach ($zoraFacade->getMessages() as $message) {
-                    file_put_contents($oaiSection->messagesFile,$message . "\n", FILE_APPEND );
-                }
+        if (!isset($params['from'])) {
+
+            throw new \Exception('mandatory parameter from not given');
+        }
+
+        $this->oaiClient = $this->facade->getOAIClient();
 
 
+        $this->oaiClient->setStartDate($params['from']);
+        if (isset($params['until']) && strlen($params['until']) > 0) {
+            $this->oaiClient->setEndDate($params['until']);
+        }
+
+        //$oaiClient->setEndDate('2050-12-31');
+        $this->oaiClient->setVerbose($config->verbose);
+        $this->oaiClient->setConfig($configName,$config->toArray());
+
+        if ($config->usedSets) {
+            $sets = explode('###',$config->usedSets);
+            foreach($sets as $set) {
+
+                $this->oaiClient->setOAISet($set);
+                $this->oaiClient->launch();
             }
         }
 
-        //todo: ich Manuela braucht wohl noch eine Webschnittstelle
-        return new ViewModel(array('messages' => $zoraFacade->getMessages()));
+    }
 
-        // All done.
-        //Console::writeLine(
-        //    "Completed without errors -- {$processed} source(s) processed."
-        //);
-        //$r = new \Zend\Http\Response();
-        //$r->setStatusCode(503);
-        //return $r;
-        //return $this->getSuccessResponse();
+
+
+    protected function startHarvestingGetRecord(\Zend\Config\Config $config,  $params) {
+
+
+
+        $this->oaiClient = $this->facade->getOAIClient();
+        //$this->oaiClient->setUrlGetRecord($config->GetRecord);
+
+        foreach($params as $entity) {
+            $this->oaiClient->launchGetRecord($entity);
+        }
 
     }
 
-    /**
-     * Merge harvested MARC records into a single <collection>
-     *
-     * @return \Zend\Console\Response
-     * @author Thomas Schwaerzler <thomas.schwaerzler@uibk.ac.at>
-     */
-    public function mergemarcAction()
-    {
-        //we don't need this
-        //but we need something with EventManager
-        //inform a Listener sending the harvested records
 
-    }
-
-    /**
-     * Indicate failure.
-     *
-     * @return \Zend\Console\Response
-     */
-    protected function getFailureResponse()
-    {
-        return $this->getResponse()->setErrorLevel(1);
-    }
-
-    /**
-     * Indicate success.
-     *
-     * @return \Zend\Console\Response
-     */
-    protected function getSuccessResponse()
-    {
-        return $this->getResponse()->setErrorLevel(0);
-    }
 
     public function harvestFromUntilAction () {
 
         $fromUntilForm = new HarvestFormFromUntil();
         $entitiesForm = new HarvestFormEntities();
 
+        $messages = array();
         $request = $this->getRequest();
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
@@ -173,8 +131,19 @@ class HarvestController extends BaseController
             $fromUntilForm->setData($data);
             if ($fromUntilForm->isValid()) {
 
-                $test = 'ok';
-                //start Harvesting
+                $oaiConfig = $this->getServiceLocator()->get('FSW\Config')->get('oai');
+                $zoraConfig = $oaiConfig->Zora;
+                $from = $data['harvest_from_until']['from'];
+                $until = $data['harvest_from_until']['until'];
+
+                $params = compact('from', 'until');
+
+                $this->startHarvestingListRecords('Zora',$zoraConfig, $params);
+
+                //$entities =  explode('##',$entitiesConcat);
+                //$this->startHarvestingGetRecord($zoraConfig, $entities);
+
+                $messages = $this->facade->getMessages();
             }
 
         }
@@ -183,7 +152,9 @@ class HarvestController extends BaseController
         $viewModel = new ViewModel(
             array(
                 'formFromUntil'  => $fromUntilForm,
-                'formEntities'  =>  $entitiesForm
+                'formEntities'  =>  $entitiesForm,
+                'messages'  => $messages
+
             )
         );
         return $viewModel;
@@ -195,16 +166,22 @@ class HarvestController extends BaseController
 
         $fromUntilForm = new HarvestFormFromUntil();
         $entitiesForm = new HarvestFormEntities();
-
+        $messages = array();
         $request = $this->getRequest();
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
 
             $entitiesForm->setData($data);
-            if ($entitiesForm->isValid()) {
 
-                $test = 'ok';
-                //start Harvesting
+            if ($entitiesForm->isValid()) {
+                $oaiConfig = $this->getServiceLocator()->get('FSW\Config')->get('oai');
+                $zoraConfig = $oaiConfig->Zora;
+                $entitiesConcat = $data['harvest_entities']['entities'];
+                $entities =  explode('##',$entitiesConcat);
+                $this->startHarvestingGetRecord($zoraConfig, $entities);
+
+                $messages = $this->facade->getMessages();
+
             }
 
         }
@@ -213,7 +190,8 @@ class HarvestController extends BaseController
         $viewModel = new ViewModel(
             array(
                 'formFromUntil'  => $fromUntilForm,
-                'formEntities'  =>  $entitiesForm
+                'formEntities'  =>  $entitiesForm,
+                'messages'   => $messages
             )
         );
         return $viewModel;

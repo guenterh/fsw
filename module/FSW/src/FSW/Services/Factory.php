@@ -341,7 +341,7 @@ class Factory {
         foreach ($oaiConfig as $sectionName => $oaiSection) {
 
             if (isset($oaiSection->active) && $oaiSection->active && $sectionName == 'Zora') {
-                $oaiClient->setConfig($sectionName,$oaiSection->toArray());
+                    $oaiClient->setConfig($sectionName,$oaiSection->toArray());
             }
          }
 

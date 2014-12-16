@@ -182,7 +182,8 @@ return array(
                 ),
                 'zoradoc-insert' => array(
                     'options' => array(
-                        'route' => 'zoraconsole',
+
+                        'route' => 'zoraconsole oaiconsole <from> [<until>]',
                         'defaults' => array(
                             'controller' => 'FSW\Controller\Consolenharvest',
                             'action' => 'oaiconsole'

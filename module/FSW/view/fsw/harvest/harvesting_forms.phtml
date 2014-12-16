@@ -67,3 +67,18 @@ $formEntities->setAttribute('action',$this->url('harvest',array('action' => 'har
 <?php echo  $this->form()->closeTag(); ?>
 
 
+<?php if (isset($this->messages) && is_array($this->messages) && count($this->messages) > 0): ?>
+
+    <div class="row-fluid">
+    <?php foreach ($this->messages as $message): ?>
+
+        <div><?php echo $message;  ?></div>
+
+
+    <?php endforeach; ?>
+    </div>
+
+
+    <?php endif; ?>
+
+

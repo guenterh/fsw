@@ -1,8 +1,10 @@
 
 <?php
+$messages = isset($this->messages) ? $this->messages : array();
 echo $this->render(
     'fsw/harvest/harvesting_forms.phtml',
     array(
         'formFromUntil' => $this->formFromUntil,
-        'formEntities'  => $this->formEntities
+        'formEntities'  => $this->formEntities,
+        'messages'  =>  $messages
     )); ?>

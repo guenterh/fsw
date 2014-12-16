@@ -131,11 +131,11 @@ class Factory {
     public static function getHarvesterController(ServiceManager $sm) {
 
         $uC = new \FSW\Controller\HarvestController();
-        //if ($uC instanceof FacadeAwareInterface)  {
+        if ($uC instanceof FacadeAwareInterface)  {
 
-        //    $uC->setFacadeService($sm->getServiceLocator()->get('LehrveranstaltungenFacade'));
+            $uC->setFacadeService($sm->getServiceLocator()->get('FSW\Services\Facade\ZoraFacade'));
 
-        //}
+        }
         return static::checkConfigAwareInterface($uC, $sm);
 
     }
@@ -144,11 +144,11 @@ class Factory {
     public static function getHarvesterConsoleController(ServiceManager $sm) {
 
         $uC = new \FSW\Controller\ConsolenharvestController();
-        //if ($uC instanceof FacadeAwareInterface)  {
+        if ($uC instanceof FacadeAwareInterface)  {
 
-        //    $uC->setFacadeService($sm->getServiceLocator()->get('LehrveranstaltungenFacade'));
+            $uC->setFacadeService($sm->getServiceLocator()->get('FSW\Services\Facade\ZoraFacade'));
 
-        //}
+        }
         return static::checkConfigAwareInterface($uC, $sm);
 
     }

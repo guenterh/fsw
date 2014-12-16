@@ -40,7 +40,7 @@ use Zend\View\Model\ViewModel;
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     http://vufind.org/wiki/vufind2:building_a_controller Wiki
  */
-class ConsolenharvestController extends BaseController
+class ConsolenharvestController extends HarvestController
 {
     /**
      * Harvest OAI-PMH records.
@@ -49,76 +49,36 @@ class ConsolenharvestController extends BaseController
      */
     public function oaiconsoleAction()
     {
+        $request = $this->getRequest();
+        $args = $request->params();
 
-
-        $oaiConfig = $this->getServiceLocator()->get('FSW\Config')->get('oai');
-
-        $zoraFacade = null;
-        foreach ($oaiConfig as $sectionName => $oaiSection) {
-
-            if (isset($oaiSection->active) && $oaiSection->active && $sectionName == 'Zora') {
-
-                $zoraFacade = $this->getServiceLocator()->get('FSW\Services\Facade\ZoraFacade');
-                //$zoraFacade->processOAIItem();
-                //$zoraFacade->insertIntoFSWExtended();
-                $oaiClient = $zoraFacade->getOAIClient();
-
-                //missing set config, do something
-                //todo: Abfrage, on ich einen Consolerequest habe, in diesem Fall existiert fromQuery nicht
-                //$oaiClient->setStartDate($this->params()->fromQuery('from','1900-01-01'));
-                //$oaiClient->setEndDate($this->params()->fromQuery('until','2050-12-31'));
-
-                $oaiClient->setStartDate('1900-01-01');
-                //$oaiClient->setEndDate('2050-12-31');
-                $oaiClient->setVerbose($oaiSection->verbose);
-                if ($oaiSection->usedSets) {
-                    $sets = explode('###',$oaiSection->usedSets);
-                    foreach($sets as $set) {
-
-                        $oaiClient->setConfig('target', array('set' => $set,
-                                                'url' => $oaiSection->url));
-                        $oaiClient->launch();
-                    }
-                } else {
-                    $oaiClient->launch();
-                }
-
-
-                foreach ($zoraFacade->getMessages() as $message) {
-                    file_put_contents($oaiSection->messagesFile,$message . "\n", FILE_APPEND );
-                }
-
-
-            }
+        foreach ($args as $key => $value) {
+            $test = "";
         }
 
-        //todo: ich Manuela braucht wohl noch eine Webschnittstelle
-        return new ViewModel(array('messages' => $zoraFacade->getMessages()));
+        $oaiConfig = $this->getServiceLocator()->get('FSW\Config')->get('oai');
+        $zoraConfig = $oaiConfig->Zora;
 
-        // All done.
-        //Console::writeLine(
-        //    "Completed without errors -- {$processed} source(s) processed."
-        //);
-        //$r = new \Zend\Http\Response();
-        //$r->setStatusCode(503);
-        //return $r;
-        //return $this->getSuccessResponse();
 
-    }
+        //$from = $request->getParam('from', '1900-01-01') || $request->getParam('f', '1900-01-01');
+        $from = $request->getParam('from');
+        $until = $request->getParam('until');
+        $until =    $until ? $until : '';
+        $params = compact('from', 'until');
 
-    /**
-     * Merge harvested MARC records into a single <collection>
-     *
-     * @return \Zend\Console\Response
-     * @author Thomas Schwaerzler <thomas.schwaerzler@uibk.ac.at>
-     */
-    public function mergemarcAction()
-    {
-        //we don't need this
-        //but we need something with EventManager
-        //inform a Listener sending the harvested records
+        $this->startHarvestingListRecords('Zora',$zoraConfig, $params);
+
+        //$entities =  explode('##',$entitiesConcat);
+        //$this->startHarvestingGetRecord($zoraConfig, $entities);
+
+        $messages = $this->facade->getMessages();
+
+        foreach ($messages as $message) {
+            file_put_contents($zoraConfig->messagesFile,$message . "\n", FILE_APPEND );
+        }
 
     }
+
 
     /**
      * Indicate failure.

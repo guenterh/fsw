@@ -31,10 +31,12 @@ class HarvestFieldsetEntities extends Fieldset implements InputFilterProviderInt
             ),
             'attributes' => array(
                 'rows' => 5,
-                'class' => 'fswTextAreaMiddle'
+                'class' => 'fswTextAreaMiddle',
+                'value' =>  'oai:www.zora.uzh.ch:xxxx##oai:www.zora.uzh.ch:yyyy'
             )
         ));
 
+        //'value' =>  'oai:www.zora.uzh.ch:xxxx##oai:www.zora.uzh.ch:yyyy'
 
 
 

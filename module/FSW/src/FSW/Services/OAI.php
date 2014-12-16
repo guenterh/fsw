@@ -119,6 +119,13 @@ class OAI implements EventManagerAwareInterface
      */
     protected $harvestEndDate;
 
+
+    /**
+     * URL for GetRecord verb
+     * @var string
+     */
+    protected $urlGetRecord;
+
     /**
      * Harvest start date (null for no specific start)
      *
@@ -282,6 +289,11 @@ class OAI implements EventManagerAwareInterface
     {
         $this->harvestEndDate = $date;
     }
+
+    public function setUrlGetRecord($urlGetRecord) {
+        $this->urlGetRecord = $urlGetRecord;
+    }
+
     /**
      * Set a start date for the harvest (only harvest records AFTER this date).
      *
@@ -292,6 +304,10 @@ class OAI implements EventManagerAwareInterface
     public function setStartDate($date)
     {
         $this->startDate = $date;
+    }
+
+    public function setOAISet ($set) {
+        $this->set = $set;
     }
 
     /**
@@ -319,6 +335,23 @@ class OAI implements EventManagerAwareInterface
                 $token = $this->getRecordsByToken($token);
             }
         }
+    }
+
+
+    public function launchGetRecord($recordId) {
+
+        $params = array();
+        $params['identifier'] = $recordId;
+        $params['metadataPrefix'] = $this->metadataPrefix;
+
+        $response = $this->sendRequestGetRecord($params);
+
+        if ($response->GetRecord->record) {
+            $this->processRecords($response->GetRecord->record);
+        }
+
+
+
     }
 
     /**
@@ -454,6 +487,73 @@ class OAI implements EventManagerAwareInterface
         // If we got this far, there was no error -- send back response.
         return $this->processResponse($result->getBody());
     }
+
+
+    /**
+     * Make an OAI-PMH request.  Die if there is an error; return a SimpleXML object
+     * on success.
+     *
+     * @param string $verb   OAI-PMH verb to execute.
+     * @param array  $params GET parameters for ListRecords method.
+     *
+     * @return object        SimpleXML-formatted response.
+     */
+    protected function sendRequestGetRecord($params = array())
+    {
+        // Debug:
+        if ($this->verbose) {
+            $this->write(
+                "Sending request: verb = GetRecord, params = " . print_r($params, true)
+            );
+        }
+
+        // Set up retry loop:
+        while (true) {
+            // Set up the request:
+            $this->client->resetParameters();
+            $this->client->setUri($this->baseURL);
+            // TODO: make timeout configurable
+            $this->client->setOptions(array('timeout' => 60));
+
+            // Set authentication, if necessary:
+            if ($this->httpUser && $this->httpPass) {
+                $this->client->setAuth($this->httpUser, $this->httpPass);
+            }
+
+            // Load request parameters:
+            $query = $this->client->getRequest()->getQuery();
+            $query->set('verb', 'GetRecord');
+            foreach ($params as $key => $value) {
+                $query->set($key, $value);
+            }
+
+            // Perform request and die on error:
+            $result = $this->client->setMethod('GET')->send();
+            if ($result->getStatusCode() == 503) {
+                $delayHeader = $result->getHeaders()->get('Retry-After');
+                $delay = is_object($delayHeader)
+                    ? $delayHeader->getDeltaSeconds() : 0;
+                if ($delay > 0) {
+                    if ($this->verbose) {
+                        $this->writeLine(
+                            "Received 503 response; waiting {$delay} seconds..."
+                        );
+                    }
+                    sleep($delay);
+                }
+            } else if (!$result->isSuccess()) {
+                throw new \Exception('HTTP Error');
+            } else {
+                // If we didn't get an error, we can leave the retry loop:
+                break;
+            }
+        }
+
+        // If we got this far, there was no error -- send back response.
+        return $this->processResponse($result->getBody());
+    }
+
+
 
     /**
      * Log a bad XML response.
@@ -797,6 +897,84 @@ class OAI implements EventManagerAwareInterface
         }
     }
 
+
+
+    /**
+     * Save harvested records to disk and track the end date.
+     *
+     * @param object $records SimpleXML records.
+     *
+     * @return void
+     */
+    protected function processRecord($records)
+    {
+        $this->writeLine('Processing ' . count($records) . " records...");
+
+        // Array for tracking successfully harvested IDs:
+        $harvestedIds = array();
+
+        // Loop through the records:
+        foreach ($records as $record) {
+            // Die if the record is missing its header:
+            if (empty($record->header)) {
+                throw new \Exception("Unexpected missing record header.");
+            }
+
+            // Get the ID of the current record:
+            $id = $this->extractID($record);
+
+            /*
+            kann man hier noch ein beeseres loggig machen?
+            $this->writeLine('Processing record; ' . $id);
+
+            $searchedIDS = array('oai:www.zora.uzh.ch:19857');
+
+            foreach ($searchedIDS as $tID) {
+
+                if (strcmp($id,$tID) == 0) {
+                    $stopit = "";
+                }
+            }
+            */
+
+
+            // Save the current record, either as a deleted or as a regular file:
+            $attribs = $record->header->attributes();
+
+            $status = !empty($attribs['status']) ? $attribs['status'] : 'updated';
+            //$this->saveRecord($id, $record,$status,$record->header->datestamp);
+
+            if (strtolower($attribs['status']) == 'deleted') {
+                $xml = $record->asXML();
+
+                $this->saveDeletedRecord($id,$xml,$status,$record->header->datestamp);
+            } else {
+                $this->saveRecord($id, $record,$status ,$record->header->datestamp);
+                $harvestedIds[] = $id;
+            }
+
+            // If the current record's date is newer than the previous end date,
+            // remember it for future reference:
+            $date = $this->normalizeDate($record->header->datestamp);
+            if ($date && $date > $this->endDate) {
+                $this->endDate = $date;
+            }
+        }
+
+        // Do we have IDs to log and a log filename?  If so, log them:
+        if (!empty($this->harvestedIdLog) && !empty($harvestedIds)) {
+            $file = fopen($this->basePath . $this->harvestedIdLog, 'a');
+            if (!$file) {
+                throw new \Exception("Problem opening {$this->harvestedIdLog}.");
+            }
+            fputs($file, implode(PHP_EOL, $harvestedIds));
+            fclose($file);
+        }
+    }
+
+
+
+
     /**
      * Harvest records using OAI-PMH.
      *
@@ -918,7 +1096,11 @@ class OAI implements EventManagerAwareInterface
         if (defined('VUFIND_PHPUNIT_RUNNING')) {
             return;
         }
-        Console::write($str);
+
+        //only command line
+        if (PHP_SAPI == 'cli') {
+            Console::write($str);
+        }
     }
 
     /**
@@ -934,7 +1116,10 @@ class OAI implements EventManagerAwareInterface
         if (defined('VUFIND_PHPUNIT_RUNNING')) {
             return;
         }
-        Console::writeLine($str);
+
+        if (PHP_SAPI == 'cli') {
+            Console::writeLine($str);
+        }
     }
 
     /**
