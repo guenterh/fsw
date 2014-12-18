@@ -30,6 +30,7 @@ use FSW\Services\OAI;
 use Zend\Console\Console;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Db\Adapter\Adapter;
 
 /**
  * This controller handles various command-line tools
@@ -52,9 +53,6 @@ class ConsolenharvestController extends HarvestController
         $request = $this->getRequest();
         $args = $request->params();
 
-        foreach ($args as $key => $value) {
-            $test = "";
-        }
 
         $oaiConfig = $this->getServiceLocator()->get('FSW\Config')->get('oai');
         $zoraConfig = $oaiConfig->Zora;
@@ -76,6 +74,39 @@ class ConsolenharvestController extends HarvestController
         foreach ($messages as $message) {
             file_put_contents($zoraConfig->messagesFile,$message . "\n", FILE_APPEND );
         }
+
+    }
+
+    public function zoradeltaAction()
+    {
+
+        $adapter = $this->facade->getDBAdapter();
+        $sql = "select identifier from fswzora where identifier not in (" ;
+        $sql .= " select oai_identifier from fsw_zora_doc)";
+
+        $result =  $adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+        $idParams = array();
+        foreach ($result as $row) {
+
+            $idParams[] = $row['identifier'];
+
+        }
+        //ansonsten wird  der EventHandler processOAIItem mehrfach registsriert
+        $this->startHarvestingGetRecord($idParams);
+
+
+        $oaiConfig = $this->getServiceLocator()->get('FSW\Config')->get('oai');
+        $zoraConfig = $oaiConfig->Zora;
+
+        $messages = $this->facade->getMessages();
+
+        foreach ($messages as $message) {
+            file_put_contents($zoraConfig->messagesFileDelta,$message . "\n", FILE_APPEND );
+        }
+
+
+
 
     }
 

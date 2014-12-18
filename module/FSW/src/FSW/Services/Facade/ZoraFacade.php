@@ -458,6 +458,13 @@ EOD;
     }
 
 
+    public function getDBAdapter ()
+    {
+        //fragwürdig...
+        return $this->getAdapter();
+    }
+
+
 
 
 

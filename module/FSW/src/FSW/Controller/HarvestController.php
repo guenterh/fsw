@@ -103,7 +103,7 @@ class HarvestController extends BaseController
 
 
 
-    protected function startHarvestingGetRecord(\Zend\Config\Config $config,  $params) {
+    protected function startHarvestingGetRecord( $params) {
 
 
 
@@ -174,11 +174,11 @@ class HarvestController extends BaseController
             $entitiesForm->setData($data);
 
             if ($entitiesForm->isValid()) {
-                $oaiConfig = $this->getServiceLocator()->get('FSW\Config')->get('oai');
-                $zoraConfig = $oaiConfig->Zora;
+                //$oaiConfig = $this->getServiceLocator()->get('FSW\Config')->get('oai');
+                //$zoraConfig = $oaiConfig->Zora;
                 $entitiesConcat = $data['harvest_entities']['entities'];
                 $entities =  explode('##',$entitiesConcat);
-                $this->startHarvestingGetRecord($zoraConfig, $entities);
+                $this->startHarvestingGetRecord($entities);
 
                 $messages = $this->facade->getMessages();
 

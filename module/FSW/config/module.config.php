@@ -190,6 +190,16 @@ return array(
                         )
                     )
                 ),
+                'zoradoc-delta' => array(
+                    'options' => array(
+
+                        'route' => 'zoraconsole zoradelta',
+                        'defaults' => array(
+                            'controller' => 'FSW\Controller\Consolenharvest',
+                            'action' => 'zoradelta'
+                        )
+                    )
+                ),
                 'medien-insert' => array(
                     'options' => array(
                         'route' => 'medien',

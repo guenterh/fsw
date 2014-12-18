@@ -6,7 +6,10 @@ flush privileges;
 als Zora Autoren aufnehmen - später automatisch
 Kuhn, Konrad J
 Bugmann, Mirjam
-Berger, Silvia bis 2005-11-01
+Berger, Silvia bis 2005-11-01 (sind in der alten Datenbank vorhanden)
+Kilian, Patrick
+Bernet, Brigitta
+Zimmermann, Dorothe
 
 
 Tabellen in der alten FSW Datenbank
@@ -61,7 +64,7 @@ Nur der Index?
 
 
 
-2) php public/index.php zora
+2) php public/index.php zoraconsole oaiconsole 1900-01-01
 
 
 3) php public/index.php kolloquien
