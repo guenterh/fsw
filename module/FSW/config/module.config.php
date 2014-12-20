@@ -200,6 +200,16 @@ return array(
                         )
                     )
                 ),
+                'zoradoc-delta-insert' => array(
+                    'options' => array(
+
+                        'route' => 'zoraconsoleinsert getOldZoraIds',
+                        'defaults' => array(
+                            'controller' => 'FSW\Controller\Consolenharvest',
+                            'action' => 'getOldZoraIds'
+                        )
+                    )
+                ),
                 'medien-insert' => array(
                     'options' => array(
                         'route' => 'medien',

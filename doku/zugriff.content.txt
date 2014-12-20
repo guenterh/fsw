@@ -3,3 +3,5 @@
 Zoradokumente
 
 http://localhost:30000/static/zf2/public/index.php/presentation/publications/show
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show?conditions=buchpublikationen
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show?mitid=1080

@@ -81,7 +81,7 @@ class ConsolenharvestController extends HarvestController
     {
 
         $adapter = $this->facade->getDBAdapter();
-        $sql = "select identifier from fswzora where identifier not in (" ;
+        $sql = "select oai_identifier from fsw_oai_identifier where oai_identifier not in (" ;
         $sql .= " select oai_identifier from fsw_zora_doc)";
 
         $result =  $adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
@@ -89,7 +89,7 @@ class ConsolenharvestController extends HarvestController
         $idParams = array();
         foreach ($result as $row) {
 
-            $idParams[] = $row['identifier'];
+            $idParams[] = $row['oai_identifier'];
 
         }
         //ansonsten wird  der EventHandler processOAIItem mehrfach registsriert
@@ -106,10 +106,34 @@ class ConsolenharvestController extends HarvestController
         }
 
 
-
-
     }
 
+    public function getOldZoraIdsAction()
+    {
+
+        $oaiConfig = $this->getServiceLocator()->get('FSW\Config')->get('oai');
+        $zoraFileDeltaIds = $oaiConfig->Zora->messagesFileDelta1;
+
+        $adapter = $this->facade->getDBAdapter();
+        //$sql = "select identifier from fswzora where identifier not in (" ;
+        //$sql .= " select oai_identifier from fsw_zora_doc)";
+
+        //$result =  $adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+        $handle = fopen($zoraFileDeltaIds, "r");
+        if ($handle) {
+            while (($line = fgets($handle)) !== false) {
+                $line = preg_replace('~[[:cntrl:]]~', '', $line);
+                $sql = "insert into fsw_oai_identifier (oai_identifier) ";
+                $sql .= " values ('" . $line . "')";
+                $adapter->query($sql,Adapter::QUERY_MODE_EXECUTE);
+            }
+        } else {
+            echo "error";
+        }
+        fclose($handle);
+
+    }
 
     /**
      * Indicate failure.
@@ -130,6 +154,8 @@ class ConsolenharvestController extends HarvestController
     {
         return $this->getResponse()->setErrorLevel(0);
     }
+
+
 
 
 }

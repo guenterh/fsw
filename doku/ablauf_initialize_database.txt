@@ -35,6 +35,10 @@ drop table Per_Rolle;
 drop table Qarb_ArbeitenV2;
 
 
+  CREATE TABLE `fsw_oai_identifier` (
+    `oai_identifier` varchar(100) NOT NULL,
+    PRIMARY KEY (`oai_identifier`)
+  ) ENGINE=InnoDB  DEFAULT CHARSET=latin1
 
 
 
