@@ -36,36 +36,51 @@ class PublicationsFacade extends BaseFacade {
     }
 
 
-    public function getPublications($type = 'all') {
+    public function getPublications($params = array()) {
 
-        $sql = 'select distinct p.*, zdoc.*, zdt.*, za.*, fc.coverlink, fc.frontpage  from fsw_zora_doctype zdt,';
-        $sql .= ' fsw_relation_zora_author_zora_doc r_zdza, fsw_zora_author za,';
+
+
+
+        $sql    = 'select distinct p.*, zdoc.*, zdt.*, za.*, fc.coverlink, fc.frontpage, persext.profilURL  from fsw_zora_doctype zdt,';
+        $sql .= ' fsw_relation_zora_author_zora_doc r_zdza, fsw_zora_author za, fsw_personen_extended persext, ';
         $sql .= ' Per_Personen p, fsw_zora_doc zdoc LEFT JOIN fsw_cover fc on (zdoc.oai_identifier = fc.oai_identifier)';
         $sql .= ' where zdoc.oai_identifier = zdt.oai_identifier and ';
         $sql .= ' zdoc.oai_identifier = r_zdza.oai_identifier and ';
         $sql .= ' za.id =  r_zdza.fid_zora_author and ';
-        $sql .= ' p.pers_id = za.pers_id and ';
-        $sql .= 'zdt.oai_recordtyp <> \'PeerReviewed\' and ';
-        $sql .= 'zdt.oai_recordtyp <> \'NonPeerReviewed\' ';
+        $sql .= ' p.pers_id = za.pers_id and persext.id = za.fid_personen and ';
+        $sql .= ' zdt.oai_recordtyp <> \'PeerReviewed\' and ';
+        $sql .= ' zdt.oai_recordtyp <> \'NonPeerReviewed\' ';
+
+
+        $condition = isset($params['conditions']) ? $params['conditions'] : "";
+        $restrictions = $this->getRestrictionForType($condition);
+
+
+        $zoraDocs = array();
+
+        foreach ($restrictions as $key => $value) {
+            $tsql = $sql . ' and ' . $value;
+
+            //$tsql .= " group by zdoc.oai_identifier ORDER BY zdt.oai_recordtyp, zdoc.year desc, zdoc.author asc, zdoc.title asc";
+            $tsql .= " group by zdoc.oai_identifier ORDER BY zdoc.year desc, zdoc.author asc, zdoc.title asc";
 
 
 
-        $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
-        $zoraDocs  = array();
+            $result =  $this->getAdapter()->query($tsql,Adapter::QUERY_MODE_EXECUTE);
 
-        foreach ($result as $row) {
-            $r = $row->getArrayCopy();
+            foreach ($result as $row) {
+                $z = new ZoraRecord();
+                $z->setRawOAIRecord($row['xmlrecord'],$row['oai_identifier'],$row['status'],$row['datestamp']);
+                $z->renderRecord();
 
-            $z = new ZoraRecord();
-            $z->setRawOAIRecord($r['xmlrecord'],$r['oai_identifier'],$r['status'],$r['datestamp']);
-
-            $z->renderRecord();
-
-            $zoraDocs[$r['oai_identifier']] = $z;
+                    $zoraDocs[$key][$row['oai_identifier']] = $z;
+            }
 
 
         }
+
+
 
 
         return $zoraDocs;
@@ -88,6 +103,85 @@ class PublicationsFacade extends BaseFacade {
     public function fetchAll()
     {
     }
+
+
+    private function getRestrictionForType ($condition)
+    {
+
+
+
+        switch ($condition) {
+            case 'buchpublikationen':
+                $restrictions = array('Monographien' => "r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'Monograph'",
+                    'Herausgeberschaften' => " r_zdza.zora_rolle = 'CONTRIBUTOR' and zdt.oai_recordtyp = 'edited scientific work'");
+
+
+                break;
+            case 'buchtest':
+                $restrictions = array('Aufsätze in Sammelbänden' =>  " mitarbeiterOAI.rolle = 'CREATOR' and typOAI.oairecordtyp = 'book section'");
+
+
+                break;
+            case 'noCover':
+                //wofür brauchen wir das
+                $restrictions = array('Aufsätze in Sammelbänden' => " r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'book section'",
+                    'Zeitschriftenaufsätze' => " r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'journal article'",
+                    'Dissertationen' => " r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'dissertation'",
+                    'Habilitationen' => " r_zdza.zora_rolle = 'CONTRIBUTOR' and zdt.oai_recordtyp = 'habilitation'");
+
+
+                break;
+            case 'booksection':
+                $restrictions = array('Aufsätze in Sammelbänden' =>  " r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'book section'");
+                break;
+            case 'journalarticle':
+                $restrictions = array('Zeitschriftenaufsätze' => " r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'journal article'",
+                    'Elektronische Publikationen' => " r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'Scientific Publication in Electronic Form'");
+                break;
+            default:
+                //sequence defined by Manuela:
+                //1) Monograhie -> Monograph
+                //2) Herausgeberschaften -> edited scientific work
+                //3) Sammelschriften -> Booksections
+                //4) Zeitschriftenaufsätze -> journal article
+                //5 -6) not defined so far
+                $restrictions = array('Monographien' => " r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'Monograph'",
+                    'Herausgeberschaften' => " r_zdza.zora_rolle = 'CONTRIBUTOR' and zdt.oai_recordtyp = 'edited scientific work'",
+                    'Aufsätze in Sammelbänden' => " r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'book section'",
+                    'Zeitschriftenaufsätze' => " r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'journal article'",
+                    'Dissertationen' => " r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'dissertation'",
+                    'Habilitationen' => " r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'habilitation'",
+                    'Elektronische Publikationen' => " r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'Scientific Publication in Electronic Form'");
+
+
+                break;
+        }
+
+        return $restrictions;
+
+
+    }
+
+    private function getPersonenInfoWithPersId($id)
+    {
+
+        $info = null;
+
+        $sql = 'select p.pers_name as nachName, p.pers_vorname as vorName, p.pers_id as id, pext.profilURL ';
+        $sql .= 'from Per_Personen as p left join fsw_personen_extended as pext on (p.pers_id = pext.pers_id) ';
+        $sql .= 'join Per_Rolle as r on (p.pers_id = r.roll_pers_id) ';
+        $sql .= 'where r.roll_id = ' . $id;
+
+        $result = $this->getAdapter()->query($sql, Adapter::QUERY_MODE_EXECUTE);
+        $row = $result->current();
+        if ($row) {
+            $info = new PersonenInfo();
+            $info->exchangeArray($row->getArrayCopy());
+
+        }
+        return $info;
+    }
+
 
 
 

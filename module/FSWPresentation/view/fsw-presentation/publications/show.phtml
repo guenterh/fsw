@@ -14,138 +14,145 @@
 
 
 
-    <?php foreach ($zoraDocs as $key => $doc): ?>
+    <?php foreach ($zoraDocs as $key => $docs): ?>
 
-    <!--ist ein Bild vorhanden wird die Struktur unterschiedlich aufgebaut (Liste oder nicht)
-    beachte: dei Ende tags der Struktur sind am Ende und müssen wieder durch entsprechende Abfragen ermittelt werden
-    -->
+    <a name="dies ist ein Name"><!-- --></a>
+    <h2 class="zoraSectionName"><?php echo $key; ?></h2>
 
-    <?php if ($doc->getCoverLink() != null): ?>
-    <div class="objectContainer">
-        <div class="objectFloat left" style="width:70px;">
-            <img src="<?php echo  $doc->getCoverLink()?>" />
+    <ul class="type1">
+
+        <?php foreach ($docs as $doc): ?>
+
+        <!--ist ein Bild vorhanden wird die Struktur unterschiedlich aufgebaut (Liste oder nicht)
+        beachte: dei Ende tags der Struktur sind am Ende und müssen wieder durch entsprechende Abfragen ermittelt werden
+        -->
+
+        <?php if ($doc->getCoverLink() != null): ?>
+        <div class="objectContainer">
+            <div class="objectFloat left" style="width:70px;">
+                <img src="<?php echo  $doc->getCoverLink()?>" />
+            </div>
+            <p>
+         <?php else: ?>
+
+                <li>
+            <p>
+
+        <?php endif; ?>
+
+            <?php echo  $doc->getSource() ?>
+
+        <?php if ( $doc->getRelationExtern() != null && (strpos($doc->getRelationExtern(),"e-collection") == true) ||
+                strpos($doc->getRelationExtern(),"lir") == true ||
+                strpos($doc->getRelationExtern(),"hls") == true ||
+                strpos($doc->getRelationExtern(),"ssoar") == true ||
+                strpos($doc->getRelationExtern(),"hermes") == true ||
+                strpos($doc->getRelationExtern(),"prokla") == true ||
+                strpos($doc->getRelationExtern(),"zfmw") == true ||
+                strpos($doc->getRelationExtern(),"sgg") == true ||
+                strpos($doc->getRelationExtern(),"apuz") == true ||
+                strpos($doc->getRelationExtern(),"224_Arni") == true ||
+                strpos($doc->getRelationExtern(),"seals") == true  ||
+                strpos($doc->getRelationExtern(),"zeitenblicke") == true ||
+                strpos($doc->getRelationExtern(),"hsozkult") == true ||
+                strpos($doc->getRelationExtern(),"gei") == true ||
+                strpos($doc->getRelationExtern(),"bezg") == true ||
+                in_array("Scientific Publication in Electronic Form",$doc->getType())    ): ?>
+
+
+
+                <!-- Fall 1
+
+                ein super dooper link auf einen Volltext
+                -->
+
+
+                <?php if ($doc->getRelationExtern() != null) : ?>
+                &nbsp;
+                <a class="uzh" href="<?php echo $doc->getRelationExtern()?>" target="_blank">Volltext</a>
+                <?php endif; ?>
+
+
+                <?php if ($doc->getSwissbibISBN() != null) : ?>
+                &nbsp;
+                <a class="uzh" href="<?php echo  $doc->getSwissbibISBN()?>" target="_blank">swissbib</a>
+                <?php endif; ?>
+
+                <?php if ($doc->getRelationZora() != null) : ?>
+                &nbsp;
+                <a class="uzh" href="<?php echo  $doc->getRelationZora()?>" target="_blank">Zora</a>
+                <?php endif; ?>
+
+
+
+
+
+
+            <?php elseif (strpos(strtolower($doc->getFormat()),"pdf") == true) : ?>
+
+
+                <!-- Fall 2-- ein PDF vorhanden, dies kann jedoch zugangsbeschränkt sein -->
+
+                <?php if ($doc->getRelationExtern() != null): ?>
+                &nbsp;
+                <a class="uzh" href="<?php echo  $doc->getRelationExtern()?>" target="_blank">Verlagsinfo</a>
+                <?php endif; ?>
+
+
+                <?php if ($doc->getSwissbibISBN() != null): ?>
+                &nbsp;
+                <a class="uzh" href="<?php echo  $doc->getSwissbibISBN() ?>" target="_blank">swissbib</a>
+                <?php endif; ?>
+
+                <?php if ($doc->getRelationZora() != null): ?>
+                &nbsp;
+                <a class="uzh" href="<?php echo  $doc->getRelationZora()?>" target="_blank">Volltext (evt. mit Zugangsbeschränkung)</a>
+                <?php endif; ?>
+
+
+                <?php else: ?>
+
+
+                <!-- Fall 3: kein PDF im Zora ich knn jedoch Verlagsinfo haben -->
+
+                <?php if ($doc->getRelationExtern() != null): ?>
+                &nbsp;
+                <a class="uzh" href="<?php echo $doc->getRelationExtern()?>" target="_blank">Verlagsinfo</a>
+                <?php endif; ?>
+
+
+                <?php if ($doc->getSwissbibISBN() != null): ?>
+                &nbsp;
+                <a class="uzh" href="<?php echo  $doc->getSwissbibISBN()?>" target="_blank">swissbib</a>
+                <?php endif; ?>
+
+                <?php if ($doc->getRelationZora() != null): ?>
+                &nbsp;
+                <a class="uzh" href="<?php echo  $doc->getRelationZora()?>" target="_blank">Zora</a>
+                <?php endif; ?>
+
+                <?php endif; ?>
+
+
+                <!--Abschluss der Struktur - entweder mit oder ohne Bild  -->
+
+
+
+                <?php if ($doc->getCoverLink() != null):?>
+            </p>
         </div>
-        <p>
-     <?php else: ?>
+        <?php else: ?>
 
-            <li>
-        <p>
-
-    <?php endif; ?>
-
-        <?php echo  $doc->getSource() ?>
-
-    <?php if ( $doc->getRelationExtern() != null && (strpos($doc->getRelationExtern(),"e-collection") == true) ||
-            strpos($doc->getRelationExtern(),"lir") == true ||
-            strpos($doc->getRelationExtern(),"hls") == true ||
-            strpos($doc->getRelationExtern(),"ssoar") == true ||
-            strpos($doc->getRelationExtern(),"hermes") == true ||
-            strpos($doc->getRelationExtern(),"prokla") == true ||
-            strpos($doc->getRelationExtern(),"zfmw") == true ||
-            strpos($doc->getRelationExtern(),"sgg") == true ||
-            strpos($doc->getRelationExtern(),"apuz") == true ||
-            strpos($doc->getRelationExtern(),"224_Arni") == true ||
-            strpos($doc->getRelationExtern(),"seals") == true  ||
-            strpos($doc->getRelationExtern(),"zeitenblicke") == true ||
-            strpos($doc->getRelationExtern(),"hsozkult") == true ||
-            strpos($doc->getRelationExtern(),"gei") == true ||
-            strpos($doc->getRelationExtern(),"bezg") == true ||
-            in_array("Scientific Publication in Electronic Form",$doc->getType())    ): ?>
-
-
-
-            <!-- Fall 1
-
-            ein super dooper link auf einen Volltext
-            -->
-
-
-            <?php if ($doc->getRelationExtern() != null) : ?>
-            &nbsp;
-            <a class="uzh" href="<?php echo $doc->getRelationExtern()?>" target="_blank">Volltext</a>
-            <?php endif; ?>
-
-
-            <?php if ($doc->getSwissbibISBN() != null) : ?>
-            &nbsp;
-            <a class="uzh" href="<?php echo  $doc->getSwissbibISBN()?>" target="_blank">swissbib</a>
-            <?php endif; ?>
-
-            <?php if ($doc->getRelationZora() != null) : ?>
-            &nbsp;
-            <a class="uzh" href="<?php echo  $doc->getRelationZora()?>" target="_blank">Zora</a>
-            <?php endif; ?>
-
-
-
-
-
-
-        <?php elseif (strpos(strtolower($doc->getFormat()),"pdf") == true) : ?>
-
-
-            <!-- Fall 2-- ein PDF vorhanden, dies kann jedoch zugangsbeschränkt sein -->
-
-            <?php if ($doc->getRelationExtern() != null): ?>
-            &nbsp;
-            <a class="uzh" href="<?php echo  $doc->getRelationExtern()?>" target="_blank">Verlagsinfo</a>
-            <?php endif; ?>
-
-
-            <?php if ($doc->getSwissbibISBN() != null): ?>
-            &nbsp;
-            <a class="uzh" href="<?php echo  $doc->getSwissbibISBN() ?>" target="_blank">swissbib</a>
-            <?php endif; ?>
-
-            <?php if ($doc->getRelationZora() != null): ?>
-            &nbsp;
-            <a class="uzh" href="<?php echo  $doc->getRelationZora()?>" target="_blank">Volltext (evt. mit Zugangsbeschränkung)</a>
-            <?php endif; ?>
-
-
-            <?php else: ?>
-
-
-            <!-- Fall 3: kein PDF im Zora ich knn jedoch Verlagsinfo haben -->
-
-            <?php if ($doc->getRelationExtern() != null): ?>
-            &nbsp;
-            <a class="uzh" href="<?php echo $doc->getRelationExtern()?>" target="_blank">Verlagsinfo</a>
-            <?php endif; ?>
-
-
-            <?php if ($doc->getSwissbibISBN() != null): ?>
-            &nbsp;
-            <a class="uzh" href="<?php echo  $doc->getSwissbibISBN()?>" target="_blank">swissbib</a>
-            <?php endif; ?>
-
-            <?php if ($doc->getRelationZora() != null): ?>
-            &nbsp;
-            <a class="uzh" href="<?php echo  $doc->getRelationZora()?>" target="_blank">Zora</a>
-            <?php endif; ?>
-
-            <?php endif; ?>
-
-
-            <!--Abschluss der Struktur - entweder mit oder ohne Bild  -->
-
-
-
-            <?php if ($doc->getCoverLink() != null):?>
         </p>
-    </div>
-    <?php else: ?>
-
-    </p>
-    </li>
+        </li>
 
 
-    <?php endif; ?>
+        <?php endif; ?>
 
-
+        <?php endforeach; ?>
+    </ul>
 
 
     <?php endforeach; ?>
 
 
-</ul>

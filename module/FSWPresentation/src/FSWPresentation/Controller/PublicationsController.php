@@ -22,13 +22,13 @@ class PublicationsController extends BaseController {
     public function showAction()
     {
 
-        $type = $this->params('type');
+        $params = $this->params()->fromQuery();
 
 
         //$this->layout()->setTemplate("presentation/layout");
 
         return new ViewModel(array(
-            'zoraDocs' => $this->facade->getPublications($type)
+            'zoraDocs' => $this->facade->getPublications($params)
         ));
 
     }

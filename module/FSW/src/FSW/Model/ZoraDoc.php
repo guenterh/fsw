@@ -203,7 +203,7 @@ class ZoraDoc extends BaseModel implements InputFilterAwareInterface{
         $this->date = $date;
     }
 
-    
+
 
 
 

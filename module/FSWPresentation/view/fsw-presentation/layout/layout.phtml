@@ -3,33 +3,23 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
+        <?php
 
-        <?php	// Styles
+            echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
 
-
-
-        echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
-
-            ->prependStylesheet($this->basePath() . 'http://w3.fsw.uzh.ch/static/zf2/public/html/css/cmsIFrameFSW.css')
-            ->prependStylesheet($this->basePath() . 'http://w3.fsw.uzh.ch/static/zf2/public/html/css/uzh.css')
-
+                ->prependStylesheet($this->basePath() . '/html/css/cmsIFrameFSW.css')
+                ->prependStylesheet($this->basePath() . '/html/css/uzh.css')
         ?>
 
         <?php	// Scripts
         $this->headScript()
-
-            ->prependFile($this->basePath() . 'http://w3.fsw.uzh.ch/static/zf2/public/js/jquery.js')
-            ->appendFile($this->basePath() . 'http://w3.fsw.uzh.ch/static/zf2/public/html/js/fsw.js');
-
-        echo $this->headScript();
+            ->prependFile($this->basePath() . '/js/jquery.js')
+            ->appendFile($this->basePath() . '/html/js/fsw.js');
+            echo $this->headScript();
         ?>
 
-        <!-- Le styles -->
-
-        
 
     </head>
     <body>
