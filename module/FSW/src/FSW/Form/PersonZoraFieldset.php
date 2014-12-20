@@ -39,12 +39,12 @@ class PersonZoraFieldset extends Fieldset {
 
         $attributesDate = $this->readOnly ? array(
             'rows' => 1,
-            'class' => 'datePicker',
-            'readonly'  => 'readonly'
+            //'class' => 'datePicker',
+            'disabled'  => 'true'
 
         ) : array(
             'rows' => 1,
-            'class' => 'datePicker',
+            //'class' => 'datePicker',
 
         );
 
@@ -112,23 +112,43 @@ class PersonZoraFieldset extends Fieldset {
             'attributes' => $attributesArea
         ));
 
+
+
+        $years = array();
+
+        for ($i = 1950; $i < 2051 ; $i++) {
+            $years ["$i"] = "$i";
+        }
+        $years["0"] = "0";
+
+        //select ist vom Framework her immer required
+        //Stand Version 2.x
+        //bug
+
+
         $this->add(array(
-            'name' => 'datum_von',
-            'type' => 'text',
+            'name' => 'year_from',
+            'type' => 'select',
             'options' => array(
-                'label' => 'datum_von'
+                'empty_option' => '-',
+                'label' => 'datum_von (0 leeres Datum)',
+                'value_options' => $years
             ),
             'attributes' => $attributesDate
         ));
 
         $this->add(array(
-            'name' => 'datum_bis',
-            'type' => 'text',
+            'name' => 'year_until',
+            'type' => 'select',
             'options' => array(
-                'label' => 'datum_bis'
+                'label' => 'datum_bis (0 leeres Datum)',
+                'empty_option' => '-',
+
+                'value_options' => $years
             ),
             'attributes' => $attributesDate
         ));
+
 
 
 

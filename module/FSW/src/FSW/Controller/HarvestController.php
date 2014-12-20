@@ -111,7 +111,7 @@ class HarvestController extends BaseController
         //$this->oaiClient->setUrlGetRecord($config->GetRecord);
 
         foreach($params as $entity) {
-            $this->oaiClient->launchGetRecord($entity);
+            $this->oaiClient->launchGetRecord(trim($entity));
         }
 
     }

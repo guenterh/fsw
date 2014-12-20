@@ -121,6 +121,21 @@ class ZoraDocFieldset extends Fieldset implements InputFilterProviderInterface {
             )
         ));
 
+
+        $this->add(array(
+            'name' => 'date',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'date'
+            ),
+            'attributes' => array(
+                'rows' => 1,
+                'class' => 'fswTextAreaSmall',
+                'readonly'  => 'readonly'
+            )
+        ));
+
+
         $this->add(array(
             'name' => 'coverlink',
             'type' => 'textarea',

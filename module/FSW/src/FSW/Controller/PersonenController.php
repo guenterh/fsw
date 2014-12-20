@@ -319,17 +319,16 @@ class PersonenController extends BaseController{
             $form->setData($request->getPost());
             if ($form->isValid()) {
 
-                $lastInsertedValue = $this->facade->updateZoraAuthor($request->getPost()->toArray()['PersonZora']);
-                if ($lastInsertedValue) {
-                    $form->getBaseFieldset()->get('id')->setValue($lastInsertedValue);
-                } else {
-                    $form->getBaseFieldset()->get('id')->setValue(0);
+                //bei update gibt es keinen lastInsertedValue
+                $this->facade->updateZoraAuthor($request->getPost()->toArray()['PersonZora']);
+                //if ($lastInsertedValue) {
+                //    $form->getBaseFieldset()->get('id')->setValue($lastInsertedValue);
+                //} else {
+                //    $form->getBaseFieldset()->get('id')->setValue(0);
                     //something went wrong (how to handle this??
-                }
+                //}
 
 
-            } else {
-                $form->getBaseFieldset()->get('id')->setValue(0);
             }
 
             $templateDaten = array(

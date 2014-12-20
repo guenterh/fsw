@@ -176,19 +176,23 @@ EOD;
     }
 
 
-    public function isFSWZoraAuthor ($object) {
+    public function isFSWZoraAuthor ($zoraDocPublishedYear, $zoraAuthorName) {
 
         $isZoraAuthor = array();
-
-        $sql = 'SELECT * from fsw_zora_author where zora_name = ' . $this->qV($object);
+        //todo: hier noch prüfen ob überhaupt Zora Author vom daterange!
+        $sql = 'SELECT * from fsw_zora_author where zora_name = ' . $this->qV($zoraAuthorName);
         $result = $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
-        $isZoraAuthor = array();
-        foreach ($result as $row) {
-            $r = $row->getArrayCopy();
-            $isZoraAuthor['id'] = $r['id'];
-            $isZoraAuthor['zora_name'] = $r['zora_name'];
-        }
 
+
+        if (count($result) == 1) {
+            $row = $result->current();
+            $inRange = $this->checkAuthorsDateRange($zoraDocPublishedYear, $row['year_from'],$row['year_until']);
+            if ($inRange) {
+
+                $isZoraAuthor['id'] = $row['id'];
+                $isZoraAuthor['zora_name'] = $row['zora_name'];
+            }
+        }
 
 
         return $isZoraAuthor;
@@ -203,9 +207,13 @@ EOD;
         foreach ($object->getCreator() as $creator) {
             $sql = 'SELECT * from fsw_zora_author where zora_name = ' . $this->qV($creator);
             $result = $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
-            if (count($result) > 0) {
-                $isZoraAuthor = true;
-                break;
+            if (count($result) == 1) {
+                $row = $result->current();
+                $inRange = $this->checkAuthorsDateRange($object->getYear(), $row['year_from'],$row['year_until']);
+                if ($inRange) {
+                    $isZoraAuthor = true;
+                    break;
+                }
             }
         }
 
@@ -213,15 +221,48 @@ EOD;
             foreach ($object->getContributor() as $contributor) {
                 $sql = 'SELECT * from fsw_zora_author where zora_name = ' . $this->qV($contributor);
                 $result = $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
-                if (count($result) > 0) {
-                    $isZoraAuthor = true;
-                    return $isZoraAuthor;
+                if (count($result) == 1) {
+
+                    $row = $result->current();
+                    $inRange = $this->checkAuthorsDateRange($object->getYear(), $row['year_from'],$row['year_until']);
+                    if ($inRange) {
+                        $isZoraAuthor = true;
+                        break;
+                    }
+
+
                 }
             }
         }
         return $isZoraAuthor;
     }
 
+
+    private function checkAuthorsDateRange($yearRecord, $yearFromAuthor, $yearUntilAuthor)
+    {
+        $inRange = true;
+
+        //sometimes it is a SimpleXMLElement (should be treated in ZoraRecord - not now...)
+        $tempYearRecord = (string) $yearRecord;
+        if (strcmp($yearFromAuthor,'0') != 0)
+        {
+            //es wurde ein from-Datum gesetzt
+            if (((int) $yearRecord) < ((int) $yearFromAuthor)) {
+                return false;
+            }
+
+        }
+        if (strcmp($yearUntilAuthor,'0') != 0)
+        {
+            //es wurde ein from-Datum gesetzt
+            if (((int) $yearRecord) > ((int) $yearUntilAuthor)) {
+                return false;
+            }
+
+        }
+
+        return $inRange;
+    }
 
 
     /**
@@ -249,15 +290,17 @@ EOD;
     private function getDBCreator (ZoraRecord $zR) {
 
 
+
+        $docYearPublished = $zR->getYear();
         foreach ($zR->getCreator() as $creator) {
 
-            if ($this->isFSWZoraAuthor($creator)) {
+            if ($this->isFSWZoraAuthor($docYearPublished, $creator)) {
                 return $creator;
             }
         }
 
         foreach ($zR->getContributor() as $contributor) {
-            if ($this->isFSWZoraAuthor($contributor)) {
+            if ($this->isFSWZoraAuthor($docYearPublished, $contributor)) {
                 return $contributor;
             }
         }
@@ -280,14 +323,11 @@ EOD;
         $sql = 'select * from fsw_zora_doc where oai_identifier = ' . $this->qV($oai_identifier);
         $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
-        $updated = false;
-        if ($number =  (count($result) > 0)){
-            foreach ($result as $row) {
-                $columns = $row->getArrayCopy();
+        $updated = true;
 
-                $updated = strcmp($columns["datestamp"],$datestamp) != 0 ? true : false;
-                break;
-            }
+        if (count($result) == 1) {
+            $row = $result->current();
+            $updated = strcmp($row["datestamp"],$datestamp) != 0 ? true : false;
         }
 
         return $updated;
@@ -302,12 +342,13 @@ EOD;
 
 
 
-        $sqlTemplate = ' insert into fsw_zora_doc  (author, datestamp, oai_identifier,status,title,xmlrecord,year) ';
-        $sqlTemplate .= ' values (AUTHOR, DATESTAMP,OAI_IDENTIFIER,STATUS,TITLE,XMLFRAGMENT,YEAR)';
+        $sqlTemplate = ' insert into fsw_zora_doc  (author, datestamp, oai_identifier,status,title,xmlrecord,year,date) ';
+        $sqlTemplate .= ' values (AUTHOR, DATESTAMP,OAI_IDENTIFIER,STATUS,TITLE,XMLFRAGMENT,YEAR,DATE)';
         $sqlTemplate = preg_replace('/AUTHOR/',$this->qV($this->getDBCreator($zR)),$sqlTemplate );
         $sqlTemplate = preg_replace('/OAI_IDENTIFIER/',$this->qV($zR->getIdentifier()),$sqlTemplate );
         $sqlTemplate = preg_replace('/DATESTAMP/',$this->qV($zR->getDatestamp()),$sqlTemplate );
-        $sqlTemplate = preg_replace('/YEAR/',$this->qV($zR->getDate()),$sqlTemplate );
+        $sqlTemplate = preg_replace('/YEAR/',$this->qV($zR->getYear()),$sqlTemplate );
+        $sqlTemplate = preg_replace('/DATE/',$this->qV($zR->getDate()),$sqlTemplate );
         $sqlTemplate = preg_replace('/TITLE/',$this->qV($zR->getTitle()),$sqlTemplate );
         $sqlTemplate = preg_replace('/STATUS/',$this->qV($recordStatus),$sqlTemplate );
         $sqlTemplate = preg_replace('/XMLFRAGMENT/', $this->qV($zR->getRecXML()),$sqlTemplate );
@@ -317,9 +358,10 @@ EOD;
         $genIdZoraDoc = $this->getAdapter()->getDriver()->getLastGeneratedValue();
 
 
+        $docYearPublished = $zR->getYear();
         foreach ($zR->getCreator() as $creator) {
 
-            $creatorAttributes = $this->isFSWZoraAuthor($creator);
+            $creatorAttributes = $this->isFSWZoraAuthor($docYearPublished, $creator);
 
             if ( count($creatorAttributes) > 0 ) {
 
@@ -339,7 +381,7 @@ EOD;
         }
         foreach ($zR->getContributor() as $contributor) {
 
-            $contributorAttributes = $this->isFSWZoraAuthor($contributor);
+            $contributorAttributes = $this->isFSWZoraAuthor($docYearPublished,$contributor);
 
             if ( count($contributorAttributes) > 0 ) {
 

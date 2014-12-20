@@ -53,6 +53,8 @@ class ZoraRecord  {
     private $customcontributors = null;
     private $coverLink = null;
 
+    private $year = null;
+
 
 
     private $rawXMLPrepared;
@@ -187,16 +189,30 @@ class ZoraRecord  {
 
     public function setDate($date) {
 
-        $tempDate = (string)$date;
-        $monthDate = explode("-",$tempDate);
-        if (count($monthDate) > 1) {
-            $tempDate = $monthDate[0];
+        //es kann sein, dass im Zora kein Jahr sondern ein dateformat yyyy-mm-dd hinterlegt ist
+        //in diesem Fall ziehen wir das Jahr heraus und hinterlegen es separat.
+
+        $dateString  = (string) $date;
+        $yearString = null;
+
+        if (strlen($dateString) > 4) {
+
+            try {
+                $timestamp = strtotime($date);
+                $yearString = strftime("%G", $timestamp);
+            } catch (\Exception $ex) {
+                //im Falle einer Exception auf 0 setzen, da in der Datenbank int definiert ist
+                $yearString = 0;
+
+            }
+        } else {
+            $yearString = $dateString;
         }
-        if (!ctype_digit($tempDate)) {
-            //todo make conversion
-            $date = 2010;
-        }
-        $this->date = $date;
+
+
+        $this->date = $dateString;
+        $this->year = $yearString;
+
     }
 
     public function setType($type) {
@@ -431,6 +447,17 @@ class ZoraRecord  {
     {
         return $this->referee;
     }
+
+    /**
+     * @return null
+     */
+    public function getYear()
+    {
+        return $this->year;
+    }
+
+
+
 
     /**
      * @return null

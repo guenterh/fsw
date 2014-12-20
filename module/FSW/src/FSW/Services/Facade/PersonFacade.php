@@ -107,7 +107,8 @@ class PersonFacade extends BaseFacade {
                                     array('fid_personen'            => $persExtendedFSW,
                                             'pers_id'               => $persIdHS,
                                             'zora_name'             =>  $zoraName,
-                                            'zora_name_customized'  =>  $zoraNameCustomized));
+                                            'zora_name_customized'  =>  $zoraNameCustomized
+                                        ));
     }
 
 
@@ -424,12 +425,12 @@ class PersonFacade extends BaseFacade {
                 foreach ($resultZoraName as $zN) {
                     $z = $zN->getArrayCopy();
 
-                    $sql = "insert into fsw_zora_author (fid_personen,pers_id,zora_name,datum_von, datum_bis, zora_name_customized) ";
+                    $sql = "insert into fsw_zora_author (fid_personen,pers_id,zora_name,year_from, year_until, zora_name_customized) ";
                     $sql = $sql .  "values (" . $this->qV($genIdPersonenExtended) . ',';
                     $sql = $sql .  $this->qV($r['pers_id']) . ',';
                     $sql = $sql .  $this->qV($z['zoraName']) . ',';
-                    $sql = $sql .  $this->qV('0000-00-00') . ',';
-                    $sql = $sql .  $this->qV('0000-00-00') . ',';
+                    $sql = $sql .  $this->qV('0') . ',';
+                    $sql = $sql .  $this->qV('0') . ',';
                     $sql = $sql .  $this->qV($z['zoraNameCustomized']) . ' )';
 
 

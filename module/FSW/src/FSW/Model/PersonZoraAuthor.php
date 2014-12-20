@@ -22,8 +22,8 @@ class PersonZoraAuthor extends BaseModel implements InputFilterAwareInterface {
     public $zora_name_customized;
     public $pers_id;
     public $fid_personen;
-    public $datum_von;
-    public $datum_bis;
+    public $year_from;
+    public $year_until;
     public $numberzoradocs;
 
 
@@ -174,34 +174,38 @@ class PersonZoraAuthor extends BaseModel implements InputFilterAwareInterface {
     /**
      * @return mixed
      */
-    public function getDatum_bis()
+    public function getYear_from()
     {
-        return $this->datum_bis;
+        return $this->year_from;
     }
 
     /**
-     * @param mixed $datum_bis
+     * @param mixed $year_from
      */
-    public function setDatum_bis($datum_bis)
+    public function setYear_from($year_from)
     {
-        $this->datum_bis = $datum_bis;
+        $this->year_from = $year_from;
     }
 
     /**
      * @return mixed
      */
-    public function getDatum_von()
+    public function getYear_until()
     {
-        return $this->datum_von;
+        return $this->year_until;
     }
 
     /**
-     * @param mixed $datum_von
+     * @param mixed $year_until
      */
-    public function setDatum_von($datum_von)
+    public function setYear_until($year_until)
     {
-        $this->datum_von = $datum_von;
+        $this->year_until = $year_until;
     }
+
+
+
+
 
     /**
      * @return mixed

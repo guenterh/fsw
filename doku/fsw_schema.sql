@@ -124,6 +124,7 @@ CREATE TABLE IF NOT EXISTS `fsw_zora_doc` (
   `oai_identifier` varchar(100)  NOT NULL,
   `datestamp` varchar(20)  NOT NULL,
   `year` int(11) NOT NULL,
+  `date` VARCHAR (10) NOT NULL,
   `status` varchar(40)  NOT NULL,
   `title` varchar(255)  NOT NULL,
   `author` varchar(255)  DEFAULT NULL,
@@ -155,8 +156,8 @@ CREATE TABLE IF NOT EXISTS `fsw_zora_author` (
   `pers_id` bigint(20) DEFAULT NULL,
   `zora_name` varchar(500)  NOT NULL,
   `zora_name_customized` varchar(500)  DEFAULT NULL,
-  `datum_von` date Default NULL,
-  `datum_bis` date Default NULL,
+  `year_from` varchar(16) DEFAULT '0',
+  `year_until` varchar(16) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fid_personen` (`fid_personen`),
   KEY `zora_name` (`zora_name`)
