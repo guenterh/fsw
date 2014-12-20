@@ -61,6 +61,11 @@ class PublicationsFacade extends BaseFacade {
         foreach ($restrictions as $key => $value) {
             $tsql = $sql . ' and ' . $value;
 
+            if (isset($params['mitid'])) {
+
+                $tsql .= ' and za.pers_id = ' . $this->qV($params['mitid']);
+            }
+
             //$tsql .= " group by zdoc.oai_identifier ORDER BY zdt.oai_recordtyp, zdoc.year desc, zdoc.author asc, zdoc.title asc";
             $tsql .= " group by zdoc.oai_identifier ORDER BY zdoc.year desc, zdoc.author asc, zdoc.title asc";
 
