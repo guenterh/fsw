@@ -23,6 +23,7 @@ class ZoraDoc extends BaseModel implements InputFilterAwareInterface{
     public $title;
     public $xmlrecord;
     public $year;
+    public $date;
 
 
 
@@ -185,6 +186,24 @@ class ZoraDoc extends BaseModel implements InputFilterAwareInterface{
     {
         return $this->year;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param mixed $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    
 
 
 
