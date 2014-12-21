@@ -3,42 +3,26 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-
-        <?php	// Styles
-
-
-
-        echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon',
-                'href' => $this->basePath() . '/images/favicon.ico'))
-            ->prependStylesheet($this->basePath() . '/html/css/cmsIFrameFSW.css')
-            ->prependStylesheet($this->basePath() . '/html/js1/jquery-ui/jquery-ui.css')
-            ->prependStylesheet($this->basePath() . '/html/css/uzh.css');
+        <?php
+            echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon',
+                    'href' => $this->basePath() . '/images/favicon.ico'))
+                ->prependStylesheet($this->basePath() . '/js/presentation/jquery-ui/fswui.css')
+                ->prependStylesheet($this->basePath() . '/css/presentation/cmsIFrameFSW.css')
+                ->prependStylesheet($this->basePath() . '/js/presentation/jquery-ui/jquery-ui.css')
+                ->prependStylesheet($this->basePath() . '/css/presentation/uzh.css')
 
         ?>
-
         <?php	// Scripts
-        $this->headScript()
-            ->appendFile($this->basePath() . '/html/js1/jquery.js')
-            ->appendFile($this->basePath() . '/html/js1/jquery-ui/jquery-ui.js')
-            ->appendFile($this->basePath() . '/html/js/fsw.js')
-
-            ->appendFile($this->basePath() . '/html/js/fswUIinit.js');
-
-
-        echo $this->headScript();
+            $this->headScript()
+                ->appendFile($this->basePath() . '/js/presentation/jquery.js')
+                ->appendFile($this->basePath() . '/js/presentation/jquery-ui/jquery-ui.js')
+                ->appendFile($this->basePath() . '/js/presentation/fsw/fsw.js')
+                ->appendFile($this->basePath() . '/js/presentation/fsw/fswUIinit.js');
+            echo $this->headScript();
         ?>
-
-
-
     </head>
     <body>
-
-            <?php echo $this->content; ?>
-
-
-
+        <?php echo $this->content; ?>
     </body>
 </html>

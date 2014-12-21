@@ -1,0 +1,56 @@
+html
+{
+	height:auto;
+}
+body
+{
+	background-color:#FFFFFF;
+	margin: 0;
+	height:auto;
+}
+div.bodywidthIFrame
+{
+	margin: 0;
+	width: auto;
+	min-height: 0;
+}
+
+
+
+img
+{
+  float:left;
+   
+}
+
+p.noMarginBottom {
+    margin-bottom:0;
+}
+
+
+li.marginTop {
+    margin-top:0.7em;
+}
+
+
+p.abstractAbsatz {
+    /*color:#ff1493; */
+}
+
+
+#stripe1 {
+    background-color:#a52a2a;
+}
+
+.objectContainer
+{
+    padding-bottom: 15px;
+}
+
+.titleZora {
+    font-weight: bold;
+}
+
+.zoraSectionName {
+    margin-bottom: 20px;
+}

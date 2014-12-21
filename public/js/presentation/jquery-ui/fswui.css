@@ -1,0 +1,20 @@
+
+
+.ui-widget-header {
+    background: url("images/ui-bg_highlight-soft_75_cccccc_1x100.png") repeat-x scroll 50% 50% #cccccc;
+    border: 1px solid #cccccc;
+    color: #cccccc;
+    font-weight: bold;
+}
+
+
+.ui-state-default a, .ui-state-default a:link, .ui-state-default{
+    color: #555555;
+    text-decoration: none;
+}
+
+.ui-widget-content {
+    background: url("images/ui-bg_highlight-soft_100_eeeeee_1x100.png") repeat-x scroll 50% top ;
+    border: 1px solid #dddddd;
+    color: #333333;
+}

@@ -8,3 +8,8 @@ http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show?
 http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show?conditions=journalarticle
 
 http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show?mitid=1080
+
+
+
+Qualitätsarbeiten
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/qarb/show?betreuer[]=sarasin&amp;status[]=laufend&amp;typ[]=diss
