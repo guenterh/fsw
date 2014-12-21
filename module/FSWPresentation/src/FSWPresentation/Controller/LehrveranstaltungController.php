@@ -47,7 +47,7 @@ class LehrveranstaltungController extends BaseController {
         $mitId = $this->params()->fromRoute('id',0);
 
         if ($mitId == 0) {
-            return $this->forward()->dispatch('FSWPresentation\Controller\Publications', array('action' => 'show' ));
+            return $this->forward()->dispatch('FSWPresentation\Controller\Lehrveranstaltung', array('action' => 'showArchiv' ));
         }
 
 
