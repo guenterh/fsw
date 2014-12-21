@@ -55,6 +55,8 @@ class ZoraRecord  {
 
     private $year = null;
 
+    private $zoraAuthorInfo = array();
+
 
 
     private $rawXMLPrepared;
@@ -344,6 +346,11 @@ class ZoraRecord  {
         return $this->coverLink;
     }
 
+    public function setCoverLink($coverlink) {
+
+        $this->coverLink = $coverlink;
+    }
+
     /**
      * @return null
      */
@@ -480,7 +487,99 @@ class ZoraRecord  {
      */
     public function getSource()
     {
+        $pattern = null;
+        $replacement = null;
+
+
+        $tosearch = array("(",")","?",":","[","]","/");
+        $toreplace = array("\(","\)","\?","\:","\[","\]","\/");
+
+        //(ZH, Zell/Rikon)  -> sucht ansonsten nach einer Option R die es nicht gibt
+
+
+        try {
+
+            $pattern = '/(' . str_replace($tosearch,$toreplace,trim($this->title)) .   ')/';
+            $replacement = '<span class="titleZora">${1}</span>';
+
+            $this->source =   preg_replace($pattern,$replacement,$this->source);
+
+        } catch (Exception $e) {
+            $test = "";
+        }
+
+        //preg_match("/\.(?[^.]+)\./",$this->source,$matches);
+
+
+        foreach ($this->getCreator() as $creator) {
+
+            $creator = (string) $creator;
+            if (array_key_exists( $creator, $this->zoraAuthorInfo)) {
+
+                if (! is_null($this->zoraAuthorInfo[$creator]->getProfilURL() &&
+                    strlen($this->zoraAuthorInfo[$creator]->getProfilURL()) > 0))
+                {
+                    $profilURL =  $this->zoraAuthorInfo[$creator]->getProfilURL();
+
+                    $temp = strpos($this->source,$creator);
+                    $firstPart = substr($this->source,0,$temp);
+
+                    $lastPart =  substr($this->source,$temp + strlen($creator));
+
+                    //im link wird dieser extra Prameter eingetragen und ein neues Fenster zu oeffnen (der Parameter selber kann bleiben, schadet nicht)
+                    if (strpos($profilURL,"&extern=true")) {
+                        $shorterLink = substr($profilURL,0,strpos($profilURL,"&extern=true"));
+                        $combine = $firstPart . '<a  title="Teaser Link" class="www" href="' . $shorterLink . '" target="_blank" >'  . $creator  .   "</a>" . $lastPart;
+                    } else {
+                        $combine = $firstPart . "<a class='uzh displayParent' href='" . $profilURL . "' >"  . $creator  .   "</a>" . $lastPart;
+                    }
+
+
+                    $this->source = $combine;
+
+                }
+
+
+            }
+
+        }
+
+
+        foreach ($this->getContributor() as $contributor) {
+
+            $contributor = (string) $contributor;
+
+            if (array_key_exists($contributor, $this->zoraAuthorInfo)) {
+
+                if (! is_null($this->zoraAuthorInfo[$contributor]->getProfilURL() &&
+                    strlen($this->zoraAuthorInfo[$contributor]->getProfilURL()) > 0))
+                {
+                    $profilURL =  $this->zoraAuthorInfo[$contributor]->getProfilURL();
+
+                    $temp = strpos($this->source,$contributor);
+                    $firstPart = substr($this->source,0,$temp);
+
+                    $lastPart =  substr($this->source,$temp + strlen($contributor));
+
+                    //im link wird dieser extra Prameter eingetragen und ein neues Fenster zu oeffnen (der Parameter selber kann bleiben, schadet nicht)
+                    if (strpos($profilURL,"&extern=true")) {
+                        $shorterLink = substr($profilURL,0,strpos($profilURL,"&extern=true"));
+                        $combine = $firstPart . '<a  title="Teaser Link" class="www" href="' . $shorterLink . '" target="_blank" >'  . $contributor  .   "</a>" . $lastPart;
+                    } else {
+                        $combine = $firstPart . "<a class='uzh displayParent' href='" . $profilURL . "' >"  . $contributor  .   "</a>" . $lastPart;
+                    }
+
+
+                    $this->source = $combine;
+
+                }
+            }
+        }
+
         return $this->source;
+
+
+
     }
 
     /**
@@ -724,6 +823,13 @@ class ZoraRecord  {
         if (count($result)  > 0 && strlen((string)$result[0]) > 0) {
             $this->customcontributors = explode("##",(string)$result[0]);
         }
+
+    }
+
+    public function addZoraAuthorInfo (array $authorInfo)
+    {
+
+        $this->zoraAuthorInfo = array_merge($this->zoraAuthorInfo, $authorInfo);
 
     }
 

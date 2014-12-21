@@ -9,6 +9,8 @@
 namespace FSWPresentation\Services\Facade;
 
 
+use FSW\Model\PersonenInfo;
+use FSW\Model\ZoraAuthorInfo;
 use FSW\Model\ZoraRecord;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
@@ -40,7 +42,7 @@ class PublicationsFacade extends BaseFacade {
 
 
 
-
+        /*
         $sql    = 'select distinct p.*, zdoc.*, zdt.*, za.*, fc.coverlink, fc.frontpage, persext.profilURL  from fsw_zora_doctype zdt,';
         $sql .= ' fsw_relation_zora_author_zora_doc r_zdza, fsw_zora_author za, fsw_personen_extended persext, ';
         $sql .= ' Per_Personen p, fsw_zora_doc zdoc LEFT JOIN fsw_cover fc on (zdoc.oai_identifier = fc.oai_identifier)';
@@ -50,6 +52,19 @@ class PublicationsFacade extends BaseFacade {
         $sql .= ' p.pers_id = za.pers_id and persext.id = za.fid_personen and ';
         $sql .= ' zdt.oai_recordtyp <> \'PeerReviewed\' and ';
         $sql .= ' zdt.oai_recordtyp <> \'NonPeerReviewed\' ';
+        */
+
+
+        $sql  = 'select distinct zdoc.*, zdt.oai_recordtyp,zdt.typform, za.zora_name, za.zora_name_customized, ';
+        $sql .= ' fc.coverlink, fc.frontpage from fsw_zora_doctype zdt,';
+        $sql .= ' fsw_relation_zora_author_zora_doc r_zdza, fsw_zora_author za, ';
+        $sql .= ' fsw_zora_doc zdoc LEFT JOIN fsw_cover fc on (zdoc.oai_identifier = fc.oai_identifier)';
+        $sql .= ' where zdoc.oai_identifier = zdt.oai_identifier and ';
+        $sql .= ' zdoc.id = r_zdza.fid_zora_doc and ';
+        $sql .= ' za.id =  r_zdza.fid_zora_author and ';
+        $sql .= ' zdt.oai_recordtyp <> \'PeerReviewed\' and ';
+        $sql .= ' zdt.oai_recordtyp <> \'NonPeerReviewed\' ';
+
 
 
         $condition = isset($params['conditions']) ? $params['conditions'] : "";
@@ -78,17 +93,39 @@ class PublicationsFacade extends BaseFacade {
                 $z = new ZoraRecord();
                 $z->setRawOAIRecord($row['xmlrecord'],$row['oai_identifier'],$row['status'],$row['datestamp']);
                 $z->renderRecord();
-
-                    $zoraDocs[$key][$row['oai_identifier']] = $z;
+                $z->setCoverLink($row['coverlink']);
+                $z->addZoraAuthorInfo($this->getPersonInfosForPublication($row['id']));
+                $zoraDocs[$key][$row['oai_identifier']] = $z;
             }
-
 
         }
 
-
-
-
         return $zoraDocs;
+
+    }
+
+
+    /**
+     * @param $zoraDocId
+     * @return array
+     */
+    private function getPersonInfosForPublication($zoraDocId) {
+
+        $sql = "select za.id, za.zora_name,za.zora_name_customized, persext.profilURL from fsw_relation_zora_author_zora_doc relAuthDoc join  fsw_zora_author za ";
+        $sql .= " on (relAuthDoc.fid_zora_author = za.id) join fsw_personen_extended persext on (za.fid_personen = persext.id) ";
+        $sql .= " where relAuthDoc.fid_zora_doc = " . $this->qV($zoraDocId);
+
+        $result = $this->getAdapter()->query($sql, Adapter::QUERY_MODE_EXECUTE);
+
+
+        $zaInfo = array();
+        foreach ($result as $row){
+            $info = new ZoraAuthorInfo();
+            $info->exchangeArray($row->getArrayCopy());
+            $zaInfo[$info->getZoraName()] = $info;
+        }
+
+        return $zaInfo;
 
     }
 
