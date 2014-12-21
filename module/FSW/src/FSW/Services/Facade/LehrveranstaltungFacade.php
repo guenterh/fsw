@@ -16,6 +16,7 @@ use FSW\Model\PersonenInfo;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Select;
 use Zend\Debug\Debug;
+use Zend\Db\ResultSet\ResultSet;
 
 class LehrveranstaltungFacade extends BaseFacade {
 
@@ -336,27 +337,73 @@ class LehrveranstaltungFacade extends BaseFacade {
     }
 
 
-    public function getLehrveranstaltungenWithDependencies($idLehrveranstaltung) {
+    public function getLehrveranstaltungenArchiv() {
 
-        $idLehrV = (int) $idLehrveranstaltung;
         $lvGateway =  $this->histSemDBService->getLehrveranstaltungenGateway();
 
-        if ($idLehrV && $idLehrV != 0) {
-            $resultset = $lvGateway->select(array(
-                'id'    => $idLehrV
-            ));
-        } else {
-            $lvArchivDefinitionen = $this->getFSWConfigLocator()->get('config')->LehrveranstaltungArchiv;
-            $inValues = array_keys($lvArchivDefinitionen->toArray());
+        $lvArchivDefinitionen = $this->getFSWConfigLocator()->get('config')->LehrveranstaltungArchiv;
+        $inValues = array_keys($lvArchivDefinitionen->toArray());
 
-            $select  = $lvGateway->getSql()->select();
-            $select->where->in('semester',$inValues);
-            $resultset =  $lvGateway->selectWith($select);
+        $select  = $lvGateway->getSql()->select();
+        $select->where->in('semester',$inValues);
+        $resultset =  $lvGateway->selectWith($select);
+
+        $lehrveranstaltungen = $resultset ? $this->compileLehrveranstaltungen($resultset) : array();
+
+        return $lehrveranstaltungen;
+
+    }
 
 
-        }
+    public function getLehrveranstaltungenAktuell() {
 
-        $lehrveranstaltungen= array();
+        $lvGateway =  $this->histSemDBService->getLehrveranstaltungenGateway();
+
+        $lvAktuellDefinitionen = $this->getFSWConfigLocator()->get('config')->LehrveranstaltungAktuell;
+        $inValues = array_keys($lvAktuellDefinitionen->toArray());
+
+        $select  = $lvGateway->getSql()->select();
+        $select->where->in('semester',$inValues);
+
+        $resultset =  $lvGateway->selectWith($select);
+
+
+        $lehrveranstaltungen = $resultset ? $this->compileLehrveranstaltungen($resultset) : array();
+
+        return $lehrveranstaltungen;
+
+    }
+
+
+    public function getLehrveranstaltungenMitarbeiter($mitId) {
+
+        $lvGateway =  $this->histSemDBService->getLehrveranstaltungenGateway();
+
+        $select  = $lvGateway->getSql()->select();
+        $select->join(array(
+            'rel_lv' => 'fsw_relation_personen_fsw_lehrveranstaltung'),
+            'rel_lv.ffsw_lehrveranstaltungen_id = fsw_lehrveranstaltung.id'
+        );
+        $select->where(
+            array(
+                'rel_lv.fper_personen_pers_id' => $mitId
+            )
+        );
+        $resultset =  $lvGateway->selectWith($select);
+
+        $lehrveranstaltungen = $resultset ? $this->compileLehrveranstaltungen($resultset) : array();
+
+        return $lehrveranstaltungen;
+
+    }
+
+
+
+
+    private function compileLehrveranstaltungen(ResultSet $resultset) {
+
+        $lehrveranstaltungen = array();
+
         if ($resultset) {
 
 
@@ -387,9 +434,7 @@ class LehrveranstaltungFacade extends BaseFacade {
         }
 
         return $lehrveranstaltungen;
-
     }
-
 
 
 

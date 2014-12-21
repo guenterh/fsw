@@ -2,7 +2,9 @@
 
 Zoradokumente
 
-http://localhost:30000/static/zf2/public/index.php/presentation/publications/show
+[alle Kategorien]
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show
+
 http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show?conditions=buchpublikationen
 http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show?conditions=booksection
 http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show?conditions=journalarticle
@@ -13,3 +15,22 @@ http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show?
 
 Qualitätsarbeiten
 http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/qarb/show?betreuer[]=sarasin&amp;status[]=laufend&amp;typ[]=diss
+
+
+Lehrveranstaltung
+1) Anzeige Archiv
+
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/lehrveranstaltung/showArchiv
+alle Lehrveranstaltungen aus dem Archiv gemäss Konfiguration in config.ini
+
+2) Anzeige aktuell
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/lehrveranstaltung/showAktuell
+-> Anzeige der aktuellen Lehrveranstaltungen
+
+3) Anzeige der Lehrveranstaltungen einer Person
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/lehrveranstaltung/showM/101
+102 ist die pers_id einer Person (im Beispiel Sarasin)
+die pers_id ist im Backend unter Personen im Tab PersonenCoreHS zu finden
+
+
+

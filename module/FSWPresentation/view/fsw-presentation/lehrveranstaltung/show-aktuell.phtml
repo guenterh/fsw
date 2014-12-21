@@ -6,48 +6,50 @@
 
 
 
-<div id="tabs" >
-
-    <ul>
-
-        <?php foreach($this->archivLabels as $key => $value): ?>
-            <li><a href="#tab-<?php echo $key; ?>"><?php echo $value ?></a></li>
-
-        <?php endforeach; ?>
-    </ul>
+<ul class="type1">
     <?php foreach($semesterArray as $semesterKey => $lehrVeranstaltungenImSemester): ?>
-
-        <div id="tab-<?php echo $semesterKey?>" class="tab">
-        <ul    class="type1">
-
         <?php foreach($lehrVeranstaltungenImSemester as $lv): ?>
-            <li class="marginTop ">
-                <div class="noMarginBottom">
-                    <?php foreach ($lv->getPersonenInfo() as $pi): ?>
-                <div>
-                    <?php if (!is_null($a = $pi->getProfilURL()) && strlen($pi->getProfilURL()) > 0): ?>
-                        <a class="displayParent" href="<?php echo $pi->getProfilURL(); ?>">
-                            <?php echo $pi->getNachName() . " " . $pi->getVorName(); ?>
-                        </a>
-                    <?php else: ?>
-                        <?php echo $pi->getNachName() . " " . $pi->getVorName(); ?>
-                    <?php endif; ?>
+            <li>
+                <?php
+                $i = 0;
+                $numberPersons = count($lv->getPersonenInfo());
+                ?>
 
-                </div>,&nbsp;
+                <?php foreach ($lv->getPersonenInfo() as $pi): ?>
+                    <div>
+                        <?php if (!is_null($a = $pi->getProfilURL()) && strlen($pi->getProfilURL()) > 0): ?>
+                            <a class="internal displayParent" href="<?php echo $pi->getProfilURL(); ?>">
+                                <?php echo $pi->getNachName() . " " . $pi->getVorName(); ?>
+                            </a>
+                        <?php else: ?>
+                            <?php echo $pi->getNachName() . " " . $pi->getVorName(); ?>
+                        <?php endif; ?>
+
+                    </div>
+                    <?php $i++; ?>
+                    <?php if ($i < $numberPersons): ?>
+                    ,
+                    <?php endif; ?>
+                       &nbsp;
                 <?php endforeach; ?>
+
+
 
                 <?php echo $lv->getTag() . ',&nbsp;' . $lv->getVon_zeit() . ',&nbsp;' . $lv->getBis_zeit() . '</br' ?>
 
+
                 <?php if (!is_null($lv->getVvzlink()) && strlen($lv->getVvzlink()) > 0): ?>
-
                     <p><a class="internal"   href="<?php echo $lv->getVvzlink(); ?>" target="_blank"><?php echo $lv->getTitel(); ?></a></p>
-
                 <?php else: ?>
                     <strong><?php echo $lv->getTitel();  ?></strong>
                 <?php endif; ?>
 
 
-                </div>
+                <?php if (!is_null($lv->getOlatlink()) && strlen($lv->getOlatlink()) > 0): ?>
+                    <p><a class="internal"   href="<?php echo $lv->getOlatlink(); ?>" target="_blank">OLAT</a></p>
+                <?php endif; ?>
+
+
                 <?php if ((!is_null($lv->getBeschreibung()) && strlen($lv->getBeschreibung()) > 0)
                     && (is_null($lv->getVvzlink()) || strlen($lv->getVvzlink() == 0) )): ?>
 
@@ -66,16 +68,8 @@
 
 
             </li>
-
-        <?php endforeach;?>
-        </ul>
-
-        </div>
-
+        <?php endforeach; ?>
     <?php endforeach; ?>
-
-
-
-</div>
+</ul>
 
 
