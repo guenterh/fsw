@@ -28,6 +28,8 @@ class ZoraFacade extends BaseFacade {
     //protected $adapter;
     protected $messages = array();
 
+    private $searchOldCovers = false;
+
 
     /**
      * Constructor
@@ -476,6 +478,9 @@ EOD;
 
     private function isRecordInFSWCoverOldDB($oai_identifier) {
 
+        if (!$this->searchOldCovers) {
+            return null;
+        }
 
         $sql = 'select * from fswcoverlink where identifier = ' . $this->qV ($oai_identifier) ;
         $result =  $this->getOldAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
@@ -505,6 +510,16 @@ EOD;
         //fragwürdig...
         return $this->getAdapter();
     }
+
+    /**
+     * @param boolean $searchOldCovers
+     */
+    public function setSearchOldCovers($searchOldCovers)
+    {
+        $this->searchOldCovers = $searchOldCovers;
+    }
+
+
 
 
 

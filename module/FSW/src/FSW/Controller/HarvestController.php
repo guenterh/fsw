@@ -80,6 +80,8 @@ class HarvestController extends BaseController
 
         $this->oaiClient = $this->facade->getOAIClient();
 
+        $this->facade->setSearchOldCovers($config->SearchOldCovers);
+
 
         $this->oaiClient->setStartDate($params['from']);
         if (isset($params['until']) && strlen($params['until']) > 0) {
@@ -103,12 +105,17 @@ class HarvestController extends BaseController
 
 
 
-    protected function startHarvestingGetRecord( $params) {
+    protected function startHarvestingGetRecord(  $configName, \Zend\Config\Config $config, $params) {
 
 
 
         $this->oaiClient = $this->facade->getOAIClient();
         //$this->oaiClient->setUrlGetRecord($config->GetRecord);
+
+        $this->oaiClient->setVerbose($config->verbose);
+        $this->oaiClient->setConfig($configName,$config->toArray());
+        $this->facade->setSearchOldCovers($config->SearchOldCovers);
+
 
         foreach($params as $entity) {
             $this->oaiClient->launchGetRecord(trim($entity));
@@ -174,11 +181,11 @@ class HarvestController extends BaseController
             $entitiesForm->setData($data);
 
             if ($entitiesForm->isValid()) {
-                //$oaiConfig = $this->getServiceLocator()->get('FSW\Config')->get('oai');
-                //$zoraConfig = $oaiConfig->Zora;
+                $oaiConfig = $this->getServiceLocator()->get('FSW\Config')->get('oai');
+                $zoraConfig = $oaiConfig->Zora;
                 $entitiesConcat = $data['harvest_entities']['entities'];
                 $entities =  explode('##',$entitiesConcat);
-                $this->startHarvestingGetRecord($entities);
+                $this->startHarvestingGetRecord('Zora',$zoraConfig ,$entities);
 
                 $messages = $this->facade->getMessages();
 

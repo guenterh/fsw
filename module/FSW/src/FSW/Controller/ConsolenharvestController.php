@@ -93,11 +93,12 @@ class ConsolenharvestController extends HarvestController
 
         }
         //ansonsten wird  der EventHandler processOAIItem mehrfach registsriert
-        $this->startHarvestingGetRecord($idParams);
-
 
         $oaiConfig = $this->getServiceLocator()->get('FSW\Config')->get('oai');
         $zoraConfig = $oaiConfig->Zora;
+        $this->startHarvestingGetRecord('Zora',$zoraConfig, $idParams);
+
+
 
         $messages = $this->facade->getMessages();
 

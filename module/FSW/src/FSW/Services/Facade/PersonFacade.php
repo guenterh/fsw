@@ -345,6 +345,39 @@ class PersonFacade extends BaseFacade {
 
         //zuerst: loesche die bereits vorhandenen items in den Tabellen die ich befuellen moeche
 
+        $duplicatePersIds = array(
+            999 => 'Bor Duplicate, Rosemary',
+            480   => 'Bänziger Duplicate, Peter-Paul ',
+            24    =>  'Darnay Duplicate, Edith',
+            924   =>  'Erni Duplicate, Oliver',
+            986   =>  'Gertsch Duplicate, Manuela',
+            881   =>  'Gloor Duplicate, Jonas',
+            922   =>  'Hehlen Duplicate, Matthias',
+            908   =>  'Herrmann Dulicate, Lucia',
+            912   =>  'Mihatsch Duplicate, Moritz',
+            14    =>  'Rendtel Dupicate, Constanze',
+            1068  =>  'Schnyfer Duplicate, Nicole',
+            928   =>  'Schubiger Duplicate, Dorothea',
+            892   =>  'Seemann Duplicate, Eva',
+            1069  =>  'Spreuer Duplicate, Jeanette',
+            886   =>  'Steigbügel Duplicate, Andrea',
+            914   =>  'Studer Duplicate, Nina Saloua',
+            917   =>  'Tanner Duplicate, Nils'
+        );
+
+        $addZoraNameWithPers_id = array(
+            349     =>  array(array('Bernet, Brigitta',0,0)),
+            350     =>  array(array('Berger, Silvia',0,2005)),
+            957     =>  array(array('Kilian, Patrick',0,0)),
+            589     =>  array(array('Zimmermann, Dorothe', 0,0)),
+            317     =>  array(array('Kuhn, Konrad J', 0 ,0)),
+            340     =>  array(array('Dejung, Christof',0,2012),array('Dejung, C',0,2012)),
+            341     =>  array(array('Dommann, Monika',0,2004)),
+            344     =>  array(array('Bugmann, Mirjam',0,0))
+
+        );
+
+
         $sql = 'delete from fsw_personen_extended';
         $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
         $sql = 'delete from fsw_zora_author';
@@ -379,6 +412,11 @@ class PersonFacade extends BaseFacade {
             if (is_null($r['pers_name']) || empty ($r['pers_name'])) {
                 continue;
             }
+
+            if ( array_key_exists($r['pers_id'], $duplicatePersIds) ) {
+                continue;
+            }
+
 
 
             //Pruefe, ob der MA bereits in der Extended Tabelle eingetragen ist (bei n-Roles)
@@ -419,24 +457,58 @@ class PersonFacade extends BaseFacade {
             //ich habe einen alten Mitarbeiter gefunden, so dass ich seine Zoranamen zuordenn kann falls es welche gibt
             if (count($oldMitarbeiterValues) > 0) {
 
-                $sql = 'select * from mitarbeiterZoraName mz where mz.mit_id = ' . $oldMitarbeiterValues['oldMitId'];
-                $resultZoraName =  $this->getOldAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+                //wenn jemand doppelte Rollen hat; kann es zu Doppeleinträgen kommen
+                $sql = 'select * from fsw_zora_author where pers_id = ' . $r['pers_id'];
+                $result = $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+                if (count($result) == 0) {
 
-                foreach ($resultZoraName as $zN) {
-                    $z = $zN->getArrayCopy();
-
-                    $sql = "insert into fsw_zora_author (fid_personen,pers_id,zora_name,year_from, year_until, zora_name_customized) ";
-                    $sql = $sql .  "values (" . $this->qV($genIdPersonenExtended) . ',';
-                    $sql = $sql .  $this->qV($r['pers_id']) . ',';
-                    $sql = $sql .  $this->qV($z['zoraName']) . ',';
-                    $sql = $sql .  $this->qV('0') . ',';
-                    $sql = $sql .  $this->qV('0') . ',';
-                    $sql = $sql .  $this->qV($z['zoraNameCustomized']) . ' )';
+                    if (array_key_exists($r['pers_id'],$addZoraNameWithPers_id)) {
+                        //diese IDs werden beim Import speziell behandelt    $
 
 
-                    $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+                        foreach ($addZoraNameWithPers_id[$r['pers_id']] as $entry) {
+
+                            $sql = "insert into fsw_zora_author (fid_personen,pers_id,zora_name,year_from, year_until, zora_name_customized) ";
+                            $sql = $sql .  "values (" . $this->qV($genIdPersonenExtended) . ',';
+                            $sql = $sql .  $this->qV($r['pers_id']) . ',';
+                            $sql = $sql .  $this->qV($entry[0]) . ',';
+                            $sql = $sql .  $this->qV($entry[1]) . ',';
+                            $sql = $sql .  $this->qV($entry[2]) . ',';
+                            $sql = $sql .  '"" )';
+                            $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+                        }
+
+
+                    } else {
+
+                        $sql = 'select * from mitarbeiterZoraName mz where mz.mit_id = ' . $oldMitarbeiterValues['oldMitId'];
+                        $resultZoraName =  $this->getOldAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+
+                        foreach ($resultZoraName as $zN) {
+
+                            $z = $zN->getArrayCopy();
+
+                            $sql = "insert into fsw_zora_author (fid_personen,pers_id,zora_name,year_from, year_until, zora_name_customized) ";
+                            $sql = $sql .  "values (" . $this->qV($genIdPersonenExtended) . ',';
+                            $sql = $sql .  $this->qV($r['pers_id']) . ',';
+                            $sql = $sql .  $this->qV($z['zoraName']) . ',';
+                            $sql = $sql .  $this->qV('0') . ',';
+                            $sql = $sql .  $this->qV('0') . ',';
+                            $sql = $sql .  $this->qV($z['zoraNameCustomized']) . ' )';
+
+
+                            $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+                        }
+
+                    }
+
+
 
                 }
+
 
                 //gibt es noch Medien zum einfügen?
                 $sql = 'select * from medien where mit_id = ' . $oldMitarbeiterValues['oldMitId'];
@@ -461,6 +533,22 @@ class PersonFacade extends BaseFacade {
                     $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
                 }
+
+            } elseif ($r['pers_id'] == 317) {
+                //spezielle Behandlung für einzelne personen
+                foreach ($addZoraNameWithPers_id[$r['pers_id']] as $entry) {
+
+                    $sql = "insert into fsw_zora_author (fid_personen,pers_id,zora_name,year_from, year_until, zora_name_customized) ";
+                    $sql = $sql .  "values (" . $this->qV($genIdPersonenExtended) . ',';
+                    $sql = $sql .  $this->qV($r['pers_id']) . ',';
+                    $sql = $sql .  $this->qV($entry[0]) . ',';
+                    $sql = $sql .  $this->qV($entry[1]) . ',';
+                    $sql = $sql .  $this->qV($entry[2]) . ',';
+                    $sql = $sql .  '"" )';
+                    $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+                }
+
 
             }
         }

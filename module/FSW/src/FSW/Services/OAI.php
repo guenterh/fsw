@@ -232,6 +232,8 @@ class OAI implements EventManagerAwareInterface
      */
     protected $endDate = 0;
 
+    protected $blockedZoraIds = array();
+
     /**
      * Constructor.
      *
@@ -339,6 +341,16 @@ class OAI implements EventManagerAwareInterface
 
 
     public function launchGetRecord($recordId) {
+
+
+
+        foreach ($this->blockedZoraIds as $blockedId) {
+            if ($blockedId == $recordId) {
+                $this->writeLine('Zora Id  ' . $blockedId . " blocked");
+                return;
+            }
+        }
+
 
         $params = array();
         $params['identifier'] = $recordId;
@@ -923,6 +935,18 @@ class OAI implements EventManagerAwareInterface
             // Get the ID of the current record:
             $id = $this->extractID($record);
 
+            $blocked = false;
+            foreach ($this->blockedZoraIds as $blockedId) {
+                if ($blockedId == $id) {
+                    $this->writeLine('Zora Id  ' . $blockedId . " blocked");
+                    $blocked = true;
+                }
+            }
+
+            if ($blocked) {
+                continue;
+            }
+
             /*
             kann man hier noch ein beeseres loggig machen?
             $this->writeLine('Processing record; ' . $id);
@@ -1080,6 +1104,10 @@ class OAI implements EventManagerAwareInterface
         // Normalize injectHeaderElements to an array:
         if (!is_array($this->injectHeaderElements)) {
             $this->injectHeaderElements = array($this->injectHeaderElements);
+        }
+
+        if (isset($settings['blockDoubleZora'])) {
+            $this->blockedZoraIds = explode('##',$settings['blockDoubleZora']);
         }
     }
 

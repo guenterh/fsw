@@ -124,23 +124,23 @@ class LehrveranstaltungFacade extends BaseFacade {
 
 
                     } else {
-                        $this->lehrveranstaltungNotFound($arrayCopy);
+                        $this->lehrveranstaltungNotFound($arrayCopy,  'pers_name: ' . $splitted[0] . ' / pers_vorname: ' . $splitted[1] . ' nicht gefunden');
 
                     }
                 } else {
-                    $this->lehrveranstaltungNotFound($arrayCopy);
+                    $this->lehrveranstaltungNotFound($arrayCopy, 'kein Komma zwischen Name und Vorname');
                 }
 
             } else {
-                $this->lehrveranstaltungNotFound($arrayCopy);
+                $this->lehrveranstaltungNotFound($arrayCopy, 'mit_id nicht gefunden');
             }
         }
     }
 
-    private function lehrveranstaltungNotFound($data = array())
+    private function lehrveranstaltungNotFound($data = array(), $message)
     {
 
-        Debug::dump($data, 'lehrveranstaltung nicht gefunden');
+        Debug::dump($data, $message);
 
     }
 
