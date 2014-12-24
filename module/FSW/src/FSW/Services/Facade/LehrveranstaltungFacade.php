@@ -58,6 +58,9 @@ class LehrveranstaltungFacade extends BaseFacade {
     public function insertLehrveranstaltungFromOldDB ()
     {
 
+        //Bischof-Bioti -> Müller, Margrit
+        $swapMitId = array(204  => 30);
+
         $lehrveranstaltungTableGW = $this->histSemDBService->getLehrveranstaltungenGateway();
         $relationPersonLVTableGW = $this->histSemDBService->getRelationPersonenLehrveranstaltungGateway();
 
@@ -80,6 +83,13 @@ class LehrveranstaltungFacade extends BaseFacade {
             $arrayCopy = $rowLV->getArrayCopy();
             $mit_id = $rowLV['mit_id'];
 
+
+            //Es gibt einen Kurs, wo die Person, welche den Kurs leitet, nicht mit Ihrer mit_id aufgenommen worden ist
+            if (array_key_exists($mit_id,$swapMitId)) {
+                $mit_id = $swapMitId[$mit_id];
+            }
+
+
             $sql = 'select * from mitarbeiter m where mit_id = ' . (int)$mit_id;
             $resultPerson = $this->getOldAdapter()->query($sql, Adapter::QUERY_MODE_EXECUTE);
             if ($resultPerson && $resultPerson->count() == 1) {
@@ -90,8 +100,18 @@ class LehrveranstaltungFacade extends BaseFacade {
                 $splitted = preg_split('/,/', $name);
 
                 if (count($splitted) == 2) {
-                    $sql = 'select * from Per_Personen p where p.pers_name like "%';
-                    $sql .= trim($splitted[0]) . '%" && p.pers_vorname like "%' . trim($splitted[1]) . '%"';
+
+                    if ($mit_id == 52) {
+                        //bei einer Person (Ischer, Philipp) ist die like Abfrage nicht präzise genug
+                        $sql = 'select * from Per_Personen p where p.pers_id = 325';
+
+                    } else {
+
+                        $sql = 'select * from Per_Personen p where p.pers_name like "%';
+                        $sql .= trim($splitted[0]) . '%" && p.pers_vorname like "%' . trim($splitted[1]) . '%"' ;
+                        $sql .= " && p.pers_name not like '%Duplicate%' ";
+                    }
+
 
                     $resultNewPerson = $this->getAdapter()->query($sql, Adapter::QUERY_MODE_EXECUTE);
                     if ($resultNewPerson && $resultNewPerson->count() == 1) {
