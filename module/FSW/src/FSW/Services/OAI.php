@@ -860,6 +860,20 @@ class OAI implements EventManagerAwareInterface
             // Get the ID of the current record:
             $id = $this->extractID($record);
 
+
+            $blocked = false;
+            foreach ($this->blockedZoraIds as $blockedId) {
+                if ($blockedId == $id) {
+                    $this->writeLine('Zora Id  ' . $blockedId . " blocked");
+                    $blocked = true;
+                }
+            }
+
+            if ($blocked) {
+                continue;
+            }
+
+
             /*
             kann man hier noch ein beeseres loggig machen?
             $this->writeLine('Processing record; ' . $id);
