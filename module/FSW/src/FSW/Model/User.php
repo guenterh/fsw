@@ -64,9 +64,10 @@ class User extends BaseModel implements InputFilterAwareInterface {
                 ),
             ));
 
+            /*
             $inputFilter->add(array(
                 'name'     => 'email',
-                'required' => true,
+               // 'required' => true,
                 'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
@@ -76,7 +77,7 @@ class User extends BaseModel implements InputFilterAwareInterface {
 
             $inputFilter->add(array(
                 'name'     => 'firstname',
-                'required' => true,
+               // 'required' => true,
                 'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
@@ -85,13 +86,13 @@ class User extends BaseModel implements InputFilterAwareInterface {
 
             $inputFilter->add(array(
                 'name'     => 'lastname',
-                'required' => true,
+                //'required' => true,
                 'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
                 ),
             ));
-
+            */
 
             $inputFilter->add(array(
                 'name'     => 'username',
