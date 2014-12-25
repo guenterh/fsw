@@ -516,8 +516,9 @@ class ZoraRecord  {
             $creator = (string) $creator;
             if (array_key_exists( $creator, $this->zoraAuthorInfo)) {
 
-                if (! is_null($this->zoraAuthorInfo[$creator]->getProfilURL() &&
-                    strlen($this->zoraAuthorInfo[$creator]->getProfilURL()) > 0))
+
+                if (! is_null($this->zoraAuthorInfo[$creator]->getProfilURL()) &&
+                    strlen($this->zoraAuthorInfo[$creator]->getProfilURL()) > 0)
                 {
                     $profilURL =  $this->zoraAuthorInfo[$creator]->getProfilURL();
 
@@ -551,8 +552,8 @@ class ZoraRecord  {
 
             if (array_key_exists($contributor, $this->zoraAuthorInfo)) {
 
-                if (! is_null($this->zoraAuthorInfo[$contributor]->getProfilURL() &&
-                    strlen($this->zoraAuthorInfo[$contributor]->getProfilURL()) > 0))
+                if (! is_null($this->zoraAuthorInfo[$contributor]->getProfilURL()) &&
+                    strlen($this->zoraAuthorInfo[$contributor]->getProfilURL()) > 0)
                 {
                     $profilURL =  $this->zoraAuthorInfo[$contributor]->getProfilURL();
 
