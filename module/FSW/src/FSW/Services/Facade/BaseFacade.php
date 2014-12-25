@@ -511,7 +511,7 @@ abstract class BaseFacade implements HistSemDBServiceAwareInterface,
             $select->order('doc.year DESC');
 
 
-            $test = $select->getSqlString();
+            //$test = $select->getSqlString();
             //SELECT "fsw_zora_doc".*, "zora_author_relation".*, "zora_author".*, "cover".* FROM "fsw_zora_doc" INNER JOIN "fsw_relation_zora_author_zora_doc" AS "zora_author_relation" ON "zora_author_relation"."fid_zora_doc" = "fsw_zora_doc"."id" INNER JOIN "fsw_zora_author" AS "zora_author" ON "zora_author"."id" = "zora_author_relation"."fid_zora_author" INNER JOIN "fsw_cover" AS "cover" ON "fsw_zora_doc"."id" = "cover"."id" WHERE "zora_author"."pers_id" = '101'
             $result = $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
