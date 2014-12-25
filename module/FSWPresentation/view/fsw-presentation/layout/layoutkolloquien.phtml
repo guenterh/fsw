@@ -1,0 +1,24 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <?php
+            echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon',
+                    'href' => $this->basePath() . '/images/favicon.ico'))
+                ->prependStylesheet($this->basePath() . '/css/presentation/cmsIFrameFSW.css')
+                ->prependStylesheet($this->basePath() . '/css/presentation/uzh.css')
+
+        ?>
+        <?php	// Scripts
+            $this->headScript()
+                ->appendFile($this->basePath() . '/js/presentation/jquery.js')
+                ->appendFile($this->basePath() . '/js/presentation/fsw/fsw.js');
+            echo $this->headScript();
+        ?>
+    </head>
+    <body>
+        <?php echo $this->content; ?>
+    </body>
+</html>

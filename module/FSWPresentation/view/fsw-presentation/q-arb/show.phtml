@@ -34,7 +34,7 @@
             <p class="noMarginBottom"><b>
                     <?php if ($qArbeit->isSetProfilURL()): ?>
 
-                        <a href="<?php echo $qArbeit->getProfilURL();?>" target="_blank"><?php echo $qArbeit->getPersName() . ',&nbsp;' . $qArbeit->getPersVorname();?></a>
+                        <a class="internal" href="<?php echo $qArbeit->getProfilURL();?>" target="_blank"><?php echo $qArbeit->getPersName() . ',&nbsp;' . $qArbeit->getPersVorname();?></a>
                      <?php else: ?>
                         <?php echo $qArbeit->getPersName() . ',&nbsp;' . $qArbeit->getPersVorname();?>
                     <?php endif; ?>
@@ -54,7 +54,7 @@
                     &nbsp; (Ref.:
 
                     <?php if ($qArbeit->getBetreuer1Info()->isSetProfilURL()): ?>
-                        <a href="<?php echo $qArbeit->getBetreuer1Info()->getProfilURL();?>" target="_blank">
+                        <a class="internal" href="<?php echo $qArbeit->getBetreuer1Info()->getProfilURL();?>" target="_blank">
 
                             <?php echo $qArbeit->getBetreuer1Info()->getNachName() . '&nbsp;' . $qArbeit->getBetreuer1Info()->getVorName();?>
                         </a>
@@ -68,7 +68,7 @@
                         &nbsp; (Zweitref.:
 
                         <?php if ($qArbeit->getBetreuer2Info()->isSetProfilURL()): ?>
-                            <a href="<?php echo $qArbeit->getBetreuer2Info()->getProfilURL();?>" target="_blank">
+                            <a class="internal" href="<?php echo $qArbeit->getBetreuer2Info()->getProfilURL();?>" target="_blank">
 
                                 <?php echo $qArbeit->getBetreuer2Info()->getNachName() . '&nbsp;' . $qArbeit->getBetreuer2Info()->getVorName();?>
                             </a>
