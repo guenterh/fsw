@@ -17,7 +17,7 @@
         <a class="internal abstractCaption" href="#">mehr</a>
         <p> &nbsp;</p>
 
-
+        <div class="abstractText veranstaltungen">
         <?php foreach ($kolloquium->getVeranstaltung() as $veranstaltung): ?>
             <?php foreach ($veranstaltung->getVortragend() as $vortragend): ?>
 
@@ -48,7 +48,7 @@
             <?php endforeach; ?>
 
 
-            <p><strong><?php $veranstaltung->getVeranstaltung_titel(); ?>&nbsp;&nbsp;(<?php echo $this->date( $veranstaltung->getDatum(),'long')  ?> )</strong></p>
+            <p><strong><?php echo $veranstaltung->getVeranstaltung_titel(); ?>&nbsp;&nbsp;(<?php echo $this->date( $veranstaltung->getDatum(),'dateonly')  ?> )</strong></p>
 
             <?php foreach ($veranstaltung->getVortragend() as $vortragend): ?>
 

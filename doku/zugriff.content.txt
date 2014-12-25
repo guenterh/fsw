@@ -11,12 +11,51 @@ http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show?
 
 http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show?mitid=1080
 
+mitid ist die pers_id aus der HS Personentabelle
+(s. Tab "personCore HS" unter Personen)
+
+*******************************************************************************
+
+Qualifikationsarbeiten
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/qarb/show
+
+Einschränkungsmöglichkeiten
+
+;query parameter: typ[]
+diss    =   Dissertation
+habil   =   Habilitation
+liz     =   Lizentiatsarbeit
+master  =   Masterarbeit
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/qarb/show?typ[]=diss&typ[]=liz
+
+;query parameter: status[]
+laufend         =   0
+abgeschlossen   =   1
+abgebrochen     =   2
+
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/qarb/show?status[]=abgebrochen
+
+;query parameter sort
+name    =   p.pers_name
+abschluss    =   a.qarb_arb_abschlussjahr
+
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/qarb/show?status[]=abgebrochen&sort=name
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/qarb/show?status[0]=abgebrochen&sort=abschluss
 
 
-Qualitätsarbeiten
-http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/qarb/show?betreuer[]=sarasin&amp;status[]=laufend&amp;typ[]=diss
+;query parameter: betreuer[]
+straumann   =   835
+sarasin =   101
+tanner  =   103
+goltermann  =   102
+
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/qarb/show?betreuer[]=straumann&sort=name
 
 
+
+
+
+*******************************************************************************
 Lehrveranstaltung
 1) Anzeige Archiv
 
@@ -31,6 +70,33 @@ http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/lehrveranstaltung/
 http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/lehrveranstaltung/showM/101
 102 ist die pers_id einer Person (im Beispiel Sarasin)
 die pers_id ist im Backend unter Personen im Tab PersonenCoreHS zu finden
+
+
+
+*****************************************************************************
+
+Medien
+
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/medien/show
+-> alle
+
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/medien/show?medientyp[]=1
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/medien/show?medientyp[]=1&medientyp[]=2&medientyp[]=3
+entspricht
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/medien/show
+
+                    '1' => 'Radio',
+                    '2' => 'Fernsehen',
+                    '3' => 'Internet',
+
+
+******************************************************************
+
+Kolloquien
+
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/kolloquien/show
+
+
 
 
 

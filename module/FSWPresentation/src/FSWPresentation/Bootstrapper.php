@@ -11,6 +11,7 @@ use FSWPresentation\Controller\QArbController;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use FSWPresentation\Controller\LehrveranstaltungController;
+use FSWPresentation\Controller\KolloquienController;
 
 
 
@@ -63,8 +64,11 @@ class Bootstrapper {
         $sm->attach(__NAMESPACE__, MvcEvent::EVENT_DISPATCH, function($e) {
             $controller = $e->getTarget();
             if ($controller instanceof LehrveranstaltungController ||
-                $controller instanceof QArbController     ) {
+                $controller instanceof QArbController ) {
                 $controller->layout()->setTemplate("presentation/layoutlv");
+            } elseif ($controller instanceof KolloquienController) {
+
+                $controller->layout()->setTemplate("presentation/layoutkolloquien");
             } else {
                 $controller->layout()->setTemplate("presentation/layout");
             }

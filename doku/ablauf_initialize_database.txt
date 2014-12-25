@@ -1,3 +1,8 @@
+
+
+Spielwiese
+http://www.fsw.uzh.ch/spielwiese/testRefactoring.html
+
 CREATE DATABASE `histsem` DEFAULT CHARACTER SET = latin1;
 GRANT ALL PRIVILEGES ON histsem.* TO 'fsw'@'%'  WITH GRANT OPTION;
 GRANT ALL PRIVILEGES ON histsem.* TO 'fsw'@'localhost'  WITH GRANT OPTION;
@@ -75,7 +80,7 @@ Nur der Index?
 
 
 
-4) php public/index.php lehrveranstaltungen
+4) php public/index.php lehrveranstaltungen > lehrveranstaltungen.import.log
 Fehlermeldungen wie:
 
 lehrveranstaltung nicht gefunden

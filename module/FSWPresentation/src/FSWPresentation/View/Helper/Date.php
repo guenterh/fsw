@@ -22,7 +22,6 @@ class Date extends AbstractHelper{
             return '-';
         }
 
-
         switch ($mode) {
 
             case 'long':
@@ -45,10 +44,7 @@ class Date extends AbstractHelper{
 
         }
 
-        $dateTime = new DateTime($dateString);
-
-        $test = $this->getView()->dateFormat($dateTime,$dateType,$timeType);
-
+        $dateTime = new \DateTime($dateString);
         return $this->getView()->dateFormat($dateTime,$dateType,$timeType);
     }
 
