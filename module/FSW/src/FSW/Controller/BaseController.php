@@ -302,7 +302,20 @@ abstract class BaseController extends AbstractActionController
         if ($forward) {
             return $this->forwardTo('Login', 'login');
         }
-        return $this->redirect()->toRoute('backendlogin');
+        //return $this->redirect()->toRoute('backendlogin');
+        $renderer = $this->getServiceLocator()->get('viewmanager')->getRenderer();
+        $host = $renderer->plugin('serverurl')->getHost();
+        $matches = array();
+        $config = $this->fswConfig->get('config');
+        preg_match('/localhost/',$host,$matches);
+        if ($matches) {
+            $loginURL = $config->Site->loginURLLocal;
+        } else {
+
+            $loginURL = $config->Site->loginURLServer;
+        }
+
+        return $this->redirect()->toUrl($loginURL);
     }
 
 
