@@ -74,6 +74,15 @@ http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/lehrveranstaltung/
 die pers_id ist im Backend unter Personen im Tab PersonenCoreHS zu finden
 
 
+wie kann man am besten doppelte Einträge finden:
+in der alten FSW Datenbank folgende Abfrage laufen lassen:
+- SELECT `ver_id`,`titel`, `semester` FROM `lehrver` order by semester DESC, titel
+- einen Teil des Titels kopieren und in der Lise der angezeigten Lehrveranstaltungen im Backend nach den Lehrveranstaltungen suchen.
+- dann sollten die doppelten angezeigt werden.
+- dann Löschen und beim Eintrag der verblieben ist die zusätzlichen Personen aufnehmen
+
+
+
 
 *****************************************************************************
 

@@ -366,6 +366,7 @@ class LehrveranstaltungFacade extends BaseFacade {
 
         $select  = $lvGateway->getSql()->select();
         $select->where->in('semester',$inValues);
+        $select->order('titel');
         $resultset =  $lvGateway->selectWith($select);
 
         $lehrveranstaltungen = $resultset ? $this->compileLehrveranstaltungen($resultset) : array();

@@ -23,38 +23,39 @@
         <?php foreach($lehrVeranstaltungenImSemester as $lv): ?>
             <li class="marginTop ">
                 <div class="noMarginBottom">
+                    <?php if (!is_null($lv->getVvzlink()) && strlen($lv->getVvzlink()) > 0): ?>
+                        <a class="internal"   href="<?php echo $lv->getVvzlink(); ?>" target="_blank"><?php echo $lv->getTitel(); ?></a>
+                    <?php else: ?>
+                        <strong><?php echo $lv->getTitel();  ?></strong>
+                    <?php endif; ?>
 
-                    <?php $i = 0; $numberPersons = count($lv->getPersonenInfo()); ?>
-                    <?php foreach ($lv->getPersonenInfo() as $pi): ?>
-                        <div>
+
+                    <?php
+                    $i = 0;
+                    $numberPersons = count($lv->getPersonenInfo());
+                    ?>
+
+                    <?php if ($numberPersons > 0): ?>
+
+
+                        <?php foreach ($lv->getPersonenInfo() as $pi): ?>
+
                             <?php if (!is_null($a = $pi->getProfilURL()) && strlen($pi->getProfilURL()) > 0): ?>
-                                <a class="displayParent" href="<?php echo $pi->getProfilURL(); ?>">
-                                    <?php echo $pi->getNachName() . " " . $pi->getVorName(); ?>
+                                <a class="internal displayParent" href="<?php echo $pi->getProfilURL(); ?>">
+                                    <?php echo trim($pi->getNachName()) . ", " . trim($pi->getVorName()); ?>
                                 </a>
                             <?php else: ?>
-                                <?php echo $pi->getNachName() . " " . $pi->getVorName(); ?>
+                                <?php echo trim($pi->getNachName()) . ", " . trim($pi->getVorName()); ?>
                             <?php endif; ?>
+                            <?php $i++; ?>
+                            <?php if ($i < $numberPersons): ?>&nbsp;<?php endif; ?>
 
-                        </div>
-                        <?php $i++; ?>
-                        <?php if ($i < $numberPersons): ?>
-                            ,
-                        <?php endif; ?>
-                        &nbsp;
                         <?php endforeach; ?>
-
-                <?php echo $lv->getTag() . ',&nbsp;' . $lv->getVon_zeit() . ',&nbsp;' . $lv->getBis_zeit() . '</br' ?>
-
-                <?php if (!is_null($lv->getVvzlink()) && strlen($lv->getVvzlink()) > 0): ?>
-
-                    <p><a class="internal"   href="<?php echo $lv->getVvzlink(); ?>" target="_blank"><?php echo $lv->getTitel(); ?></a></p>
-
-                <?php else: ?>
-                    <strong><?php echo $lv->getTitel();  ?></strong>
-                <?php endif; ?>
-
-
+                    <?php endif; ?>
                 </div>
+
+                <?php echo $lvLabels[$lv->getSemester()] ; ?>
+
                 <?php if ((!is_null($lv->getBeschreibung()) && strlen($lv->getBeschreibung()) > 0)
                     && (is_null($lv->getVvzlink()) || strlen($lv->getVvzlink() == 0) )): ?>
 
@@ -70,6 +71,8 @@
                     </div>
 
                 <?php endif; ?>
+
+                <p>&nbsp;</p>
 
 
             </li>
