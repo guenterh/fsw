@@ -14,14 +14,14 @@
 <?php if (array_key_exists('sort', $params)): ?>
 
     <?php if (strcmp($params['sort'],'name') == 0): ?>
-        <?php $sorttext = 'sort alphabetisch' ?>
+        <?php $sorttext = 'alphabetische Sortierung' ?>
     <?php else: ?>
-        <?php $sorttext = 'sort Abschlussjahr' ?>
+        <?php $sorttext = 'chronologische Sortierung' ?>
     <?php endif; ?>
 
 
     <a class="internal"  href="<?php echo $this->url('presentation/default', array('controller' => 'qarb','action' => 'show'), array('query' => $params)); ?>"><?php echo $sorttext; ?></a>
-
+    <p>&nbsp;</p>
 
 <?php endif; ?>
 
@@ -51,35 +51,23 @@
 
                 <?php if ($all): ?>
 
-                    &nbsp; (Ref.:
-
-                    <?php if ($qArbeit->getBetreuer1Info()->isSetProfilURL()): ?>
-                        <a class="internal" href="<?php echo $qArbeit->getBetreuer1Info()->getProfilURL();?>" target="_blank">
-
-                            <?php echo $qArbeit->getBetreuer1Info()->getNachName() . '&nbsp;' . $qArbeit->getBetreuer1Info()->getVorName();?>
+                    &nbsp; (Ref.:&nbsp;<?php if ($qArbeit->getBetreuer1Info()->isSetProfilURL()): ?>
+                        <a class="internal" href="<?php echo trim($qArbeit->getBetreuer1Info()->getProfilURL());?>" target="_blank">
+                            <?php echo trim($qArbeit->getBetreuer1Info()->getNachName()) . '&nbsp;' . trim($qArbeit->getBetreuer1Info()->getVorName());?>)
                         </a>
                     <?php else: ?>
-                        <?php echo $qArbeit->getBetreuer1Info()->getNachName() . '&nbsp;' . $qArbeit->getBetreuer1Info()->getVorName();?>
+                        <?php echo trim($qArbeit->getBetreuer1Info()->getNachName()) . '&nbsp;' . trim($qArbeit->getBetreuer1Info()->getVorName());?>)
                     <?php endif; ?>
-
-                    )
 
                     <?php if ($qArbeit->isSetBetreuer2Info()): ?>
-                        &nbsp; (Zweitref.:
-
-                        <?php if ($qArbeit->getBetreuer2Info()->isSetProfilURL()): ?>
+                        &nbsp; (Zweitref.:&nbsp;<?php if ($qArbeit->getBetreuer2Info()->isSetProfilURL()): ?>
                             <a class="internal" href="<?php echo $qArbeit->getBetreuer2Info()->getProfilURL();?>" target="_blank">
-
-                                <?php echo $qArbeit->getBetreuer2Info()->getNachName() . '&nbsp;' . $qArbeit->getBetreuer2Info()->getVorName();?>
+                                <?php echo $qArbeit->getBetreuer2Info()->getNachName() . '&nbsp;' . $qArbeit->getBetreuer2Info()->getVorName();?>)
                             </a>
                         <?php else: ?>
-                            <?php echo $qArbeit->getBetreuer2Info()->getNachName() . '&nbsp;' . $qArbeit->getBetreuer2Info()->getVorName();?>
+                            <?php echo $qArbeit->getBetreuer2Info()->getNachName() . '&nbsp;' . $qArbeit->getBetreuer2Info()->getVorName();?>)
                         <?php endif; ?>
-
-                        )
-
                     <?php endif; ?>
-
                 <?php endif; ?>
             </p>
 
@@ -95,7 +83,17 @@
 
         <?php endif; ?>
 
+        <!--
+        wenn abgeschlossene Diss und im Feld $qArbeit->getQarbArbURL() etwas vorhanden ist sollte als Linktext
+        "Onlinepublikation" erscheinen
+        -->
+        <?php if ($qArbeit->isSetQarbArbURL()): ?>
+            <div><a class="www" href="<?php echo $qArbeit->getQarbArbURL();?>" target="_blank">Archivexemplar der Zentralbibliothek Zürich</a></div>
+        <?php endif; ?>
 
+        <?php if ($qArbeit->isSetQarbArbISBN()): ?>
+            <div><a class="www" href="<?php echo "https://www.swissbib.ch/Search/Results?lookfor=" . $qArbeit->getQarbArbISBN();?>" target="_blank">Publikation</a></div>
+        <?php endif; ?>
 
     </li>
 

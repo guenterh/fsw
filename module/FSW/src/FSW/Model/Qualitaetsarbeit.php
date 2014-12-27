@@ -641,6 +641,17 @@ class Qualitaetsarbeit extends BaseModel {
         return !is_null($this->getBetreuer2Info()) ? true : false;
     }
 
+    public function isSetQarbArbURL()
+    {
+
+        return !is_null($this->getQarbArbURL()) && strlen($this->getQarbArbURL()) > 0 ? true : false;
+    }
+
+    public function isSetQarbArbISBN()
+    {
+
+        return !is_null($this->getQarbArbISBN()) && strlen($this->getQarbArbISBN()) > 0 ? true : false;
+    }
 
 
     /**

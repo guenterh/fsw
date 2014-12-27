@@ -273,6 +273,7 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'qarb_arb_URL'
             ),
             'attributes' => array(
+                'class' => 'fswTextAreaMiddle',
                 'rows' => 1
             )
         ));
