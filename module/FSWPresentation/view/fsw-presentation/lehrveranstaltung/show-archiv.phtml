@@ -22,7 +22,7 @@
 
         <?php foreach($lehrVeranstaltungenImSemester as $lv): ?>
             <li class="marginTop ">
-                <div class="noMarginBottom">
+                <div >
                     <?php if (!is_null($lv->getVvzlink()) && strlen($lv->getVvzlink()) > 0): ?>
                         <a class="internal"   href="<?php echo $lv->getVvzlink(); ?>" target="_blank"><?php echo $lv->getTitel(); ?></a>
                     <?php else: ?>
@@ -54,7 +54,7 @@
                     <?php endif; ?>
                 </div>
 
-                <?php echo $lvLabels[$lv->getSemester()] ; ?>
+
 
                 <?php if ((!is_null($lv->getBeschreibung()) && strlen($lv->getBeschreibung()) > 0)
                     && (is_null($lv->getVvzlink()) || strlen($lv->getVvzlink() == 0) )): ?>
@@ -71,8 +71,6 @@
                     </div>
 
                 <?php endif; ?>
-
-                <p>&nbsp;</p>
 
 
             </li>
