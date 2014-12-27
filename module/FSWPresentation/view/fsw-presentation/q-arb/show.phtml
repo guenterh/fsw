@@ -94,12 +94,14 @@
 
         <?php endif; ?>
 
-        <!--
-        wenn abgeschlossene Diss und im Feld $qArbeit->getQarbArbURL() etwas vorhanden ist sollte als Linktext
-        "Onlinepublikation" erscheinen
-        -->
         <?php if ($qArbeit->isSetQarbArbURL()): ?>
-            <div><a class="www" href="<?php echo $qArbeit->getQarbArbURL();?>" target="_blank">Archivexemplar der Zentralbibliothek Zürich</a></div>
+            <?php if ($qArbeit->isOnlineAbgeschlosseneDiss()): ?>
+                <div><a class="www" href="<?php echo $qArbeit->getQarbArbURL();?>" target="_blank">Onlinepublikation</a></div>
+            <?php else: ?>
+                <div><a class="www" href="<?php echo $qArbeit->getQarbArbURL();?>" target="_blank">Archivexemplar der Zentralbibliothek Zürich</a></div>
+            <?php endif; ?>
+
+
         <?php endif; ?>
 
         <?php if ($qArbeit->isSetQarbArbISBN()): ?>

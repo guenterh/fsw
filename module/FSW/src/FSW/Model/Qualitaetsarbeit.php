@@ -653,6 +653,10 @@ class Qualitaetsarbeit extends BaseModel {
         return !is_null($this->getQarbArbISBN()) && strlen($this->getQarbArbISBN()) > 0 ? true : false;
     }
 
+    public function isOnlineAbgeschlosseneDiss() {
+        return isset($this->qarb_arb_typ) && strcmp($this->qarb_arb_typ,'Dissertation') == 0 && $this->isSetQarbArbURL() ? true : false;
+    }
+
 
     /**
      * @param array $betreuerInfo
