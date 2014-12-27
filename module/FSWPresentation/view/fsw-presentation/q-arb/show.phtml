@@ -45,7 +45,18 @@
 
                 <?php echo $qArbeit->getQarbArbTitel(); ?>
 
-                <?php if (array_key_exists('status',$params) && strcmp($params['status'],'abgeschlossen') == 0): ?>
+
+                <?php
+                $showDatum = false;
+                foreach ($params['status'] as $status) {
+                    if (strcmp($status,'abgeschlossen') == 0) {
+                        $showDatum = true;
+                        break;
+                    }
+                }
+                ?>
+
+                <?php if ($showDatum): ?>
                     &nbsp; Abschluss: <?php echo $qArbeit->getQarbArbAbschlussjahr(); ?>
                 <?php endif; ?>
 
