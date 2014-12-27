@@ -5,9 +5,11 @@ Zoradokumente
 [alle Kategorien]
 http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show
 
-http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show?conditions=buchpublikationen
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show?conditions=monographien
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show?conditions=herausgeber
 http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show?conditions=booksection
 http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show?conditions=journalarticle
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show?conditions=digital
 
 http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show?mitid=1080
 

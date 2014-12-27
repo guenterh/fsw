@@ -153,14 +153,13 @@ class PublicationsFacade extends BaseFacade {
 
 
         switch ($condition) {
-            case 'buchpublikationen':
-                $restrictions = array('Monographien' => "r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'Monograph'",
-                    'Herausgeberschaften' => " r_zdza.zora_rolle = 'CONTRIBUTOR' and zdt.oai_recordtyp = 'edited scientific work'");
+            case 'monographien':
+                $restrictions = array('Monographien' => "r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'Monograph'");
 
 
                 break;
-            case 'buchtest':
-                $restrictions = array('Aufsätze in Sammelbänden' =>  " mitarbeiterOAI.rolle = 'CREATOR' and typOAI.oairecordtyp = 'book section'");
+            case 'herausgeber':
+                $restrictions = array('Herausgeberschaften' => " r_zdza.zora_rolle = 'CONTRIBUTOR' and zdt.oai_recordtyp = 'edited scientific work'");
 
 
                 break;
@@ -177,8 +176,10 @@ class PublicationsFacade extends BaseFacade {
                 $restrictions = array('Aufsätze in Sammelbänden' =>  " r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'book section'");
                 break;
             case 'journalarticle':
-                $restrictions = array('Zeitschriftenaufsätze' => " r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'journal article'",
-                    'Elektronische Publikationen' => " r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'Scientific Publication in Electronic Form'");
+                $restrictions = array('Zeitschriftenaufsätze' => " r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'journal article'");
+                break;
+            case 'digital':
+                $restrictions = array('Elektronische Publikationen' => " r_zdza.zora_rolle = 'CREATOR' and zdt.oai_recordtyp = 'Scientific Publication in Electronic Form'");
                 break;
             default:
                 //sequence defined by Manuela:
