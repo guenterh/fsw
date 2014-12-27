@@ -101,6 +101,10 @@ http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/medien/show
                     '3' => 'Fernsehen',
 
 
+Anzeige der Medien für eine einzelne Person
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/medien/showMa/101
+
+
 ******************************************************************
 
 Kolloquien

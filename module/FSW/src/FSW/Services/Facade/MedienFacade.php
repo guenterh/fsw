@@ -7,6 +7,8 @@
  */
 
 namespace FSW\Services\Facade;
+use FSW\Model\PersonenInfo;
+use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
@@ -190,14 +192,7 @@ class MedienFacade extends BaseFacade {
             ->where($likeCondition);
 
 
-        //$sql = new Sql($this->tableGateway->getAdapter(), $this->getTable());
-        //$test = $sql->getSqlStringForSqlObject($select);
-        //var_dump($sql->getSqlStringForSqlObject($select));
-
         return $targetGateway->selectWith($select);
-
-
-
 
     }
 
@@ -205,16 +200,6 @@ class MedienFacade extends BaseFacade {
     public function getMedienByTyp($medientypen = array()) {
 
 
-        //SELECT `fsw_medien`.* FROM `fsw_medien` INNER JOIN `Per_Personen` AS `personen` ON `fsw_medien`.`mit_id_per_extended` = `personen`.`pers_id`
-        //WHERE `medientyp` IN () ORDER BY `datum` DESC
-
-        //so koennte man mappen und gleichzeitig quotens
-        //$test = array_map(function ($element){
-        //        return $this->qV($element);
-        //    }
-        //,$medientypen);
-
-        //$test1 =  implode(',',$medientypen);
 
         $sql = 'SELECT m.* , p.pers_name, p.pers_vorname FROM `fsw_medien` as m, `Per_Personen` as p where m.mit_id_per_extended = p.pers_id ';
         if (count($medientypen) > 0) {
@@ -224,10 +209,30 @@ class MedienFacade extends BaseFacade {
         $sql .=  'order by datum DESC';
         $result = $this->getAdapter()->query(   $sql, Adapter::QUERY_MODE_EXECUTE);
 
+
+        return $this->compileMedien($result, true);
+
+    }
+
+    public function getMedienByMitarbeiter($mitid) {
+
+        $sql = 'SELECT m.* , p.pers_name, p.pers_vorname FROM `fsw_medien` as m, `Per_Personen` as p where m.mit_id_per_extended = p.pers_id ';
+        $sql .= ' and p.pers_id = ' . $mitid;
+        $sql .=  ' order by datum DESC';
+        $result = $this->getAdapter()->query(   $sql, Adapter::QUERY_MODE_EXECUTE);
+
+
+        return $this->compileMedien($result);
+    }
+
+
+    private function compileMedien (ResultSet $result, $addPerson = false) {
+
         $medien = array();
 
         foreach ($result as $row) {
             $m = new Medium();
+
 
             $m->setId($row['id']);
             $m->setDatum($row['datum']);
@@ -239,64 +244,38 @@ class MedienFacade extends BaseFacade {
             $m->setLink($row['link']);
 
             $m->setBeteiligter($row['pers_vorname'] . ' ' . $row['pers_name']);
+
+
+
+            if ($addPerson) {
+                //$lvPersGateway = $this->histSemDBService->getKolloquienVeranstaltungenGateway();
+                $sql = 'select p.pers_name as name, p.pers_vorname as vorname, pe.profilURL as url, p.pers_id as id from ';
+                $sql .= 'Per_Personen p inner join fsw_personen_extended pe on (p.pers_id = pe.pers_id) ';
+                $sql .= ' where  p.pers_id = ' . $row['mit_id_per_extended'];
+
+                $rPinfo = $this->getAdapter()->query($sql, Adapter::QUERY_MODE_EXECUTE);
+
+                if ($rPinfo && count($rPinfo) == 1) {
+                    $pinfo = $rPinfo->current()->getArrayCopy();
+                    $pi = new PersonenInfo();
+
+                    $pi->setId($pinfo['id']);
+                    $pi->setNachName($pinfo['name']);
+                    $pi->setVorName($pinfo['vorname']);
+                    $pi->setProfilURL($pinfo['url']);
+                    $m->addPersonenInfo($pi);
+                }
+            }
+
+
+
             $medien[] = $m;
         }
 
         return $medien;
 
 
-
-        /*
-         * joins mit columns aus mehreren Tabellen plus Predicat in bekomme ich nicht in...
-        $targetGateway = $this->histSemDBService->getMedienGateway();
-
-        //$sql =  new Sql($this->getAdapter());
-        //$select = $sql->select();
-        $select	= new Select();
-        $select->columns(array('*'));
-        $select->from('fsw_medien');
-        $select->join(array('personen' => 'Per_Personen'),
-            'fsw_medien.mit_id_per_extended = personen.pers_id',
-            array());
-        $select->order("datum DESC")
-            ->where->in('medientyp', array(
-                $medientypen
-            ));
-
-        //$select->where(array('fsw_zora_author.id' => $authorId));
-
-        //$results = $this->histSemDBService->getZoraAuthorGateway()->selectWith($select);
-        //$result = $this->getAdapter()->query($sql->getSqlStringForSqlObject($select), Adapter::QUERY_MODE_EXECUTE);
-
-        $test = $targetGateway->selectWith($select);
-
-        return  $test;
-        //return  $results->current()->getPers_id();
-
-
-
-
-
-        $targetGateway = $this->histSemDBService->getMedienGateway();
-        $select = new Select();
-
-        if (count($medientypen) > 0) {
-
-            $select->from($targetGateway->getTable())
-                ->order("datum DESC")
-                ->where->in('medientyp', array(
-                    $medientypen
-                ));
-        } else {
-            $select->from($targetGateway->getTable())
-                ->order("datum DESC");
-
-        }
-
-        return  $targetGateway->selectWith($select);
-        */
     }
-
 
 
 }

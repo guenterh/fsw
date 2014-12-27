@@ -21,16 +21,31 @@ class MedienController extends BaseController {
 
     public function showAction()
     {
-
         $medientypen =  $this->params()->fromQuery('medientyp',array());
-
-
-        //$this->layout()->setTemplate("presentation/layout");
-
         return new ViewModel(array(
             'medien' => $this->facade->getMedienByTyp( $medientypen)
         ));
 
     }
+
+    public function showMaAction()
+    {
+
+        $mitId = $this->params()->fromRoute('id',0);
+
+        if ($mitId == 0) {
+            return $this->forward()->dispatch('FSWPresentation\Controller\Medien', array('action' => 'show' ));
+        }
+
+        return new ViewModel(array(
+            'medien' => $this->facade->getMedienByMitarbeiter( $mitId)
+        ));
+
+
+
+    }
+
+
+
 
 }

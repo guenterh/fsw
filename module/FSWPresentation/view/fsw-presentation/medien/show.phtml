@@ -10,15 +10,34 @@
 
 <div class="objectContainer" >
 
-    <div class="objectFloat left" style="width:80px;" >
-        <?php
+    <!--<div class="objectFloat left" style="width:80px;" > -->
+    <div  style="width:80px;" >
+    <img src="<?php echo "http://www.fsw.uzh.ch/static/img/" . $medium->getIcon(); ?>" />
+    </div>
+    <br/>
+    <?php
+        $numberPersons = count($medium->getPersonenInfo());
+    ?>
 
-            $imgsrc = "http://www.fsw.uzh.ch/static/img/" . $medium->getIcon();
 
-        ?>
-        <img src="<?php echo $imgsrc ?>" />
-    </div><br />
-    <b><?php echo $medium->getBeteiligter() ?></b>,&nbsp;
+    <?php if ($numberPersons > 0): ?>
+
+
+        <?php foreach ($medium->getPersonenInfo() as $pi): ?>
+
+            <?php if (!is_null($a = $pi->getProfilURL()) && strlen($pi->getProfilURL()) > 0): ?>
+                <a class="internal displayParent" href="<?php echo $pi->getProfilURL(); ?>">
+                    <?php echo trim($pi->getNachName()) . ", " . trim($pi->getVorName()); ?>
+                </a>
+            <?php else: ?>
+                <?php echo trim($pi->getNachName()) . ", " . trim($pi->getVorName()); ?>
+            <?php endif; ?>
+
+        <?php endforeach; ?>
+    <?php endif; ?>
+
+
+
 
     <?php $date = new DateTime($medium->getDatum()); ?>
     <?php echo $medium->getSendetitel() ?>  vom  <?php echo $date->format('d.m.Y') ?>

@@ -1,0 +1,33 @@
+
+
+<?php
+    $medien = $this->medien;
+?>
+
+
+
+<?php foreach ($medien as $medium): ?>
+
+<div class="objectContainer" >
+
+    <!--<div class="objectFloat left" style="width:80px;" > -->
+    <div  style="width:80px;" >
+        <img src="<?php echo "http://www.fsw.uzh.ch/static/img/" . $medium->getIcon(); ?>" />
+    </div>
+    <br/>
+
+    <?php $date = new DateTime($medium->getDatum()); ?>
+    <?php echo $medium->getSendetitel() ?>  vom  <?php echo $date->format('d.m.Y') ?>
+    <br />
+    <a href="<?php echo $medium->getLink() ?>" class="www" target="_blank">
+        <?php echo $medium->getGespraechstitel() ?>
+
+    </a>
+    <br style="margin-bottom: 0px" class="floatclear" />
+
+</div>
+
+<?php endforeach; ?>
+
+
+
