@@ -20,10 +20,7 @@
     </div><br />
     <b><?php echo $medium->getBeteiligter() ?></b>,&nbsp;
 
-    <?php
-    $date = new DateTime($medium->getDatum());
-    echo $date->format('Y-m-d H:i:s');
-    ?>
+    <?php $date = new DateTime($medium->getDatum()); ?>
     <?php echo $medium->getSendetitel() ?>  vom  <?php echo $date->format('d.m.Y') ?>
     <br />
     <a href="<?php echo $medium->getLink() ?>" class="www" target="_blank">
