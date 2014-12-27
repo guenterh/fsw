@@ -83,6 +83,7 @@ class MediumForm extends Form {
          */
 
 
+
         $this->add(array(
             'name' => 'icon',
             'type' => 'select',
@@ -90,20 +91,26 @@ class MediumForm extends Form {
                 'empty_option' => '- Kein Icon -',
                 'label' => 'Icon',
                 'value_options' => array(
-                    'woz.gif' => 'woz.gif',
-                    'drs.gif' => 'drs.gif',
-                    'zeit.gif' => 'zeit.gif',
-                    'ta.gif' => 'ta.gif',
-                    'nzz.gif' => 'nzz.gif',
-                    'magazin.gif' => 'magazin.gif',
-                    'migros.gif'    =>  'migros.gif',
-                    'ceo.gif'   =>  'ceo.gif',
-                    'baz.gif'   =>  'baz.gif',
-                    'handelszeitung.gif' => 'handelszeitung.gif',
-                    'st-galler-tagblatt.gif' => 'st-galler-tagblatt.gif',
-                    'bund.gif'  =>  'bund.gif'
-
-
+                    'zeit.gif' => 'Die Zeit',
+                    'drs.gif' => 'DRS',
+                    'sf.gif' => 'Fernsehen SF',
+                    'nzz.gif' => 'Zeitung NZZ',
+                    'woz.gif' => 'Zeitung WOZ',
+                    'ta.gif' => 'Zeitung Tagesanzeiger',
+                    'lora.gif'    =>  'Radio Lora',
+                    'orf.gif'   =>  'Oesterreichischer Rundfunk',
+                    'baz.gif'   =>  'Basler Zeitung',
+                    'bund.gif'  =>  'Der Bund',
+                    'srf.gif'  =>  'Fernsehen / Radio SRF',
+                    'magazin.gif'  =>  'Magazin uzh',
+                    'ceo.gif'  =>  'CEO Magazin',
+                    'horizonte.gif'  =>  'horizonte snf',
+                    '3sat.gif'  =>  '3 SAT',
+                    'suedostschweiz.gif'  =>  'Südostschweiz',
+                    'migros.gif'  =>  'Migros Magazin',
+                    'handelszeitung.gif'  =>  'Handelszeitung',
+                    'jahresspiegel.gif'  =>  'Jahresspiegel',
+                    'st_galler_tagblatt.gif'  =>  'ST. Galler Tagblatt'
 
                 )
             ),
@@ -121,9 +128,9 @@ class MediumForm extends Form {
                 'empty_option' => '- Kein Icon -',
                 'label' => 'Medientyp',
                 'value_options' => array(
-                    '1' => 'Radio',
-                    '2' => 'Fernsehen',
-                    '3' => 'Internet',
+                    '1' => 'Zeitung',
+                    '2' => 'Radio',
+                    '3' => 'Fernsehen',
                 )
             ),
             'attributes' => array(

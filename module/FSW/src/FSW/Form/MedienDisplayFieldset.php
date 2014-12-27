@@ -57,9 +57,9 @@ class MedienDisplayFieldset extends Fieldset implements InputFilterProviderInter
                 'empty_option' => '- Kein Icon -',
                 'label' => 'Medientyp',
                 'value_options' => array(
-                    '1' => 'Radio',
-                    '2' => 'Fernsehen',
-                    '3' => 'Internet',
+                    '1' => 'Zeitung',
+                    '2' => 'Radio',
+                    '3' => 'Fernsehen',
                 )
             ),
             'attributes' => array(
