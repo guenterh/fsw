@@ -143,14 +143,15 @@ class LehrveranstaltungFieldset extends Fieldset  {
         $selectarray = array(
             0   => 'keine Angabe',
             1   =>  'Vorlesungen',
-            2   =>  'Seminare BA',
-            3   =>  'Seminare MA',
-            4   =>  'Methoden und Theorieseminar',
-            5   =>  'Fremdanbieter',
-            6   =>  'Kolloquien BA',
-            7   =>  'Kolloquien MA',
-            8   =>  'Master-/DoktoranInnenkolloquien',
-            9   =>  'Doktoratsstufe'
+            2   =>  'Proseminar',
+            3   =>  'Seminare BA',
+            4   =>  'Seminare MA',
+            5   =>  'Methoden und Theorieseminar',
+            6   =>  'Fremdanbieter',
+            7   =>  'Kolloquien BA',
+            8   =>  'Kolloquien MA',
+            9   =>  'Master-/DoktoranInnenkolloquien',
+            10   =>  'Doktoratsstufe'
 
         );
 

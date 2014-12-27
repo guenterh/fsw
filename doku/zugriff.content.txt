@@ -69,7 +69,7 @@ http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/lehrveranstaltung/
 -> Anzeige der aktuellen Lehrveranstaltungen
 
 3) Anzeige der Lehrveranstaltungen einer Person
-http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/lehrveranstaltung/showM/101
+http://w3.fsw.uzh.ch/static/zf2/public/index.php/presentation/lehrveranstaltung/showMa/101
 102 ist die pers_id einer Person (im Beispiel Sarasin)
 die pers_id ist im Backend unter Personen im Tab PersonenCoreHS zu finden
 

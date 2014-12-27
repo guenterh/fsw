@@ -388,6 +388,8 @@ class LehrveranstaltungFacade extends BaseFacade {
         $resultset =  $lvGateway->selectWith($select);
 
 
+
+
         $lehrveranstaltungen = $resultset ? $this->compileLehrveranstaltungen($resultset) : array();
 
         return $lehrveranstaltungen;
@@ -397,6 +399,7 @@ class LehrveranstaltungFacade extends BaseFacade {
 
     public function getLehrveranstaltungenMitarbeiter($mitId) {
 
+        /*
         $lvGateway =  $this->histSemDBService->getLehrveranstaltungenGateway();
 
         $select  = $lvGateway->getSql()->select();
@@ -409,9 +412,25 @@ class LehrveranstaltungFacade extends BaseFacade {
                 'rel_lv.fper_personen_pers_id' => $mitId
             )
         );
-        $resultset =  $lvGateway->selectWith($select);
 
-        $lehrveranstaltungen = $resultset ? $this->compileLehrveranstaltungen($resultset) : array();
+        */
+        $sql = " SELECT fsw_lehrveranstaltung.* FROM fsw_lehrveranstaltung inner JOIN fsw_relation_personen_fsw_lehrveranstaltung AS rel_lv ";
+        $sql .= " ON rel_lv.ffsw_lehrveranstaltungen_id = fsw_lehrveranstaltung.id WHERE rel_lv.fper_personen_pers_id = " . $mitId;
+        $sql .= " order by semester DESC ";
+        $resultset = $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+        $lehrveranstaltungen = array();
+
+        foreach ($resultset as $row) {
+
+            $lv = new Lehrveranstaltung();
+            $lv->exchangeArray($row->getArrayCopy());
+
+            $lehrveranstaltungen[] = $lv;
+        }
+
+
+        $lehrveranstaltungen = count($lehrveranstaltungen) > 0 ? $this->compileLehrveranstaltungen($lehrveranstaltungen, $mitId) : array();
 
         return $lehrveranstaltungen;
 
@@ -419,32 +438,36 @@ class LehrveranstaltungFacade extends BaseFacade {
 
 
 
-
-    private function compileLehrveranstaltungen(ResultSet $resultset) {
-
+    private function compileLehrveranstaltungen($resultset, $excludemitid = 0) {
+        //werden die Lehrveranstaltungen zu einer Person angezeigt, sollen die Angaben zu dieser Person nicht nochmals
+        //mit angezeigt werden. Deshalb ein exclude
         $lehrveranstaltungen = array();
 
         if ($resultset) {
 
 
             //$lvPersGateway = $this->histSemDBService->getKolloquienVeranstaltungenGateway();
-            $sqlTemplate = 'select p.pers_name as name, p.pers_vorname as vorname, pe.profilURL as url, p.pers_id as id from fsw_lehrveranstaltung l,';
-            $sqlTemplate .= ' fsw_relation_personen_fsw_lehrveranstaltung rpl, ';
-            $sqlTemplate .= 'Per_Personen p, fsw_personen_extended pe where l.id = rpl.ffsw_lehrveranstaltungen_id and ';
-            $sqlTemplate .= 'rpl.fper_personen_pers_id = p.pers_id and p.pers_id = pe.pers_id and l.id = LVID';
+            $sqlTemplate = 'select p.pers_name as name, p.pers_vorname as vorname, pe.profilURL as url, p.pers_id as id from fsw_lehrveranstaltung l ';
+            $sqlTemplate .= ' join fsw_relation_personen_fsw_lehrveranstaltung rpl on (l.id = rpl.ffsw_lehrveranstaltungen_id) join ';
+            $sqlTemplate .= 'Per_Personen p on (rpl.fper_personen_pers_id = p.pers_id) left join fsw_personen_extended pe on (p.pers_id = pe.pers_id) ';
+            $sqlTemplate .= ' where  l.id = LVID order by p.pers_name, p.pers_vorname';
 
             foreach ($resultset as $lv) {
 
                 $sql = preg_replace('/LVID/',$lv->getId(),$sqlTemplate );
                 $rPinfo =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
                 foreach($rPinfo as $pinfo) {
-                    $pi = new PersonenInfo();
 
-                    $pi->setId($pinfo['id']);
-                    $pi->setNachName($pinfo['name']);
-                    $pi->setVorName($pinfo['vorname']);
-                    $pi->setProfilURL($pinfo['url']);
-                    $lv->addPersonenInfo($pi);
+                    if ($excludemitid == 0 || $pinfo['id'] != $excludemitid) {
+                        $pi = new PersonenInfo();
+
+                        $pi->setId($pinfo['id']);
+                        $pi->setNachName($pinfo['name']);
+                        $pi->setVorName($pinfo['vorname']);
+                        $pi->setProfilURL($pinfo['url']);
+                        $lv->addPersonenInfo($pi);
+
+                    }
                 }
 
                 $lehrveranstaltungen[$lv->getSemester()][] = $lv;

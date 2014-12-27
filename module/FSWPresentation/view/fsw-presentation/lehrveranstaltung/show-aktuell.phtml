@@ -25,19 +25,13 @@
                             <?php echo $pi->getNachName() . " " . $pi->getVorName(); ?>
                         <?php endif; ?>
 
-                    </div>
+
                     <?php $i++; ?>
                     <?php if ($i < $numberPersons): ?>
                     ,
                     <?php endif; ?>
                        &nbsp;
                 <?php endforeach; ?>
-
-
-
-                <?php echo $lv->getTag() . ',&nbsp;' . $lv->getVon_zeit() . ',&nbsp;' . $lv->getBis_zeit() . '</br' ?>
-
-
                 <?php if (!is_null($lv->getVvzlink()) && strlen($lv->getVvzlink()) > 0): ?>
                     <p><a class="internal"   href="<?php echo $lv->getVvzlink(); ?>" target="_blank"><?php echo $lv->getTitel(); ?></a></p>
                 <?php else: ?>
@@ -48,7 +42,7 @@
                 <?php if (!is_null($lv->getOlatlink()) && strlen($lv->getOlatlink()) > 0): ?>
                     <p><a class="internal"   href="<?php echo $lv->getOlatlink(); ?>" target="_blank">OLAT</a></p>
                 <?php endif; ?>
-
+                    </div>
 
                 <?php if ((!is_null($lv->getBeschreibung()) && strlen($lv->getBeschreibung()) > 0)
                     && (is_null($lv->getVvzlink()) || strlen($lv->getVvzlink() == 0) )): ?>
