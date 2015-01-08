@@ -80,7 +80,7 @@ class LoginForm extends Form {
 
         $this->add(array(
             'name' => 'username',
-            'type' => 'textarea',
+            'type' => 'Text',
             'options' => array(
                 'label' => 'username'
             ),
