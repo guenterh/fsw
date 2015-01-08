@@ -64,41 +64,58 @@ $form->setAttribute('action',$this->url('medien',array('action' => 'edit', 'id' 
 
     <fieldset class="general">
         <div class="container-fluid">
-        <div class="row-fluid">
+            <div class="row-fluid">
 
-            <div class="span12"><?php echo  $this->formRowTwb($form->get('gespraechstitel')) ?></div>
-        </div>
-        <div class="row-fluid">
+                <div class="span12"><?php echo  $this->formRowTwb($form->get('gespraechstitel')) ?></div>
+            </div>
 
-            <div class="span12"><?php echo  $this->formRowTwb($form->get('sendetitel')) ?></div>
-        </div>
+            <div class="row-fluid">
+                <div class="medienKommentar">Zum Beispiel: Die Schweiz am Rande des Bürgerkriegs</div>
+            </div>
 
-        <div class="row-fluid">
+            <div class="row-fluid">
 
-            <div class="span12"><?php echo  $this->formRowTwb($form->get('id')) ?></div>
-        </div>
+                <div class="span12"><?php echo  $this->formRowTwb($form->get('sendetitel')) ?></div>
+            </div>
 
-        <div class="row-fluid">
-
-            <div class="span12"><?php echo  $this->formRowTwb($form->get('mit_id_per_extended')) ?></div>
-        </div>
-
+            <div class="row-fluid">
+                <div class="medienKommentar ">Zum Beispiel: Radio SRF 2, Kontext</div>
+            </div>
 
 
-        <div class="row-fluid">
 
-            <div class="span12"><?php echo  $this->formRowTwb($form->get('medientyp')) ?></div>
-        </div>
+            <div class="row-fluid">
 
-        <div class="row-fluid">
+                <div class="span12"><?php echo  $this->formRowTwb($form->get('id')) ?></div>
+            </div>
 
-            <div class="span12"><?php echo  $this->formRowTwb($form->get('icon')) ?></div>
-        </div>
+            <div class="row-fluid">
 
-        <div class="row-fluid">
+                <div class="span12"><?php echo  $this->formRowTwb($form->get('mit_id_per_extended')) ?></div>
+            </div>
 
-            <div class="span12"><?php echo  $this->formRowTwb($form->get('link')) ?></div>
-        </div>
+
+
+            <div class="row-fluid">
+
+                <div class="span12"><?php echo  $this->formRowTwb($form->get('medientyp')) ?></div>
+            </div>
+
+            <div class="row-fluid">
+
+                <div class="span12"><?php echo  $this->formRowTwb($form->get('icon')) ?></div>
+            </div>
+
+            <div class="row-fluid">
+
+                <div class="span12"><?php echo  $this->formRowTwb($form->get('link')) ?></div>
+            </div>
+
+            <div class="row-fluid">
+
+                <div class="span12"><?php echo  $this->formRowTwb($form->get('datum')) ?></div>
+            </div>
+
         </div>
 
 

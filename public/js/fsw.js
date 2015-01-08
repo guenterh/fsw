@@ -9,7 +9,7 @@ var FSWAdmin = {
         if (this.hasUrlPart('/medien/')
             /*||
             this.hasUrlPart('/forschung/') ||  this.hasUrlPart('/forschungAdmin/') */ ) {
-            Allgemein.init();
+            Medien.init();
         } else if (this.hasUrlPart('/personen/')) {
 
             Personen.init();

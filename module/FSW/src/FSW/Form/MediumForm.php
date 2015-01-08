@@ -152,6 +152,19 @@ class MediumForm extends Form {
             )
         ));
 
+        $this->add(array(
+            'name' => 'datum',
+            'type' => 'text',
+            'options' => array(
+                'label' => 'Datum'
+            ),
+            'attributes' => array(
+
+                'class' => 'datePicker'
+            )
+        ));
+
+
 
         $this->add(array(
             'name' => 'submit',

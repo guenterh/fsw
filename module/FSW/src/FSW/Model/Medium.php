@@ -76,6 +76,14 @@ class Medium extends BaseModel implements InputFilterAwareInterface {
             ));
 
 
+
+            $inputFilter->add(array(
+                'name'     => 'datum',
+                'required' => true
+            ));
+
+
+
             $inputFilter->add(array(
                 'name'     => 'icon',
                 'required' => true,
