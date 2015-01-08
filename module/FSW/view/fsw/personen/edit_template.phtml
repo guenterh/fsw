@@ -610,7 +610,7 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
                             </div>
 
                             <div class="row-fluid linkMitAbstandBottom">
-                                <div class="span4">
+                                <div class="span2">
                                     <?php $identifier = $zoradoc->get('oai_identifier')->getValue();
                                     $matches = array();
 
@@ -618,9 +618,12 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
                                     ?>
                                     <a  target="_blank" href='<?php echo   'http://www.zora.uzh.ch/' .   $matches[1] ?>'>Link zu Zora</a>
                                 </div>
-                                <div class="span6">
+                                <div class="span2">
                                     <a href="#"
                                        class="updateCoverLink" data-currentOaiIdentfier="<?php echo $zoradoc->get('oai_identifier')->getValue(); ?>">update Coverlink</a>
+                                </div>
+                                <div class="span2">
+                                    <a  target="_blank" href='<?php echo   'http://www.zora.uzh.ch/cgi/oai2?verb=GetRecord&identifier=' . $identifier . '&metadataPrefix=oai_dc' ?>'>Link zu Zora (xml)</a>
                                 </div>
                             </div>
 
