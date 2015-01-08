@@ -32,7 +32,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_id'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -44,7 +45,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_pers_id'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -57,7 +59,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                     'label' => 'Abteilung'
                 ),
                 'attributes' => array(
-                    'rows' => 1
+                    'rows' => 1,
+                    'readonly'  => 'readonly'
                 )
             ));
         } else {
@@ -91,7 +94,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_arbe_id'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -101,7 +105,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_skv_id'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -114,7 +119,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                     'label' => 'roll_funk_id'
                 ),
                 'attributes' => array(
-                    'rows' => 1
+                    'rows' => 1,
+                    'readonly'  => 'readonly'
                 )
             ));
         } else {
@@ -173,7 +179,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_anstellung'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -184,7 +191,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_persnr'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -194,7 +202,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_datestart'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -204,7 +213,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_dateend'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -214,7 +224,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_anstellungprozent'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -224,7 +235,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_befristet'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -234,7 +246,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_email'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -244,7 +257,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_telg'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -254,7 +268,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_url'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -266,7 +281,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_hs_fsw'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -276,7 +292,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_mund_pruf'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -286,7 +303,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_verteiler_skeinladung'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -296,7 +314,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_verteiler_mittelbau'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -307,7 +326,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_verteiler_skprotokoll'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -317,7 +337,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_verteiler_profs'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -327,7 +348,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_verteiler_koordag'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -337,7 +359,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_verteiler_koordma'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -347,7 +370,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_verteiler_koordnz'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -357,7 +381,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_changedate'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -367,7 +392,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_oldid'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -377,7 +403,8 @@ class PersonRolleFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label' => 'roll_fswfunktion'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 

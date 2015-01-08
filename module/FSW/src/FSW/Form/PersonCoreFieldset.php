@@ -34,7 +34,8 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
                 'label' => 'pers_id'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -46,7 +47,8 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
                 'label' => 'pers_uzhshortname'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -57,7 +59,8 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
                 'label' => 'pers_name'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -70,7 +73,8 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
                 'label' => 'pers_midname'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -81,7 +85,8 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
                 'label' => 'pers_vorname'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -92,7 +97,8 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
                 'label' => 'pers_fullname'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -103,7 +109,8 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
                 'label' => 'pers_anrede'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -114,7 +121,8 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
                 'label' => 'pers_titel'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -125,7 +133,8 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
                 'label' => 'pers_titel_OLD'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -136,7 +145,8 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
                 'label' => 'pers_sex'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -147,7 +157,8 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
                 'label' => 'pers_strasse'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -158,7 +169,8 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
                 'label' => 'pers_plz'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -169,7 +181,8 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
                 'label' => 'pers_ort'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -180,7 +193,8 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
                 'label' => 'pers_land'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -192,7 +206,8 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
                 'label' => 'pers_tel_privat'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -203,7 +218,8 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
                 'label' => 'pers_tel_mobile'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -214,7 +230,8 @@ class PersonCoreFieldset extends Fieldset implements InputFilterProviderInterfac
                 'label' => 'pers_email'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 

@@ -15,12 +15,31 @@ use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 
 class PersonExtendedFieldset extends Fieldset  {
 
-    public function __construct() {
+
+    protected $readOnly;
+
+    public function __construct($readonly = true) {
+
+        $this->readOnly = $readonly;
 
         parent::__construct('PersonExtended');
 
         $this->setHydrator(new ClassMethodsHydrator(false))
             ->setObject(new PersonExtended());
+
+        $attributesArea = $this->readOnly ? array(
+            'rows' => 3,
+            'class' => 'fswTextAreaSmall',
+            'readonly'  => 'readonly'
+
+        ) : array(
+            'rows' => 3,
+            'class' => 'fswTextAreaSmall'
+
+        );
+
+
+
 
         $this->add(array(
             'name' => 'id',
@@ -54,10 +73,7 @@ class PersonExtendedFieldset extends Fieldset  {
             'options' => array(
                 'label' => 'profilURL'
             ),
-            'attributes' => array(
-                'rows' => 3,
-                'class' => 'fswTextAreaSmall'
-            )
+            'attributes' => $attributesArea
         ));
 
 

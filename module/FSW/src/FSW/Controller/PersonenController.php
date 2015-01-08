@@ -31,6 +31,7 @@ namespace FSW\Controller;
 
 use FSW\Form\CoverlinkForm;
 use FSW\Form\PersonCoreFieldset;
+use FSW\Form\PersonExtendedFieldset;
 use FSW\Form\PersonForm;
 use FSW\Form\PersonFormAllHS;
 use FSW\Form\PersonFSWExtendedForm;
@@ -377,11 +378,17 @@ class PersonenController extends BaseController{
 
         if ($request->isGet() && $idPersonExtended > 0) {
             $personExtended = $this->facade->getExtendedFSWPersonAttributes($idPersonExtended);
-            $form = new PersonFSWExtendedForm();
+
+            $persExtendedFieldset = new PersonExtendedFieldset(false);
+            $persExtendedFieldset->setUseAsBaseFieldset(true);
+
+            $form = new PersonFSWExtendedForm('FSWPersonExtended', $persExtendedFieldset);
             $form->bind($personExtended);
         } elseif ($request->isPost()) {
 
-            $form = new PersonFSWExtendedForm();
+            $persExtendedFieldset = new PersonExtendedFieldset(false);
+            $persExtendedFieldset->setUseAsBaseFieldset(true);
+            $form = new PersonFSWExtendedForm('FSWPersonExtended', $persExtendedFieldset);
 
             $form->setData($this->params()->fromPost());
 

@@ -40,7 +40,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'qarb_arb_id'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -52,7 +53,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'qarb_arb_autorid'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -63,7 +65,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'autor rollid    '
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -75,7 +78,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
             ),
             'attributes' => array(
                 'rows' => 2,
-                'class' => 'fswTextAreaMiddle'
+                'class' => 'fswTextAreaMiddle',
+                'readonly'  => 'readonly'
 
             )
         ));
@@ -88,7 +92,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'Typ'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -98,7 +103,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'Betreuer 1'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -111,7 +117,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
                     'label' => 'Betreuer 1'
                 ),
                 'attributes' => array(
-                    'rows' => 1
+                    'rows' => 1,
+                    'readonly'  => 'readonly'
                 )
             ));
         } else {
@@ -147,7 +154,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'qarb_arb_betreuer2'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -159,7 +167,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'qarb_arb_istabgeschlossen'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -169,7 +178,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'qarb_arb_abschlussjahr'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -179,7 +189,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'qarb_arb_semester'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -190,7 +201,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'qarb_arb_bemerkungen'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -201,7 +213,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
             ),
             'attributes' => array(
                 'rows' => 8,
-                'class' => 'fswTextAreaMiddle'
+                'class' => 'fswTextAreaMiddle',
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -211,7 +224,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'qarb_arb_imwebsichtbar'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -221,7 +235,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'qarb_arb_DOI'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -232,7 +247,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'qarb_arb_ISSN'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -242,7 +258,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'qarb_arb_ISBN'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -252,7 +269,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'qarb_arb_ZORA'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 
@@ -263,7 +281,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'qarb_arb_FDB'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -274,7 +293,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
             ),
             'attributes' => array(
                 'class' => 'fswTextAreaMiddle',
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
         $this->add(array(
@@ -284,7 +304,8 @@ class ForschungFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'qarb_arb_changed'
             ),
             'attributes' => array(
-                'rows' => 1
+                'rows' => 1,
+                'readonly'  => 'readonly'
             )
         ));
 

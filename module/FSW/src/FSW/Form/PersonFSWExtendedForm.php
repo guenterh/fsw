@@ -17,17 +17,12 @@ use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 class PersonFSWExtendedForm extends Form {
 
 
-    public function __construct($name = 'FSWPersonExtended')
+    public function __construct($name = 'FSWPersonExtended', $persExtendedFieldset)
     {
         // we want to ignore the name passed
         parent::__construct($name);
 
-        $this->add(array(
-            'type' => 'FSW\Form\PersonExtendedFieldset',
-            'options' => array(
-                'use_as_base_fieldset' => true
-            )
-        ));
+        $this->add($persExtendedFieldset);
 
         $this->add(array(
             'name' => 'submit',
