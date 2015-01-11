@@ -10,6 +10,8 @@
 namespace FSW\Model;
 
  
+use FSW\Services\ExternInternLinkChecker;
+
 class ZoraRecord  {
 
     private $identifier = null;
@@ -70,6 +72,7 @@ class ZoraRecord  {
     //public function getItemType() {
     //    return 1;
     //}
+
 
 
     public function setRawOAIDeletedRecord($rawrecord, $id,$status,$datestamp) {
@@ -502,6 +505,24 @@ class ZoraRecord  {
             $pattern = '/(' . str_replace($tosearch,$toreplace,trim($this->title)) .   ')/';
             $replacement = '<span class="titleZora">${1}</span>';
 
+            $test = $this->source;
+            if (stristr($test, 'Effizienz versus Gerechtigkeit')) {
+                /*
+                 *
+                 *
+                 * http://www.fsw.uzh.ch/static/zf2/public/index.php/presentation/publications/show?conditions=booksection
+
+                    Effizienz versus Gerechtigkeit
+
+                    oai:www.zora.uzh.ch:59142
+
+
+                    SELECT * FROM `fsw_zora_doc` zd inner join fsw_relation_zora_author_zora_doc zr on (zd.oai_identifier = zr.oai_identifier) WHERE zd.oai_identifier = 'oai:www.zora.uzh.ch:59142'
+                 */
+                $t = "";
+            }
+
+
             $this->source =   preg_replace($pattern,$replacement,$this->source);
 
         } catch (Exception $e) {
@@ -511,32 +532,22 @@ class ZoraRecord  {
         //preg_match("/\.(?[^.]+)\./",$this->source,$matches);
 
 
+        $processedPersons = array();
         foreach ($this->getCreator() as $creator) {
 
             $creator = (string) $creator;
             if (array_key_exists( $creator, $this->zoraAuthorInfo)) {
 
-
                 if (! is_null($this->zoraAuthorInfo[$creator]->getProfilURL()) &&
-                    strlen($this->zoraAuthorInfo[$creator]->getProfilURL()) > 0)
+                    strlen($this->zoraAuthorInfo[$creator]->getProfilURL()) > 0 && !in_array($creator,$processedPersons))
                 {
+                    $processedPersons[] = $creator;
                     $profilURL =  $this->zoraAuthorInfo[$creator]->getProfilURL();
 
-                    $temp = strpos($this->source,$creator);
-                    $firstPart = substr($this->source,0,$temp);
+                    $link = $this->createLink($profilURL, $creator);
 
-                    $lastPart =  substr($this->source,$temp + strlen($creator));
+                    $this->source = preg_replace("/$creator/",$link,$this->source);
 
-                    //im link wird dieser extra Prameter eingetragen und ein neues Fenster zu oeffnen (der Parameter selber kann bleiben, schadet nicht)
-                    if (strpos($profilURL,"&extern=true")) {
-                        $shorterLink = substr($profilURL,0,strpos($profilURL,"&extern=true"));
-                        $combine = $firstPart . '<a  title="Teaser Link" class="www" href="' . $shorterLink . '" target="_blank" >'  . $creator  .   "</a>" . $lastPart;
-                    } else {
-                        $combine = $firstPart . "<a class='uzh displayParent' href='" . $profilURL . "' >"  . $creator  .   "</a>" . $lastPart;
-                    }
-
-
-                    $this->source = $combine;
 
                 }
 
@@ -553,26 +564,15 @@ class ZoraRecord  {
             if (array_key_exists($contributor, $this->zoraAuthorInfo)) {
 
                 if (! is_null($this->zoraAuthorInfo[$contributor]->getProfilURL()) &&
-                    strlen($this->zoraAuthorInfo[$contributor]->getProfilURL()) > 0)
+                    strlen($this->zoraAuthorInfo[$contributor]->getProfilURL()) > 0 && !in_array($contributor,$processedPersons))
                 {
+                    $processedPersons[] = $contributor;
+
                     $profilURL =  $this->zoraAuthorInfo[$contributor]->getProfilURL();
 
-                    $temp = strpos($this->source,$contributor);
-                    $firstPart = substr($this->source,0,$temp);
+                    $link = $this->createLink($profilURL, $contributor);
 
-                    $lastPart =  substr($this->source,$temp + strlen($contributor));
-
-                    //im link wird dieser extra Prameter eingetragen und ein neues Fenster zu oeffnen (der Parameter selber kann bleiben, schadet nicht)
-                    if (strpos($profilURL,"&extern=true")) {
-                        $shorterLink = substr($profilURL,0,strpos($profilURL,"&extern=true"));
-                        $combine = $firstPart . '<a  title="Teaser Link" class="www" href="' . $shorterLink . '" target="_blank" >'  . $contributor  .   "</a>" . $lastPart;
-                    } else {
-                        $combine = $firstPart . "<a class='uzh displayParent' href='" . $profilURL . "' >"  . $contributor  .   "</a>" . $lastPart;
-                    }
-
-
-                    $this->source = $combine;
-
+                    $this->source = preg_replace("/$contributor/",$link,$this->source);
                 }
             }
         }
@@ -831,6 +831,29 @@ class ZoraRecord  {
     {
 
         $this->zoraAuthorInfo = array_merge($this->zoraAuthorInfo, $authorInfo);
+
+    }
+
+
+    protected function isExternalLink ($link)
+    {
+        return !stristr($link, 'fsw.uzh.ch') ? true : false;
+
+    }
+
+    protected function createLink ($link, $subject)
+    {
+
+
+        if ($this->isExternalLink($link))
+        {
+            $fullLink =    '<a  title="Teaser Link" class="www" href="' . $link . '" target="_blank" >'  . $subject  .   "</a>";
+        } else {
+            $fullLink = "<a class='uzh displayParent' href='" . $link . "' >"  . $subject  .   "</a>";
+        }
+
+        return $fullLink;
+
 
     }
 
