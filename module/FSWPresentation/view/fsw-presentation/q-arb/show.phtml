@@ -68,13 +68,14 @@
 
                         if ($qArbeit->getBetreuer1Info()->isSetProfilURL()) {
                             echo $this->internalExternalLink()->createLink($qArbeit->getBetreuer1Info()->getProfilURL(),
-                                trim($qArbeit->getBetreuer1Info()->getNachName()) . '&nbsp;' . trim($qArbeit->getBetreuer1Info()->getVorName()));
+                                trim($qArbeit->getBetreuer1Info()->getNachName()) . '&nbsp;' . trim($qArbeit->getBetreuer1Info()->getVorName())) . ')';
 
                         } else {
-                            echo trim($qArbeit->getBetreuer1Info()->getNachName()) . '&nbsp;' . trim($qArbeit->getBetreuer1Info()->getVorName());
+                            echo trim($qArbeit->getBetreuer1Info()->getNachName()) . '&nbsp;' . trim($qArbeit->getBetreuer1Info()->getVorName()) . ')';
                         }
 
                     ?>
+
 
                 <?php endif; ?>
             </p>
