@@ -97,7 +97,7 @@ class Medium extends BaseModel implements InputFilterAwareInterface {
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min'      => 1,
-                            'max'      => 100,
+                            'max'      => 300,
                         ),
                     ),
                 ),
@@ -117,7 +117,7 @@ class Medium extends BaseModel implements InputFilterAwareInterface {
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min'      => 1,
-                            'max'      => 100,
+                            'max'      => 1000,
                         ),
                     ),
                 ),
@@ -136,7 +136,7 @@ class Medium extends BaseModel implements InputFilterAwareInterface {
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min'      => 1,
-                            'max'      => 100,
+                            'max'      => 1000,
                         ),
                     ),
                 ),
