@@ -31,16 +31,18 @@
     <li>
         <!-- noch  zu machen: meherere Autoren-->
 
-            <p class="noMarginBottom"><b>
-                    <?php if ($qArbeit->isSetProfilURL()): ?>
+            <p class="noMarginBottom">
+                    <?php
+                    if ($qArbeit->isSetProfilURL()) {
 
-                        <a class="internal" href="<?php echo $qArbeit->getProfilURL();?>" target="_blank"><?php echo $qArbeit->getPersName() . ',&nbsp;' . $qArbeit->getPersVorname();?></a>
-                     <?php else: ?>
-                        <?php echo $qArbeit->getPersName() . ',&nbsp;' . $qArbeit->getPersVorname();?>
-                    <?php endif; ?>
+                        echo $this->internalExternalLink()->createLink($qArbeit->getProfilURL(), $qArbeit->getPersName() . ',&nbsp;' . $qArbeit->getPersVorname());
+
+                    } else {
+                        echo '<b>' . $qArbeit->getPersName() . ',&nbsp;' . $qArbeit->getPersVorname() . '</b>';
+                    }
+                    ?>
 
 
-                </b>
                 <br />
 
                 <?php echo $qArbeit->getQarbArbTitel(); ?>
@@ -61,24 +63,19 @@
                 <?php endif; ?>
 
                 <?php if ($all): ?>
+                    &nbsp; (Ref.:&nbsp;
+                    <?php
 
-                    &nbsp; (Ref.:&nbsp;<?php if ($qArbeit->getBetreuer1Info()->isSetProfilURL()): ?>
-                        <a class="internal" href="<?php echo trim($qArbeit->getBetreuer1Info()->getProfilURL());?>" target="_blank">
-                            <?php echo trim($qArbeit->getBetreuer1Info()->getNachName()) . '&nbsp;' . trim($qArbeit->getBetreuer1Info()->getVorName());?>)
-                        </a>
-                    <?php else: ?>
-                        <?php echo trim($qArbeit->getBetreuer1Info()->getNachName()) . '&nbsp;' . trim($qArbeit->getBetreuer1Info()->getVorName());?>)
-                    <?php endif; ?>
+                        if ($qArbeit->getBetreuer1Info()->isSetProfilURL()) {
+                            echo $this->internalExternalLink()->createLink($qArbeit->getBetreuer1Info()->getProfilURL(),
+                                trim($qArbeit->getBetreuer1Info()->getNachName()) . '&nbsp;' . trim($qArbeit->getBetreuer1Info()->getVorName()));
 
-                    <?php if ($qArbeit->isSetBetreuer2Info()): ?>
-                        &nbsp; (Zweitref.:&nbsp;<?php if ($qArbeit->getBetreuer2Info()->isSetProfilURL()): ?>
-                            <a class="internal" href="<?php echo $qArbeit->getBetreuer2Info()->getProfilURL();?>" target="_blank">
-                                <?php echo $qArbeit->getBetreuer2Info()->getNachName() . '&nbsp;' . $qArbeit->getBetreuer2Info()->getVorName();?>)
-                            </a>
-                        <?php else: ?>
-                            <?php echo $qArbeit->getBetreuer2Info()->getNachName() . '&nbsp;' . $qArbeit->getBetreuer2Info()->getVorName();?>)
-                        <?php endif; ?>
-                    <?php endif; ?>
+                        } else {
+                            echo trim($qArbeit->getBetreuer1Info()->getNachName()) . '&nbsp;' . trim($qArbeit->getBetreuer1Info()->getVorName());
+                        }
+
+                    ?>
+
                 <?php endif; ?>
             </p>
 
@@ -96,16 +93,22 @@
 
         <?php if ($qArbeit->isSetQarbArbURL()): ?>
             <?php if ($qArbeit->isOnlineAbgeschlosseneDiss()): ?>
-                <div><a class="www" href="<?php echo $qArbeit->getQarbArbURL();?>" target="_blank">Onlinepublikation</a></div>
+                <div>
+                    <?php echo $this->internalExternalLink()->createLink($qArbeit->getQarbArbURL(), 'Onlinepublikation'); ?>
+                </div>
             <?php else: ?>
-                <div><a class="www" href="<?php echo $qArbeit->getQarbArbURL();?>" target="_blank">Archivexemplar der Zentralbibliothek Zürich</a></div>
+                <div>
+                    <?php echo $this->internalExternalLink()->createLink($qArbeit->getQarbArbURL(), 'Archivexemplar der Zentralbibliothek Zürich'); ?>
+                </div>
             <?php endif; ?>
 
 
         <?php endif; ?>
 
         <?php if ($qArbeit->isSetQarbArbISBN()): ?>
-            <div><a class="www" href="<?php echo "https://www.swissbib.ch/Search/Results?lookfor=" . $qArbeit->getQarbArbISBN();?>" target="_blank">Publikation</a></div>
+            <div>
+                <?php echo $this->internalExternalLink()->createLink("http://www.swissbib.ch/Search/Results?lookfor=" . $qArbeit->getQarbArbISBN(), 'Publikation'); ?>
+            </div>
         <?php endif; ?>
 
     </li>

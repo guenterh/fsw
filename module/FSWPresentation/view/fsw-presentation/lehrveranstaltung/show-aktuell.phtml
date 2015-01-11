@@ -12,11 +12,15 @@
             <li>
             <li class="marginTop ">
                 <div >
-                    <?php if (!is_null($lv->getVvzlink()) && strlen($lv->getVvzlink()) > 0): ?>
-                        <a class="internal"   href="<?php echo $lv->getVvzlink(); ?>" target="_blank"><?php echo $lv->getTitel(); ?></a>
-                    <?php else: ?>
-                        <strong><?php echo $lv->getTitel();  ?></strong>
-                    <?php endif; ?>
+                    <?php
+                        if (!is_null($lv->getVvzlink()) && strlen($lv->getVvzlink()) > 0) {
+                            echo $this->internalExternalLink()->createLink($lv->getVvzlink(), $lv->getTitel());
+                        } else {
+
+                            echo '<b>' . $lv->getTitel() . '</b>';
+                        }
+
+                    ?>
 
 
                     <?php
@@ -29,13 +33,13 @@
 
                         <?php foreach ($lv->getPersonenInfo() as $pi): ?>
 
-                            <?php if (!is_null($a = $pi->getProfilURL()) && strlen($pi->getProfilURL()) > 0): ?>
-                                <a class="internal displayParent" href="<?php echo $pi->getProfilURL(); ?>">
-                                    <?php echo trim($pi->getNachName()) . ", " . trim($pi->getVorName()); ?>
-                                </a>
-                            <?php else: ?>
-                                <?php echo trim($pi->getNachName()) . ", " . trim($pi->getVorName()); ?>
-                            <?php endif; ?>
+                            <?php
+                                if (!is_null($a = $pi->getProfilURL()) && strlen($pi->getProfilURL()) > 0) {
+                                    echo $this->internalExternalLink()->createLink($pi->getProfilURL(), trim($pi->getNachName()) . ", " . trim($pi->getVorName()));
+                                } else {
+                                    echo trim($pi->getNachName()) . ", " . trim($pi->getVorName());
+                                }
+                            ?>
                             <?php $i++; ?>
                             <?php if ($i < $numberPersons): ?>&nbsp;<?php endif; ?>
 

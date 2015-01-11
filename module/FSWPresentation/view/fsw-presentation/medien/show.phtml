@@ -25,13 +25,15 @@
 
         <?php foreach ($medium->getPersonenInfo() as $pi): ?>
 
-            <?php if (!is_null($a = $pi->getProfilURL()) && strlen($pi->getProfilURL()) > 0): ?>
-                <a class="internal displayParent" href="<?php echo $pi->getProfilURL(); ?>">
-                    <?php echo trim($pi->getNachName()) . ", " . trim($pi->getVorName()); ?>
-                </a>
-            <?php else: ?>
-                <?php echo trim($pi->getNachName()) . ", " . trim($pi->getVorName()); ?>
-            <?php endif; ?>
+            <?php
+            if (!is_null($a = $pi->getProfilURL()) && strlen($pi->getProfilURL()) > 0) {
+
+                echo $this->internalExternalLink()->createLink($pi->getProfilURL(),trim($pi->getNachName())) . ", " . trim($pi->getVorName());
+            } else {
+                echo trim($pi->getNachName()) . ", " . trim($pi->getVorName());
+            }
+
+            ?>
 
         <?php endforeach; ?>
     <?php endif; ?>
@@ -42,10 +44,8 @@
     <?php $date = new DateTime($medium->getDatum()); ?>
     <?php echo $medium->getSendetitel() ?>  vom  <?php echo $date->format('d.m.Y') ?>
     <br />
-    <a href="<?php echo $medium->getLink() ?>" class="www" target="_blank">
-        <?php echo $medium->getGespraechstitel() ?>
+    <?php echo $this->internalExternalLink()->createLink($medium->getLink(),$medium->getGespraechstitel());  ?>
 
-    </a>
     <br style="margin-bottom: 0px" class="floatclear" />
 
 </div>

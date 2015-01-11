@@ -21,13 +21,14 @@
         <?php foreach ($kolloquium->getVeranstaltung() as $veranstaltung): ?>
             <?php foreach ($veranstaltung->getVortragend() as $vortragend): ?>
 
-                <?php if ($vortragend->getPerson_link() != null && strlen($vortragend->getPerson_link()) > 0): ?>
-                    <span><a class="internal" target="_blank" href="<?php echo $vortragend->getPerson_link() ?>">
-                            <?php echo $vortragend->getVor_name(); ?> &nbsp; <?php echo $vortragend->getNach_name(); ?></a></span>
-                <?php else: ?>
-                    <span><?php echo $vortragend->getVor_name(); ?> &nbsp; <?php echo $vortragend->getNach_name(); ?></span>
-
-                <?php endif; ?>
+                <?php
+                if ($vortragend->getPerson_link() != null && strlen($vortragend->getPerson_link()) > 0) {
+                    echo '<span>' . $this->internalExternalLink()->createLink($vortragend->getPerson_link(),
+                        $vortragend->getVor_name() . '&nbsp;' . $vortragend->getNach_name() . '</span>');
+                } else {
+                    echo '<span>' . $vortragend->getVor_name() . '&nbsp;' .  $vortragend->getNach_name() . '</span>';
+                }
+                ?>
 
 
             <?php endforeach; ?>
@@ -36,12 +37,15 @@
             <?php foreach ($veranstaltung->getVortragend() as $vortragend): ?>
 
                 <?php if ($index == 0): ?>
-                    <?php if ($vortragend->getInstitution_link_bild() != null && strlen($vortragend->getInstitution_link_bild()) > 0): ?>
-                        <span><a class="internal" target="_blank" href="<?php echo $vortragend->getInstitution_link_bild() ?>">
-                        <?php echo $vortragend->getInstitution_name(); ?></a></span>
-                    <?php else: ?>
-                        <span><?php echo $vortragend->getInstitution_name(); ?></span>
-                    <?php endif; ?>
+
+                    <?php
+                    if ($vortragend->getInstitution_link_bild() != null && strlen($vortragend->getInstitution_link_bild()) > 0) {
+                        echo '<span>' . $this->internalExternalLink()->createLink($vortragend->getInstitution_link_bild(),
+                                $vortragend->getInstitution_name() . '</span>');
+                    } else {
+                        echo '<span>' . $vortragend->getInstitution_name() . '</span>';
+                    }
+                    ?>
                 <?php endif; ?>
 
                 <?php $index++; ?>

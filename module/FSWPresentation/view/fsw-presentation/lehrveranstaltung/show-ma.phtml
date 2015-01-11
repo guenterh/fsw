@@ -1,47 +1,50 @@
-
-
 <?php
     $semesterArray = $this->lvWithDpendencies;
     $lvLabels = $this->lvLabels;
 ?>
-
-
 
 <ul class="type1">
     <?php foreach($semesterArray as $semesterKey => $lehrVeranstaltungenImSemester): ?>
         <?php foreach($lehrVeranstaltungenImSemester as $lv): ?>
             <li>
                 <div>
-                <?php if (!is_null($lv->getVvzlink()) && strlen($lv->getVvzlink()) > 0): ?>
-                    <a class="internal"   href="<?php echo $lv->getVvzlink(); ?>" target="_blank"><?php echo $lv->getTitel(); ?></a>
-                <?php else: ?>
-                    <strong><?php echo $lv->getTitel();  ?></strong>
-                <?php endif; ?>
+
+                    <?php
+                    if (!is_null($lv->getVvzlink()) && strlen($lv->getVvzlink()) > 0) {
+                        echo $this->internalExternalLink()->createLink($lv->getVvzlink(), $lv->getTitel());
+                    } else {
+
+                        echo '<b>' . $lv->getTitel() . '</b>';
+                    }
+
+                    ?>
+
+                    <?php
+                    $i = 0;
+                    $numberPersons = count($lv->getPersonenInfo());
+                    ?>
+
+                    <?php if ($numberPersons > 0): ?>
+
+                        zusammen mit:&nbsp;
+                        <?php foreach ($lv->getPersonenInfo() as $pi): ?>
 
 
-                <?php
-                $i = 0;
-                $numberPersons = count($lv->getPersonenInfo());
-                ?>
+                            <?php
+                            if (!is_null($a = $pi->getProfilURL()) && strlen($pi->getProfilURL()) > 0) {
+                                echo $this->internalExternalLink()->createLink($pi->getProfilURL(), trim($pi->getNachName()) . ", " . trim($pi->getVorName()));
+                            } else {
+                                echo trim($pi->getNachName()) . ", " . trim($pi->getVorName());
+                            }
+                            ?>
 
-                <?php if ($numberPersons > 0): ?>
 
-                    zusammen mit:&nbsp;
-                    <?php foreach ($lv->getPersonenInfo() as $pi): ?>
+                            <?php $i++; ?>
+                            <?php if ($i < $numberPersons): ?>&nbsp;<?php endif; ?>
 
-                            <?php if (!is_null($a = $pi->getProfilURL()) && strlen($pi->getProfilURL()) > 0): ?>
-                                <a class="internal displayParent" href="<?php echo $pi->getProfilURL(); ?>">
-                                    <?php echo trim($pi->getNachName()) . ", " . trim($pi->getVorName()); ?>
-                                </a>
-                            <?php else: ?>
-                                <?php echo trim($pi->getNachName()) . ", " . trim($pi->getVorName()); ?>
-                            <?php endif; ?>
-                        <?php $i++; ?>
-                        <?php if ($i < $numberPersons): ?>&nbsp;<?php endif; ?>
-
-                    <?php endforeach; ?>
-                <?php endif; ?>
-                    </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
 
                 <?php echo $lvLabels[$lv->getSemester()] ; ?>
 
