@@ -418,7 +418,7 @@ class LehrveranstaltungFacade extends BaseFacade {
         */
         $sql = " SELECT fsw_lehrveranstaltung.* FROM fsw_lehrveranstaltung inner JOIN fsw_relation_personen_fsw_lehrveranstaltung AS rel_lv ";
         $sql .= " ON rel_lv.ffsw_lehrveranstaltungen_id = fsw_lehrveranstaltung.id WHERE rel_lv.fper_personen_pers_id = " . $mitId;
-        $sql .= " order by semester DESC ";
+        $sql .= " order by semester DESC, titel ASC ";
         $resultset = $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
         $lehrveranstaltungen = array();
