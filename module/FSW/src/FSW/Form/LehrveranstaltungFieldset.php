@@ -150,7 +150,7 @@ class LehrveranstaltungFieldset extends Fieldset  {
             6   =>  'Fremdanbieter',
             7   =>  'Kolloquien BA',
             8   =>  'Kolloquien MA',
-            9   =>  'Master-/DoktoranInnenkolloquien',
+            9   =>  'Forschungskolloquien',
             10   =>  'Doktoratsstufe'
 
         );
