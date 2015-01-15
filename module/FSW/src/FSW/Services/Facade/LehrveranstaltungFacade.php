@@ -339,7 +339,8 @@ class LehrveranstaltungFacade extends BaseFacade {
                 'titel'  =>  $postData['lehrveranstaltung']['titel'],
                 'vvzlink'  =>  $postData['lehrveranstaltung']['vvzlink'],
                 'olatlink'  =>  $postData['lehrveranstaltung']['olatlink'],
-                'beschreibung'  =>  $postData['lehrveranstaltung']['beschreibung']
+                'beschreibung'  =>  $postData['lehrveranstaltung']['beschreibung'],
+                'lvtyp'         =>  $postData['lehrveranstaltung']['lvtyp']
             )
         );
 

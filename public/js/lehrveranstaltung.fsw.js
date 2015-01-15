@@ -202,6 +202,7 @@ var  Lehrveranstaltung = {
 
             event.preventDefault();
             //console.log("in add Lehrveranstaltung")
+            var newLehrId = 0;
 
             $("<div id='fswDialogBox'>").dialog({
                 open: function(){
@@ -213,10 +214,15 @@ var  Lehrveranstaltung = {
                     {
                         text: "Sichern",
                         click: function() {
-
+                            if (newLehrId >0) {
+                                alert ("Veranstaltung wurde bereits eingefügt. Kein insert mehr möglich");
+                                return;
+                            }
                             //$(this).load('/kolloquien/editVeranstaltung/' + veranstaltungID, $('#Veranstaltung', this).serializeArray() );
                             $(this).load('/static/zf2/public/index.php/lehrveranstaltung/editLvModal',
-                                $('#lehrveranstaltung', this).serializeArray()
+                                $('#lehrveranstaltung', this).serializeArray(),function (){
+                                    newLehrId = $('#lehrveranstaltung\\[id\\]',this).val();
+                                }
                             );
 
                         }
@@ -224,8 +230,13 @@ var  Lehrveranstaltung = {
                     {
                         text: "Abbrechen",
                         click: function() {
+
                             $( this ).dialog( "close" );
-                            window.location = '/static/zf2/public/index.php/lehrveranstaltung/';
+                            if (newLehrId > 0) {
+                                window.location = '/static/zf2/public/index.php/lehrveranstaltung/edit/' + newLehrId + '?completeView=true';
+                            } else {
+                                window.location = '/static/zf2/public/index.php/lehrveranstaltung/';
+                            }
 
                         }
                     }

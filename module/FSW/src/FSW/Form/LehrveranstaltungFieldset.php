@@ -36,7 +36,8 @@ class LehrveranstaltungFieldset extends Fieldset  {
             ),
             'attributes' => array(
                 'rows' => 1,
-                'class' => 'fswTextAreaSmall'
+                'class' => 'fswTextAreaSmall',
+                'readonly'  => 'readonly'
             )
         ));
 
