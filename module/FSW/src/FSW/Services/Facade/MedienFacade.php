@@ -24,7 +24,7 @@ class MedienFacade extends BaseFacade {
 
     protected $searchFields = array(
         'gespraechstitel',
-        'sendetitel',
+        //'sendetitel',
     );
 
     /**
@@ -59,8 +59,14 @@ class MedienFacade extends BaseFacade {
         //ich möchte nicht mehr mit dedizierten tables in den Fassaden arbeiten.
         //Facades sollten keine direkten Referenzen mehr auf Tabellen haben
         //$resultSet = $this->tableGateway->select();
-        $resultSet = $this->histSemDBService->getMedienGateway()->select();
-        return $resultSet;
+        //$resultSet = $this->histSemDBService->getMedienGateway()->select();
+
+        $targetGateway = $this->histSemDBService->getMedienGateway();
+        $select = new Select();
+        $select->from($targetGateway->getTable())->order("gespraechstitel");
+
+        return $targetGateway->selectWith($select);
+
     }
 
 

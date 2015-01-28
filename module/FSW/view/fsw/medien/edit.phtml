@@ -60,10 +60,14 @@ $form->setAttribute('action',$this->url('medien',array('action' => 'edit', 'id' 
     </fieldset>
 
 
-<?php echo  $this->ztbFlashMessenger()->render() ?>
+
 
     <fieldset class="general">
         <div class="container-fluid">
+
+
+            <?php echo  $this->ztbFlashMessenger()->render() ?>
+
             <div class="row-fluid">
 
                 <div class="span12"><?php echo  $this->formRowTwb($form->get('gespraechstitel')) ?></div>

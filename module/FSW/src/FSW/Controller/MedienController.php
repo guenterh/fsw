@@ -51,7 +51,7 @@ class MedienController extends BaseController {
             if ($form->isValid()) {
                 $medium->exchangeArray($form->getData());
                 $idUpdated =  $this->facade->saveMedium($medium);
-
+                $this->flashMessenger()->addMessage("neues Medium gespeichert");
                 // Redirect to list of albums
                 //return $this->forward()->toRoute('medien',array("action" => 'edit','id' => '52'));
                 return $this->forward()->dispatch('FSW\Controller\Medien', array('action' => 'show','id' => $idUpdated ));
@@ -135,6 +135,7 @@ class MedienController extends BaseController {
 
             if ($form->isValid()) {
                 $this->facade->saveMedium($medium);
+                $this->flashMessenger()->addMessage("Medium aktualisiert");
 
                 // Redirect to list of albums
                 //return $this->redirect()->toRoute('medien');

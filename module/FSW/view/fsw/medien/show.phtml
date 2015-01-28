@@ -50,11 +50,15 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
 
 
 
-<?php echo  $this->ztbFlashMessenger()->render() ?>
+
 
     <fieldset class="general">
         <legend><?php echo  $this->translate('Angaben zum Medium ','Libadmin') ?></legend>
         <div class="container-fluid">
+
+
+            <?php echo  $this->ztbFlashMessenger()->render() ?>
+
             <div class="row-fluid">
 
                 <div class="span12"><?php echo  $this->formRowTwb($form->get('gespraechstitel')) ?></div>
