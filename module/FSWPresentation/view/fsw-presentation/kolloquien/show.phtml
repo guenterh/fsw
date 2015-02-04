@@ -22,12 +22,8 @@
             <?php foreach ($veranstaltung->getVortragend() as $vortragend): ?>
 
                 <?php
-                if ($vortragend->getPerson_link() != null && strlen($vortragend->getPerson_link()) > 0) {
-                    echo '<span>' . $this->internalExternalLink()->createLink($vortragend->getPerson_link(),
-                        $vortragend->getVor_name() . '&nbsp;' . $vortragend->getNach_name() . '</span>');
-                } else {
+                    //Personenlink soll nicht mehr angezeigt werden - Wunsch Manuela 4.2.2015
                     echo '<span>' . $vortragend->getVor_name() . '&nbsp;' .  $vortragend->getNach_name() . '</span>';
-                }
                 ?>
 
 
@@ -39,8 +35,8 @@
                 <?php if ($index == 0): ?>
 
                     <?php
-                    if ($vortragend->getInstitution_link_bild() != null && strlen($vortragend->getInstitution_link_bild()) > 0) {
-                        echo '<span>' . $this->internalExternalLink()->createLink($vortragend->getInstitution_link_bild(),
+                    if ($vortragend->getInstitution_link() != null && strlen($vortragend->getInstitution_link()) > 0) {
+                        echo '<span>' . $this->internalExternalLink()->createLink($vortragend->getInstitution_link(),
                                 $vortragend->getInstitution_name() . '</span>');
                     } else {
                         echo '<span>' . $vortragend->getInstitution_name() . '</span>';
