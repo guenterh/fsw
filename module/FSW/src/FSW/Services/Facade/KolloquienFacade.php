@@ -29,8 +29,9 @@ class KolloquienFacade extends BaseFacade {
     public function getKolloquien() {
 
         $kolloquienTableGateway =  $this->histSemDBService->getKolloquienGateway();
-        $resultset =  $kolloquienTableGateway->select();
-        return $resultset;
+        $select = $kolloquienTableGateway->getSql()->select();
+        $select->order('id_kolloquium DESC');
+        return $kolloquienTableGateway->selectWith($select);
 
     }
 
@@ -506,13 +507,17 @@ class KolloquienFacade extends BaseFacade {
         $kollVeranstaltungGateway = $this->histSemDBService->getKolloquienVeranstaltungenGateway();
         $personenVeranstaltungTableGateway =  $this->histSemDBService->getKolloquienVeranstaltungenPersonGateway();
 
-        if ($idKolloquium && $idKolloquium != 0) {
-            $resultset = $kolloquienTableGateway->select(array(
-                'id'    => $id
-            ));
-        } else {
+        $select = $kolloquienTableGateway->getSql()->select();
 
-            $resultset = $kolloquienTableGateway->select();
+
+        if ($idKolloquium && $idKolloquium != 0) {
+
+            $select->where(array('id' => $id));
+            $resultset = $kolloquienTableGateway->selectWith($select);
+        } else {
+            $select->order('id_kolloquium DESC');
+            $resultset = $kolloquienTableGateway->selectWith($select);
+
         }
 
         $kolloquien = array();
