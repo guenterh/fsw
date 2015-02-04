@@ -350,7 +350,8 @@ var Kolloquien = {
 
 
                                         $( myDialog ).dialog( "close" );
-                                        document.location = '/kolloquien/'
+                                        window.location = '/static/zf2/public/index.php/kolloquien';
+                                        //document.location = '/kolloquien/'
                                     }
                                 });
 
