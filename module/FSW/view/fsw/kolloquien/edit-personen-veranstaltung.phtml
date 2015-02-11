@@ -13,11 +13,68 @@
     $vortragende = $veranstaltung->get('vortragend');
 
 ?>
-<?php echo  $this->formTwb()->openTag($form, 'horizontal') ?>
+<?php echo  $this->formTwb()->openTag($form, 'horizontal');
+
+?>
+
+<script language="JavaScript"   >
+    $(".deleteCurrentPersonLink").on('click', function (e) {
+
+        e.preventDefault();
+
+        var currentPersonNumber = $(e.target).attr('data-PersonId');
+
+        $("#fswDialogBox").load('/static/zf2/public/index.php/kolloquien/deletePersonVeranstaltung/' + currentPersonNumber);
+
+
+    });
+
+
+
+    $(".updateCurrentPersonLink").on('click', function (e) {
+
+
+        e.preventDefault();
+        var currentIndexId = $(e.target).attr('data-currentIndex');
+
+        var currentPersonNumber = $(e.target).attr('data-PersonId');
+
+
+        var nach_name = $('#Veranstaltungen\\[vortragend\\]\\[' +  currentIndexId  +  '\\]\\[nach_name\\]').val();
+        var vor_name = $('#Veranstaltungen\\[vortragend\\]\\[' +  currentIndexId  +  '\\]\\[vor_name\\]').val();
+        var person_link = $('#Veranstaltungen\\[vortragend\\]\\[' +  currentIndexId  +  '\\]\\[person_link\\]').val();
+        var institution_name = $('#Veranstaltungen\\[vortragend\\]\\[' +  currentIndexId  +  '\\]\\[institution_name\\]').val();
+        var institution_link = $('#Veranstaltungen\\[vortragend\\]\\[' +  currentIndexId  +  '\\]\\[institution_link\\]').val();
+        var institution_link_bild = $('#Veranstaltungen\\[vortragend\\]\\[' +  currentIndexId  +  '\\]\\[institution_link_bild\\]').val();
+        var personeninformation = $('#Veranstaltungen\\[vortragend\\]\\[' +  currentIndexId  +  '\\]\\[personeninformation\\]').val();
+
+
+        $("#fswDialogBox").load('/static/zf2/public/index.php/kolloquien/updatePersonVeranstaltung/' + currentPersonNumber,
+
+            {
+                'nach_name' : nach_name,
+                'vor_name'  : vor_name,
+                'person_link'   : person_link,
+                'institution_link'  : institution_link,
+                'institution_name'  : institution_name,
+                'institution_link_bild' : institution_link_bild,
+                'personeninformation'   : personeninformation
+
+            }
+        );
+
+
+    })
+
+
+
+</script
+
+
 
 <fieldset>
     <legend>Personen</legend>
-
+    <?php echo $this->ztbFlashMessenger()->render() ?>
     <?php $numberPerson = 0 ?>
 
     <?php foreach ( $veranstaltung->get('vortragend') as $vortragend) :?>
@@ -83,8 +140,14 @@
         <div class="row-fluid">
             <div class="span2" style="margin-left: 30px;">
                 <a href="#"
-                   class="deleteCurrentPersonButton" data-currentIndex="<?php echo $numberPerson; ?>">delete Veranstaltung</a>
+                   class="deleteCurrentPersonLink" data-currentIndex="<?php echo $numberPerson; ?>" data-PersonId="<?php echo $vortragend->get('id')->getValue(); ?>">delete Person</a>
             </div>
+
+            <div class="span2" style="margin-left: 30px;">
+                <a href="#"
+                   class="updateCurrentPersonLink" data-currentIndex="<?php echo $numberPerson; ?>" data-PersonId="<?php echo $vortragend->get('id')->getValue(); ?>">update Person</a>
+            </div>
+
         </div>
 
         <?php $numberPerson++; ?>
@@ -93,55 +156,3 @@
 
 <?php echo  $this->form()->closeTag(); ?>
 
-<script language="JavaScript">
-
-    $('.deleteCurrentPersonButton').on('click',function(event){
-
-        event.preventDefault();
-        var currentPersonIndex = $(event.target).attr('data-currentindex');
-
-        $('#fswDialogBox').attr('data-dialogAttr');
-
-        $('<div id="okEscDialog" title="Loeschen einer Person">' +
-        '<p>Wollen Sie die Person</p>' +
-        '<p>loeschen?</p>' +
-        '</div>')
-            .dialog({
-                buttons: [
-                    {
-                        text: "OK",
-                        click: function(event) {
-
-
-                            var currentVortragendID = $('#Veranstaltungen\\[vortragend\\]\\['  +  currentPersonIndex  +   '\\]\\[id\\]').val();
-
-                            $('#fswDialogBox').load('/kolloquien/deletePersonVeranstaltung/' + currentVortragendID).css('background-color','#d9d9d9');
-                            $( this ).dialog( "close" );
-
-                        }
-
-                    },
-                    {
-                        text: "Abbrechen",
-                        click: function() {
-                            $( this ).dialog( "close" );
-                        }
-                    }
-
-                ],
-                open: function(){
-
-                    $('#okEscDialog').css('background-color','#149bdf');
-                },
-                close: function (event, ui) {
-                    $(this).dialog('destroy').remove();
-                }
-
-            }).dialog( "widget")
-            .find( ".ui-dialog-titlebar-close" )
-            .hide();
-
-    });
-
-
-</script>

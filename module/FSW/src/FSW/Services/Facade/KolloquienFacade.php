@@ -484,6 +484,20 @@ class KolloquienFacade extends BaseFacade {
     }
 
 
+    public function updatePersonVeranstaltung ($personDataUpdate = array(), $personId) {
+
+
+        $kollVeranstaltungGateway = $this->histSemDBService->getKolloquienVeranstaltungenPersonGateway();
+        $kollVeranstaltungGateway->update(
+            $personDataUpdate,
+            array(
+                'id' =>  $personId
+            ));
+    }
+
+
+
+
     public function getVeranstaltungZuPerson ($personData = array()) {
 
         $personId = $personData['id'];

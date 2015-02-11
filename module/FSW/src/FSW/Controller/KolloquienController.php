@@ -10,7 +10,7 @@ namespace FSW\Controller;
 
 use FSW\Form\KolloquiumFieldset;
 use FSW\Form\KolloquiumForm;
-use FSW\Form\KolloquiumFormSingle;
+
 use FSW\Form\VeranstaltungForm;
 use FSW\Form\VeranstaltungKolloquiumPersonForm;
 use Zend\InputFilter\Input;
@@ -18,6 +18,8 @@ use Zend\InputFilter\InputFilter;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
+use \Zend\Mvc\Controller\Plugin\FlashMessenger;
+
 
 
 class KolloquienController extends BaseController {
@@ -64,6 +66,39 @@ class KolloquienController extends BaseController {
     }
 
 
+
+    public function updatePersonVeranstaltungAction() {
+
+
+        $inputData = array(
+            'id' => $this->params()->fromRoute('id', null),
+        );
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+
+            $personDataForUpdate = $request->getPost()->toArray();
+            $this->facade->updatePersonVeranstaltung($personDataForUpdate, $inputData['id']);
+
+            $this->flashMessenger()->setNamespace(FlashMessenger::NAMESPACE_SUCCESS)->addMessage("Person erfolgreich aktualisiert");
+
+
+        }
+
+        $veranstaltung = $this->facade->getVeranstaltungZuPerson($inputData);
+
+        $params = array(
+            'action' => 'editPersonenVeranstaltung',
+            'id'    =>  $veranstaltung->getId_kolloquium_veranstaltung()
+        );
+
+        return $this->forward()->dispatch('FSW\Controller\Kolloquien', $params);
+
+
+    }
+
+
+
     public function addPersonVeranstaltungAction() {
 
         $request = $this->getRequest();
@@ -75,6 +110,8 @@ class KolloquienController extends BaseController {
 
                 $lastInsertedValue = $this->facade->insertVortragendKolloquium($request->getPost()->toArray()['vortragend']);
                 $form->getBaseFieldset()->get('id')->setValue($lastInsertedValue);
+                $this->flashMessenger()->clearCurrentMessages();
+                $this->flashMessenger()->setNamespace(FlashMessenger::NAMESPACE_SUCCESS)->addMessage("Person wurde hinzugefügt");
 
             }
 
@@ -482,6 +519,10 @@ class KolloquienController extends BaseController {
 
         $veranstaltung = $this->facade->getVeranstaltungZuPerson($inputData);
         $kolloquium = $this->facade->deletePersonVeranstaltung($inputData);
+
+        $this->flashMessenger()->clearCurrentMessages();
+        $this->flashMessenger()->setNamespace(FlashMessenger::NAMESPACE_SUCCESS)->addMessage("Person mit id: " . $inputData['id'] . " gelöscht");
+
 
         $params = array(
             'action' => 'editPersonenVeranstaltung',
