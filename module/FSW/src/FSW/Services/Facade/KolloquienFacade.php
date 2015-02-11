@@ -523,9 +523,14 @@ class KolloquienFacade extends BaseFacade {
         $kolloquien = array();
         foreach ($resultset as $kolloquium) {
 
-            $resultVeranstaltungen =  $kollVeranstaltungGateway->select(array(
+            $select = $kollVeranstaltungGateway->getSql()->select();
+
+            $select->where(array(
                 'id_kolloquium' =>  $kolloquium->getId()
             ));
+            $select->order('datum ASC');
+
+            $resultVeranstaltungen =  $kollVeranstaltungGateway->selectWith($select);
 
             foreach($resultVeranstaltungen as $veranstaltung) {
 
