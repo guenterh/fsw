@@ -1,0 +1,24 @@
+<?php
+
+    $personen = $this->personenZuKolloquien;
+
+
+?>
+
+
+<div class="objectContainer" >
+
+    <?php foreach ($personen as $person): ?>
+
+        <div>
+            <?php echo '<strong>' . $person->getNachName() . ', ' . $person->getVorName() . '</strong>, '; ?>
+            <?php foreach ($person->getKolloquiumLabel() as $label): ?>
+                <?php echo $label . '&nbsp;' ?>
+            <?php endforeach; ?>
+            <br/>
+        </div>
+
+
+    <?php endforeach; ?>
+
+<div >

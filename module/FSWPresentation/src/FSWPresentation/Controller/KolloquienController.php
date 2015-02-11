@@ -30,4 +30,13 @@ class KolloquienController extends BaseController {
 
     }
 
+    public function allPersonenKolloquienAction ()
+    {
+        $test = "";
+        return new ViewModel(array(
+            'personenZuKolloquien' => $this->facade->getPersonenZuKolloquien()
+        ));
+
+    }
+
 }

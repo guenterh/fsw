@@ -8,6 +8,7 @@
 
 namespace FSW\Services\Facade;
 
+use FSW\Model\PersonKolloquiumShort;
 use FSW\Model\VeranstaltungKolloquium;
 use FSW\Model\VeranstaltungKolloquiumPerson;
 use Zend\Db\Adapter\Adapter;
@@ -513,6 +514,8 @@ class KolloquienFacade extends BaseFacade {
 
     }
 
+
+
     public function getKolloquiumWithDependencies ($id) {
 
         $idKolloquium = (int) $id;
@@ -589,6 +592,41 @@ class KolloquienFacade extends BaseFacade {
 
         return $targetGateway->selectWith($select);
 
+    }
+
+
+    public function getPersonenZuKolloquien ()
+    {
+
+
+        $sql = 'SELECT `nach_name`, `vor_name`, `institution_link`, `person_link`, k.id_kolloquium FROM `fsw_kolloquium_veranstaltung_person` as p inner join ';
+        $sql .= ' fsw_kolloquium_veranstaltung as v on ( p.id_kolloquium_veranstaltung = v.id) inner join fsw_kolloquium k on (k.id = v.id_kolloquium) order by nach_name';
+
+        $result = $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+        $personenListe = array();
+
+        $pName = "";
+        $person = new PersonKolloquiumShort();
+        foreach ($result as $row) {
+
+            if (strcmp( $row['nach_name'], $pName) == 0) {
+                $person->addIdKolloquium($row['id_kolloquium']);
+            } else {
+                $person = new PersonKolloquiumShort();
+                $person->setId($row['id']);
+                $person->setVorName($row['vor_name']);
+                $person->setNachName($row['nach_name']);
+                $person->setInstitutionLink($row['institution_link']);
+                $person->addIdKolloquium($row['id_kolloquium']);
+
+                $personenListe[] = $person;
+            }
+
+            $pName = $row['nach_name'];
+        }
+
+        return $personenListe;
     }
 
 
