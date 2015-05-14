@@ -28,7 +28,7 @@
             <?php
             if (!is_null($a = $pi->getProfilURL()) && strlen($pi->getProfilURL()) > 0) {
 
-                echo $this->internalExternalLink()->createLink($pi->getProfilURL(),trim($pi->getNachName())) . ", " . trim($pi->getVorName());
+                echo $this->internalExternalLink()->createLink($pi->getProfilURL(),trim($pi->getNachName())  . ", " . trim($pi->getVorName() . "." )) ;
             } else {
                 echo trim($pi->getNachName()) . ", " . trim($pi->getVorName());
             }
