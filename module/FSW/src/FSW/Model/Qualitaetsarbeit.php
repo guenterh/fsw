@@ -275,6 +275,18 @@ class Qualitaetsarbeit extends BaseModel {
         return $this->qarb_arb_abstract;
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function getQarbArbAbstractInParagraphs()
+    {
+        return implode('', array_map(function ($element) {
+            return '<p>' . $element . '</p>';
+        }, explode ( "\n\r" , $this->qarb_arb_abstract)));
+    }
+
+
     public function isSetAbstract()
     {
         return !is_null($this->qarb_arb_abstract) && strlen($this->qarb_arb_abstract) > 0 ? true : false;
