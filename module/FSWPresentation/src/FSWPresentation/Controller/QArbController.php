@@ -37,4 +37,17 @@ class QArbController extends BaseController {
 
     }
 
+    public function abstractForWorkAction()
+    {
+        $response = $this->getResponse();
+        $headers = $response->getHeaders();
+        $headers->addHeaderLine(
+            'Content-type', 'text/plain'
+        );
+        $teststring = "dies ist dazugefügter text dies ist dazugefügter text dies ist dazugefügter text";
+        $response->setContent($teststring);
+        return $response;
+
+    }
+
 }
