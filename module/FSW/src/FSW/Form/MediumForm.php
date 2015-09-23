@@ -110,7 +110,8 @@ class MediumForm extends Form {
                     'migros.gif'  =>  'Migros Magazin',
                     'handelszeitung.gif'  =>  'Handelszeitung',
                     'jahresspiegel.gif'  =>  'Jahresspiegel',
-                    'st_galler_tagblatt.gif'  =>  'ST. Galler Tagblatt'
+                    'st_galler_tagblatt.gif'  =>  'ST. Galler Tagblatt',
+                    'rts.gif'   =>  'RTS'
 
                 )
             ),
