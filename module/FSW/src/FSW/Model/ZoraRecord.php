@@ -732,11 +732,20 @@ class ZoraRecord  {
             // <dc:relation>http://www.biomedcentral.com/content/pdf/1472-6963-7-7.pdf</dc:relation>
             $tMatches = array();
 
-            preg_match("/www\.zora\.uzh\.ch/",(string)$node,$tMatches);
+            //es hat sich etwas hier geändert. Früher bekamm ich diesen link
+            //http://www.zora.uzh.ch/113389/1/zimmermann_hinter_vorgehaltener_hand_2015.pdf
+            //nicht geschickt
+            //Manuela möchte nicht, dass er angezeigt wird. user sollen immer nur an die Zoraeingangstür kommen
+            //dort kommen sie einen evtl. vorhandenen link angezeigt
+            preg_match("/www\.zora\.uzh\.ch\/\d*?\/$/",(string)$node,$tMatches);
             if (count($tMatches) > 0) {
                 $this->relationZora = (string)$node;
             } else {
-                $this->relationExtern = (string)$node;
+                $tMatches = array();
+                preg_match("/www\.zora\.uzh\.ch/",(string)$node,$tMatches);
+                if (!count($tMatches) > 0) {
+                    $this->relationExtern = (string)$node;
+                }
             }
 
 
