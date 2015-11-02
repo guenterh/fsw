@@ -1132,8 +1132,8 @@ class PersonFacade extends BaseFacade {
             $sql = "delete from fsw_zora_doctype where oai_identifier = " .  $this->qV ($oaiID);
             $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
-            $sql = "delete from fsw_cover where oai_identifier = " .  $this->qV ($oaiID);
-            $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+            //$sql = "delete from fsw_cover where oai_identifier = " .  $this->qV ($oaiID);
+            //$this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
 
             $sql = "delete from fsw_relation_zora_author_zora_doc where oai_identifier = " .  $this->qV ($oaiID);
             $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
