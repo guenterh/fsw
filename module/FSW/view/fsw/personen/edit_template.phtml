@@ -625,6 +625,10 @@ $this->formSelectTwb()->setTranslatorTextDomain('Libadmin');
                                 <div class="span2">
                                     <a  target="_blank" href='<?php echo   'http://www.zora.uzh.ch/cgi/oai2?verb=GetRecord&identifier=' . $identifier . '&metadataPrefix=oai_dc' ?>'>Link zu Zora (xml)</a>
                                 </div>
+                                <div class="span2">
+                                    <a href="#"
+                                       class="deleteZoraDoc" data-currentOaiId="<?php echo $zoradoc->get('oai_identifier')->getValue(); ?>">deleteDoc</a>
+                                </div>
                             </div>
 
 

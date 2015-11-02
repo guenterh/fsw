@@ -94,6 +94,8 @@ class PersonFacade extends BaseFacade {
     }
 
 
+
+
     public function addZoraAuthor($persExtendedFSW,
                                     $persIdHS,
                                     $zoraName,
@@ -1101,6 +1103,47 @@ class PersonFacade extends BaseFacade {
         }
 
     }
+
+
+    public function deleteZoraDoc($oaiID, $pers_id) {
+
+
+        $sql = "select * from fsw_relation_zora_author_zora_doc where oai_identifier = " .  $this->qV ($oaiID);
+        $resultSet = $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        $count = $resultSet->count();
+
+        if ($count > 1) {
+            $sql = "select relAuthorDoc.id from  fsw_relation_zora_author_zora_doc relAuthorDoc join fsw_zora_author zora_author on ";
+            $sql .= " (relAuthorDoc.fid_zora_author = zora_author.id) ";
+            $sql .= " where zora_author.pers_id = " . $pers_id . ' and relAuthorDoc.oai_identifier =  ' . $this->qV ($oaiID);
+
+            $result =  $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+            foreach ($result as $row) {
+
+                $tId = $row['id'];
+                $sql = "delete from fsw_relation_zora_author_zora_doc where id = " .  $tId;
+                $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+            }
+
+
+
+        } else {
+            $sql = "delete from fsw_zora_doctype where oai_identifier = " .  $this->qV ($oaiID);
+            $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+            //$sql = "delete from fsw_cover where oai_identifier = " .  $this->qV ($oaiID);
+            //$this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+            $sql = "delete from fsw_relation_zora_author_zora_doc where oai_identifier = " .  $this->qV ($oaiID);
+            $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+
+            $sql = "delete from fsw_zora_doc where oai_identifier = " .  $this->qV ($oaiID);
+            $this->getAdapter()->query($sql,Adapter::QUERY_MODE_EXECUTE);
+        }
+
+    }
+
 
 
 }
