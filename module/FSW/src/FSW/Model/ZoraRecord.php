@@ -87,6 +87,7 @@ class ZoraRecord  {
 
     public function setRawOAIRecord ($rawrecord, $id,$status,$datestamp ) {
 
+
         //$this->rawXML = $rawrecord;
         $this->setRecXML($rawrecord);
 
@@ -731,20 +732,28 @@ class ZoraRecord  {
             //<dc:relation>http://www.zora.uzh.ch/1/</dc:relation>
             // <dc:relation>http://www.biomedcentral.com/content/pdf/1472-6963-7-7.pdf</dc:relation>
             $tMatches = array();
+            $stringNode = (string)$node;
 
             //es hat sich etwas hier geändert. Früher bekamm ich diesen link
             //http://www.zora.uzh.ch/113389/1/zimmermann_hinter_vorgehaltener_hand_2015.pdf
             //nicht geschickt
             //Manuela möchte nicht, dass er angezeigt wird. user sollen immer nur an die Zoraeingangstür kommen
             //dort kommen sie einen evtl. vorhandenen link angezeigt
-            preg_match("/www\.zora\.uzh\.ch\/\d*?\/$/",(string)$node,$tMatches);
+            preg_match("/www\.zora\.uzh\.ch\/\d*?\/$/",$stringNode,$tMatches);
             if (count($tMatches) > 0) {
-                $this->relationZora = (string)$node;
+                $this->relationZora = $stringNode;
             } else {
                 $tMatches = array();
-                preg_match("/www\.zora\.uzh\.ch/",(string)$node,$tMatches);
+                preg_match("/www\.zora\.uzh\.ch/",$stringNode,$tMatches);
                 if (!count($tMatches) > 0) {
-                    $this->relationExtern = (string)$node;
+                    //es gibt auch Links (i.d.R, DOI's ohne http, diese wollen wir nicht anzeigen
+                    //wir suchen also nach links die http enthalten
+                    $tMatches = array();
+                    preg_match("/http/",$stringNode,$tMatches);
+                    if (count($tMatches) > 0) {
+                        $this->relationExtern = $stringNode;
+                    }
+
                 }
             }
 
