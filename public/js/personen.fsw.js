@@ -78,6 +78,67 @@ var Personen= {
 
         });
 
+        $('.deleteZoraDoc').click(function(event){
+
+            event.preventDefault();
+
+            var currentId =  $(this).attr('data-currentOaiId');
+            var pers_id = $('#PersonCore\\[personExtended\\]\\[0\\]\\[pers_id\\]').val();
+
+
+            $('<div id="okEscDialog" title="Loeschen eines Zoradokuments"><p>' +
+                'Wollen Sie das Dokument mit der ID: ' + currentId + ' tatsächlich löschen?' +
+                '</p></div>')
+                .dialog({
+                    buttons: [
+                        {
+                            text: "OK",
+                            click: function() {
+
+                                $.ajax({
+                                    url: '/static/zf2/public/index.php/personen/deleteZoraDoc',
+                                    dataType: 'json',
+                                    //async false ist wichtig da ansonsten success function als callback aufgerufen wird.
+                                    //Dies bewirkt dann, dass ich den return Value nicht mehr setzen kann
+                                    async: false,
+                                    data: {
+                                        'id': currentId,
+                                        'pers_id' : pers_id
+                                    },
+                                    success: function(response) {
+
+                                        window.location = '/static/zf2/public/index.php/personen/edit/' + pers_id + '?completeView=true';
+                                        $( this ).dialog( "close" );
+
+                                    }
+                                });
+                                //$( this ).dialog( "close" );
+                            }
+                        },
+                        {
+                            text: "Abbrechen",
+                            click: function() {
+                                $( this ).dialog( "close" );
+                                window.location = '/static/zf2/public/index.php/personen/edit/' + pers_id + '?completeView=true';
+                            }
+                        }
+
+                    ],
+                    open: function(){
+
+                        $('#okEscDialog').css('background-color','#d9d9d9');
+                    },
+                    close: function (event, ui) {
+                        $(this).dialog('destroy').remove();
+                    }
+
+                }).dialog( "widget")
+                .find( ".ui-dialog-titlebar-close" )
+                .hide();
+
+        });
+
+
         $('#addAdditionalZoraAuthor').click(function (event) {
 
             event.preventDefault();

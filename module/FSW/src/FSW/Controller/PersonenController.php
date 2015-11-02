@@ -493,9 +493,37 @@ class PersonenController extends BaseController{
 
         }
 
+    }
 
+    public function deleteZoraDocAction () {
+
+        $zoraDocId = $this->params()->fromQuery('id');
+        $pers_id = $this->params()->fromQuery('pers_id');
+        if (isset($zoraDocId) && isset($pers_id)) {
+            $this->facade->deleteZoraDoc($zoraDocId,$pers_id);
+            $jsonResponse = array(
+                'status' => 'ok',
+            );
+
+
+            return new JsonModel(
+                $jsonResponse
+            );
+
+        } else {
+            $jsonResponse = array(
+                'status' => 'notok',
+            );
+
+            return new JsonModel(
+                $jsonResponse
+            );
+        }
 
     }
+
+
+
 
 
 

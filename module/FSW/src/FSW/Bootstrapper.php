@@ -39,7 +39,8 @@ class Bootstrapper {
 
                                         ),
         'FSW\Controller\Personen'    =>  array(
-                                            'deleteZoraAuthor'
+                                            'deleteZoraAuthor',
+                                            'deleteZoraDoc'
                                         )
     );
 
