@@ -113,7 +113,8 @@ class MediumForm extends Form {
                     'st_galler_tagblatt.gif'  =>  'ST. Galler Tagblatt',
                     'rts.gif'   =>  'RTS',
                     'schweiz_sonntag.gif'   =>  'Schweiz am Sonntag',
-                    'das_magazin.gif'   =>  "Das Magazin"
+                    'das_magazin.gif'   =>  'Das Magazin',
+                    'tageswoche.gif'   =>  'TagesWoche'
 
                 )
             ),
