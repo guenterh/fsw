@@ -7,5 +7,18 @@ nbproject
 .project
 .settings
 composer.lock
+doku/ablauf_initialize_database.local.txt
+hsdb
+public/.htaccess
+public/js/old
+public/js/oldneu
+public/js/test.js
+publicFSW
+vendor/phpunit/phpunit/Tests/Regression/GitHub/1472.phpt
+vendor/phpunit/phpunit/Tests/Regression/GitHub/1472/
+
+
+
+
 
 
