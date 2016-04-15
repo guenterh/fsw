@@ -9,8 +9,8 @@
 <ul class="type1">
     <?php foreach($semesterArray as $semesterKey => $lehrVeranstaltungenImSemester): ?>
         <?php foreach($lehrVeranstaltungenImSemester as $lv): ?>
-            <li>
-            <li class="marginTop ">
+
+            <li class="marginTop">
                 <div class="skin-text-basics">
                     <?php
                         if (!is_null($lv->getVvzlink()) && strlen($lv->getVvzlink()) > 0) {

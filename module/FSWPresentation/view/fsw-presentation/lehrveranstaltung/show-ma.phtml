@@ -6,8 +6,8 @@
 <ul class="type1">
     <?php foreach($semesterArray as $semesterKey => $lehrVeranstaltungenImSemester): ?>
         <?php foreach($lehrVeranstaltungenImSemester as $lv): ?>
-            <li>
-                <div>
+            <li class="marginTop">
+                <div class="skin-text-basics">
 
                     <?php
                     if (!is_null($lv->getVvzlink()) && strlen($lv->getVvzlink()) > 0) {
@@ -52,10 +52,10 @@
                     && (is_null($lv->getVvzlink()) || strlen($lv->getVvzlink() == 0) )): ?>
 
 
-                    <div>
-                        <a class="internal abstractCaption" href="#">mehr</a>
+                    <div class="skin-text-basics">
+                        <a class="internal abstractCaption" href="#" style="font-size: 0.9125em;">mehr</a>
 
-                        <div class="abstractText">
+                        <div class="abstractText" style="font-size: 0.9125em;">
                             <?php echo $lv->getBeschreibung(); ?>
                         </div>
 

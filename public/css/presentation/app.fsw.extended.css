@@ -8117,6 +8117,20 @@ div.objectContainer div.right
     margin: 4px 0 0 10px; float: right;
 }
 
+ul.type1, ul.type2, ul.type3, ul.type4
+{
+    list-style-type:none;
+    padding-left:0;
+}
+
+ul.type1 li
+{
+    background-position: 0.5em 0.6em;
+    background-repeat: no-repeat;
+    padding-left: 1.5em;
+}
+
+
 /* Ende alte uzh.css Definitionen*/
 
 .skin-text-basics a[href^="http"],
@@ -8167,6 +8181,11 @@ rausgenommen, da sonst zora als intern erscheint
   padding-left: 0;
   background-image: none;
 }
+
+
+
+
+
 @media screen and (max-width: 767px) {
   .skin-text-basics a[href] {
     color: #dc6027;
