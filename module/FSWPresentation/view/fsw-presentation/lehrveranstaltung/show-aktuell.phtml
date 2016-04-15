@@ -11,7 +11,7 @@
         <?php foreach($lehrVeranstaltungenImSemester as $lv): ?>
             <li>
             <li class="marginTop ">
-                <div >
+                <div class="skin-text-basics">
                     <?php
                         if (!is_null($lv->getVvzlink()) && strlen($lv->getVvzlink()) > 0) {
                             echo $this->internalExternalLink()->createLink($lv->getVvzlink(), $lv->getTitel());

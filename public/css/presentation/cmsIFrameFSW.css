@@ -53,4 +53,9 @@ p.abstractAbsatz {
 
 .zoraSectionName {
     margin-bottom: 20px;
+    font-size: 1.2em;
+    margin-top: 1.5em;
+    padding: 0;
+    line-height: 1.2em;
+
 }

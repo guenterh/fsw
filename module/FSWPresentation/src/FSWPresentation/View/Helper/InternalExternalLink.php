@@ -27,7 +27,7 @@ class InternalExternalLink extends AbstractHelper{
         {
             $fullLink =    '<a  title="Teaser Link" class="www" href="' . $link . '" target="_blank" >'  . $subject  .   "</a>";
         } else {
-            $fullLink = "<a class='uzh displayParent' href='" . $link . "' >"  . $subject  .   "</a>";
+            $fullLink = "<a class='internal displayParent' href='" . $link . "' >"  . $subject  .   "</a>";
         }
 
         return $fullLink;

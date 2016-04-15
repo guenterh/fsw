@@ -20,7 +20,7 @@
     <?php endif; ?>
 
 
-    <a class="internal"  href="<?php echo $this->url('presentation/default', array('controller' => 'qarb','action' => 'show'), array('query' => $params)); ?>"><?php echo $sorttext; ?></a>
+    <a class="internal with-arrow"  href="<?php echo $this->url('presentation/default', array('controller' => 'qarb','action' => 'show'), array('query' => $params)); ?>"><?php echo $sorttext; ?></a>
     <p>&nbsp;</p>
 
 <?php endif; ?>
@@ -31,7 +31,7 @@
     <li>
         <!-- noch  zu machen: meherere Autoren-->
 
-            <p class="noMarginBottom">
+            <p class="noMarginBottom skin-text-basics">
                     <?php
                     if ($qArbeit->isSetProfilURL()) {
 
@@ -82,7 +82,7 @@
 
 
         <?php if ($qArbeit->isSetAbstract()): ?>
-            <div>
+            <div class="skin-text-basics">
                 <a class="internal abstractCaption" href="#">mehr</a>
                 <br/>
                 <div class="abstractText">
@@ -94,11 +94,11 @@
 
         <?php if ($qArbeit->isSetQarbArbURL()): ?>
             <?php if ($qArbeit->isOnlineAbgeschlosseneDiss()): ?>
-                <div>
+                <div class="skin-text-basics">
                     <?php echo $this->internalExternalLink()->createLink($qArbeit->getQarbArbURL(), 'Onlinepublikation'); ?>
                 </div>
             <?php else: ?>
-                <div>
+                <div class="skin-text-basics">
                     <?php echo $this->internalExternalLink()->createLink($qArbeit->getQarbArbURL(), 'Archivexemplar der Zentralbibliothek Zürich'); ?>
                 </div>
             <?php endif; ?>
@@ -107,7 +107,7 @@
         <?php endif; ?>
 
         <?php if ($qArbeit->isSetQarbArbISBN()): ?>
-            <div>
+            <div class="skin-text-basics">
                 <?php echo $this->internalExternalLink()->createLink("http://www.swissbib.ch/Search/Results?lookfor=" . $qArbeit->getQarbArbISBN(), 'Publikation'); ?>
             </div>
         <?php endif; ?>
