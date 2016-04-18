@@ -24,7 +24,7 @@
 
         <?php if ($doc->getCoverLink() != null): ?>
                 <li class="marginTop">
-
+                    <div class="fluid">
 
             <div class="floating-box-left" >
                 <img src="<?php echo  $doc->getCoverLink()?>" />
@@ -37,6 +37,7 @@
          <?php else: ?>
 
                 <li class="marginTop-small">
+                <div>
                 <?php
                 $typeFloatingBoxRight = 'floating-box-right-large';
                 ?>
@@ -150,7 +151,7 @@
             </div>
 
                 <!--Abschluss der Struktur - entweder mit oder ohne Bild  -->
-
+            </div>
             </li>
 
         <?php endforeach; ?>

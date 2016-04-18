@@ -8182,24 +8182,43 @@ rausgenommen, da sonst zora als intern erscheint
   background-image: none;
 }
 
+.fluid {
+
+    width: 100%;
+    display:table;
+}
 
 .floating-box-left {
-    display: inline-block;
-    min-height: 75px;
+    /*display: inline-block;*/
+    display: table-cell;
+    /*max-width:100%;*/
+    max-height:100%;
+    /*min-height: 75px;*/
     width: 70px;
-    height: 75px;
-    margin: 10px;
+    /*height: 75px;*/
+    margin-bottom: 5px;
+    /*margin-left: 10px; */
+    margin-top: 5px;
+    padding-bottom: 10px;
 }
 
 .floating-box-right {
-    display: inline-block;
-    width: 490px;
-    min-height: 75px;
-    height: 75px;
+    /*display: inline-block;*/
+    display: table-cell;
+    padding-left: 20px;
+    max-width:100%;
+    max-height:100%;
+    /*float: left; */
+    /* width: 490px; */
+    /*width: 350px;*/
+    /*min-width: 350px;*/
+    /*min-height: 75px;
+    height: 75px;%/
     /*margin: 10px;*/
     margin-bottom: 20px;
     margin-left: 10px;
     margin-top: 10px;
+    vertical-align: top;
 }
 
 .floating-box-right-large {
@@ -8207,7 +8226,7 @@ rausgenommen, da sonst zora als intern erscheint
     min-height: 75px;
     height: 75px;
     margin-bottom: 5px;
-    margin-left: 10px;
+    /*margin-left: 10px; */
     margin-top: 5px;
 }
 
