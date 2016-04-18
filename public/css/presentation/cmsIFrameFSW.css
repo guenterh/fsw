@@ -29,8 +29,13 @@ p.noMarginBottom {
 
 
 li.marginTop {
-    margin-top:1.0em;
+    margin-top:1.2em;
 }
+
+li.marginTop-small {
+    margin-top:0.5em;
+}
+
 
 
 p.abstractAbsatz {

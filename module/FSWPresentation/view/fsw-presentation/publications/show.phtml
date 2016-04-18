@@ -26,18 +26,23 @@
                 <li class="marginTop">
 
 
-            <div class="objectContainer objectFloat" style="width:70px;">
+            <div class="floating-box-left" >
                 <img src="<?php echo  $doc->getCoverLink()?>" />
             </div>
 
-            <p>
+                <?php
+                $typeFloatingBoxRight = 'floating-box-right';
+                ?>
+
          <?php else: ?>
 
-                <li class="marginTop">
-            <p>
+                <li class="marginTop-small">
+                <?php
+                $typeFloatingBoxRight = 'floating-box-right-large';
+                ?>
 
         <?php endif; ?>
-
+            <div class="<?php echo $typeFloatingBoxRight; ?>">
             <?php echo  $doc->getSource() ?>
 
         <?php if ( $doc->getRelationExtern() != null && (strpos($doc->getRelationExtern(),"e-collection") == true) ||
@@ -66,24 +71,27 @@
                 ein super dooper link auf einen Volltext
                 -->
 
-
+            <p>
                 <?php if ($doc->getRelationExtern() != null) : ?>
-                &nbsp;
+
                     <?php echo $this->internalExternalLink()->createLink($doc->getRelationExtern(), 'Volltext'); ?>
+                    &nbsp;
                 <?php endif; ?>
 
 
                 <?php if ($doc->getSwissbibISBN() != null) : ?>
-                &nbsp;
+
                     <?php echo $this->internalExternalLink()->createLink($doc->getSwissbibISBN(), 'swissbib'); ?>
+                    &nbsp;
 
                 <?php endif; ?>
 
                 <?php if ($doc->getRelationZora() != null) : ?>
-                &nbsp;
-                    <?php echo $this->internalExternalLink()->createLink($doc->getRelationZora(), 'Zora'); ?>
-                <?php endif; ?>
 
+                    <?php echo $this->internalExternalLink()->createLink($doc->getRelationZora(), 'Zora'); ?>
+                    &nbsp;
+                <?php endif; ?>
+            </p>
 
 
 
@@ -93,54 +101,57 @@
 
 
                 <!-- Fall 2-- ein PDF vorhanden, dies kann jedoch zugangsbeschränkt sein -->
-
+                <p>
                 <?php if ($doc->getRelationExtern() != null): ?>
-                &nbsp;
+
                     <?php echo $this->internalExternalLink()->createLink($doc->getRelationExtern(), 'Verlagsinfo'); ?>
+                    &nbsp;
                 <?php endif; ?>
 
 
                 <?php if ($doc->getSwissbibISBN() != null): ?>
-                &nbsp;
-                    <?php echo $this->internalExternalLink()->createLink($doc->getSwissbibISBN(), 'swissbib'); ?>
 
+                    <?php echo $this->internalExternalLink()->createLink($doc->getSwissbibISBN(), 'swissbib'); ?>
+                    &nbsp;
                 <?php endif; ?>
 
                 <?php if ($doc->getRelationZora() != null): ?>
-                &nbsp;
-                    <?php echo $this->internalExternalLink()->createLink($doc->getRelationZora(), 'Volltext (evt. mit Zugangsbeschränkung)'); ?>
-                <?php endif; ?>
 
+                    <?php echo $this->internalExternalLink()->createLink($doc->getRelationZora(), 'Volltext (evt. mit Zugangsbeschränkung)'); ?>
+                    &nbsp;
+                <?php endif; ?>
+                </p>
 
                 <?php else: ?>
 
-
+            <p>
                 <!-- Fall 3: kein PDF im Zora ich knn jedoch Verlagsinfo haben -->
 
                 <?php if ($doc->getRelationExtern() != null): ?>
-                &nbsp;
-                    <?php echo $this->internalExternalLink()->createLink($doc->getRelationExtern(), 'Verlagsinfo'); ?>
 
+                    <?php echo $this->internalExternalLink()->createLink($doc->getRelationExtern(), 'Verlagsinfo'); ?>
+                    &nbsp;
                 <?php endif; ?>
 
 
                 <?php if ($doc->getSwissbibISBN() != null): ?>
-                &nbsp;
-                    <?php echo $this->internalExternalLink()->createLink($doc->getSwissbibISBN(), 'swissbib'); ?>
 
+                    <?php echo $this->internalExternalLink()->createLink($doc->getSwissbibISBN(), 'swissbib'); ?>
+                    &nbsp;
                 <?php endif; ?>
 
                 <?php if ($doc->getRelationZora() != null): ?>
-                &nbsp;
+
                     <?php echo $this->internalExternalLink()->createLink($doc->getRelationZora(), 'Zora'); ?>
+                    &nbsp;
                 <?php endif; ?>
-
+            </p>
                 <?php endif; ?>
-
+            </div>
 
                 <!--Abschluss der Struktur - entweder mit oder ohne Bild  -->
 
-            </p></li>
+            </li>
 
         <?php endforeach; ?>
     </ul>

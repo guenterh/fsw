@@ -8183,6 +8183,33 @@ rausgenommen, da sonst zora als intern erscheint
 }
 
 
+.floating-box-left {
+    display: inline-block;
+    min-height: 75px;
+    width: 70px;
+    height: 75px;
+    margin: 10px;
+}
+
+.floating-box-right {
+    display: inline-block;
+    width: 490px;
+    min-height: 75px;
+    height: 75px;
+    /*margin: 10px;*/
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.floating-box-right-large {
+    display: inline-block;
+    min-height: 75px;
+    height: 75px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    margin-top: 5px;
+}
 
 
 
