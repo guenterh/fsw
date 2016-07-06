@@ -114,6 +114,11 @@ class MediumForm extends Form {
                     'rts.gif'   =>  'RTS',
                     'schweiz_sonntag.gif'   =>  'Schweiz am Sonntag',
                     'das_magazin.gif'   =>  'Das Magazin',
+                    'ssp_vpod.gif'   =>  'ssp_vpod',
+                    'schauspielhaus.gif'   =>  'Zuerich Schauspielhaus',
+		     'taz.gif'   =>  'taz',
+		     'medienwoche.gif'   =>  'medienwoche',
+ 		     'az.gif'   =>  'az aargauer Zeitung',
                     'tageswoche.gif'   =>  'TagesWoche'
 
                 )
