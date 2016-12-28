@@ -8082,7 +8082,7 @@ a.internal {
 a.internal.with-arrow {
     padding-left: 13px;
     padding-right: 2px;
-    background: transparent url(http://www.fsw.uzh.ch/terrific/71/assets/img/sprite/icon/arrow-right.png) 0 0 no-repeat;
+    background: transparent url(http://www.fsw.uzh.ch/static/img/fsw/arrow-right.png) 0 0 no-repeat;
 }
 
 /* Anfang alte uzh.css Definitionen*/
@@ -8137,7 +8137,7 @@ ul.type1 li
 .skin-text-basics a.www.displayParent {
   padding-left: 13px;
   padding-right: 2px;
-  background: transparent url(http://www.fsw.uzh.ch/terrific/71/assets/img/sprite/icon/arrow-up-right.png) 0 0 no-repeat;
+  background: transparent url(http://www.fsw.uzh.ch/static/img/fsw/arrow-up-right.png) 0 0 no-repeat;
 }
 
 /*
@@ -8153,7 +8153,7 @@ rausgenommen, da sonst zora als intern erscheint
 .skin-text-basics a.internal.displayParent a[href^="http://www.fsw.uzh.ch"] {
   padding-left: 13px;
   padding-right: 2px;
-  background: transparent url(http://www.fsw.uzh.ch/terrific/71/assets/img/sprite/icon/arrow-right.png) 0 0 no-repeat;
+  background: transparent url(http://www.fsw.uzh.ch/static/img/fsw/arrow-right.png) 0 0 no-repeat;
 }
 .skin-text-basics a[href*="/dam/"],
 .skin-text-basics a.download {
