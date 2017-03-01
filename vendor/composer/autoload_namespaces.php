@@ -9,7 +9,6 @@ return array(
     'ZfcTwitterBootstrap' => array($vendorDir . '/mwillbanks/zfc-twitter-bootstrap/src'),
     'Zend\\' => array($vendorDir . '/zendframework/zendframework/library'),
     'ZendXml\\' => array($vendorDir . '/zendframework/zendxml/library'),
-    'ZendDeveloperTools' => array($vendorDir . '/zendframework/zend-developer-tools/src'),
     'DluTwBootstrapDemo' => array($vendorDir . '/dlu/dlutwbootstrapdemo/src'),
     'DluTwBootstrap' => array($vendorDir . '/dlu/dlutwbootstrap/src'),
 );

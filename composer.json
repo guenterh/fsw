@@ -12,8 +12,7 @@
         "zendframework/zendframework": "2.2.*",
         "dlu/dlutwbootstrap": "dev-master@dev",
         "dlu/dlutwbootstrapdemo": "dev-master@dev",
-        "mwillbanks/zfc-twitter-bootstrap": "@dev",
-        "zendframework/zend-developer-tools": "dev-master@dev"
+        "mwillbanks/zfc-twitter-bootstrap": "@dev"
 
     },
     "require-dev": {

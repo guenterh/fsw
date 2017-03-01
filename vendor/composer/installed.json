@@ -18,7 +18,7 @@
             "php": ">=5.3.3",
             "zendframework/zendframework": ">=2.1.0"
         },
-        "time": "2013-03-27 13:05:57",
+        "time": "2013-03-27T13:05:57+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -69,7 +69,7 @@
             "php": ">=5.3.3",
             "zendframework/zendframework": ">=2.0.5"
         },
-        "time": "2012-12-15 11:29:31",
+        "time": "2012-12-15T11:29:31+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -103,53 +103,6 @@
         ]
     },
     {
-        "name": "zendframework/zendxml",
-        "version": "1.0.1",
-        "version_normalized": "1.0.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/zendframework/ZendXml.git",
-            "reference": "54edb3875aba5b45f02824f65f311c9fb2743a38"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/zendframework/ZendXml/zipball/54edb3875aba5b45f02824f65f311c9fb2743a38",
-            "reference": "54edb3875aba5b45f02824f65f311c9fb2743a38",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~3.7",
-            "squizlabs/php_codesniffer": "~1.5"
-        },
-        "time": "2015-08-03 14:50:10",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "ZendXml\\": "library/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "description": "Utility library for XML usage, best practices, and security in PHP",
-        "homepage": "http://packages.zendframework.com/",
-        "keywords": [
-            "security",
-            "xml",
-            "zf2"
-        ]
-    },
-    {
         "name": "mwillbanks/zfc-twitter-bootstrap",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -175,7 +128,7 @@
             "phpunit/phpunit": ">=3.7.7",
             "zendframework/zendframework": "2.*"
         },
-        "time": "2014-11-23 04:35:56",
+        "time": "2014-11-23T04:35:56+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -203,87 +156,17 @@
         ]
     },
     {
-        "name": "zendframework/zend-developer-tools",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/zendframework/ZendDeveloperTools.git",
-            "reference": "b2509f8e62b018fc9d70ad126431d01ba0de6eed"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/zendframework/ZendDeveloperTools/zipball/b2509f8e62b018fc9d70ad126431d01ba0de6eed",
-            "reference": "b2509f8e62b018fc9d70ad126431d01ba0de6eed",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3",
-            "zendframework/zend-debug": "2.*",
-            "zendframework/zend-eventmanager": "2.*",
-            "zendframework/zend-modulemanager": "2.*",
-            "zendframework/zend-mvc": "2.*",
-            "zendframework/zend-servicemanager": "2.*",
-            "zendframework/zend-stdlib": "2.*",
-            "zendframework/zend-version": "2.*",
-            "zendframework/zend-view": "2.*"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4"
-        },
-        "suggest": {
-            "aist/aist-git-tools": "Show you informations about current GIT repository",
-            "bjyoungblood/bjy-profiler": "Version: dev-master, allows the usage of the (Zend) Db collector.",
-            "doctrine/doctrine-orm-module": "Profile DoctrineORM queries",
-            "jhuet/zdt-logger-module": "Show you log data from Zend\\Log",
-            "ocramius/ocra-service-manager": "OcraServiceManager can help you track dependencies within your application.",
-            "san/san-session-toolbar": "SanSessionToolbar can help you see current Zend\\Session data you're using within your application.",
-            "snapshotpl/zf-snap-event-debugger": "ZfSnapEventDebugger can help you debug events from Zend\\EventManager"
-        },
-        "time": "2015-11-24 11:08:25",
-        "type": "zf-module",
-        "installation-source": "source",
-        "autoload": {
-            "psr-0": {
-                "ZendDeveloperTools": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Evan Coury",
-                "email": "me@evancoury.com",
-                "homepage": "http://blog.evan.pro/"
-            },
-            {
-                "name": "Eric Boh",
-                "email": "cossish@gmail.com"
-            }
-        ],
-        "description": "Module for developer and debug tools for working with the ZF2 MVC layer.",
-        "homepage": "https://github.com/zendframework/ZendDeveloperTools",
-        "keywords": [
-            "debug",
-            "developer",
-            "module",
-            "zf2"
-        ]
-    },
-    {
         "name": "zendframework/zendframework",
         "version": "2.2.10",
         "version_normalized": "2.2.10.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/zendframework/zf2.git",
+            "url": "https://github.com/zendframework/zendframework.git",
             "reference": "a8d56b4b7ef3f027fc531c34064e2bf0132feab2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zendframework/zf2/zipball/a8d56b4b7ef3f027fc531c34064e2bf0132feab2",
+            "url": "https://api.github.com/repos/zendframework/zendframework/zipball/a8d56b4b7ef3f027fc531c34064e2bf0132feab2",
             "reference": "a8d56b4b7ef3f027fc531c34064e2bf0132feab2",
             "shasum": ""
         },
@@ -360,7 +243,7 @@
             "zendframework/zendpdf": "ZendPdf for creating PDF representations of barcodes",
             "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha for rendering ReCaptchas in Zend\\Captcha and/or Zend\\Form"
         },
-        "time": "2015-02-17 20:01:36",
+        "time": "2015-02-17T20:01:36+00:00",
         "bin": [
             "bin/classmap_generator.php",
             "bin/pluginmap_generator.php",
@@ -391,57 +274,6 @@
         ]
     },
     {
-        "name": "symfony/yaml",
-        "version": "v2.8.1",
-        "version_normalized": "2.8.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/yaml.git",
-            "reference": "ac84cbb98b68a6abbc9f5149eb96ccc7b07b8966"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/yaml/zipball/ac84cbb98b68a6abbc9f5149eb96ccc7b07b8966",
-            "reference": "ac84cbb98b68a6abbc9f5149eb96ccc7b07b8966",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.9"
-        },
-        "time": "2015-12-26 13:37:56",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.8-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Component\\Yaml\\": ""
-            },
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony Yaml Component",
-        "homepage": "https://symfony.com"
-    },
-    {
         "name": "phpunit/php-text-template",
         "version": "1.2.1",
         "version_normalized": "1.2.1.0",
@@ -459,7 +291,7 @@
         "require": {
             "php": ">=5.3.3"
         },
-        "time": "2015-06-21 13:50:34",
+        "time": "2015-06-21T13:50:34+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -506,7 +338,7 @@
         "suggest": {
             "ext-soap": "*"
         },
-        "time": "2013-01-13 10:24:48",
+        "time": "2013-01-13T10:24:48+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -536,49 +368,6 @@
         ]
     },
     {
-        "name": "phpunit/php-timer",
-        "version": "1.0.7",
-        "version_normalized": "1.0.7.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/sebastianbergmann/php-timer.git",
-            "reference": "3e82f4e9fc92665fafd9157568e4dcb01d014e5b"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/3e82f4e9fc92665fafd9157568e4dcb01d014e5b",
-            "reference": "3e82f4e9fc92665fafd9157568e4dcb01d014e5b",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "time": "2015-06-21 08:01:12",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "src/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Sebastian Bergmann",
-                "email": "sb@sebastian-bergmann.de",
-                "role": "lead"
-            }
-        ],
-        "description": "Utility class for timing",
-        "homepage": "https://github.com/sebastianbergmann/php-timer/",
-        "keywords": [
-            "timer"
-        ]
-    },
-    {
         "name": "phpunit/php-token-stream",
         "version": "1.2.2",
         "version_normalized": "1.2.2.0",
@@ -597,7 +386,7 @@
             "ext-tokenizer": "*",
             "php": ">=5.3.3"
         },
-        "time": "2014-03-03 05:10:30",
+        "time": "2014-03-03T05:10:30+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -631,55 +420,6 @@
         ]
     },
     {
-        "name": "phpunit/php-file-iterator",
-        "version": "1.4.1",
-        "version_normalized": "1.4.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-            "reference": "6150bf2c35d3fc379e50c7602b75caceaa39dbf0"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/6150bf2c35d3fc379e50c7602b75caceaa39dbf0",
-            "reference": "6150bf2c35d3fc379e50c7602b75caceaa39dbf0",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "time": "2015-06-21 13:08:43",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.4.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "src/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Sebastian Bergmann",
-                "email": "sb@sebastian-bergmann.de",
-                "role": "lead"
-            }
-        ],
-        "description": "FilterIterator implementation that filters files based on a list of suffixes.",
-        "homepage": "https://github.com/sebastianbergmann/php-file-iterator/",
-        "keywords": [
-            "filesystem",
-            "iterator"
-        ]
-    },
-    {
         "name": "phpunit/php-code-coverage",
         "version": "1.2.18",
         "version_normalized": "1.2.18.0",
@@ -707,7 +447,7 @@
             "ext-dom": "*",
             "ext-xdebug": ">=2.0.5"
         },
-        "time": "2014-09-02 10:13:14",
+        "time": "2014-09-02T10:13:14+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -778,7 +518,7 @@
         "suggest": {
             "phpunit/php-invoker": "~1.1"
         },
-        "time": "2014-10-17 09:04:17",
+        "time": "2014-10-17T09:04:17+00:00",
         "bin": [
             "composer/bin/phpunit"
         ],
@@ -816,5 +556,203 @@
             "testing",
             "xunit"
         ]
+    },
+    {
+        "name": "zendframework/zendxml",
+        "version": "1.0.2",
+        "version_normalized": "1.0.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/zendframework/ZendXml.git",
+            "reference": "7b64507bc35d841c9c5802d67f6f87ef8e1a58c9"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/zendframework/ZendXml/zipball/7b64507bc35d841c9c5802d67f6f87ef8e1a58c9",
+            "reference": "7b64507bc35d841c9c5802d67f6f87ef8e1a58c9",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.3.3 || ^7.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^3.7 || ^4.0",
+            "squizlabs/php_codesniffer": "^1.5"
+        },
+        "time": "2016-02-04T21:02:08+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "ZendXml\\": "library/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "description": "Utility library for XML usage, best practices, and security in PHP",
+        "homepage": "http://packages.zendframework.com/",
+        "keywords": [
+            "security",
+            "xml",
+            "zf2"
+        ]
+    },
+    {
+        "name": "phpunit/php-file-iterator",
+        "version": "1.4.2",
+        "version_normalized": "1.4.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
+            "reference": "3cc8f69b3028d0f96a9078e6295d86e9bf019be5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/3cc8f69b3028d0f96a9078e6295d86e9bf019be5",
+            "reference": "3cc8f69b3028d0f96a9078e6295d86e9bf019be5",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "time": "2016-10-03T07:40:28+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.4.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Sebastian Bergmann",
+                "email": "sb@sebastian-bergmann.de",
+                "role": "lead"
+            }
+        ],
+        "description": "FilterIterator implementation that filters files based on a list of suffixes.",
+        "homepage": "https://github.com/sebastianbergmann/php-file-iterator/",
+        "keywords": [
+            "filesystem",
+            "iterator"
+        ]
+    },
+    {
+        "name": "phpunit/php-timer",
+        "version": "1.0.9",
+        "version_normalized": "1.0.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/php-timer.git",
+            "reference": "3dcf38ca72b158baf0bc245e9184d3fdffa9c46f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/3dcf38ca72b158baf0bc245e9184d3fdffa9c46f",
+            "reference": "3dcf38ca72b158baf0bc245e9184d3fdffa9c46f",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.3.3 || ^7.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
+        },
+        "time": "2017-02-26T11:10:40+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Sebastian Bergmann",
+                "email": "sb@sebastian-bergmann.de",
+                "role": "lead"
+            }
+        ],
+        "description": "Utility class for timing",
+        "homepage": "https://github.com/sebastianbergmann/php-timer/",
+        "keywords": [
+            "timer"
+        ]
+    },
+    {
+        "name": "symfony/yaml",
+        "version": "v2.8.17",
+        "version_normalized": "2.8.17.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/yaml.git",
+            "reference": "322a8c2dfbca15ad6b1b27e182899f98ec0e0153"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/yaml/zipball/322a8c2dfbca15ad6b1b27e182899f98ec0e0153",
+            "reference": "322a8c2dfbca15ad6b1b27e182899f98ec0e0153",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9"
+        },
+        "time": "2017-01-21T16:40:50+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.8-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Yaml\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Yaml Component",
+        "homepage": "https://symfony.com"
     }
 ]
