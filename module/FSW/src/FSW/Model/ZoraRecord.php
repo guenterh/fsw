@@ -740,7 +740,9 @@ class ZoraRecord  {
             //Manuela möchte nicht, dass er angezeigt wird. user sollen immer nur an die Zoraeingangstür kommen
             //dort kommen sie einen evtl. vorhandenen link angezeigt
             preg_match("/www\.zora\.uzh\.ch\/\d*?\/$/",$stringNode,$tMatches);
-            if (count($tMatches) > 0) {
+            //GH: 23.8.2017: neu aufgebauter link: www.zora.uzh.ch/id/eprint/4711
+            preg_match("/www\.zora\.uzh\.ch\/id\/eprint\/\d*?\/$/",$stringNode,$tNewLinkMatches);
+            if (count($tMatches) > 0 || count($tNewLinkMatches) > 0) {
                 $this->relationZora = $stringNode;
             } else {
                 $tMatches = array();
