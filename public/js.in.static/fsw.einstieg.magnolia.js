@@ -26,11 +26,11 @@ $(document).ready(function(){
 
 
     var ranNumber = GetRandom(1,6);
-    var imgSRC = "http://www.fsw.uzh.ch/static/img/buchanzeige" + ranNumber + ".png";
+    var imgSRC = "https://www.fsw.uzh.ch/static/img/buchanzeige" + ranNumber + ".png";
 
     //css of Magnolia for picture links is adding an arrow by default. This is not desirable for the FSW frontpage
     //the simplest way: override it with a not existent image...
-    var newHTML = "<a style='background: transparent url(\"test.png\") no-repeat scroll 0 0' href='http://www.fsw.uzh.ch/forschung/publikationen/buchpublikationen.html'>" +
+    var newHTML = "<a style='background: transparent url(\"test.png\") no-repeat scroll 0 0' href='https://www.fsw.uzh.ch/forschung/publikationen/buchpublikationen.html'>" +
             "<img alt=\"\" src=\""  + imgSRC + "\" width=\"460\"/>" +
             "</a>";
 

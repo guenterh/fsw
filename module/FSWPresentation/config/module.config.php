@@ -56,7 +56,8 @@ return array(
         'invokables'    =>  array(
             'date'  =>  'FSWPresentation\View\Helper\Date',
             'sortSwitcher'  => 'FSWPresentation\View\Helper\SortSwitcher',
-            'internalExternalLink'  => 'FSWPresentation\View\Helper\InternalExternalLink'
+            'internalExternalLink'  => 'FSWPresentation\View\Helper\InternalExternalLink',
+            'changeTohttps'     =>      'FSWPresentation\View\Helper\ChangeToHttps'
         )
     ),
 

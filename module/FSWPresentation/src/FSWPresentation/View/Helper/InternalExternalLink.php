@@ -27,7 +27,7 @@ class InternalExternalLink extends AbstractHelper{
         {
             $fullLink =    '<a  title="Teaser Link" class="www" href="' . $link . '" target="_blank" >'  . $subject  .   "</a>";
         } else {
-            $fullLink = "<a class='internal displayParent' href='" . $link . "' >"  . $subject  .   "</a>";
+            $fullLink = "<a class='internal displayParent' href='" . $this->view->changeTohttps($link) . "' >"  . $subject  .   "</a>";
         }
 
         return $fullLink;
@@ -40,7 +40,5 @@ class InternalExternalLink extends AbstractHelper{
         return !stristr($link, 'fsw.uzh.ch') ? true : false;
 
     }
-
-
 
 } 
