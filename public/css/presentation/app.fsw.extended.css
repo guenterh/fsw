@@ -1204,7 +1204,7 @@ var {
   color: #000000;
   padding-left: 14px;
 }
-.mod-directlinks li a[href^="http"]:before,
+.mod-directlinks li a[href^="https"]:before,
 .mod-directlinks li a.www:before {
   content: '';
   position: absolute;
@@ -1321,7 +1321,7 @@ var {
   .mod-directlinks li a {
     color: #000000;
   }
-  .mod-directlinks li a[href^="http"]:before,
+  .mod-directlinks li a[href^="https"]:before,
   .mod-directlinks li a.www:before {
     display: inline-block;
     background: url(assets/img/sprite/sprite.png?20150331135517) no-repeat 0 0;
@@ -2696,9 +2696,9 @@ body {
   margin-right: 0.25em;
   z-index: 1;
 }
-.mod-linklist h3 a[href^="http"]:before,
-.mod-linklist li a[href^="http"]:before,
-.mod-linklist p a[href^="http"]:before,
+.mod-linklist h3 a[href^="https"]:before,
+.mod-linklist li a[href^="https"]:before,
+.mod-linklist p a[href^="https"]:before,
 .mod-linklist h3 a.www:before,
 .mod-linklist li a.www:before,
 .mod-linklist p a.www:before {
@@ -2838,9 +2838,9 @@ body {
     width: 10px;
     height: 13px;
   }
-  .mod-linklist h3 a[href^="http"]:before,
-  .mod-linklist li a[href^="http"]:before,
-  .mod-linklist p a[href^="http"]:before,
+  .mod-linklist h3 a[href^="https"]:before,
+  .mod-linklist li a[href^="https"]:before,
+  .mod-linklist p a[href^="https"]:before,
   .mod-linklist h3 a.www:before,
   .mod-linklist li a.www:before,
   .mod-linklist p a.www:before {
@@ -6468,7 +6468,7 @@ body {
   width: 10px;
   height: 13px;
 }
-.mod-teaser li a[href^="http"]:before,
+.mod-teaser li a[href^="https"]:before,
 .mod-teaser li a.www:before {
   margin-top: 1px;
   display: inline-block;
@@ -6477,17 +6477,17 @@ body {
   width: 10px;
   height: 13px;
 }
-.mod-teaser li a[href^="http"][href^="/"]:before,
+.mod-teaser li a[href^="https"][href^="/"]:before,
 .mod-teaser li a.www[href^="/"]:before,
-.mod-teaser li a[href^="http"][href*="uzh.ch"]:before,
+.mod-teaser li a[href^="https"][href*="uzh.ch"]:before,
 .mod-teaser li a.www[href*="uzh.ch"]:before,
-.mod-teaser li a[href^="http"].mail:before,
+.mod-teaser li a[href^="https"].mail:before,
 .mod-teaser li a.www.mail:before,
-.mod-teaser li a[href^="http"].uzh:before,
+.mod-teaser li a[href^="https"].uzh:before,
 .mod-teaser li a.www.uzh:before,
-.mod-teaser li a[href^="http"].internal:before,
+.mod-teaser li a[href^="https"].internal:before,
 .mod-teaser li a.www.internal:before,
-.mod-teaser li a[href^="http"][href^="#"]:before,
+.mod-teaser li a[href^="https"][href^="#"]:before,
 .mod-teaser li a.www[href^="#"]:before {
   display: inline-block;
   background: url(assets/img/sprite/sprite.png?20150331135517) no-repeat 0 0;
@@ -6673,7 +6673,7 @@ body {
     width: 10px;
     height: 13px;
   }
-  .mod-teaser li a[href^="http"]:before,
+  .mod-teaser li a[href^="https"]:before,
   .mod-teaser li a.www:before {
     display: inline-block;
     background: url(assets/img/sprite/sprite.png?20150331135517) no-repeat 0 0;
@@ -6681,17 +6681,17 @@ body {
     width: 10px;
     height: 13px;
   }
-  .mod-teaser li a[href^="http"][href^="/"]:before,
+  .mod-teaser li a[href^="https"][href^="/"]:before,
   .mod-teaser li a.www[href^="/"]:before,
-  .mod-teaser li a[href^="http"][href*="uzh.ch"]:before,
+  .mod-teaser li a[href^="https"][href*="uzh.ch"]:before,
   .mod-teaser li a.www[href*="uzh.ch"]:before,
-  .mod-teaser li a[href^="http"].mail:before,
+  .mod-teaser li a[href^="https"].mail:before,
   .mod-teaser li a.www.mail:before,
-  .mod-teaser li a[href^="http"].uzh:before,
+  .mod-teaser li a[href^="https"].uzh:before,
   .mod-teaser li a.www.uzh:before,
-  .mod-teaser li a[href^="http"].internal:before,
+  .mod-teaser li a[href^="https"].internal:before,
   .mod-teaser li a.www.internal:before,
-  .mod-teaser li a[href^="http"][href^="#"]:before,
+  .mod-teaser li a[href^="https"][href^="#"]:before,
   .mod-teaser li a.www[href^="#"]:before {
     display: inline-block;
     background: url(assets/img/sprite/sprite.png?20150331135517) no-repeat 0 0;
@@ -8082,7 +8082,7 @@ a.internal {
 a.internal.with-arrow {
     padding-left: 13px;
     padding-right: 2px;
-    background: transparent url(http://www.fsw.uzh.ch/static/img/fsw/arrow-right.png) 0 0 no-repeat;
+    background: transparent url(https://www.fsw.uzh.ch/static/img/fsw/arrow-right.png) 0 0 no-repeat;
 }
 
 /* Anfang alte uzh.css Definitionen*/
@@ -8133,11 +8133,11 @@ ul.type1 li
 
 /* Ende alte uzh.css Definitionen*/
 
-.skin-text-basics a[href^="http"],
+.skin-text-basics a[href^="https"],
 .skin-text-basics a.www.displayParent {
   padding-left: 13px;
   padding-right: 2px;
-  background: transparent url(http://www.fsw.uzh.ch/static/img/fsw/arrow-up-right.png) 0 0 no-repeat;
+  background: transparent url(https://www.fsw.uzh.ch/static/img/fsw/arrow-up-right.png) 0 0 no-repeat;
 }
 
 /*
@@ -8150,10 +8150,10 @@ rausgenommen, da sonst zora als intern erscheint
 .skin-text-basics a.mail,
 .skin-text-basics a.uzh,
 .skin-text-basics a.internal,
-.skin-text-basics a.internal.displayParent a[href^="http://www.fsw.uzh.ch"] {
+.skin-text-basics a.internal.displayParent a[href^="https://www.fsw.uzh.ch"] {
   padding-left: 13px;
   padding-right: 2px;
-  background: transparent url(http://www.fsw.uzh.ch/static/img/fsw/arrow-right.png) 0 0 no-repeat;
+  background: transparent url(https://www.fsw.uzh.ch/static/img/fsw/arrow-right.png) 0 0 no-repeat;
 }
 .skin-text-basics a[href*="/dam/"],
 .skin-text-basics a.download {
@@ -8245,7 +8245,7 @@ rausgenommen, da sonst zora als intern erscheint
   .skin-text-basics a[href] {
     color: #000000;
   }
-  .skin-text-basics a[href^="http"],
+  .skin-text-basics a[href^="https"],
   .skin-text-basics a.www {
     background-image: url(assets/img/sprite/icon/arrow-up-right-print.png);
   }
