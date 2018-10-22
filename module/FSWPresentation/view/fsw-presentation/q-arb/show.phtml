@@ -50,12 +50,21 @@
 
                 <?php
                 $showDatum = false;
-                foreach ($params['status'] as $status) {
-                    if (strcmp($status,'abgeschlossen') == 0) {
+                if (array_key_exists('status',$params) && is_array($params['status'])) {
+                    foreach ($params['status'] as $status) {
+                        if (strcmp($status, 'abgeschlossen') == 0) {
+                            $showDatum = true;
+                            break;
+                        }
+                    }
+                } elseif (array_key_exists('status',$params)) {
+                    if (strcmp($params['status'], 'abgeschlossen') == 0) {
                         $showDatum = true;
                         break;
                     }
+
                 }
+
                 ?>
 
                 <?php if ($showDatum): ?>
