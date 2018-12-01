@@ -119,7 +119,9 @@ class MediumForm extends Form {
 		     'taz.gif'   =>  'taz',
 		     'medienwoche.gif'   =>  'medienwoche',
  		     'az.gif'   =>  'az aargauer Zeitung',
-                    'tageswoche.gif'   =>  'TagesWoche'
+                    'tageswoche.gif'   =>  'TagesWoche',
+                    'deutschlandfunk.gif' => 'Deutschlandfunk',
+                    'mdr.gif'       => 'Mitteldeutscher Rundfunk'
 
                 )
             ),
