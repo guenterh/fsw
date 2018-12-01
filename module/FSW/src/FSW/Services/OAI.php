@@ -453,14 +453,15 @@ class OAI implements EventManagerAwareInterface
                 "Sending request: verb = {$verb}, params = " . print_r($params, true)
             );
         }
-
         // Set up retry loop:
         while (true) {
             // Set up the request:
             $this->client->resetParameters();
             $this->client->setUri($this->baseURL);
             // TODO: make timeout configurable
-            $this->client->setOptions(array('timeout' => 60));
+            //since Zora changed to https and the server we are running on isn't configured properly
+            //with the necessary certificates we have to switch off the ssl verification
+            $this->client->setOptions(array('timeout' => 60, 'sslverifypeer' => false) );
 
             // Set authentication, if necessary:
             if ($this->httpUser && $this->httpPass) {
